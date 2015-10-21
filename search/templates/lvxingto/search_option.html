@@ -1,0 +1,61 @@
+<div class="hiddle42 hidden-phone hidden-tablet"></div>
+<div class="search-option">
+	<div class="search-content span12">
+		<div class="row-fluid">
+			<div class="span6">
+			
+				<li><?=$sph_messages['Categories']?>:</li>
+				<!--遍历分类-->
+
+				<?if (is_array($cats['main_list'])){?>
+				<?foreach ($cats['main_list'] as $_val){?>
+				<li class="cx">
+					<a href="<?=$base_url;?>?catid=<?=$_val['category_id']?>">
+					<?=$_val['category']?>
+					</a>
+				</li>
+				
+				<? }?>
+				<? }?>
+			</div>
+			<div class="span6 hidden-phone hidden-tablet">
+			
+				<? if ($adv==1 || $advanced_search==1) {
+				?>
+				<li>搜索方式：</li>
+				<div class="controls">
+
+					<label class="radio">
+
+					<input type="radio" id="search-type1" name="type" value="and" <?=$type=='and'?'checked':''?>><?=$sph_messages['andSearch']?>
+
+					</label>
+
+					<label class="radio">
+
+					<input type="radio" id="search-type2" name="type" value="or" <?=$_REQUEST['type']=='or'?'checked':''?>><?=$sph_messages['orSearch']?>
+
+					</label>  
+
+					<label class="radio">
+
+					<input type="radio" id="search-type3" name="type" value="phrase" <?=$_REQUEST['type']=='phrase'?'checked':''?>><?=$sph_messages['phraseSearch']?>
+					
+					</label>  
+					
+					<select style="margin-top: 0px !important" class="span2 radio" data-placeholder="Choose a Category" tabindex="1" name='results' id="search-results1">
+						<option <? if ($results_per_page==10) echo "selected";?>>10</option>
+						<option <? if ($results_per_page==20) echo "selected";?>>20</option>
+						<option <? if ($results_per_page==50) echo "selected";?>>50</option>
+						<option <? if ($results_per_page==100) echo "selected";?>>100</option>
+					</select>
+					
+				</div>
+				
+				<?}?>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<!--分类搜索-->

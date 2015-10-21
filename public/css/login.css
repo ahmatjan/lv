@@ -1,0 +1,172 @@
+/***
+Login page
+***/
+
+/* logo page */
+/*
+.login {
+  background-color: #444 !important;
+}
+*/
+.login .logo {
+  width: 247px;
+  margin: 0 auto;   
+  margin-top:60px;
+  padding: 15px;
+  text-align: center;
+}  
+
+.login .content {
+  background-color:#fff; 
+  width: 350px;
+  margin: 0 auto; 
+  margin-bottom: 0px;
+  padding: 0px;  
+  padding-top: 0px;  
+  padding-bottom: 15px;  
+}
+
+.login .content h3 {
+  color: #000;
+}
+.login .content h4  {
+  color: #555;
+}
+
+.login .content h5  {
+  padding: 0 0 8px 0;
+  margin-top: 3px;
+  border-bottom:1px dotted #666;
+}
+
+.login .content p {
+  color: #222;
+}
+
+.login .content .login-form,
+.login .content .forget-form {
+    padding: 5px;
+    margin: 0px;
+    border:1px solid rgb(201, 201, 201);
+}
+
+.login .content .m-wrap {
+  width: 296px;
+  border-left: 0 !important;
+}
+
+.login .content .input-icon {
+  border-left: 2px solid #35aa47 !important;
+}
+
+.login .content .control-group {
+  margin-bottom: 15px !important;
+}
+
+.login .content .input-icon .m-wrap {  
+  margin: 0px !important;
+}
+
+.login .content .forget-form {
+  display: none;
+}
+
+.login .content .register-form {
+  display: none;
+  padding: 5px;
+  margin: 0px;
+  border:1px solid rgb(201, 201, 201);
+}
+
+.login .content .form-title {
+  font-weight: 300;
+  /*
+  margin-bottom: 25px;
+  */
+}
+
+.login .content .form-actions {
+  background-color: #fff;
+  clear: both;
+  border: 0px;
+  padding: 0;
+  margin: 12px 0;
+}
+
+.login .content .forget-form .form-actions {
+  border: 0;
+  margin-bottom: 0;
+  padding-bottom: 20px;
+}  
+
+.login .content .register-form .form-actions {
+  border: 0;
+  margin-bottom: 0;
+  padding-bottom: 0px;
+}
+
+.login .content .form-actions .checkbox {
+  display: inline-block;
+}
+
+.login .content .form-actions .btn {
+  margin-top: 1px;
+}
+
+.login .content .forget-password {
+  margin-top: 5px;
+}
+
+.login .content .create-account {
+  border-top: 1px dotted #666;
+}
+
+.login .content .create-account a {
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.login .copyright {
+  text-align: center;
+  width: 250px;
+  margin: 0 auto; 
+  padding: 10px 10px 0 10px;
+  color: #68bbec;
+  font-size: 11px;
+}
+
+@media (max-width: 480px) {
+  /***
+  Login page
+  ***/
+  .login .content .register-form,
+  .login .content .login-form,
+  .login .content .forget-form {
+  border: none;
+  }
+  .login .logo {
+    margin-top:10px;
+  }
+
+  .login .content {
+  	/*
+    padding: 30px; 
+    width: 222px;
+    */
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  .login .content h3 {
+    font-size: 22px;
+  }
+
+  .login .content .m-wrap {
+      width: calc(100% - 40px);
+  }
+
+  .login .checkbox {
+    font-size: 13px;
+  }
+}

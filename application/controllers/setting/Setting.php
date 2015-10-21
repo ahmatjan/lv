@@ -1,0 +1,193 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Setting extends CI_Controller {
+	public function index()
+	{
+		$this->lang->load('setting/setting');
+		//header部分
+		$header['title']=$this->lang->line('heading_title');
+		$header['css_page_style']=array('public/css/chosen.css','public/css/daterangepicker.css','public/css/summernote.css','public/css/jquery.fancybox.css','public/css/select2_metro.css','public/css/multi-select-metro.css','public/css/DT_bootstrap.css');
+		$this->public_section->get_header($header);
+		$this->public_section->get_usertop();
+		
+		//1、设置语言
+		$data['text_title']=$this->lang->line('heading_title');
+		$data['text_title_helper']=$this->lang->line('text_title_helper');
+		$data['text_select']=$this->lang->line('text_select');
+		
+		//面包导航
+		$data['breadcrumbs']=array(
+			'home'			=>array(
+								'name'=>$this->lang->line('text_home'),
+								'url'=>site_url()
+								),
+			'user_center'	=>array(
+								'name'=>$this->lang->line('text_user_home'),
+								'url'=>site_url('user/User_center')
+								),
+			'setting'		=>array(
+								'name'=>$this->lang->line('heading_title'),
+								'this_url'=>site_url('setting/Setting'),
+								'url'=>''
+								)
+		);
+		
+		//开始主体程序
+		//接收一个选项卡位置（$data['tab_position']）
+		$data['tab_position']=$this->input->get('tab_position');
+		
+		//处理接收数据
+		$this->load->model('setting/base_setting');
+
+		$data['website_name']=$this->base_setting->get_setting('website_name');
+
+		
+		$data['website_title']=$this->base_setting->get_setting('website_title');
+		
+		$data['mate_key']=$this->base_setting->get_setting('mate_key');
+		
+		$data['mate_description']=$this->base_setting->get_setting('mate_description');
+		
+		$data['mate_author']=$this->base_setting->get_setting('mate_author');
+		
+		$data['quantity_view']=$this->base_setting->get_setting('quantity_view');
+		
+		$data['quantity_admin']=$this->base_setting->get_setting('quantity_admin');
+		
+		$data['article_check']=$this->base_setting->get_setting('article_check');
+		
+		$data['author_check']=$this->base_setting->get_setting('author_check');
+		
+		//----------------------------------后台分类设置-----------------------------------------------
+		$this->load->model('setting/nav_setting');
+		$nav_parents=$this->nav_setting->get_parent_nav('admin');
+
+		foreach($nav_parents as $v){
+			//$nav_childs=$this->nav_setting->get_child_nav($v['nav_id']);
+			$nav_childs[]=$this->nav_setting->get_child_nav($v['nav_id']);
+		}
+		
+		foreach($nav_parents as $k=>$v){
+			$nav_parents[$k]['childs']=&$nav_childs[$k];
+		}
+		
+		$data['navs']=$nav_parents;
+		
+		
+		//----------------------------------帮助中心分类设置-----------------------------------------------
+		//$this->load->model('setting/nav_setting');
+		$nav_helpers=$this->nav_setting->get_parent_nav('helper');
+
+		foreach($nav_helpers as $nav_helper){
+			//$nav_childs=$this->nav_setting->get_child_nav($v['nav_id']);
+			$nav_helper_childs[]=$this->nav_setting->get_child_nav($nav_helper['nav_id']);
+		}
+		
+		foreach($nav_helpers as $k=>$v){
+			$nav_helpers[$k]['childs']=&$nav_helper_childs[$k];
+		}
+		
+		$data['nav_helpers']=$nav_helpers;
+		
+		//----------------------------------前台顶部列表-----------------------------------------------
+		$nav_view_tops=$this->nav_setting->get_parent_nav('view_top');
+
+		foreach($nav_view_tops as $nav_view_top){
+			//$nav_childs=$this->nav_setting->get_child_nav($v['nav_id']);
+			$nav_view_top_childs[]=$this->nav_setting->get_child_nav($nav_view_top['nav_id']);
+		}
+		
+		foreach($nav_view_tops as $k=>$v){
+			$nav_view_tops[$k]['childs']=&$nav_view_top_childs[$k];
+		}
+		
+		$data['nav_view_tops']=$nav_view_tops;
+		//var_dump($data['nav_view_tops']);
+		
+		//----------------------------------后台顶部列表-----------------------------------------------
+		$nav_admin_tops=$this->nav_setting->get_parent_nav('admin_top');
+
+		foreach($nav_admin_tops as $nav_admin_top){
+			//$nav_childs=$this->nav_setting->get_child_nav($v['nav_id']);
+			$nav_admin_top_childs[]=$this->nav_setting->get_child_nav($nav_admin_top['nav_id']);
+		}
+		
+		foreach($nav_admin_tops as $k=>$v){
+			$nav_admin_tops[$k]['childs']=&$nav_admin_top_childs[$k];
+		}
+		
+		$data['nav_admin_tops']=$nav_admin_tops;
+		//var_dump($data['nav_admin_tops']);
+		
+		$this->load->view('setting/setting',$data);
+		$this->public_section->get_footer();
+	}
+	
+	//提交网站基础设置
+	public function updata_setting(){
+		$this->load->model('setting/base_setting');
+		//接收参数
+		$data['website_name']=$this->input->post('website_name',TRUE);//网站名
+		$data['website_title']=$this->input->post('website_title',TRUE);//网站标题前缀
+		$data['mate_key']=$this->input->post('mate_key',TRUE);//网站标签关键词
+		$data['mate_description']=$this->input->post('mate_description',TRUE);//网站标签描述
+		$data['mate_author']=$this->input->post('mate_author',TRUE);//网站标签作者
+		$data['quantity_view']=$this->input->post('quantity_view',TRUE);//前台显示条数
+		$data['quantity_admin']=$this->input->post('quantity_admin',TRUE);//后台显示条数
+		$data['article_check']=$this->input->post('article_check',TRUE);//是否审核文章
+		$data['author_check']=$this->input->post('author_check',TRUE);//是否允许作者审核评论
+		
+		if($this->validata_basesetting($data)!==FALSE){
+			$this->base_setting->updata_base_setting($data);
+			$this->session->set_flashdata('setting_success', '修改网站基础设置成功！');
+			redirect('setting/setting');
+		}else{
+			$this->session->set_flashdata('setting_false', '网站设置没有被修改！');
+			redirect('setting/setting');
+		}
+	}
+	
+	public function validata_basesetting($data)
+	{
+		//验证表单
+		$this->load->library('form_validation');
+		if($this->form_validation->validata($data['website_name'],array(array('min_length',2),array('max_length',25)))!==TRUE){
+			return FALSE;
+		}
+
+		if($this->form_validation->validata($data['website_title'],array(array('min_length',2),array('max_length',25)))!==TRUE){
+			return FALSE;
+		}
+		
+		if($this->form_validation->validata($data['mate_key'],array(array('min_length',2),array('max_length',120)))!==TRUE){
+			return FALSE;
+		}
+		
+		if($this->form_validation->validata($data['mate_description'],array(array('min_length',2),array('max_length',255)))!==TRUE){
+			return FALSE;
+		}
+		
+		if($this->form_validation->validata($data['mate_author'],array(array('min_length',2),array('max_length',20)))!==TRUE){
+			return FALSE;
+		}
+		
+		if($this->form_validation->validata($data['quantity_view'],array(array('is_natural'),array('required'),array('max_length',3)))!==TRUE){
+
+			return FALSE;
+		}
+		
+		if($this->form_validation->validata($data['quantity_admin'],array(array('is_natural'),array('required'),array('max_length',3)))!==TRUE){
+			return FALSE;
+		}
+		
+		if($this->form_validation->validata($data['article_check'],array(array('max_length',2),array('required')))!==TRUE){
+			return FALSE;
+		}
+		
+		if($this->form_validation->validata($data['author_check'],array(array('max_length',2),array('required')))!==TRUE){
+			return FALSE;
+		}
+	
+	}
+}
