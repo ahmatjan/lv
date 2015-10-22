@@ -43,32 +43,50 @@ class Test extends CI_Controller {
  * 
  */
 
-	function logdebug($text){
-		file_put_contents('../data/log.txt',$text."\n",FILE_APPEND);		
-	}
+	public function __construct() {
+		parent::__construct();
+			$params = array(
+				'token'=>'weixin', //填写你设定的key
+				'encodingaeskey'=>'encodingaeskey', //填写加密用的EncodingAESKey
+				'appid'=>'wxfc790e2eb9601add', //填写高级调用功能的app id
+		 		'appsecret'=>'39ea2b90c55ec14462b1967909316895' //填写高级调用功能的密钥
+	 		);
+	        $this->load->library('wechat_api/wechat',$params);
+	        $this->wechat->valid();
+	    }
+	    
 	public function index (){
-		$this->load->library('wechat/wechat');
-		$options = array(
-		'token'=>'weixin', //填写你设定的key
-		'encodingaeskey'=>'encodingaeskey', //填写加密用的EncodingAESKey
-		'appid'=>'wxfc790e2eb9601add', //填写高级调用功能的app id
-		'appsecret'=>'39ea2b90c55ec14462b1967909316895' //填写高级调用功能的密钥
-		);
-		$weObj = new Test($options);
-		$weObj->valid();
-		$type = $weObj->getRev()->getRevType();
+		$type=$this->wechat->getRev()->getRevType();
 		switch($type) {
 			case Wechat::MSGTYPE_TEXT:
-				$weObj->text("hello, I'm wechat")->reply();
+				$this->wechat->text("hello, I'm 文本")->reply();
 				exit;
 				break;
 			case Wechat::MSGTYPE_EVENT:
+				$this->wechat->text("hello, 我是事件")->reply();
+				exit;
 				break;
 			case Wechat::MSGTYPE_IMAGE:
+				$this->wechat->text("hello, I'm 图片")->reply();
+				exit;
 				break;
 			default:
-				$weObj->text("help info")->reply();
+				$this->wechat->text("我是未知")->reply();
 		}
-		
+	}
+	
+	public function seeting_menu (){
+		/*
+		$newmenu =  array(
+    		"button"=>
+    			array(
+    				array('type'=>'click','name'=>'最新消息','key'=>'MENU_KEY_NEWS'),
+    				array('type'=>'view','name'=>'我要搜索','url'=>'http://www.baidu.com'),
+    				)
+   		);
+    $result = $this->wechat->createMenu($newmenu);
+	*/
+	$c=$this->wechat->getServerIp();
+	var_dump($c);
 	}
 }
