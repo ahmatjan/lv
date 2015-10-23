@@ -2,6 +2,11 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Image_manager extends CI_Controller {
+	public function __construct() {
+		parent::__construct();
+			$this->output->https_jump();
+	}
+	
 	public function index()
 	{
 		$this->lang->load('user/image_manager');

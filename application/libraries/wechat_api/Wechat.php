@@ -195,7 +195,7 @@ class Wechat
 		// Set the super object to a local variable for use later
 		$this->CI =& get_instance();
 		// Load the Sessions class
-		$this->CI->load->driver('session');
+		$this->CI->load->library('session');
 		
 		$this->token = isset($params['token'])?$params['token']:'';
 		$this->encodingAesKey = isset($params['encodingaeskey'])?$params['encodingaeskey']:'';

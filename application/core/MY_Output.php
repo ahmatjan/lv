@@ -3,6 +3,13 @@
 require_once 'compactor.php';//载入html压缩类库
 class MY_Output extends CI_Output
 {
+	//构造函数
+	public function __construct()
+    {
+        parent::__construct();
+        // Set the super object to a local variable for use later
+		//$this->CI =& get_instance();
+     }
 //替换缓存写入类,在视图输出前压缩html代码
 	/**
 	 * Display Output
@@ -150,6 +157,76 @@ class MY_Output extends CI_Output
 
 		log_message('info', 'Final output sent to browser');
 		log_message('debug', 'Total execution time: '.$elapsed);
+	}
+	
+	//判断跳转https
+	public function https_jump (){
+		$this->CI =& get_instance();
+		//session用来记录用户访问设备和https的设置
+		//$this->CI->load->library('session');
+		//装载模型
+		$this->CI->load->model('setting/base_setting');
+		//调设置
+		$https_pc=$this->CI->base_setting->get_setting('https_pc');
+		//调设置
+		$https_mobile=$this->CI->base_setting->get_setting('https_mobile');
+		
+		//当前访问链接
+		//$current_url=current_url();
+		
+		//用户代理类用来判断设备
+		$this->CI->load->library('user_agent');
+		
+		$url_ = $_SERVER['SERVER_NAME'];
+		if(strpos($url_ ,'www.') !== FALSE){
+			$url_=substr($url_,4);
+		}
+		
+		if($this->CI->agent->is_mobile())
+		{
+			//如果使用的是移动端
+			if($https_mobile == TRUE){
+				if (@$_SERVER["HTTPS"] <> "on")
+					{
+					    $xredir="https://".$url_.$_SERVER["REQUEST_URI"];
+					    header("Location: ".$xredir);
+					}
+			}else{
+				if(@$_SERVER['HTTPS'] == "on") 
+				{ 
+				    $xredir='http://'.$url_. $_SERVER['REQUEST_URI']; 
+
+				    header("Location: ".$xredir); 
+				}  
+			}
+		}
+		if(!$this->CI->agent->is_mobile())
+		{
+			//如果使用的不是移动端
+			if($https_pc == TRUE){
+				//使用https
+				if (@$_SERVER["HTTPS"] <> "on")
+				{
+				    $xredir="https://".$url_.$_SERVER["REQUEST_URI"];
+				    header("Location: ".$xredir);
+				}else{
+					//已经是https
+					if(strpos($_SERVER['SERVER_NAME'] ,'www.') !== FALSE){
+						
+						$xredir="https://".substr($_SERVER['SERVER_NAME'],4).$_SERVER["REQUEST_URI"];
+				    	header("Location: ".$xredir);
+					}
+				}
+			}else{
+				//不使用https
+				if(@$_SERVER['HTTPS'] == "on") 
+				{ 
+				    $xredir='http://'.$url_. $_SERVER['REQUEST_URI']; 
+
+				    header("Location: ".$xredir); 
+				}  
+			}
+		}
 	}
 
 }

@@ -2,6 +2,11 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Setting extends CI_Controller {
+	public function __construct() {
+		parent::__construct();
+			$this->output->https_jump();
+	}
+	
 	public function index()
 	{
 		$this->lang->load('setting/setting');
@@ -58,6 +63,10 @@ class Setting extends CI_Controller {
 		$data['article_check']=$this->base_setting->get_setting('article_check');
 		
 		$data['author_check']=$this->base_setting->get_setting('author_check');
+		
+		$data['https_pc']=$this->base_setting->get_setting('https_pc');
+		
+		$data['https_mobile']=$this->base_setting->get_setting('https_mobile');
 		
 		//----------------------------------后台分类设置-----------------------------------------------
 		$this->load->model('setting/nav_setting');
@@ -137,6 +146,8 @@ class Setting extends CI_Controller {
 		$data['quantity_admin']=$this->input->post('quantity_admin',TRUE);//后台显示条数
 		$data['article_check']=$this->input->post('article_check',TRUE);//是否审核文章
 		$data['author_check']=$this->input->post('author_check',TRUE);//是否允许作者审核评论
+		$data['https_pc']=$this->input->post('https_pc',TRUE);//pc
+		$data['https_mobile']=$this->input->post('https_mobile',TRUE);//mobile
 		
 		if($this->validata_basesetting($data)!==FALSE){
 			$this->base_setting->updata_base_setting($data);
@@ -181,13 +192,21 @@ class Setting extends CI_Controller {
 			return FALSE;
 		}
 		
-		if($this->form_validation->validata($data['article_check'],array(array('max_length',2),array('required')))!==TRUE){
+		if($this->form_validation->validata($data['article_check'],array(array('is_natural')))){
 			return FALSE;
 		}
 		
-		if($this->form_validation->validata($data['author_check'],array(array('max_length',2),array('required')))!==TRUE){
+		if($this->form_validation->validata($data['author_check'],array(array('is_natural')))){
 			return FALSE;
 		}
-	
+		
+		if($this->form_validation->validata($data['https_pc'],array(array('is_natural')))){
+			return FALSE;
+		}
+		
+		if($this->form_validation->validata($data['https_mobile'],array(array('is_natural')))){
+			return FALSE;
+		}
+		
 	}
 }

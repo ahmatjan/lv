@@ -76,7 +76,7 @@ class Test extends CI_Controller {
 	}
 	
 	public function seeting_menu (){
-		/*
+		
 		$newmenu =  array(
     		"button"=>
     			array(
@@ -85,8 +85,14 @@ class Test extends CI_Controller {
     				)
    		);
     $result = $this->wechat->createMenu($newmenu);
-	*/
+	
 	$c=$this->wechat->getServerIp();
 	var_dump($c);
 	}
+	/*
+	public function index (){
+		$this->output->https_jump();
+		echo $_SERVER["SERVER_NAME"];	
+	}
+	*/
 }

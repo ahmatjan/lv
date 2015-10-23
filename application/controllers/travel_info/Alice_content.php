@@ -2,6 +2,11 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Alice_content extends CI_Controller {
+	public function __construct() {
+		parent::__construct();
+			$this->output->https_jump();
+	}
+	
 	public function index()
 	{
 		$this->load->model(array('travel/travel_con','common/image'));

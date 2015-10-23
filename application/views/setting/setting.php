@@ -292,6 +292,98 @@
 
 												</div>
 											
+											<div class="control-group">
+
+													<label class="control-label">PC端https：</label>
+
+													<div class="controls">
+
+														<label class="radio">
+														
+														<?php if ($https_pc == '1'): ?>
+
+														<input type="radio" name="https_pc" value="1" checked/>
+
+														是
+														
+														<?php else: ?>
+														
+														<input type="radio" name="https_pc" value="1" />
+
+														是
+														
+														<?php endif; ?> 
+
+														</label>
+
+														<label class="radio">
+
+														<?php if ($https_pc !== '1'): ?>
+
+														<input type="radio" name="https_pc" value="0" checked/>
+
+														否
+														
+														<?php else: ?>
+														
+														<input type="radio" name="https_pc" value="0" />
+
+														否
+														
+														<?php endif; ?> 
+
+														</label>  
+
+													</div>
+
+												</div>
+												
+												<div class="control-group">
+
+													<label class="control-label">移动端https：</label>
+
+													<div class="controls">
+
+														<label class="radio">
+														
+														<?php if ($https_mobile == '1'): ?>
+
+														<input type="radio" name="https_mobile" value="1" checked/>
+
+														是
+														
+														<?php else: ?>
+														
+														<input type="radio" name="https_mobile" value="1" />
+
+														是
+														
+														<?php endif; ?> 
+
+														</label>
+
+														<label class="radio">
+
+														<?php if ($https_mobile !== '1'): ?>
+
+														<input type="radio" name="https_mobile" value="0" checked/>
+
+														否
+														
+														<?php else: ?>
+														
+														<input type="radio" name="https_mobile" value="0" />
+
+														否
+														
+														<?php endif; ?> 
+
+														</label>  
+
+													</div>
+
+												</div>
+												
 											<div class="form-actions">
 
 												<button type="submit" class="btn blue">提交</button>
@@ -305,7 +397,7 @@
 
 									</div>
 
-									<?php if ($tab_position === 'tab_1_2' || $tab_position == NULL): ?>
+									<?php if ($tab_position === 'tab_1_2'): ?>
 									<div class="tab-pane active" id="tab_1_2">
 									<?php else :?>
 									<div class="tab-pane" id="tab_1_2">
