@@ -29,11 +29,18 @@ Page header
 Page sidebar
 ***/
 .page-sidebar {
+	background-color: #FFF;
+  /*
   background-color: #1570a6;
+  */
 }
 ul.page-sidebar-menu > li > a {
+  border-top:1px solid #EAE6E6 !important;
+  color: #000 !important;
+  /*
   border-top: 1px solid #1c95dc !important;
   color: #ffffff !important;
+  */
 }
 ul.page-sidebar-menu > li:last-child > a {
   border-bottom: 1px solid transparent !important;
@@ -44,26 +51,43 @@ ul.page-sidebar-menu > li a i {
 ul.page-sidebar-menu > li.open > a,
 ul.page-sidebar-menu > li > a:hover,
 ul.page-sidebar-menu > li:hover > a {
+  background: #B2EAFC;
+  /*
   background: #12618f;
+  */
 }
 ul.page-sidebar-menu > li.active > a {
+  background: #E0F3F9 !important;
+  color: #000;
+  /*
   background: #cc1d1d !important;
-  border-top-color: transparent !important;
   color: #ffffff;
+  */
+  border-top-color: transparent !important;
 }
 ul.page-sidebar-menu > li.active > a i {
+  color: #484343;
+  /*
   color: #ffffff;
+  */
 }
 ul.page-sidebar-menu > li > ul.sub-menu > li:first-child > a {
   border-top: 0px !important;
 }
 ul.page-sidebar-menu > li > ul.sub-menu > li.active > a,
 ul.page-sidebar-menu > li > ul.sub-menu > li > a:hover {
+  color: #000 !important;
+  background: #E0F3F9 !important;
+  /*
   color: #ffffff !important;
   background: #1b8fd3 !important;
+  */
 }
 ul.page-sidebar-menu > li > ul.sub-menu > li > a:hover {
+  background: #B2EAFC !important;
+  /*
   background: #1b8fd3 !important;
+  */
 }
 /* 3rd level sub menu */
 ul.page-sidebar-menu > li > ul.sub-menu li > ul.sub-menu > li.active > a,
@@ -74,12 +98,16 @@ ul.page-sidebar-menu > li > ul.sub-menu li.open > a {
 }
 /* font color for all sub menu links*/
 ul.page-sidebar-menu li > ul.sub-menu > li > a {
+  color: #000;
+  border-top: 1px solid #EAE6E6 !important
+  /*
   color: #c3e4f7;
+  */
 }
 /* menu arrows */
 ul.page-sidebar-menu > li > a .arrow:before,
 ul.page-sidebar-menu > li > a .arrow.open:before {
-  color: #51b1e9 !important;
+  color: #000 !important;
 }
 ul.page-sidebar-menu > li > ul.sub-menu a .arrow:before,
 ul.page-sidebar-menu > li > ul.sub-menu a .arrow.open:before {
@@ -90,7 +118,7 @@ ul.page-sidebar-menu > li > a > .arrow.open:before {
 }
 ul.page-sidebar-menu > li.active > a .arrow:before,
 ul.page-sidebar-menu > li.active > a .arrow.open:before {
-  color: #ffffff !important;
+  color: #000 !important;
 }
 /* sidebar search */
 .page-sidebar .sidebar-search input {
@@ -107,11 +135,18 @@ ul.page-sidebar-menu > li.active > a .arrow.open:before {
   color: #51b1e9 !important;
 }
 .page-sidebar .sidebar-search input {
+  background-color: #fff !important;
+  color: #333 !important;
+  /*
   background-color: #1570a6 !important;
   color: #bfbfbf !important;
+  */
 }
 .page-sidebar .sidebar-search .input-box {
+  border-bottom: none;
+  /*
   border-bottom: 1px solid #51b1e9 !important;
+  */
 }
 .page-sidebar .sidebar-search .submit {
   background-image: url(../../public/image/search-icon-blue.png);
@@ -132,21 +167,27 @@ Sidebar toggler
 }
 /* sub menu bg color on hover menu item */
 .page-sidebar-closed ul.page-sidebar-menu > li:hover .sub-menu {
+  background-color: #FFF;
+  /*
   background-color: #1570a6;
+  */
 }
 /***
 Horizontal Menu(new in v1.2)
 ***/
 /*search*/
 .header .hor-menu .hor-menu-search-form-toggler.hide {
-  background: #000000 url(../../public/image/hor-menu-search-close.png) no-repeat center;
+  background: #2A78A7 url(../../public/image/hor-menu-search-close.png) no-repeat center;
 }
 .header .hor-menu .search-form {
-  background: #000000;
+  background: #267EB3;
 }
 .header .hor-menu .search-form .btn {
   color: #f0f8fd;
-  background: #04141e url(../../public/image/search-icon.png) no-repeat center;
+  background: #267EB3 url(../../public/image/search-icon.png) no-repeat center;
+}
+.header .hor-menu .search-form .btn:hover {
+  background: #2A78A7 url(../../public/image/search-icon.png) no-repeat center !important;
 }
 .header .hor-menu .search-form form input {
   color: #f0f8fd;
@@ -255,8 +296,9 @@ Gritter Notifications
     background-color: #FFF !important;
   }
   .page-boxed .page-container {
-    background-color: #1570a6;
+    background-color: #FFF;
     /*
+    background-color: #1570a6;
     border-left: 1px solid #1c98e1;
     border-bottom: 1px solid #1c98e1;
     */
@@ -301,4 +343,9 @@ Landscape phone to portrait tablet
   ul.page-sidebar-menu > li:hover > a {
     background: #0e4b70;
   }
+}
+/*弹出登陆*/
+.jump-login {
+	width: 300px;
+	margin-left: -150px;
 }

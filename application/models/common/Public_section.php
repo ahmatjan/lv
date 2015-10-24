@@ -44,6 +44,33 @@ class public_section extends CI_Model {
 	
 	//这是网站前台的顶部
 	public function get_top(){
+		//设置语言
+		$this->load->language('common/top');
+		//text
+		$data['text_username']=$this->lang->line('text_username');
+		$data['text_password']=$this->lang->line('text_password');
+		$data['text_remember']=$this->lang->line('text_remember');
+		$data['text_login']=$this->lang->line('text_login');
+		$data['text_forgotpassword']=$this->lang->line('text_forgotpassword');
+		$data['text_findpassword']=$this->lang->line('text_findpassword');
+		$data['text_nouser']=$this->lang->line('text_nouser');
+		$data['text_register']=$this->lang->line('text_register');
+		$data['text_findpw_email']=$this->lang->line('text_findpw_email');
+		$data['text_ent_email']=$this->lang->line('text_ent_email');
+		$data['text_back']=$this->lang->line('text_back');
+		$data['text_submint']=$this->lang->line('text_submint');
+		$data['text_signup']=$this->lang->line('text_signup');
+		$data['text_details']=$this->lang->line('text_details');
+		$data['text_confirmpassword']=$this->lang->line('text_confirmpassword');
+		$data['text_email']=$this->lang->line('text_email');
+		
+		//获取当前页链接
+		$active=uri_string();
+		$active=strtolower($active);
+		if($active == NULL){
+			$active='home';
+		}
+		
 		$this->load->model('setting/nav_setting');
 		$nav_parents=$this->nav_setting->get_parent_nav('view_top');
 
@@ -54,15 +81,25 @@ class public_section extends CI_Model {
 		
 		foreach($nav_parents as $k=>$v){
 			$nav_parents[$k]['childs']=&$nav_childs[$k];
+			if($nav_parents[$k]['nav_url'] == $active){
+				$nav_parents[$k]['active']='active';
+			}
+			if(!empty($nav_childs[$k])){
+				foreach($nav_childs[$k] as $b){
+					if($b['nav_child_url'] == $active){
+						$nav_parents[$k]['active']='active';
+					}
+				}
+			}
+			
 		}
 		
-		if($nav_parents['0'] && is_array($nav_parents['0'])){
-			$data['nav1']=array_slice($nav_parents,0,1);
+		if($nav_parents && is_array($nav_parents)){
+			$data['nav']=$nav_parents;
 		}
 		
-		if($nav_parents['1'] && is_array($nav_parents['1'])){
-			$data['nav2']=array_slice($nav_parents,1);
-		}
+		$data['active']=$active;
+
 		/*
 		$session_ipcity = $this->session->userdata('country');//国家
 		if(isset($session_ipcity)){
@@ -107,11 +144,14 @@ class public_section extends CI_Model {
 		//判断用户是否已经登陆并做出相应跳转
 		
 		if($this->session->userdata('logged_in')!==TRUE){
-			$this->session->set_flashdata('error_login', '请先登陆，或者注册一个帐号！');//闪出错误信息
+			$this->session->set_flashdata('info_login', '请先登陆，或者注册一个帐号！');//闪出提示信息
 			redirect(site_url('user/login'));
 		}
 		
 		//------------------------------------------------------------------------------------
+		//获取当前页链接
+		$active=uri_string();
+		$active=strtolower($active);
 		
 		$this->load->model('setting/nav_setting');
 		$nav_parents=$this->nav_setting->get_parent_nav('admin_top');
@@ -123,15 +163,24 @@ class public_section extends CI_Model {
 		
 		foreach($nav_parents as $k=>$v){
 			$nav_parents[$k]['childs']=&$nav_childs[$k];
+			if($nav_parents[$k]['nav_url'] == $active){
+				$nav_parents[$k]['active']='active';
+			}
+			if(!empty($nav_childs[$k])){
+				foreach($nav_childs[$k] as $b){
+					if($b['nav_child_url'] == $active){
+						$nav_parents[$k]['active']='active';
+					}
+				}
+			}
+			
 		}
 		
-		if($nav_parents['0'] && is_array($nav_parents['0'])){
-			$data['nav1']=array_slice($nav_parents,0,1);
+		if($nav_parents && is_array($nav_parents)){
+			$data['nav']=$nav_parents;
 		}
 		
-		if($nav_parents['1'] && is_array($nav_parents['1'])){
-			$data['nav2']=array_slice($nav_parents,1);
-		}
+		$data['active']=$active;
 		
 		//顶布局
 		$this->load->module('common/module_top');
@@ -242,6 +291,10 @@ class public_section extends CI_Model {
 	
 	//这是帮助中心侧栏
 	public function get_helper_left(){
+		//获取当前页链接
+		$active=uri_string();
+		$active=strtolower($active);
+		
 		$this->load->model('setting/nav_setting');
 		$nav_helpers=$this->nav_setting->get_parent_nav('helper');
 
@@ -252,19 +305,24 @@ class public_section extends CI_Model {
 		
 		foreach($nav_helpers as $k=>$v){
 			$nav_helpers[$k]['childs']=&$nav_helper_childs[$k];
+			if($nav_helpers[$k]['nav_url'] == $active){
+				$nav_helpers[$k]['active']='active';
+			}
+			if(!empty($nav_helpers_childs[$k])){
+				foreach($nav_helpers_childs[$k] as $b){
+					if($b['nav_child_url'] == $active){
+						$nav_helpers[$k]['active']='active';
+					}
+				}
+			}
+			
 		}
 		
-		if($nav_helpers['0'] && is_array($nav_helpers['0'])){
-			$data['nav1']=array_slice($nav_helpers,0,1);
+		if($nav_helpers && is_array($nav_helpers)){
+			$data['nav']=$nav_helpers;
 		}
 		
-		if($nav_helpers['1'] && is_array($nav_helpers['1'])){
-			$data['nav2']=array_slice($nav_helpers,1,1);
-		}
-		
-		if($nav_helpers['2'] && is_array($nav_helpers['2'])){
-			$data['nav3']=array_slice($nav_helpers,2);
-		}
+		$data['active']=$active;
 		
 		return $this->load->view('common/helper_left',$data);
 	}

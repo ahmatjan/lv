@@ -50,38 +50,54 @@
 
 							</li>
 
-							<!--导航第一个开始-->
-							<?php if (is_array($nav1)): ?>
+							<!--导航开始-->
+							<?php if (is_array($nav)): ?>
 	
-							<?php foreach ($nav1 as $item1): ?>
+							<?php foreach ($nav as $item): ?>
 							
-							<li class="active">
+							<?php if (isset($item['active'])): ?>
+							<li class="<?php echo $item['active']?>">
+							<?php else: ?>
+							<li>
+							<?php endif; ?>
 
-								<?php if (isset($item1['nav_url'])): ?>
+								<?php if (empty($item['childs'])): ?>
 								
-								<a href="<?php echo site_url($item1['nav_url'])?>">
+								<a href="<?php echo site_url($item['nav_url'])?>">
 								
 								<?php else: ?>
 							
-								<a href="javascript:;">
+								<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
 							
 								<?php endif; ?>
+								
+								<span class="selected"></span>
 
-								<?php echo $item1['nav_name']?>
+								<?php echo $item['nav_name']?>
 
+								<?php if (!empty($item['childs'])): ?>
+		
+								<span class="arrow"></span>     
+
+								<?php endif; ?>
+								
 								</a>
 
-								<?php if (!empty($item1['childs'])): ?>
+								<?php if (!empty($item['childs'])): ?>
 								
 								<ul class="dropdown-menu">
 
-									<?php foreach ($item1['childs'] as $childs1): ?>
+									<?php foreach ($item['childs'] as $childs): ?>
 
+									<?php if ($childs['nav_child_url'] == $active): ?>
+									<li class="active">
+									<?php else: ?>
 									<li>
+									<?php endif; ?>
 
-										<a href="<?php echo site_url($childs1['nav_child_url'])?>">
+										<a href="<?php echo site_url($childs['nav_child_url'])?>">
 
-										<?php echo $childs1['nav_child_name']?>
+										<?php echo $childs['nav_child_name']?>
 
 										</a>
 
@@ -99,61 +115,7 @@
 
 							<?php endif; ?>
 							
-							<!--导航第一个结束-->
-							<!--导航第二个开始-->
-							<?php if (is_array($nav2)): ?>
-	
-							<?php foreach ($nav2 as $item2): ?>
-							
-							<li>
-							
-								<?php if (isset($item2['nav_url'])): ?>
-								<a data-toggle="dropdown" class="dropdown-toggle" href="<?php echo site_url($item2['nav_url'])?>">
-								
-								<?php else: ?>
-								
-								<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
-								
-								<?php endif; ?>
-
-								<span class="selected"></span>
-
-								<?php echo $item2['nav_name']?>
-
-								<?php if (!empty($item2['childs'])): ?>
-								
-								<span class="arrow"></span>     
-
-								<?php endif; ?>
-								
-								</a>
-
-								<?php if (is_array($item2['childs']) && !empty($item2['childs'])): ?>
-
-								<ul class="dropdown-menu">
-
-									<?php foreach ($item2['childs'] as $childs2): ?>
-
-									<li>
-
-										<a href="<?php echo site_url($childs2['nav_child_url'])?>">
-
-										<?php echo $childs2['nav_child_name']?>                  
-										</a>
-
-									</li>
-									
-									<?php endforeach; ?>
-									
-								</ul>           
-
-								<?php endif; ?>
-								
-							</li>
-							<?php endforeach; ?>
-
-							<?php endif; ?>
-							<!--第二个结束-->
+							<!--导航结束-->
 							
 							<li>
 
@@ -461,7 +423,7 @@
 
 							<li><a href="<?php echo site_url('user/Login_lock')?>"><i class="icon-lock"></i> 锁定帐号</a></li>
 
-							<li><a href="<?php echo site_url('user/login')?>"><i class="icon-key"></i> 退出</a></li>
+							<li><a href="<?php echo site_url('user/login/login_out')?>"><i class="icon-key"></i> 退出</a></li>
 
 						</ul>
 
@@ -517,19 +479,113 @@
 		<!-- END TOP NAVIGATION BAR -->
 	</div>
 		<!--弹出登陆开始-->
-		<div id="this-login" class="modal hide fade" tabindex="-1" data-replace="true">
+		<div id="this-login" class="modal hide fade jump-login hidden-phone hidden-tablet" tabindex="-1" data-replace="true">
 
 		<div class="modal-body">
 
-			<a class="btn red" data-toggle="modal" href="#notlong" alt="" style="position: absolute; top: 50%; right: 12px">Not So Long Modal</a>
+			<!-- BEGIN LOGIN FORM -->
 
-			<img style="height: 800px" src="<?php echo base_url('public/image/KwPYo.jpg')?>">
+		<form action="<?php echo site_url('user/login/user_login')?>" method="post" enctype="multipart/form-data" class="form-vertical login-form" >
+
+			<div class="control-group">
+
+				<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+
+				<label class="control-label visible-ie8 visible-ie9">帐号：</label>
+
+				<div class="controls">
+
+					<div class="input-icon left">
+
+						<i class="icon-user"></i>
+
+						<input class="m-wrap placeholder-no-fix" type="text" placeholder="帐号" name="username" value="帐号"/>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="control-group">
+
+				<label class="control-label visible-ie8 visible-ie9">密码：</label>
+
+				<div class="controls">
+
+					<div class="input-icon left">
+
+						<i class="icon-lock"></i>
+
+						<input class="m-wrap placeholder-no-fix" type="password" placeholder="密码" name="password"/>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="form-actions">
+
+				<label class="checkbox">
+
+				<input type="checkbox" name="remember" value="1"/> <?php echo $text_remember?>
+
+				</label>
+
+				<!--<button type="submit" class="btn green pull-right">-->
+				<button type="submit" class="btn green btn-block">
+
+				<?php echo $text_login ?>  <i class="m-icon-swapright m-icon-white"></i>
+
+				</button>            
+
+			</div>
+			
+			<div class="forget-password">
+
+				<h4><?php echo $text_forgotpassword ?></h4>
+
+				<p>
+
+				<?php 
+				$click_txt='javascript:window.open('."'".site_url('user/login')."')";
+				?>
+				<a href="#" onclick="<?php echo $click_txt?>"><?php echo $text_findpassword?></a>
+
+				</p>
+
+			</div>
+
+			<div class="create-account">
+
+				<p>
+
+				<?php echo $text_nouser?>&nbsp; 
+
+				<?php 
+				$click_txt='javascript:window.open('."'".site_url('user/login')."')";
+				?>
+				<a href="#" onclick="<?php echo $click_txt?>"><?php echo $text_register?></a>
+
+				</p>
+
+			</div>
+
+			<div>
+				<a href="<?php echo site_url('user/sns/session/qq')?>" class="btn red btn-block">用QQ直接登陆<i class="m-icon-swapright m-icon-white"></i></a>
+				<!--<a href="<?php echo site_url('user/sns/session/weixin')?>" class="btn green btn-block">微信登陆<i class="m-icon-swapright m-icon-white"></i></a>-->
+			</div>
+			
+		</form>
+
+		<!-- END LOGIN FORM -->
 
 		</div>
 
 		<div class="modal-footer">
 
-			<button type="button" data-dismiss="modal" class="btn">Close</button>
+			<button type="button" data-dismiss="modal" class="btn">关闭</button>
 
 		</div>
 

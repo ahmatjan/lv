@@ -25,6 +25,18 @@
 			</div>
 
 			<?php endif; ?>
+			
+			<?php if ($info_login): ?>
+			<!--如果提示信息存在-->
+			<div class="alert alert-info">
+
+				<button class="close" data-dismiss="alert"></button>
+
+				<span><?php echo $info_login?></span>
+
+			</div>
+
+			<?php endif; ?>
 
 			<div class="control-group">
 

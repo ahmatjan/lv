@@ -5,7 +5,7 @@
 	<!--
 	<div class="header navbar navbar-inverse navbar-fixed-top">
 	-->
-	<div class="header navbar navbar-inverse navbar-fixed-top">
+	<div class="header navbar navbar-inverse navbar-fixed-top hidden-phone hidden-tablet">
 
 		<!-- BEGIN TOP NAVIGATION BAR -->
 
@@ -53,44 +53,66 @@
 
 							</li>
 
-							<!--导航第一个开始-->
-							<?php if (is_array($nav1)): ?>
+							<!--导航开始-->
+							<?php if (is_array($nav)): ?>
 	
-							<?php foreach ($nav1 as $item1): ?>
+							<?php foreach ($nav as $item): ?>
 							
-							<li class="active">
+							<?php if (isset($item['active'])): ?>
+							<li class="<?php echo $item['active']?>">
+							<?php else: ?>
+							<li>
+							<?php endif; ?>
 
-								<?php if (isset($item1['nav_url'])): ?>
+								<?php if (empty($item['childs'])): ?>
 								
-								<a href="<?php echo site_url($item1['nav_url'])?>" target="_black">
+								<?php 
+									$click_txt='javascript:window.open('."'".site_url($item['nav_url'])."')";
+								?>
+								<a href="#" onclick="<?php echo $click_txt?>">
 								
 								<?php else: ?>
 							
-								<a href="javascript:;">
+								<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
 							
 								<?php endif; ?>
+								
+								<span class="selected"></span>
 
-								<?php echo $item1['nav_name']?>
+								<?php echo $item['nav_name']?>
 
+								<?php if (!empty($item['childs'])): ?>
+		
+								<span class="arrow"></span>     
+
+								<?php endif; ?>
+								
 								</a>
 
-								<?php if (!empty($item1['childs'])): ?>
+								<?php if (!empty($item['childs'])): ?>
 								
 								<ul class="dropdown-menu">
 
-									<?php foreach ($item1['childs'] as $childs1): ?>
+									<?php foreach ($item['childs'] as $childs): ?>
 
+									<?php if ($childs['nav_child_url'] == $active): ?>
+									<li class="active">
+									<?php else: ?>
 									<li>
+									<?php endif; ?>
 
-										<a href="<?php echo site_url($childs1['nav_child_url'])?>" target="_black">
+										<?php 
+										$click_txt='javascript:window.open('."'".site_url($childs['nav_child_url'])."')";
+										?>
+										<a href="#" onclick="<?php echo $click_txt?>">
 
-										<?php echo $childs1['nav_child_name']?>
+										<?php echo $childs['nav_child_name']?>
 
 										</a>
 
 									</li>
 									
-									<?php endforeach; ?>
+								<?php endforeach; ?>
 								
 								</ul>
 								
@@ -102,61 +124,7 @@
 
 							<?php endif; ?>
 							
-							<!--导航第一个结束-->
-							<!--导航第二个开始-->
-							<?php if (is_array($nav2)): ?>
-	
-							<?php foreach ($nav2 as $item2): ?>
-							
-							<li>
-							
-								<?php if (isset($item2['nav_url'])): ?>
-								<a data-toggle="dropdown" class="dropdown-toggle" href="<?php echo site_url($item2['nav_url'])?>" target="_black">
-								
-								<?php else: ?>
-								
-								<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
-								
-								<?php endif; ?>
-
-								<span class="selected"></span>
-
-								<?php echo $item2['nav_name']?>
-
-								<?php if (!empty($item2['childs'])): ?>
-								
-								<span class="arrow"></span>     
-
-								<?php endif; ?>
-								
-								</a>
-
-								<?php if (is_array($item2['childs']) && !empty($item2['childs'])): ?>
-
-								<ul class="dropdown-menu">
-
-									<?php foreach ($item2['childs'] as $childs2): ?>
-
-									<li>
-
-										<a href="<?php echo site_url($childs2['nav_child_url'])?>" target="_black">
-
-										<?php echo $childs2['nav_child_name']?>                  
-										</a>
-
-									</li>
-									
-									<?php endforeach; ?>
-									
-								</ul>           
-
-								<?php endif; ?>
-								
-							</li>
-							<?php endforeach; ?>
-
-							<?php endif; ?>
-							<!--第二个结束-->
+							<!--导航结束-->
 
 							<li>
 
@@ -462,7 +430,7 @@
 
 							<li><a href="extra_lock.html"><i class="icon-lock"></i> Lock Screen</a></li>
 
-							<li><a href="<?php echo site_url('user/login')?>"><i class="icon-key"></i> 退出</a></li>
+							<li><a href="<?php echo site_url('user/login/login_out')?>"><i class="icon-key"></i> 退出</a></li>
 
 						</ul>
 

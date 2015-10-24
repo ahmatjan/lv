@@ -50,6 +50,7 @@ class Login extends CI_Controller {
 		
 		//value
 		$error_login=$this->session->flashdata('error_login');
+		$info_login=$this->session->flashdata('info_login');
 		$username=$this->session->userdata('username');
 		if(isset($error_login)){
 			$data['val_username']=$username;
@@ -57,6 +58,14 @@ class Login extends CI_Controller {
 		}else{
 			$data['val_username']='';
 			$data['error_login']='';
+		}
+		
+		if(isset($info_login)){
+			$data['val_username']=$username;
+			$data['info_login'] = $info_login;
+		}else{
+			$data['val_username']='';
+			$data['info_login']='';
 		}
 		
 		//bottom
@@ -228,6 +237,14 @@ class Login extends CI_Controller {
 		var_dump($this->input->post());
 		
 		//redirect('user/User_center', 'location');
+	}
+	
+	//退出登陆
+	public function login_out(){
+		session_destroy();
+		//$this->session->set_flashdata('info_login', '退出成功！');
+		redirect(site_url('user/Login'));
+		
 	}
 	
 	//输入用户名是邮箱验证函数

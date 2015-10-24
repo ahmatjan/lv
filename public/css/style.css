@@ -542,7 +542,9 @@ ul.page-sidebar-menu > li > a {
 
 ul.page-sidebar-menu > li > a i {
   font-size: 16px;
+  /*
   margin-right: 5px;
+  */
   text-shadow:none; 
 }
 
@@ -696,7 +698,7 @@ ul.page-sidebar-menu > li > ul.sub-menu  li > ul.sub-menu > li > a > i {
 /* sidebar search */
 
 .page-sidebar .sidebar-search {
-  margin: 8px 20px 20px 20px;
+  margin: 8px 20px;
 }
 
 .page-sidebar .sidebar-search .submit {  
@@ -871,6 +873,7 @@ Sidebar toggler(show/hide)
 
 /* 2rd level sub menu*/
 .page-sidebar-closed ul.page-sidebar-menu > li:hover > .sub-menu > li > a {
+  border-top: 1px solid #EAE6E6 !important;
   padding-left: 15px !important;
 }
 
@@ -1251,6 +1254,7 @@ Portlets
   margin: 0;
   padding: 0;
   margin-bottom: 7px; 
+  color: #666;
 }
 
 .portlet-title .caption i {
@@ -1259,7 +1263,7 @@ Portlets
   display: inline-block !important;
   font-size: 13px;
   margin-right: 5px;
-  color: #666;
+  color: #7fc5ef !important;
 }
 
 .portlet.blue > .portlet-title .caption, .portlet-title.blue .caption, 
@@ -1379,7 +1383,10 @@ Portlets
 }
 
 .portlet-body.blue, .portlet.blue {
+  background-color: #FFF !important;
+  /*
   background-color: #4b8df8 !important;
+  */
 }
 
 .portlet-body.red, .portlet.red {
@@ -1549,15 +1556,20 @@ Box portlet
 }
 
 .portlet.box .portlet-title {  
-  margin-bottom: 0px;
+  margin-bottom: 10px;
 }
 
 .portlet.box.blue .portlet-title {
+  background-color: #E0F3F9;
+  /*
   background-color: #4b8df8;
+  */
 } 
 
-.portlet.box.blue {  
+.portlet.box.blue {
+   /* 
    border: 1px solid #b4cef8;
+   */
    border-top: 0;
 }
 
@@ -1598,11 +1610,11 @@ Box portlet
 }
 
 .portlet.box.grey .portlet-title {
-  background-color: #555555;
+  background-color: #E0F3F9;
 } 
 
 .portlet.box.grey {  
-   border: 1px solid #9d9c9c;
+   border: 1px solid #F3EFEF;
    border-top: 0;
 }
 
@@ -4736,7 +4748,7 @@ Horezantal Menu(new in v1.2)
 
 .header .hor-menu ul.nav li a:hover,
 .header .hor-menu ul.nav li a:focus {
-    background: #2d2d2d;
+    background: #146a9d;
 }
 
 /*drop-down*/
@@ -4744,7 +4756,7 @@ Horezantal Menu(new in v1.2)
     margin-top: 0;
     border: none;
     box-shadow: none;
-    background: #2d2d2d;
+    background: #0F4E74;
 }
 
 .header .hor-menu .dropdown-menu li > a {

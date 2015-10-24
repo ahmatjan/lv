@@ -1,6 +1,6 @@
 <!-- BEGIN SIDEBAR -->
 
-<div class="page-sidebar nav-collapse collapse hidden-phone">
+<div class="page-sidebar nav-collapse collapse hidden-phone page-sidebar-helper">
 
 <!-- BEGIN SIDEBAR MENU -->        
 
@@ -38,16 +38,20 @@
 
 	</li>
 
-	<!--导航第一个开始-->
-	<?php if (is_array($nav1)): ?>
+	<!--导航遍历开始-->
+	<?php if (is_array($nav)): ?>
 	
-	<?php foreach ($nav1 as $item1): ?>
-	
-	<li class="start ">
+	<?php foreach ($nav as $item): ?>
 
-		<?php if (isset($item1['nav_url'])): ?>
+	<?php if (isset($item['active'])): ?>
+	<li class="<?php echo $item['active']?>">
+	<?php else: ?>
+	<li>
+	<?php endif; ?>
+	<!--如果存在链接...-->
+		<?php if (isset($item['nav_url'])): ?>
 
-		<a href="<?php echo site_url($item1['nav_url'])?>">
+		<a href="<?php echo site_url($item['nav_url'])?>">
 
 		<?php else: ?>
 		
@@ -55,11 +59,11 @@
 
 		<?php endif; ?>
 
-		<i class="<?php echo 'icon-'.$item1['nav_ico']?>"></i> 
+		<i class="<?php echo 'icon-'.$item['nav_ico']?>"></i> 
 
-		<span class="title"><?php echo $item1['nav_name']?></span>
+		<span class="title"><?php echo $item['nav_name']?></span>
 		
-		<?php if (!empty($item1['childs'])): ?>
+		<?php if (!empty($item['childs'])): ?>
 		
 		<span class="arrow"></span>
 		
@@ -67,23 +71,27 @@
 		
 		</a>
 
-		<?php if (is_array($item1['childs'])): ?>
-		
-		<?php foreach ($item1['childs'] as $childs1): ?>
+		<?php if (is_array($item['childs']) && !empty($item['childs'])): ?>
 		
 		<ul class="sub-menu">
 
-			<li >
+			<?php foreach ($item['childs'] as $childs): ?>
 
-				<a href="<?php echo site_url($childs1['nav_child_url'])?>">
+			<?php if ($childs['nav_child_url'] == $active): ?>
+			<li class="active">
+			<?php else: ?>
+			<li>
+			<?php endif; ?>
 
-				<?php echo $childs1['nav_child_name']?></a>
+				<a href="<?php echo site_url($childs['nav_child_url'])?>">
+
+				<?php echo $childs['nav_child_name']?></a>
 
 			</li>
+			
+			<?php endforeach; ?>
 
 		</ul>
-		
-		<?php endforeach; ?>
 		
 		<?php endif; ?>
 
@@ -95,120 +103,6 @@
 	
 	<!--导航第一个结束-->
 	
-	<!--导航第二个开始，红色-->
-	
-	<?php if (is_array($nav2)): ?>
-	
-	<?php foreach ($nav2 as $item2): ?>
-	
-	<li class="active">
-
-		<?php if (isset($item2['nav_url'])): ?>
-
-		<a href="<?php echo site_url($item2['nav_url'])?>">
-
-		<?php else: ?>
-		
-		<a href="javascript:;">
-
-		<?php endif; ?>
-
-		<i class="<?php echo 'icon-'.$item2['nav_ico']?>"></i> 
-
-		<span class="title"><?php echo $item2['nav_name']?></span>
-		
-		<span class="selected"></span>
-
-		<span class="arrow open"></span>
-
-		</a>
-
-		<?php if (is_array($item2['childs'])): ?>
-		
-		<?php foreach ($item2['childs'] as $childs2): ?>
-
-		<ul class="sub-menu">
-
-			<li >
-
-				<a href="<?php echo site_url($childs2['nav_child_url'])?>">
-
-				<?php echo $childs2['nav_child_name']?></a>
-
-			</li>
-
-		</ul>
-
-		<?php endforeach; ?>
-
-		<?php endif; ?>
-
-	</li>
-	
-	<?php endforeach; ?>
-
-	<?php endif; ?>
-	
-	<!--导航第二个结束，红色-->
-
-	<!--导航第二个之后开始-->
-
-	<?php if (is_array($nav3)): ?>
-	
-	<?php foreach ($nav3 as $item3): ?>
-
-	<li class="">
-
-		<?php if (isset($item3['nav_url'])): ?>
-
-		<a href="<?php echo site_url($item3['nav_url'])?>">
-
-		<?php else: ?>
-		
-		<a href="javascript:;">
-
-		<?php endif; ?>
-
-		<i class="<?php echo 'icon-'.$item3['nav_ico']?>"></i> 
-
-		<span class="title"><?php echo $item3['nav_name']?></span>
-
-		<?php if (!empty($item3['childs'])): ?>
-		
-		<span class="arrow"></span>
-		
-		<?php endif; ?>
-
-		</a>
-
-		<?php if (!empty($item3['childs']) && is_array($item3['childs'])): ?>
-		
-		<ul class="sub-menu">
-
-			<?php foreach ($item3['childs'] as $childs3): ?>
-
-			<li >
-
-				<a href="<?php echo site_url($childs3['nav_child_url'])?>">
-
-				<?php echo $childs3['nav_child_name']?></a>
-
-			</li>
-			
-			<?php endforeach; ?>
-
-		</ul>
-		
-		<?php endif; ?>
-
-	</li>
-	
-	<?php endforeach; ?>
-
-	<?php endif; ?>
-
-	<!--导航第二个之后结束-->
-
 </ul>
 
 <!-- END SIDEBAR MENU -->
