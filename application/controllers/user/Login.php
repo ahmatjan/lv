@@ -137,6 +137,65 @@ class Login extends CI_Controller {
 		}
 	}
 	
+		//登陆
+	public function ajax_login()
+	{
+		$this->load->model('user/user_info');
+		
+		$username=$this->input->post('username',TRUE);
+		$password=md5($this->input->post('password',TRUE));
+		
+		if(preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i',$username) && strlen($username)>3){
+			//邮箱登陆
+			$user_infos=$this->user_info->get_useremail_info($username);
+			if($username===$user_infos['email'] && $password === $user_infos['passwd']){
+				echo $username;
+				//写入用户信息session
+				$user_session = array(
+		                   'username'  		=> $username,
+		                   'logged_in' 		=> TRUE
+		               );
+				
+				$this->session->set_userdata($user_session);
+				
+				if($this->input->post('remember')== TRUE){
+					
+				}
+				
+				//返回true
+				echo '1';
+		}else{
+				//登陆不成功
+				//返回失败
+				echo '0';
+			}
+		}
+		
+		if(!preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i',$username) && strlen($username)>3){
+			//帐号登陆
+			$user_infos=$this->user_info->get_username_info($username);
+			
+			if($username===$user_infos['user_name'] && $password === $user_infos['passwd']){
+				//写入用户信息session
+				$user_session = array(
+		                   'username'  		=> $username,
+		                   'logged_in' 		=> TRUE
+		               );
+
+				$this->session->set_userdata($user_session);
+				
+				if($this->input->post('remember')== TRUE){
+					
+				}
+				//返回true
+				echo '1';
+		}else{
+				//登陆不成功
+				echo '0';
+			}
+		}
+	}
+	
 	//注册
 	public function register()
 	{

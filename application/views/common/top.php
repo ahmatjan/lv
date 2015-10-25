@@ -480,6 +480,14 @@
 	</div>
 		<!--弹出登陆开始-->
 		<div id="this-login" class="modal hide fade jump-login hidden-phone hidden-tablet" tabindex="-1" data-replace="true">
+		
+		<div class="modal-footer">
+		
+			<h4>用户登陆</h4>
+
+			<button type="button" data-dismiss="modal" class="btn"><i class="icon-remove" style="font-size: 18px;cursor:pointer"></i></button>
+
+		</div>
 
 		<div class="modal-body">
 
@@ -499,7 +507,7 @@
 
 						<i class="icon-user"></i>
 
-						<input class="m-wrap placeholder-no-fix" type="text" placeholder="帐号" name="username" value="帐号"/>
+						<input class="m-wrap placeholder-no-fix m-bottom" type="text" placeholder="帐号" name="username" value="帐号"/>
 
 					</div>
 
@@ -517,7 +525,7 @@
 
 						<i class="icon-lock"></i>
 
-						<input class="m-wrap placeholder-no-fix" type="password" placeholder="密码" name="password"/>
+						<input class="m-wrap placeholder-no-fix m-bottom" type="password" placeholder="密码" name="password"/>
 
 					</div>
 
@@ -541,51 +549,38 @@
 				</button>            
 
 			</div>
+			<div class="fr-login">
 			
-			<div class="forget-password">
+				<div class="forget-password">
 
-				<h4><?php echo $text_forgotpassword ?></h4>
+					<?php 
+					$click_txt='javascript:window.open('."'".site_url('user/login')."')";
+					?>
+					<a href="#" onclick="<?php echo $click_txt?>"><?php echo $text_forgotpassword ?></a>
+				</div>
 
-				<p>
+				<div class="create-account">
 
-				<?php 
-				$click_txt='javascript:window.open('."'".site_url('user/login')."')";
-				?>
-				<a href="#" onclick="<?php echo $click_txt?>"><?php echo $text_findpassword?></a>
+					<?php 
+					$click_txt='javascript:window.open('."'".site_url('user/login')."')";
+					?>
+					<a href="#" onclick="<?php echo $click_txt?>">注册</a>
 
-				</p>
-
-			</div>
-
-			<div class="create-account">
-
-				<p>
-
-				<?php echo $text_nouser?>&nbsp; 
-
-				<?php 
-				$click_txt='javascript:window.open('."'".site_url('user/login')."')";
-				?>
-				<a href="#" onclick="<?php echo $click_txt?>"><?php echo $text_register?></a>
-
-				</p>
-
+				</div>
 			</div>
 
 			<div>
-				<a href="<?php echo site_url('user/sns/session/qq')?>" class="btn red btn-block">用QQ直接登陆<i class="m-icon-swapright m-icon-white"></i></a>
+				<?php 
+				$click_txt='javascript:window.open('."'".site_url('user/sns/session/qq')."')";
+				?>
+				<a class="btn red btn-block" href="#" onclick="<?php echo $click_txt?>">
+				用QQ直接登陆<i class="m-icon-swapright m-icon-white"></i></a>
 				<!--<a href="<?php echo site_url('user/sns/session/weixin')?>" class="btn green btn-block">微信登陆<i class="m-icon-swapright m-icon-white"></i></a>-->
 			</div>
 			
 		</form>
 
 		<!-- END LOGIN FORM -->
-
-		</div>
-
-		<div class="modal-footer">
-
-			<button type="button" data-dismiss="modal" class="btn">关闭</button>
 
 		</div>
 

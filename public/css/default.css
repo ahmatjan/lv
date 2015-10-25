@@ -349,3 +349,37 @@ Landscape phone to portrait tablet
 	width: 300px;
 	margin-left: -150px;
 }
+.jump-login .modal-body {
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+.jump-login .modal-footer {
+	padding: 5px 14px;
+}
+.jump-login .modal-footer h4{
+	float: left;
+	margin: 8px 0;
+}
+.jump-login .form-actions {
+	padding: 5px 0;
+	margin: 0;
+	background-color: #FFF;
+	border-top: none;
+}
+.jump-login .m-bottom {
+	margin-bottom: 0;
+	width: 229px;
+}
+.jump-login .checkbox {
+	margin-bottom: 10px;
+}
+.jump-login .fr-login {
+	height: 24px;
+	margin: 10px 5px;
+}
+.jump-login .forget-password {
+	float: left;
+}
+.jump-login .create-account {
+	float: right;
+}

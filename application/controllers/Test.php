@@ -42,7 +42,7 @@ class Test extends CI_Controller {
  * 微信公共接口测试
  * 
  */
-
+/*
 	public function __construct() {
 		parent::__construct();
 			$params = array(
@@ -95,4 +95,15 @@ class Test extends CI_Controller {
 		echo $_SERVER["SERVER_NAME"];	
 	}
 	*/
+	
+	public function index ()
+	{
+		$this->public_section->get_header();
+		$this->load->view('Test');
+	}
+	
+	public function cc (){
+		//echo 'kkjj';
+		echo $this->input->post('username').$this->input->post('password');
+	}
 }

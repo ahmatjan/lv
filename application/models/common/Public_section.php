@@ -5,21 +5,29 @@
 class public_section extends CI_Model {
 	
 	//这是一个只包含css/js等引入的公共头部
-	public function get_header($header)
+	public function get_header($header=array())
 	{
 		//$this->load->helper('array');
 		//把css样式组成字符串
 		
 		//$data['css_page_style']=arrayToString($header['css_page_style']);
-		$data['css_page_style']=$header['css_page_style'];
-		
+		if(isset($header['css_page_style'])){
+			$data['css_page_style']=$header['css_page_style'];
+		}else{
+			$data['css_page_style']='';
+		}
+			
 		if(isset($header['meta'])){
 			$data['meta']=$header['meta'];
 		}else{
 			$data['meta']='';
 		}
 		
-		$data['title']=$header['title'];
+		if(isset($header['title'])){
+			$data['title']=$header['title'];	
+		}else{
+			$data['title']='';
+		}
 		
 		$this->load->model('setting/base_setting');
 		
