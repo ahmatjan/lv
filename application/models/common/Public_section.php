@@ -82,7 +82,13 @@ class public_section extends CI_Model {
 		}
 		
 		if(@$_SESSION['user_image']){
-			$data['user_image']=$_SESSION['user_image'];
+			//存在http
+			if(strpos($_SESSION['user_image'] ,'http') !== FALSE){
+				$data['user_image']=$_SESSION['user_image'];
+			}else{
+				$data['user_image']=base_url($_SESSION['user_image']);
+			}
+			
 		}else{
 			$data['user_image']='';
 		}
@@ -179,10 +185,10 @@ class public_section extends CI_Model {
 			$data['nick_name']='';
 		}
 		
-		if(@$_SESSION['user_image']){
+		if(strpos($_SESSION['user_image'] ,'http') !== FALSE){
 			$data['user_image']=$_SESSION['user_image'];
 		}else{
-			$data['user_image']='';
+			$data['user_image']=base_url($_SESSION['user_image']);
 		}
 		
 		//获取当前页链接

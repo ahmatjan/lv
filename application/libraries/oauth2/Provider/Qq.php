@@ -68,9 +68,9 @@ class OAuth2_Provider_Qq extends OAuth2_Provider
 			'location' => '',
 			'description' => '',
 			'image' => $user->figureurl,
-			'access_token' => $token->access_token,
-			'expire_at' => $token->expires,
-			'refresh_token' => $token->refresh_token
+			'access_token' => $token->access_token,//访问令牌
+			'expire_at' => $token->expires,//到期
+			'refresh_token' => $token->refresh_token //刷新令牌
 		);
 	}
 }

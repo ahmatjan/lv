@@ -401,7 +401,7 @@
 
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
-						<img class="user-image" alt="<?php echo $nick_name?>" src="<?php echo base_url($user_image) ?>" />
+						<img class="user-image lazy" data-original="<?php echo $user_image ?>" alt="<?php echo $nick_name?>" />
 
 						<span class="username"><?php echo $nick_name?></span>
 

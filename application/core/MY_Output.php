@@ -163,7 +163,10 @@ class MY_Output extends CI_Output
 	public function https_jump (){
 		$this->CI =& get_instance();
 		//session用来记录用户访问设备和https的设置
-		//$this->CI->load->library('session');
+		$this->CI->load->library('session');
+		//记录用户的上一个访问页面
+		$this->CI->session->set_userdata('before_access', current_url());
+		
 		//装载模型
 		$this->CI->load->model('setting/base_setting');
 		//调设置

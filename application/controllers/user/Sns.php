@@ -47,9 +47,24 @@ class Sns extends CI_Controller {
 	        	$sns_user = $provider->get_user_info($token);
 				if (is_array($sns_user))
 				{
+					/*
                     $this->session->set_flashdata('info', '登录成功');
 					$this->session->set_userdata('user', $sns_user);
                     $this->session->set_userdata('is_login', TRUE);
+                    */
+                    $user_session = array(
+		                   'username'  		=> $sns_user['uid'],
+		                   'nick_name'  	=> $sns_user['screen_name'],
+		                   'user_image'  	=> trim($sns_user['image']),
+		                   'logged_in' 		=> TRUE
+		               );
+
+					$this->session->set_userdata($user_session);
+					
+					if(@$_SESSION['before_access']){
+						redirect($_SESSION['before_access']);
+					}
+           
 				}
 				else
 				{
