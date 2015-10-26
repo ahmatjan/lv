@@ -9,9 +9,15 @@ class Home extends CI_Controller {
 	
 	public function index()
 	{
+		//var_dump(@$_SESSION['sns_user']);
 		//if($this->agent->is_robot()){
 			//return;
 		//}
+		if(@$_SESSION['user']){
+			var_dump($_SESSION['user']);
+		}else{
+			echo '用户信息空';
+		}
 		//---------------------------------------------------------------------------------------------
 		//块布局
 		$this->load->module('common/module_page');

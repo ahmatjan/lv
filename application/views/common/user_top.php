@@ -408,9 +408,9 @@
 
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
-						<img alt="" src="<?php echo base_url('public/image/avatar1_small.jpg') ?>" />
+						<img class="user-image" alt="<?php echo $nick_name?>" src="<?php echo base_url($user_image) ?>" />
 
-						<span class="username">Bob Nilson</span>
+						<span class="username"><?php echo $nick_name?></span>
 
 						<i class="icon-angle-down"></i>
 

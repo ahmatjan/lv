@@ -401,9 +401,9 @@
 
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
-						<img alt="" src="<?php echo base_url('public/image/avatar1_small.jpg') ?>" />
+						<img class="user-image" alt="<?php echo $nick_name?>" src="<?php echo base_url($user_image) ?>" />
 
-						<span class="username">Bob Nilson</span>
+						<span class="username"><?php echo $nick_name?></span>
 
 						<i class="icon-angle-down"></i>
 
@@ -493,7 +493,7 @@
 
 			<!-- BEGIN LOGIN FORM -->
 
-		<form action="<?php echo site_url('user/login/user_login')?>" method="post" enctype="multipart/form-data" class="form-vertical login-form" >
+		<div class="form-vertical login-form" >
 
 			<div class="control-group">
 
@@ -507,7 +507,7 @@
 
 						<i class="icon-user"></i>
 
-						<input class="m-wrap placeholder-no-fix m-bottom" type="text" placeholder="帐号" name="username" value="帐号"/>
+						<input class="m-wrap placeholder-no-fix m-bottom luser_name" type="text" placeholder="帐号" name="username"/>
 
 					</div>
 
@@ -525,7 +525,7 @@
 
 						<i class="icon-lock"></i>
 
-						<input class="m-wrap placeholder-no-fix m-bottom" type="password" placeholder="密码" name="password"/>
+						<input class="m-wrap placeholder-no-fix m-bottom lpass_word" type="password" name="password" placeholder="密码" />
 
 					</div>
 
@@ -535,18 +535,21 @@
 
 			<div class="form-actions">
 
-				<label class="checkbox">
+				<label class="checkbox"">
 
 				<input type="checkbox" name="remember" value="1"/> <?php echo $text_remember?>
 
+				 <span class="login-info"></span>
+				
 				</label>
 
 				<!--<button type="submit" class="btn green pull-right">-->
-				<button type="submit" class="btn green btn-block">
+				
+				<div class="btn green btn-block sub-login">
 
 				<?php echo $text_login ?>  <i class="m-icon-swapright m-icon-white"></i>
 
-				</button>            
+				</div>            
 
 			</div>
 			<div class="fr-login">
@@ -578,7 +581,7 @@
 				<!--<a href="<?php echo site_url('user/sns/session/weixin')?>" class="btn green btn-block">微信登陆<i class="m-icon-swapright m-icon-white"></i></a>-->
 			</div>
 			
-		</form>
+		</div>
 
 		<!-- END LOGIN FORM -->
 
@@ -631,3 +634,79 @@
 	<!--这个是网站顶部-->
 
 	<div class="container">
+	<!--登陆js-->
+	<script>
+	
+	$(document).ready(function(){
+	  $(".sub-login").click(function(){
+	  	var user_name=$(".luser_name").val();
+	  	var pass_word=$(".lpass_word").val();
+	  	//判断验证用户输入
+	  	//验证用户名
+	  	if(user_name){
+			//如果用户名不为空
+			$(".luser_name").css({"border":"1px solid green"});
+			var is_login=1;
+		}else{
+			//如果用户名为空
+			$(".luser_name").css({"border":"1px solid red"});
+			var is_login=0;
+		}
+		
+		//验证密码
+		if(pass_word){
+			//如果密码不为空
+			if(pass_word.length > 25 || pass_word.length < 5){
+				$(".lpass_word").css({"border":"1px solid red"});
+				var is_login=0;
+			}else{
+				var is_login=1;
+			}
+		}else{
+			//如果密码为空
+			$(".lpass_word").css({"border":"1px solid red"});
+			var is_login=0;
+		}
+		
+		//错误信息
+		if(is_login == 0){
+			if(!$(".login-info").text()){
+				//如果错误提示为空添加
+				$(".login-info").append("用户名或密码不正确!");
+			}
+		}else{
+			if($(".login-info").text()){
+				//如果错误提示为空添加
+				$(".login-info").text("");
+				$(".lpass_word").css({"border":"1px solid green"});
+			}
+		}
+		
+		//如果验证通过    提交
+		if(is_login == 1){
+			$.post("user/login/ajax_login",
+		    {
+		      username: user_name,
+		      password: pass_word
+		    },
+		    function(data){
+		      //判断返回的数据
+		      if(data==1){
+			  	//刷新当前页面
+			  	location.reload();
+			  }else{
+			  	//如果返回数据不通过
+				if(!$(".login-info").text()){
+				//如果错误提示为空添加
+					$(".login-info").append("用户名或密码不正确!");
+					$(".lpass_word").css({"border":"1px solid red"});
+					$(".luser_name").css({"border":"1px solid red"});
+				}
+			  }
+		    });
+		}
+		
+	  });
+	});
+	</script>
+	<!--登陆js-->

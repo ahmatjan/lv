@@ -7,15 +7,17 @@ class public_section extends CI_Model {
 	//这是一个只包含css/js等引入的公共头部
 	public function get_header($header=array())
 	{
-		//$this->load->helper('array');
+		$this->load->helper('array');
 		//把css样式组成字符串
 		
-		//$data['css_page_style']=arrayToString($header['css_page_style']);
+		$data['css_page_style']=arrayToString($header['css_page_style']);
+		/*
 		if(isset($header['css_page_style'])){
 			$data['css_page_style']=$header['css_page_style'];
 		}else{
 			$data['css_page_style']='';
 		}
+		*/
 			
 		if(isset($header['meta'])){
 			$data['meta']=$header['meta'];
@@ -71,6 +73,19 @@ class public_section extends CI_Model {
 		$data['text_details']=$this->lang->line('text_details');
 		$data['text_confirmpassword']=$this->lang->line('text_confirmpassword');
 		$data['text_email']=$this->lang->line('text_email');
+		
+		//从session中获取用户信息
+		if(@$_SESSION['nick_name']){
+			$data['nick_name']=$_SESSION['nick_name'];
+		}else{
+			$data['nick_name']='';
+		}
+		
+		if(@$_SESSION['user_image']){
+			$data['user_image']=$_SESSION['user_image'];
+		}else{
+			$data['user_image']='';
+		}
 		
 		//获取当前页链接
 		$active=uri_string();
@@ -157,6 +172,19 @@ class public_section extends CI_Model {
 		}
 		
 		//------------------------------------------------------------------------------------
+		//从session中获取用户信息
+		if(@$_SESSION['nick_name']){
+			$data['nick_name']=$_SESSION['nick_name'];
+		}else{
+			$data['nick_name']='';
+		}
+		
+		if(@$_SESSION['user_image']){
+			$data['user_image']=$_SESSION['user_image'];
+		}else{
+			$data['user_image']='';
+		}
+		
 		//获取当前页链接
 		$active=uri_string();
 		$active=strtolower($active);

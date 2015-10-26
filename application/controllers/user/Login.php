@@ -88,20 +88,23 @@ class Login extends CI_Controller {
 			//邮箱登陆
 			$user_infos=$this->user_info->get_useremail_info($username);
 			if($username===$user_infos['email'] && $password === $user_infos['passwd']){
-				echo $username;
 				//写入用户信息session
 				$user_session = array(
 		                   'username'  		=> $username,
+		                   'nick_name'  	=> $user_infos['nick_name'],
+		                   'user_image'  	=> $user_infos['image'],
 		                   'logged_in' 		=> TRUE
 		               );
 				
 				$this->session->set_userdata($user_session);
 				
-				redirect(site_url('user/User_center'));
-				
+				//如果勾选记住帐号
 				if($this->input->post('remember')== TRUE){
 					
 				}
+				
+				redirect(site_url('user/User_center'));
+				
 		}else{
 				//登陆不成功，把错误信息写入session
 				$this->session->set_userdata('username', $username);
@@ -118,16 +121,21 @@ class Login extends CI_Controller {
 				//写入用户信息session
 				$user_session = array(
 		                   'username'  		=> $username,
+		                   'nick_name'  	=> $user_infos['nick_name'],
+		                   'user_image'  	=> $user_infos['image'],
 		                   'logged_in' 		=> TRUE
 		               );
 
 				$this->session->set_userdata($user_session);
 				
-				redirect(site_url('user/User_center'));
-				
+				//如果勾选记住帐号   把帐号写入cooke
 				if($this->input->post('remember')== TRUE){
+					$this->load->helper('cookie');
 					
 				}
+				
+				redirect(site_url('user/User_center'));
+				
 		}else{
 				//登陆不成功，把错误信息写入session
 				$this->session->set_userdata('username', $username);
@@ -149,15 +157,18 @@ class Login extends CI_Controller {
 			//邮箱登陆
 			$user_infos=$this->user_info->get_useremail_info($username);
 			if($username===$user_infos['email'] && $password === $user_infos['passwd']){
-				echo $username;
+				
 				//写入用户信息session
 				$user_session = array(
 		                   'username'  		=> $username,
+		                   'nick_name'  	=> $user_infos['nick_name'],
+		                   'user_image'  	=> $user_infos['image'],
 		                   'logged_in' 		=> TRUE
 		               );
 				
 				$this->session->set_userdata($user_session);
 				
+				//如果勾选记住帐号
 				if($this->input->post('remember')== TRUE){
 					
 				}
@@ -179,11 +190,14 @@ class Login extends CI_Controller {
 				//写入用户信息session
 				$user_session = array(
 		                   'username'  		=> $username,
+		                   'nick_name'  	=> $user_infos['nick_name'],
+		                   'user_image'  	=> $user_infos['image'],
 		                   'logged_in' 		=> TRUE
 		               );
 
 				$this->session->set_userdata($user_session);
 				
+				//如果勾选记住帐号
 				if($this->input->post('remember')== TRUE){
 					
 				}

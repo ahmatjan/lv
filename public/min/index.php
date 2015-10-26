@@ -16,7 +16,7 @@ if (isset($_GET['test'])) {
     include MINIFY_MIN_DIR . '/config-test.php';
 }
 
-require "$min_libPath/Minify/Loader.php";
+require $min_libPath."/Minify/Loader.php";
 Minify_Loader::register();
 
 Minify::$uploaderHoursBehind = $min_uploaderHoursBehind;

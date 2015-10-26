@@ -349,9 +349,11 @@ Landscape phone to portrait tablet
 	width: 300px;
 	margin-left: -150px;
 }
+.jump-login .login-info {
+	color: red;
+}
 .jump-login .modal-body {
 	margin-bottom: 0;
-	padding-bottom: 0;
 }
 .jump-login .modal-footer {
 	padding: 5px 14px;
@@ -382,4 +384,12 @@ Landscape phone to portrait tablet
 }
 .jump-login .create-account {
 	float: right;
+}
+/*用户登陆信息*/
+.user .user-image {
+	width: 29px;
+	-webkit-border-radius:50% !important;
+	-moz-border-radius:50% !important;
+	border-radius:50% !important;
+	margin-right: 5px;
 }
