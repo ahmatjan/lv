@@ -248,7 +248,8 @@ class Login extends CI_Controller {
 					'status'	=>'1',
 					'last_login'=>$date_now,
 					'system_os'	=>$system_os,
-					'browser'=>$browser_info
+					'browser'=>$browser_info,
+					'register_style'=>'email',
 				);
 				
 				$this->user_info->int_username($user_info);
@@ -281,7 +282,8 @@ class Login extends CI_Controller {
 					'status'	=>'1',
 					'last_login'=>$date_now,
 					'system_os'	=>$system_os,
-					'browser'=>$browser_info
+					'browser'=>$browser_info,
+					'register_style'=>'user_name',
 				);
 				
 				$this->user_info->int_username($user_info);

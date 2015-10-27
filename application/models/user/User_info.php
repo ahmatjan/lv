@@ -35,8 +35,7 @@ class user_info extends CI_Model {
 	//添加用户
 	public function int_username($data)
 	{
-	//通过用户名查用户信息
-
+	//
 		$this->db->insert('user_info', $data);
 		
 	}
