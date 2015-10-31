@@ -1,0 +1,131 @@
+@charset "utf-8";
+#portrait .container {
+	width: 250px;
+	margin: 0;
+	position: relative;
+	font-family: 微软雅黑;
+	font-size: 12px;
+}
+#portrait .container p {
+	line-height: 12px;
+	line-height: 0px;
+	height: 0px;
+	margin: 10px;
+	color: #bbb
+}
+#portrait .action {
+	width: 253px;
+	height: 35px;
+	margin: 10px 0;
+}
+#portrait .cropped {
+	position: absolute;
+	right: -230px;
+	top: 0;
+	width: 200px;
+	border: 1px #ddd solid;
+	height: 285px;
+	padding: 4px;
+	box-shadow: 0px 0px 12px #ddd;
+	text-align: center;
+}
+#portrait .imageBox {
+	position: relative;
+	height: 250px;
+	width: 250px;
+	border: 1px solid #aaa;
+	background: #fff;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	cursor: move;
+	box-shadow: 4px 4px 12px #B0B0B0; 
+}
+#portrait .imageBox .thumbBox {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 200px;
+	height: 200px;
+	margin-top: -100px;
+	margin-left: -100px;
+	box-sizing: border-box;
+	border: 1px solid rgb(102, 102, 102);
+	box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+	background: none repeat scroll 0% 0% transparent;
+}
+#portrait .imageBox .spinner {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	text-align: center;
+	line-height: 400px;
+	background: rgba(0,0,0,0.7);
+}
+#portrait .Btnsty_peyton{ float: right;
+   width: 45px;
+  display: inline-block;
+  margin-bottom: 10px;
+  height: 35px;
+  line-height: 35px;
+  font-size: 16px;
+  color: #FFFFFF;
+  margin:0px 2px;
+  background-color: #0f4e74;
+  border-radius: 3px !important;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0px 0px 5px #B0B0B0;
+  border: 0px #fff solid;}
+/*选择文件上传*/
+#portrait .new-contentarea {
+	width: 100px;
+	overflow:hidden;
+	margin: 0 auto;
+	position:relative;float:left;
+}
+#portrait .new-contentarea label {
+	width:100%;
+	height:100%;
+	display:block;
+}
+#portrait .new-contentarea input[type=file] {
+	width:100px;
+	height:35px;
+	background:#333;
+	margin: 0 auto;
+	position:absolute;
+	right:0;
+	margin-right:0px;
+	top:0;
+	right/*\**/:0px\9 !important;
+	margin-right/*\**/:0px\9 !important;
+	width/*\**/:10px\9 !important;
+	opacity:0;
+	filter:alpha(opacity=0) !important;
+	z-index:2;
+}
+#portrait a.upload-img{
+	width:100px;
+	display: inline-block;
+	margin-bottom: 0px;
+	/*
+	height:35px;
+	line-height: 35px;
+	*/
+	padding: 5px 0;
+	font-size: 16px;
+	color: #FFFFFF;
+	background-color: #0f4e74;
+	border-radius: 3px !important;
+	text-decoration:none;
+	cursor:pointer;
+	border: 0px #fff solid;
+	box-shadow: 0px 0px 5px #B0B0B0;
+}
+#portrait a.upload-img:hover{
+	background-color: #ec7e70;
+}
+
+#portrait .tc{text-align:center;}

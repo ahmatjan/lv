@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+//添加一个根目录常量
+define('WWW_PATH',str_replace('\\','/',realpath(dirname(__FILE__).'/../../')));//站点根目录
+
 /*
 |--------------------------------------------------------------------------
 | File and Directory Modes

@@ -33,43 +33,41 @@
 
 							<ul class="nav nav-tabs">
 
-								<li class="active"><a href="#tab_1_1" data-toggle="tab">Overview</a></li>
+								<li class="active"><a href="#tab_1_1" data-toggle="tab">个人信息</a></li>
 
-								<li><a href="#tab_1_2" data-toggle="tab">Profile Info</a></li>
+								<li><a href="#tab_1_3" data-toggle="tab">资料修改</a></li>
 
-								<li><a href="#tab_1_3" data-toggle="tab">Account</a></li>
+								<li><a href="#tab_1_4" data-toggle="tab">交易管理</a></li>
 
-								<li><a href="#tab_1_4" data-toggle="tab">Projects</a></li>
-
-								<li><a href="#tab_1_6" data-toggle="tab">Help</a></li>
+								<li><a href="#tab_1_6" data-toggle="tab">帮助</a></li>
 
 							</ul>
 
 							<div class="tab-content">
 
 								<div class="tab-pane row-fluid active" id="tab_1_1">
+								
+									<div class="span12 user-info1">
+									
+										<ul class="unstyled profile-nav span3 user_portrait">
 
-									<ul class="unstyled profile-nav span3">
+											<li style="width: 150px;height: 150px"><img class="lazy" data-original="<?php echo $user_image?>" alt="<?php echo $nick_name?>" /> <a data-toggle="modal" href="#portrait" class="profile-edit">编辑</a></li>
 
-										<li><img src="<?php echo base_url('public/image/profile-img.png')?>" alt="" /> <a href="#" class="profile-edit">edit</a></li>
+											<li><a href="#">Projects</a></li>
 
-										<li><a href="#">Projects</a></li>
+											<li><a href="#">Messages <span>3</span></a></li>
 
-										<li><a href="#">Messages <span>3</span></a></li>
+											<li><a href="#">Friends</a></li>
 
-										<li><a href="#">Friends</a></li>
+											<li><a href="#">Settings</a></li>
 
-										<li><a href="#">Settings</a></li>
-
-									</ul>
-
-									<div class="span9">
-
-										<div class="row-fluid">
+										</ul>
+										
+										<div class="row-fluid span9">
 
 											<div class="span8 profile-info">
 
-												<h1>John Doe</h1>
+												<h1><?php echo $nick_name?></h1>
 
 												<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.</p>
 
@@ -154,6 +152,10 @@
 										</div>
 
 										<!--end row-fluid-->
+									
+									</div>
+
+									<div class="span12" style="margin:0">
 
 										<div class="tabbable tabbable-custom tabbable-custom-profile">
 
@@ -1125,40 +1127,6 @@
 
 								<!--end tab-pane-->
 
-								<div class="tab-pane profile-classic row-fluid" id="tab_1_2">
-
-									<div class="span2"><img src="<?php echo base_url('public/image/profile-img.png')?>" alt="" /> <a href="#" class="profile-edit">edit</a></div>
-
-									<ul class="unstyled span10">
-
-										<li><span>User Name:</span> JDuser</li>
-
-										<li><span>First Name:</span> John</li>
-
-										<li><span>Last Name:</span> Doe</li>
-
-										<li><span>Counrty:</span> Spain</li>
-
-										<li><span>Birthday:</span> 18 Jan 1982</li>
-
-										<li><span>Occupation:</span> Web Developer</li>
-
-										<li><span>Email:</span> <a href="#">john@mywebsite.com</a></li>
-
-										<li><span>Interests:</span> Design, Web etc.</li>
-
-										<li><span>Website Url:</span> <a href="#">http://www.mywebsite.com</a></li>
-
-										<li><span>Mobile Number:</span> +1 646 580 DEMO (6284)</li>
-
-										<li><span>About:</span> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.</li>
-
-									</ul>
-
-								</div>
-
-								<!--tab_1_2-->
-
 								<div class="tab-pane row-fluid profile-account" id="tab_1_3">
 
 									<div class="row-fluid">
@@ -1175,7 +1143,7 @@
 
 														<i class="icon-cog"></i> 
 
-														Personal info
+														基本信息
 
 														</a> 
 
@@ -1183,11 +1151,11 @@
 
 													</li>
 
-													<li class=""><a data-toggle="tab" href="#tab_2-2"><i class="icon-picture"></i> Change Avatar</a></li>
+													<li class=""><a data-toggle="tab" href="#tab_2-2"><i class="icon-picture"></i>修改头像</a></li>
 
-													<li class=""><a data-toggle="tab" href="#tab_3-3"><i class="icon-lock"></i> Change Password</a></li>
+													<li class=""><a data-toggle="tab" href="#tab_3-3"><i class="icon-lock"></i>修改密码</a></li>
 
-													<li class=""><a data-toggle="tab" href="#tab_4-4"><i class="icon-eye-open"></i> Privacity Settings</a></li>
+													<li class=""><a data-toggle="tab" href="#tab_4-4"><i class="icon-eye-open"></i>隐私设置</a></li>
 
 												</ul>
 
@@ -1203,11 +1171,11 @@
 
 															<form action="#">
 
-																<label class="control-label">First Name</label>
+																<label class="control-label">用户名<span style="color:red">用户名不可修改！</span></label>
 
 																<input type="text" placeholder="John" class="m-wrap span8" />
 
-																<label class="control-label">Last Name</label>
+																<label class="control-label">昵称</label>
 
 																<input type="text" placeholder="Doe" class="m-wrap span8" />
 
@@ -2376,6 +2344,52 @@
 		<!-- END PAGE -->    
 		</div>
 	</div>
+	
+	<div id="portrait" class="modal hide fade" tabindex="-1" data-replace="true" style="width:511px">
+
+		<div class="modal-header">
+
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+
+			<h3>修改头像</h3>
+
+		</div>
+
+		<div class="modal-body">
+
+			<div class="container">
+				<div class="imageBox">
+					<div class="thumbBox"></div>
+					<div class="spinner" style="display: none">Loading...</div>
+				</div>
+				<div class="action"> 
+				<!-- <input type="file" id="file" style=" width: 200px">-->
+				<div class="new-contentarea tc"> <a href="javascript:void(0)" class="upload-img">
+					<label for="upload-file">上传图像</label>
+					</a>
+					<input type="file" class="" name="upload-file" id="upload-file" />
+				</div>
+				<input type="button" id="btnCrop"  class="Btnsty_peyton" value="裁切">
+				<input type="button" id="btnZoomIn" class="Btnsty_peyton" value="+"  >
+				<input type="button" id="btnZoomOut" class="Btnsty_peyton" value="-" >
+				</div>
+				<div class="cropped"></div>
+				</div>
+
+		</div>
+
+		<div class="modal-footer">
+
+			<button type="button" data-dismiss="modal" id="submit-portrait" class="btn blue">确认提交</button>
+
+		</div>
+
+	</div>
+	
+	<!--头像上传-->
+	<script src="<?php echo base_url('public/js/loading/portrait.js')?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('public/js/loading/portrait_app.js')?>" type="text/javascript"></script>
+	<!--头像上传-->
 
 	<!-- END CONTAINER -->
 

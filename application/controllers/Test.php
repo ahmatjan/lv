@@ -98,12 +98,10 @@ class Test extends CI_Controller {
 	
 	public function index ()
 	{
-		$this->public_section->get_header();
-		$this->load->view('Test');
-	}
-	
-	public function cc (){
-		//echo 'kkjj';
-		echo $this->input->post('username').$this->input->post('password');
+		//加载目录辅助函数
+		$this->load->helper('directory');
+		$portraits=directory_map('public/image/portrait/');
+		$portrait=array_rand($portraits, 1);
+		var_dump($portraits[$portrait]);
 	}
 }

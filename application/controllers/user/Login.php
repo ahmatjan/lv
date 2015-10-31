@@ -68,6 +68,15 @@ class Login extends CI_Controller {
 			$data['info_login']='';
 		}
 		
+		//如果cookie存在，直接读
+		//加载cookie辅助函数
+		$this->load->helper('cookie');
+		if(get_cookie('username')){
+			$data['val_username']=get_cookie('username');
+		}else{
+			$data['val_username']='';
+		}
+		
 		//bottom
 		$data['text_signupbottom']=$this->lang->line('text_signupbottom');
 		
@@ -100,7 +109,10 @@ class Login extends CI_Controller {
 				
 				//如果勾选记住帐号
 				if($this->input->post('remember')== TRUE){
-					
+					//加载cookie辅助函数
+					$this->load->helper('cookie');
+					//写入到cookie
+					set_cookie('username',$this->input->post('username'));
 				}
 				
 				redirect(site_url('user/User_center'));
@@ -130,8 +142,10 @@ class Login extends CI_Controller {
 				
 				//如果勾选记住帐号   把帐号写入cooke
 				if($this->input->post('remember')== TRUE){
+					//加载cookie辅助函数
 					$this->load->helper('cookie');
-					
+					//写入到cookie
+					set_cookie('username',$this->input->post('username'));
 				}
 				
 				redirect(site_url('user/User_center'));
@@ -235,6 +249,12 @@ class Login extends CI_Controller {
 			$system_os=$this->agent->platform();
 		}
 		
+		//加载目录辅助函数
+		$this->load->helper('directory');
+		$portraits=directory_map('image/portrait/');
+		$portrait=array_rand($portraits, 1);
+		$portrait='portrait/'.$portraits[$portrait];
+		
 		if(preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i',$username) && strlen($username)>3)
 		{
 			if($this->username_email($username,$email,$password,$rpassword)){
@@ -243,6 +263,8 @@ class Login extends CI_Controller {
 					'user_name' =>$random_username,
 					'email'		=>$email,
 					'passwd'	=>$password,
+					'nick_name'	=>$random_username,
+					'image'		=>$portrait,
 					'add_ip'	=>$ip,
 					'add_date'	=>$date_now,
 					'status'	=>'1',
@@ -256,7 +278,9 @@ class Login extends CI_Controller {
 				
 				//写入用户信息session
 				$user_session = array(
-		                   'email'  		=> $email,
+		                   'username'  		=> $email,
+		                   'nick_name'  	=> $random_username,
+		                   'user_image'  	=> $portrait,
 		                   'logged_in' 		=> TRUE
 		               );
 
@@ -277,6 +301,8 @@ class Login extends CI_Controller {
 					'user_name' =>$username,
 					'email'		=>$email,
 					'passwd'	=>$password,
+					'nick_name'	=>$random_username,
+					'image'		=>$portrait,
 					'add_ip'	=>$ip,
 					'add_date'	=>$date_now,
 					'status'	=>'1',
@@ -291,12 +317,13 @@ class Login extends CI_Controller {
 				//写入用户信息session
 				$user_session = array(
 		                   'username'  		=> $username,
+		                   'nick_name'  	=> $random_username,
+		                   'user_image'  	=> $portrait,
 		                   'logged_in' 		=> TRUE
 		               );
 
 				$this->session->set_userdata($user_session);
 
-				
 				redirect(site_url('user/User_center'));
 				
 			}else{
@@ -304,7 +331,7 @@ class Login extends CI_Controller {
 			}
 		}
 		
-		//redirect('user/User_center', 'location');
+		redirect('user/User_center', 'location');
 	}
 	
 	//找回密码

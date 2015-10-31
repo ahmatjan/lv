@@ -86,7 +86,8 @@ class public_section extends CI_Model {
 			if(strpos($_SESSION['user_image'] ,'http') !== FALSE){
 				$data['user_image']=$_SESSION['user_image'];
 			}else{
-				$data['user_image']=base_url($_SESSION['user_image']);
+				$portrait_img=$this->image->rezice($_SESSION['user_image'],29,29);
+				$data['user_image']=$portrait_img['new_img'];
 			}
 			
 		}else{
@@ -188,7 +189,9 @@ class public_section extends CI_Model {
 		if(strpos($_SESSION['user_image'] ,'http') !== FALSE){
 			$data['user_image']=$_SESSION['user_image'];
 		}else{
-			$data['user_image']=base_url($_SESSION['user_image']);
+			$portrait_img=$this->image->rezice($_SESSION['user_image'],29,29);
+			$this->image->rezice($_SESSION['user_image'],150,150);
+			$data['user_image']=$portrait_img['new_img'];
 		}
 		
 		//获取当前页链接

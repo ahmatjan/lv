@@ -137,4 +137,4 @@ $autoload['language'] = array('chinese');
 |	$autoload['model'] = array('first_model' => 'first');
 */
 
-$autoload['model'] = array('common/public_section');
+$autoload['model'] = array('common/public_section','common/image');

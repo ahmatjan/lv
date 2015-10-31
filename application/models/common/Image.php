@@ -40,7 +40,7 @@ class Image extends CI_Model {
 				$config['image_library'] = 'gd2';
 				$config['source_image'] = $old_image;
 				$config['new_image'] = $new_image;
-				$config['quality'] = 60;
+				$config['quality'] = 80;
 				$config['create_thumb'] = FALSE;
 				//$config['maintain_ratio'] = TRUE;
 				$config['maintain_ratio'] = FALSE;
@@ -83,5 +83,36 @@ class Image extends CI_Model {
 		*/
 
 		return $filename;
+	}
+	
+	//删除图片
+	public function del_img ($data){
+		//定义图片文件夹
+		/**
+		* 数组格式： 
+		* array(
+		*  'name'=>		
+		* )
+		*/
+		$img_path=WWW_PATH.'/image/';
+		//判断是不是一个数组
+		if(is_array($data)){
+			//是一个数组
+			foreach($data as $img_name){
+				//遍历数组
+				$file_name=$img_path.$img_name;
+				if( is_file( $file_name ) ){
+					//如果文件存在，删除
+					unlink($file_name);
+				}
+			}
+			
+		}else{
+			$file_name=$img_path.$data;
+			if( is_file( $file_name ) ){
+				//如果文件存在，删除
+				unlink($file_name);
+			}
+		}
 	}
 }

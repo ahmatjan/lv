@@ -393,3 +393,17 @@ Landscape phone to portrait tablet
 	border-radius:50% !important;
 	margin-right: 5px;
 }
+/*个人中心*/
+@media(min-width: 1200px){
+	.user_portrait{
+		width: 150px !important;
+	}
+}
+.user_portrait{
+		margin-bottom: 0 !important;
+	}
+.user-info1{
+	border:1px dotted rgb(171, 171, 171);
+	padding: 10px;
+	margin-bottom: 15px;
+}
