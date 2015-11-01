@@ -388,6 +388,7 @@ Landscape phone to portrait tablet
 /*用户登陆信息*/
 .user .user-image {
 	width: 29px;
+	height: 29px;
 	-webkit-border-radius:50% !important;
 	-moz-border-radius:50% !important;
 	border-radius:50% !important;

@@ -15,7 +15,7 @@
 
 				<!-- BEGIN LOGO -->
 
-				<a class="brand" href="<?php echo site_url('home')?>">
+				<a class="brand" href="<?php echo site_url('user/user_center')?>">
 
 				<img src="<?php echo base_url('public/image/logo.png') ?>" alt="logo" />
 

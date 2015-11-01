@@ -56,6 +56,12 @@ class Image extends CI_Model {
 				copy($old_image,$new_image);
 			}
 		}
+		//panduan缓存文件是否存在
+		
+		if(!is_file(WWW_PATH . '/' . $new_image)){
+			$new_image='public/image/no_img.gif';
+		}
+		
 		$images=array(
 			'old_img'=>base_url($old_image),
 			'new_img'=>base_url($new_image)

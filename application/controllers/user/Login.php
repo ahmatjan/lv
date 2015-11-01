@@ -115,7 +115,7 @@ class Login extends CI_Controller {
 					set_cookie('username',$this->input->post('username'));
 				}
 				
-				redirect(site_url('user/User_center'));
+				redirect(site_url('user/user_center'));
 				
 		}else{
 				//登陆不成功，把错误信息写入session
@@ -148,13 +148,13 @@ class Login extends CI_Controller {
 					set_cookie('username',$this->input->post('username'));
 				}
 				
-				redirect(site_url('user/User_center'));
+				redirect(site_url('user/user_center'));
 				
 		}else{
 				//登陆不成功，把错误信息写入session
 				$this->session->set_userdata('username', $username);
 				$this->session->set_flashdata('error_login', '登陆名或密码不正确！');//闪出错误信息
-				redirect(site_url('user/Login'));
+				redirect(site_url('user/login'));
 			}
 		}
 	}
@@ -290,7 +290,7 @@ class Login extends CI_Controller {
 				redirect(site_url('user/User_center'));
 				
 			}else{
-				redirect(site_url('user/Login'));
+				redirect(site_url('user/login'));
 			}
 		}
 		if(!preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i',$username) && strlen($username)>3)
@@ -324,10 +324,10 @@ class Login extends CI_Controller {
 
 				$this->session->set_userdata($user_session);
 
-				redirect(site_url('user/User_center'));
+				redirect(site_url('user/user_center'));
 				
 			}else{
-				redirect(site_url('user/Login'));
+				redirect(site_url('user/login'));
 			}
 		}
 		
@@ -345,7 +345,7 @@ class Login extends CI_Controller {
 	public function login_out(){
 		session_destroy();
 		//$this->session->set_flashdata('info_login', '退出成功！');
-		redirect(site_url('user/Login'));
+		redirect(site_url('user/login'));
 		
 	}
 	

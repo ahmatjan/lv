@@ -1171,17 +1171,17 @@
 
 															<form action="#">
 
-																<label class="control-label">用户名<span style="color:red">用户名不可修改！</span></label>
+																<label class="control-label">用户名<span style="color:#B5B1B1">用于登陆且不可修改！</span></label>
 
-																<input type="text" placeholder="John" class="m-wrap span8" />
+																<input type="text" placeholder="用于登陆且不可修改..." value="<?php echo $_SESSION['username']?>" disabled="true" class="m-wrap span8" />
 
 																<label class="control-label">昵称</label>
 
-																<input type="text" placeholder="Doe" class="m-wrap span8" />
+																<input type="text" placeholder="填写你的昵称..." class="m-wrap span8" />
 
-																<label class="control-label">Mobile Number</label>
+																<label class="control-label">手机号</label>
 
-																<input type="text" placeholder="+1 646 580 DEMO (6284)" class="m-wrap span8" />
+																<input type="text" placeholder="填写你的手机号..." class="m-wrap span8" />
 
 																<label class="control-label">Interests</label>
 
