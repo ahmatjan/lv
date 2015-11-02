@@ -230,6 +230,10 @@ class MY_Output extends CI_Output
 				}  
 			}
 		}
+	
+	//判断用户是否有查看权限
+	
+	
 	}
 
 }

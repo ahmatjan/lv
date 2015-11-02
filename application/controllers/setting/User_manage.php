@@ -125,8 +125,18 @@ class User_manage extends CI_Controller {
 								),
 		);
 		
-		$this->load->helper('directory');
-		$data['maps'] = directory_map(APPPATH.'controllers');
+		$this->load->helper(array('directory','array'));
+		$maps = directory_map(APPPATH.'controllers');
+		$maps=arrayToString($maps);
+		$maps=explode(',',$maps);
+		
+		foreach ($maps as $k=>$v){
+			if(pathinfo($v, PATHINFO_EXTENSION)=='php'){
+				$maps[$k]=strtolower(substr($v,0,-4));	
+			}else{
+				unset($maps[$k]);
+			}
+		}//到这这里$maps成了一个纯一维数组，并且去除了html
 		
 		//获取用户分组信息
 		$group_infos=array();
@@ -151,21 +161,32 @@ class User_manage extends CI_Controller {
 			$data['group_description']='';
 		}
 		
-		if($this->input->post('my_multi_select1')){
-			$data['permission_view']=$this->input->post('my_multi_select1');	
-		}elseif(isset($group_infos['permission_view'])){
-			$data['permission_view']=unserialize($group_infos['permission_view']);
-		}else{
-			$data['permission_view']=array();
-		}
-		$co=count($data['permission_view']);
+		$permission_view=unserialize($group_infos['permission_view']);
 		
-		if($this->input->post('my_multi_select2')){
-			$data['permission_edit']=$this->input->post('my_multi_select2');	
-		}elseif(isset($group_infos['permission_edit'])){
-			$data['permission_edit']=unserialize($group_infos['permission_edit']);
+		if($this->input->post('my_multi_select1')){
+			$data['permission_view1']=$this->input->post('my_multi_select1');//选中的查看权限
+			$data['permission_view2']=array_diff($maps,$this->input->post('my_multi_select1'));//未选中的查看权限/差集
+			
+		}elseif(count($permission_view)>1){
+			$data['permission_view1']=$permission_view;
+			$data['permission_view2']=array_diff($maps,$permission_view);
 		}else{
-			$data['permission_edit']=array();
+			$data['permission_view1']=array();
+			$data['permission_view2']=$maps;
+		}
+		
+		//编辑权限
+		$permission_edit=unserialize($group_infos['permission_edit']);
+		if($this->input->post('my_multi_select2')){
+			$data['permission_edit1']=$this->input->post('my_multi_select2');//选中的查看权限
+			$data['permission_edit2']=array_diff($maps,$this->input->post('my_multi_select2'));//未选中的查看权限/差集
+			
+		}elseif(count($permission_edit)>1){
+			$data['permission_edit1']=$permission_edit;
+			$data['permission_edit2']=array_diff($maps,$permission_edit);
+		}else{
+			$data['permission_edit1']=array();
+			$data['permission_edit2']=$maps;
 		}
 
 		//group_id

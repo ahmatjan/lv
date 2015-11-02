@@ -120,25 +120,42 @@ class Test extends CI_Controller {
 
 		echo $this->pagination->create_links();
 		*/
+		$this->load->model('user/user_group');
+		$group_infos=$this->user_group->get_infobygroup_id('3');
+	
+		$permission_views=unserialize($group_infos['permission_view']);
+	
 		$this->load->helper('directory');
-		$map = directory_map(APPPATH.'controllers');
-		//var_dump($map);
-		//echo count($map);
-		foreach ($map as $k=>$v){
-			if(is_int($k) && pathinfo($v, PATHINFO_EXTENSION)=='php'){
-				echo $map[$k].'<br/>';
+		$maps = directory_map(APPPATH.'controllers');
+		
+		$this->load->helper('array');
+		$b=arrayToString($maps);
+		$b=explode(',',$b);
+		foreach ($b as $k=>$v){
+			if(pathinfo($v, PATHINFO_EXTENSION)=='php'){
+				$b[$k]=strtolower(substr($v,0,-4));	
+			}else{
+				unset($b[$k]);
 			}
-			/*
-			if(!is_int($k)){
-				echo $k.'<br/>';
+		}
+		$e=array_diff($b,$permission_views);
+		
+		foreach($e as $n){
+			echo $n.'<br/>';
+		}
+		/*
+		foreach ($maps as $k=>$v){
+			if(is_int($k)){
+				echo $v.'<br/>';
 			}
 			
-			if(!is_array($v)){
-				if(pathinfo($v, PATHINFO_EXTENSION)=='php'){
-					echo $v;
+			if(!is_int($k)){
+				foreach($v as $q=>$y){
+					echo $q.'=>'.$y.'<br/>';
 				}
 			}
-			*/
 		}
+		*/
+		
 	}
 }

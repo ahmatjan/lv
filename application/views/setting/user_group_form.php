@@ -94,53 +94,28 @@
 
 												<select multiple="multiple" id="my_multi_select1" name="my_multi_select1[]">
 												
-													<optgroup label="主文件夹下">
+													<optgroup label="没有查看权限">
 													
-													<?php if (is_array($maps)):?>
-													
-													<?php foreach ($maps as $k=>$v): ?>
+													<?php foreach ($permission_view2 as $permission_view2_): ?>
 													<!--遍历控制器-->
-
-													<?php if (is_int($k) && pathinfo($v, PATHINFO_EXTENSION)=='php'):?>
 														
-														<option><?php echo strtolower(substr($v,0,-4))?></option>;
-															
-													<?php endif;?>
-													
+														<option><?php echo $permission_view2_?></option>;
+														
 													<?php endforeach; ?>
-													
-													<?php endif;?>
 													
 													</optgroup>
 													
-													<?php if (is_array($maps)):?>
-													
-													<?php foreach ($maps as $k=>$v): ?>
-													<!--遍历控制器-->
-													
-													<?php if (!is_int($k) && is_array($v)):?><!--如果$k不是一个数字,并且$v是一个数组-->
-													
-													<optgroup label="<?php echo $k?>">
+													<optgroup label="已有权限">
 
-														<?php foreach ($v as $c): ?>
+														<?php foreach ($permission_view1 as $permission_view1_): ?>
 														<!--遍历控制器文件夹下内容-->
 													
-														<?php if (pathinfo($c, PATHINFO_EXTENSION)=='php'):?><!--如果$c是php文件-->
-													
-														<option><?php echo strtolower(substr($c,0,-4))?></option>
-														
-														<?php endif;?>
+														<option selected="selected"><?php echo $permission_view1_?></option>;
 														
 														<?php endforeach; ?>
 
 													</optgroup>
 													
-													<?php endif;?>
-													
-													<?php endforeach; ?>
-													
-													<?php endif;?>
-
 												</select>
 
 											</div>
@@ -155,53 +130,28 @@
 
 												<select multiple="multiple" id="my_multi_select2" name="my_multi_select2[]">
 												
-													<optgroup label="主文件夹下">
+													<optgroup label="没有编辑权限">
 													
-													<?php if (is_array($maps)):?>
-													
-													<?php foreach ($maps as $k=>$v): ?>
+													<?php foreach ($permission_edit2 as $permission_edit2_): ?>
 													<!--遍历控制器-->
 
-													<?php if (is_int($k) && pathinfo($v, PATHINFO_EXTENSION)=='php'):?>
-													
-														<option><?php echo strtolower(substr($v,0,-4));?></option>
+														<option><?php echo $permission_edit2_;?></option>
 
-													<?php endif;?>
-													
 													<?php endforeach; ?>
-													
-													<?php endif;?>
 													
 													</optgroup>
 													
-													<?php if (is_array($maps)):?>
-													
-													<?php foreach ($maps as $k=>$v): ?>
-													<!--遍历控制器-->
-													
-													<?php if (!is_int($k) && is_array($v)):?><!--如果$k不是一个数字,并且$v是一个数组-->
-													
-													<optgroup label="<?php echo $k?>">
+													<optgroup label="已有编辑权限">
 
-														<?php foreach ($v as $c): ?>
+														<?php foreach ($permission_edit1 as $permission_edit1_): ?>
 														<!--遍历控制器文件夹下内容-->
 													
-														<?php if (pathinfo($c, PATHINFO_EXTENSION)=='php'):?><!--如果$c是php文件-->
-													
-														<option><?php echo  strtolower(substr($c,0,-4))?></option>
-														
-														<?php endif;?>
+														<option selected="selected"><?php echo $permission_edit1_;?></option>
 														
 														<?php endforeach; ?>
 
 													</optgroup>
 													
-													<?php endif;?>
-													
-													<?php endforeach; ?>
-													
-													<?php endif;?>
-
 												</select>
 
 											</div>
