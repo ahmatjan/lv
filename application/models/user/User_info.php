@@ -73,4 +73,16 @@ class user_info extends CI_Model {
 			return $row['image'];
 		}
 	}
+	
+	//获取所有用户信息用于用户管理
+	//默认获取前20条
+	public function get_userall($start=0,$end=20){
+		$sql = "SELECT user_id , user_name , mobile , email , wechat , QQ , nick_name , status , group_id FROM user_info ORDER BY user_id ASC limit ? , ?"; 
+
+		$query=$this->db->query($sql, array($start,$end));
+
+		$row = $query->result_array();
+		
+		return $row;
+	}
 }

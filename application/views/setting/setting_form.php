@@ -264,7 +264,7 @@
 															
 															<option value="admin_top">后台顶部</option>
 															
-															<option value="admin">后台左</option>
+															<option value="admin">后台左栏</option>
 
 														</select>
 

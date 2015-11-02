@@ -1225,8 +1225,8 @@ Portlets
 ***/
 .portlet  {
   clear: both;
-  margin-top: 0px;
-  margin-bottom: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   padding: 0px;
 }
 

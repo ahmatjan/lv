@@ -51,15 +51,9 @@
 									
 										<ul class="unstyled profile-nav span3 user_portrait">
 
-											<li style="width: 150px;height: 150px"><img class="lazy" data-original="<?php echo $user_image?>" alt="<?php echo $nick_name?>" /> <a data-toggle="modal" href="#portrait" class="profile-edit">编辑</a></li>
+											<li><img style="width: 203px;height: 203px" class="lazy" data-original="<?php echo $user_image?>" alt="<?php echo $nick_name?>" /> <a data-toggle="modal" href="#portrait" class="profile-edit">编辑</a></li>
 
-											<li><a href="#">Projects</a></li>
-
-											<li><a href="#">Messages <span>3</span></a></li>
-
-											<li><a href="#">Friends</a></li>
-
-											<li><a href="#">Settings</a></li>
+											<li><a href="#">我的好友<span>3</span></a></li>
 
 										</ul>
 										
@@ -69,13 +63,13 @@
 
 												<h1><?php echo $nick_name?></h1>
 
-												<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.</p>
+												<p>我还是一个正直忠诚、勤奋求实的人，会不断追求人格的自我完善；明显的特点是乐观自信、温和开朗、稳重宽厚，因此，我人际关系和谐，适应环境能力较强...</p>
 
 												<p><a href="#">www.mywebsite.com</a></p>
 
 												<ul class="unstyled inline">
 
-													<li><i class="icon-map-marker"></i> Spain</li>
+													<li><i class="icon-map-marker"></i>我还是一个正直忠诚、勤奋求实的人</li>
 
 													<li><i class="icon-calendar"></i> 18 Jan 1982</li>
 
@@ -97,7 +91,7 @@
 
 													<div class="portlet-title">
 
-														<div class="caption">Sales Summary</div>
+														<div class="caption">统计信息</div>
 
 														<div class="tools">
 
@@ -111,7 +105,7 @@
 
 														<li>
 
-															<span class="sale-info">TODAY SOLD <i class="icon-img-up"></i></span> 
+															<span class="sale-info">发表文章<i class="icon-img-up"></i></span> 
 
 															<span class="sale-num">23</span>
 
@@ -119,7 +113,7 @@
 
 														<li>
 
-															<span class="sale-info">WEEKLY SALES <i class="icon-img-down"></i></span> 
+															<span class="sale-info">文章访客<i class="icon-img-down"></i></span> 
 
 															<span class="sale-num">87</span>
 
@@ -127,7 +121,7 @@
 
 														<li>
 
-															<span class="sale-info">TOTAL SOLD</span> 
+															<span class="sale-info">回复总数</span> 
 
 															<span class="sale-num">2377</span>
 
@@ -135,7 +129,7 @@
 
 														<li>
 
-															<span class="sale-info">EARNS</span> 
+															<span class="sale-info">个人主页访客</span> 
 
 															<span class="sale-num">$37.990</span>
 
@@ -161,9 +155,9 @@
 
 											<ul class="nav nav-tabs">
 
-												<li class="active"><a href="#tab_1_11" data-toggle="tab">Latest Customers</a></li>
+												<li class="active"><a href="#tab_1_11" data-toggle="tab">我的文章</a></li>
 
-												<li class=""><a href="#tab_1_22" data-toggle="tab">Feeds</a></li>
+												<li class=""><a href="#tab_1_22" data-toggle="tab">我的动态</a></li>
 
 											</ul>
 
@@ -1151,8 +1145,6 @@
 
 													</li>
 
-													<li class=""><a data-toggle="tab" href="#tab_2-2"><i class="icon-picture"></i>修改头像</a></li>
-
 													<li class=""><a data-toggle="tab" href="#tab_3-3"><i class="icon-lock"></i>修改密码</a></li>
 
 													<li class=""><a data-toggle="tab" href="#tab_4-4"><i class="icon-eye-open"></i>隐私设置</a></li>
@@ -1183,103 +1175,37 @@
 
 																<input type="text" placeholder="填写你的手机号..." class="m-wrap span8" />
 
-																<label class="control-label">Interests</label>
+																<label class="control-label">兴趣爱好</label>
 
-																<input type="text" placeholder="Design, Web etc." class="m-wrap span8" />
+																<input type="text" placeholder="请填写你的兴趣爱好..." class="m-wrap span8" />
 
-																<label class="control-label">Occupation</label>
+																<label class="control-label">职业</label>
 
-																<input type="text" placeholder="Web Developer" class="m-wrap span8" />
+																<input type="text" placeholder="请填写你的职业..." class="m-wrap span8" />
 
-																<label class="control-label">Counrty</label>
-
-																<div class="controls">
-
-																	<input type="text" class="span8 m-wrap" style="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source="[&quot;Alabama&quot;,&quot;Alaska&quot;,&quot;Arizona&quot;,&quot;Arkansas&quot;,&quot;US&quot;,&quot;Colorado&quot;,&quot;Connecticut&quot;,&quot;Delaware&quot;,&quot;Florida&quot;,&quot;Georgia&quot;,&quot;Hawaii&quot;,&quot;Idaho&quot;,&quot;Illinois&quot;,&quot;Indiana&quot;,&quot;Iowa&quot;,&quot;Kansas&quot;,&quot;Kentucky&quot;,&quot;Louisiana&quot;,&quot;Maine&quot;,&quot;Maryland&quot;,&quot;Massachusetts&quot;,&quot;Michigan&quot;,&quot;Minnesota&quot;,&quot;Mississippi&quot;,&quot;Missouri&quot;,&quot;Montana&quot;,&quot;Nebraska&quot;,&quot;Nevada&quot;,&quot;New Hampshire&quot;,&quot;New Jersey&quot;,&quot;New Mexico&quot;,&quot;New York&quot;,&quot;North Dakota&quot;,&quot;North Carolina&quot;,&quot;Ohio&quot;,&quot;Oklahoma&quot;,&quot;Oregon&quot;,&quot;Pennsylvania&quot;,&quot;Rhode Island&quot;,&quot;South Carolina&quot;,&quot;South Dakota&quot;,&quot;Tennessee&quot;,&quot;Texas&quot;,&quot;Utah&quot;,&quot;Vermont&quot;,&quot;Virginia&quot;,&quot;Washington&quot;,&quot;West Virginia&quot;,&quot;Wisconsin&quot;,&quot;Wyoming&quot;]" />
-
-																	<p class="help-block"><span class="muted">Start typing to auto complete!. E.g: US</span></p>
-
-																</div>
-
-																<label class="control-label">About</label>
-
-																<textarea class="span8 m-wrap" rows="3"></textarea>
-
-																<label class="control-label">Website Url</label>
-
-																<input type="text" placeholder="http://www.mywebsite.com" class="m-wrap span8" />
-
-																<div class="submit-btn">
-
-																	<a href="#" class="btn green">Save Changes</a>
-
-																	<a href="#" class="btn">Cancel</a>
-
-																</div>
-
-															</form>
-
-														</div>
-
-													</div>
-
-													<div id="tab_2-2" class="tab-pane">
-
-														<div style="height: auto;" id="accordion2-2" class="accordion collapse">
-
-															<form action="#">
-
-																<p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.</p>
-
-																<br />
-
-																<div class="space10"></div>
-
-																<div class="fileupload fileupload-new" data-provides="fileupload">
-
-																	<div class="input-append">
-
-																		<div class="uneditable-input">
-
-																			<i class="icon-file fileupload-exists"></i> 
-
-																			<span class="fileupload-preview"></span>
-
-																		</div>
-
-																		<span class="btn btn-file">
-
-																		<span class="fileupload-new">Select file</span>
-
-																		<span class="fileupload-exists">Change</span>
-
-																		<input type="file" class="default" />
-
-																		</span>
-
-																		<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-
-																	</div>
-
-																</div>
-
-																<div class="clearfix"></div>
+																<label class="control-label">所在地</label>
 
 																<div class="controls">
 
-																	<span class="label label-important">NOTE!</span>
+																	<input type="text" placeholder="请选择你的所在地..." class="m-wrap span8" />
 
-																	<span>You can write some information here..</span>
+																	<p class="help-block"><span class="muted">国家地区->省->市</span></p>
 
 																</div>
 
-																<div class="space10"></div>
+																<label class="control-label">个人简介</label>
+
+																<textarea class="span8 m-wrap" rows="3" placeholder="请选择你的所在地..."></textarea>
+
+																<label class="control-label">个人博客</label>
+
+																<input type="text" placeholder="填写QQ空间、新浪博客或微博的链接..." class="m-wrap span8" />
 
 																<div class="submit-btn">
 
-																	<a href="#" class="btn green">Submit</a>
+																	<a href="#" class="btn green">保存</a>
 
-																	<a href="#" class="btn">Cancel</a>
+																	<a href="#" class="btn">取消</a>
 
 																</div>
 
@@ -1295,23 +1221,23 @@
 
 															<form action="#">
 
-																<label class="control-label">Current Password</label>
+																<label class="control-label">当前密码</label>
 
 																<input type="password" class="m-wrap span8" />
 
-																<label class="control-label">New Password</label>
+																<label class="control-label">新密码</label>
 
 																<input type="password" class="m-wrap span8" />
 
-																<label class="control-label">Re-type New Password</label>
+																<label class="control-label">确认新密码</label>
 
 																<input type="password" class="m-wrap span8" />
 
 																<div class="submit-btn">
 
-																	<a href="#" class="btn green">Change Password</a>
+																	<a href="#" class="btn green">修改密码</a>
 
-																	<a href="#" class="btn">Cancel</a>
+																	<a href="#" class="btn">取消</a>
 
 																</div>
 
@@ -1331,7 +1257,7 @@
 
 																	<div class="span9">
 
-																		<p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus..</p>
+																		<p>关闭个人空间，不允许任何人查看我的个人主页</p>
 
 																	</div>
 
@@ -1343,7 +1269,7 @@
 
 																			<input type="radio" name="optionsRadios1" value="option1" />
 
-																			Yes
+																			是
 
 																			</label>
 
@@ -1351,7 +1277,7 @@
 
 																			<input type="radio" name="optionsRadios1" value="option2" checked />
 
-																			No
+																			否
 
 																			</label>  
 
@@ -1367,7 +1293,7 @@
 
 																	<div class="span9">
 
-																		<p>Enim eiusmod high life accusamus terry richardson ad squid wolf moon</p>
+																		<p>什么人可以搜索到我</p>
 
 																	</div>
 
@@ -1377,39 +1303,13 @@
 
 																			<label class="checkbox">
 
-																			<input type="checkbox" value="" /> All
+																			<input type="checkbox" value="" /> 所有人
 
 																			</label>
 
 																			<label class="checkbox">
 
-																			<input type="checkbox" value="" /> Friends
-
-																			</label>
-
-																		</div>
-
-																	</div>
-
-																</div>
-
-																<!--end profile-settings-->
-
-																<div class="profile-settings row-fluid">
-
-																	<div class="span9">
-
-																		<p>Pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson</p>
-
-																	</div>
-
-																	<div class="control-group span3">
-
-																		<div class="controls">
-
-																			<label class="checkbox">
-
-																			<input type="checkbox" value="" /> Yes
+																			<input type="checkbox" value="" /> 好友
 
 																			</label>
 
@@ -1425,7 +1325,7 @@
 
 																	<div class="span9">
 
-																		<p>Cliche reprehenderit enim eiusmod high life accusamus terry</p>
+																		<p>加我为好友需要确认</p>
 
 																	</div>
 
@@ -1435,7 +1335,7 @@
 
 																			<label class="checkbox">
 
-																			<input type="checkbox" value="" /> Yes
+																			<input type="checkbox" value="" /> 是
 
 																			</label>
 
@@ -1451,7 +1351,7 @@
 
 																	<div class="span9">
 
-																		<p>Oiusmod high life accusamus terry richardson ad squid wolf fwopo</p>
+																		<p>允许转载我的文章及图片</p>
 
 																	</div>
 
@@ -1461,7 +1361,33 @@
 
 																			<label class="checkbox">
 
-																			<input type="checkbox" value="" /> Yes
+																			<input type="checkbox" value="" /> 是
+
+																			</label>
+
+																		</div>
+
+																	</div>
+
+																</div>
+
+																<!--end profile-settings-->
+
+																<div class="profile-settings row-fluid">
+
+																	<div class="span9">
+
+																		<p>让搜索引擎可以抓取我的文章</p>
+
+																	</div>
+
+																	<div class="control-group span3">
+
+																		<div class="controls">
+
+																			<label class="checkbox">
+
+																			<input type="checkbox" value="" /> 是
 
 																			</label>
 
@@ -1477,9 +1403,9 @@
 
 																<div class="submit-btn">
 
-																	<a href="#" class="btn green">Save Changes</a>
+																	<a href="#" class="btn green">保存</a>
 
-																	<a href="#" class="btn">Cancel</a>
+																	<a href="#" class="btn">取消</a>
 
 																</div>
 

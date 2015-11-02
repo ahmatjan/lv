@@ -56,7 +56,7 @@ class nav_setting extends CI_Model {
 		$query=$this->db->query($sql, array($parent_id));
 
 		$row = $query->result_array(); 
-			return $row;
+		return $row;
 	}
 	
 	//-----------------------------------------------------------------------------------------------

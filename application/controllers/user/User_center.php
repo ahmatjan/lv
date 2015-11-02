@@ -48,7 +48,7 @@ class User_center extends CI_Controller {
 			if(strpos($_SESSION['user_image'] ,'http') !== FALSE){
 				$data['user_image']=$_SESSION['user_image'];
 			}else{
-				$portrait_img=$this->image->rezice($_SESSION['user_image'],150,150);
+				$portrait_img=$this->image->rezice($_SESSION['user_image'],203,203);
 				$data['user_image']=$portrait_img['new_img'];
 			}
 			

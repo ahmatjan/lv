@@ -96,6 +96,7 @@ class Test extends CI_Controller {
 	}
 	*/
 	
+	/*
 	public function index ()
 	{
 		//加载目录辅助函数
@@ -103,5 +104,41 @@ class Test extends CI_Controller {
 		$portraits=directory_map('public/image/portrait/');
 		$portrait=array_rand($portraits, 1);
 		var_dump($portraits[$portrait]);
+	}
+	*/
+	
+	public function index()
+	{
+		/*
+		$this->load->library('pagination');
+
+		$config['base_url'] = 'http://example.com/index.php/test/page/';
+		$config['total_rows'] = 200;
+		$config['per_page'] = 20;
+
+		$this->pagination->initialize($config);
+
+		echo $this->pagination->create_links();
+		*/
+		$this->load->helper('directory');
+		$map = directory_map(APPPATH.'controllers');
+		//var_dump($map);
+		//echo count($map);
+		foreach ($map as $k=>$v){
+			if(is_int($k) && pathinfo($v, PATHINFO_EXTENSION)=='php'){
+				echo $map[$k].'<br/>';
+			}
+			/*
+			if(!is_int($k)){
+				echo $k.'<br/>';
+			}
+			
+			if(!is_array($v)){
+				if(pathinfo($v, PATHINFO_EXTENSION)=='php'){
+					echo $v;
+				}
+			}
+			*/
+		}
 	}
 }
