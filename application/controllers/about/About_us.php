@@ -34,7 +34,7 @@ class About_us extends CI_Controller {
 								),
 			'setting'		=>array(
 								'name'=>$this->lang->line('heading_title'),
-								'this_url'=>site_url('about/About_us'),
+								'this_url'=>site_url('about/about_us'),
 								'url'=>''
 								),
 		);

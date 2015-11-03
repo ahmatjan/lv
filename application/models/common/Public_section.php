@@ -394,24 +394,4 @@ class public_section extends CI_Model {
 		
 		return $this->load->view('common/view_sideastop',$data);
 	}
-
-	
-	function is_access ($url=''){
-		//$this->CI =& get_instance();
-		//处理权限，如果没有查看权限，不显示
-		//用用户id调用户组id提取权限
-		$this->load->model(array('user/user_info','user/user_group'));
-		$group_id=$this->user_info->get_usergroup_forid(@$_SESSION['user_id']);//用户组id
-		//通过group_id查权限
-		$permission_views=$this->user_group->get_prebygroup_id($group_id);
-		//把权限转成数组
-		$permission_views=unserialize($permission_views);
-		//遍历权限
-		$this->load->helper('array');
-		$permission_views=arrayToString($permission_views);
-		echo $url.'<br/>'.$permission_views;
-		if(strpos($permission_views,$url) === false){
-			echo '不';
-		}
-	}
 }
