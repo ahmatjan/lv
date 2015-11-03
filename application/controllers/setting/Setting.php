@@ -68,6 +68,10 @@ class Setting extends CI_Controller {
 		
 		$data['https_mobile']=$this->base_setting->get_setting('https_mobile');
 		
+		$data['register_group']=$this->base_setting->get_setting('register_group');
+		
+		$data['visitors_group']=$this->base_setting->get_setting('visitors_group');
+		
 		//----------------------------------后台分类设置-----------------------------------------------
 		$this->load->model('setting/nav_setting');
 		$nav_parents=$this->nav_setting->get_parent_nav('admin');
@@ -129,6 +133,10 @@ class Setting extends CI_Controller {
 		$data['nav_admin_tops']=$nav_admin_tops;
 		//var_dump($data['nav_admin_tops']);
 		
+		//用户组
+		$this->load->model('user/user_group');
+		$data['user_groupalls']=$this->user_group->get_groupall();
+		
 		$this->load->view('setting/setting',$data);
 		$this->public_section->get_footer();
 	}
@@ -148,6 +156,8 @@ class Setting extends CI_Controller {
 		$data['author_check']=$this->input->post('author_check',TRUE);//是否允许作者审核评论
 		$data['https_pc']=$this->input->post('https_pc',TRUE);//pc
 		$data['https_mobile']=$this->input->post('https_mobile',TRUE);//mobile
+		$data['register_group']=$this->input->post('register_group',TRUE);//mobile
+		$data['visitors_group']=$this->input->post('visitors_group',TRUE);//mobile
 		
 		if($this->validata_basesetting($data)!==FALSE){
 			$this->base_setting->updata_base_setting($data);

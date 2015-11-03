@@ -285,7 +285,7 @@
 
 													<div class="actions">
 
-														<a href="<?php echo site_url('setting/layout_form')?>" class="btn blue"><i class="icon-pencil"></i>
+														<a href="<?php echo site_url('setting/user_manage/edit_usergroup')?>" class="btn blue"><i class="icon-pencil"></i>
 
 														添加
 

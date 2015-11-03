@@ -99,7 +99,8 @@ class Login extends CI_Controller {
 			if($username===$user_infos['email'] && $password === $user_infos['passwd']){
 				//写入用户信息session
 				$user_session = array(
-		                   'username'  		=> $username,
+						   'user_id'		=> $user_infos['user_id'],
+		                   'username'  		=> $user_infos['user_name'],
 		                   'nick_name'  	=> $user_infos['nick_name'],
 		                   'user_image'  	=> $user_infos['image'],
 		                   'logged_in' 		=> TRUE
@@ -132,7 +133,8 @@ class Login extends CI_Controller {
 			if($username===$user_infos['user_name'] && $password === $user_infos['passwd']){
 				//写入用户信息session
 				$user_session = array(
-		                   'username'  		=> $username,
+						   'user_id'		=> $user_infos['user_id'],
+		                   'username'  		=> $user_infos['user_name'],
 		                   'nick_name'  	=> $user_infos['nick_name'],
 		                   'user_image'  	=> $user_infos['image'],
 		                   'logged_in' 		=> TRUE
@@ -174,7 +176,8 @@ class Login extends CI_Controller {
 				
 				//写入用户信息session
 				$user_session = array(
-		                   'username'  		=> $username,
+		                   'user_id'		=> $user_infos['user_id'],
+		                   'username'  		=> $user_infos['user_name'],
 		                   'nick_name'  	=> $user_infos['nick_name'],
 		                   'user_image'  	=> $user_infos['image'],
 		                   'logged_in' 		=> TRUE
@@ -203,7 +206,8 @@ class Login extends CI_Controller {
 			if($username===$user_infos['user_name'] && $password === $user_infos['passwd']){
 				//写入用户信息session
 				$user_session = array(
-		                   'username'  		=> $username,
+		                   'user_id'		=> $user_infos['user_id'],
+		                   'username'  		=> $user_infos['user_name'],
 		                   'nick_name'  	=> $user_infos['nick_name'],
 		                   'user_image'  	=> $user_infos['image'],
 		                   'logged_in' 		=> TRUE
@@ -249,6 +253,11 @@ class Login extends CI_Controller {
 			$system_os=$this->agent->platform();
 		}
 		
+		//默认注册用户组
+		if($this->base_setting->get_setting('register_group')!==NULL){
+			$register_group=$this->base_setting->get_setting('register_group');
+		}
+		
 		//加载目录辅助函数
 		$this->load->helper('directory');
 		$portraits=directory_map('image/portrait/');
@@ -272,12 +281,16 @@ class Login extends CI_Controller {
 					'system_os'	=>$system_os,
 					'browser'=>$browser_info,
 					'register_style'=>'email',
+					'group_id'=>$register_group,
 				);
 				
 				$this->user_info->int_username($user_info);
 				
+				//通过邮箱查用户id
+				$user_id=$this->user_info->get_useremail_id($email);
 				//写入用户信息session
 				$user_session = array(
+						   'user_id'		=> $user_id,
 		                   'username'  		=> $email,
 		                   'nick_name'  	=> $random_username,
 		                   'user_image'  	=> $portrait,
@@ -310,12 +323,15 @@ class Login extends CI_Controller {
 					'system_os'	=>$system_os,
 					'browser'=>$browser_info,
 					'register_style'=>'user_name',
+					'group_id'=>$register_group,
 				);
 				
 				$this->user_info->int_username($user_info);
-				
+				//通过用户名查id
+				$user_id=$this->user_info->get_username_id($username);
 				//写入用户信息session
 				$user_session = array(
+						   'user_id'		=> $user_id,
 		                   'username'  		=> $username,
 		                   'nick_name'  	=> $random_username,
 		                   'user_image'  	=> $portrait,

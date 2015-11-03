@@ -204,185 +204,261 @@
 											
 											<div class="control-group">
 
-													<label class="control-label">是否审核文章：</label>
+												<label class="control-label">注册用户默认组：</label>
 
-													<div class="controls">
-													
-														<label class="radio">
-														
-														<?php if ($article_check == '1'): ?>
-
-														<input type="radio" name="article_check" value="1" checked />
-
-														是
-														
-														<?php else: ?>
-														
-														<input type="radio" name="article_check" value="1" />
-
-														是
-														<?php endif; ?>
-														</label>
-														
-														<label class="radio">
-														
-														<?php if ($article_check !== '1'): ?>
-
-														<input type="radio" name="article_check" value="0" checked />
-
-														否
-														
-														<?php else: ?>
-
-														<input type="radio" name="article_check" value="0"/>
-
-														否
-														
-														<?php endif; ?> 
-														
-														</label> 
-														
-													</div>
-
-												</div>
-											
-											<div class="control-group">
-
-													<label class="control-label">是否允许作者审核评论：</label>
-
-													<div class="controls">
-
-														<label class="radio">
-														
-														<?php if ($author_check == '1'): ?>
-
-														<input type="radio" name="author_check" value="1" checked/>
-
-														是
-														
-														<?php else: ?>
-														
-														<input type="radio" name="author_check" value="1" />
-
-														是
-														
-														<?php endif; ?> 
-
-														</label>
-
-														<label class="radio">
-
-														<?php if ($author_check !== '1'): ?>
-
-														<input type="radio" name="author_check" value="0" checked/>
-
-														否
-														
-														<?php else: ?>
-														
-														<input type="radio" name="author_check" value="0" />
-
-														否
-														
-														<?php endif; ?> 
-
-														</label>  
-
-													</div>
-
-												</div>
-											
-											<div class="control-group">
-
-													<label class="control-label">PC端https：</label>
-
-													<div class="controls">
-
-														<label class="radio">
-														
-														<?php if ($https_pc == '1'): ?>
-
-														<input type="radio" name="https_pc" value="1" checked/>
-
-														是
-														
-														<?php else: ?>
-														
-														<input type="radio" name="https_pc" value="1" />
-
-														是
-														
-														<?php endif; ?> 
-
-														</label>
-
-														<label class="radio">
-
-														<?php if ($https_pc !== '1'): ?>
-
-														<input type="radio" name="https_pc" value="0" checked/>
-
-														否
-														
-														<?php else: ?>
-														
-														<input type="radio" name="https_pc" value="0" />
-
-														否
-														
-														<?php endif; ?> 
-
-														</label>  
-
-													</div>
-
-												</div>
+												<div class="controls">
 												
-												<div class="control-group">
+												<!--###############################################################-->
+												<select data-placeholder="请选择一个默认注册组..." class="chosen span12" tabindex="-1" id="selS0V" name="register_group">
 
-													<label class="control-label">移动端https：</label>
+													<?php if (isset($register_group)): ?>
+													<?php foreach ($user_groupalls as $user_groupall): ?><!--遍历用户组-->
+													<?php if ($register_group==$user_groupall['group_id']): ?>
+													<option value="<?php echo $user_groupall['group_id']?>"><?php echo $user_groupall['name']?></option>
+													<?php endif; ?>
+													<?php endforeach; ?>
+													<?php else: ?>
 
-													<div class="controls">
+													<option value="">---请选择一个默认注册组---</option>
+													
+													<?php endif; ?>
 
-														<label class="radio">
+													<optgroup label="用户组">
+
+														<?php foreach ($user_groupalls as $user_groupall): ?>
+													
+														<option value="<?php echo $user_groupall['group_id']?>"><?php echo $user_groupall['name']?></option>
 														
-														<?php if ($https_mobile == '1'): ?>
+														<?php endforeach; ?>
 
-														<input type="radio" name="https_mobile" value="1" checked/>
+													</optgroup>
 
-														是
+												</select>
+												<!--###############################################################-->
+										
+												</div>
+
+											</div>
+											
+											<div class="control-group">
+
+												<label class="control-label">访客默认用户组：</label>
+
+												<div class="controls">
+												
+												<!--###############################################################-->
+												<select data-placeholder="请选择一个访客默认组..." class="chosen span12" tabindex="-1" id="selS0V1" name="visitors_group">
+
+													<?php if (isset($visitors_group)): ?>
+													<?php foreach ($user_groupalls as $user_groupall): ?><!--遍历用户组-->
+													<?php if ($visitors_group==$user_groupall['group_id']): ?>
+													<option value="<?php echo $user_groupall['group_id']?>"><?php echo $user_groupall['name']?></option>
+													<?php endif; ?>
+													<?php endforeach; ?>
+													<?php else: ?>
+
+													<option value="">---请选择一个访客默认组---</option>
+													
+													<?php endif; ?>
+
+													<optgroup label="用户组">
+
+														<?php foreach ($user_groupalls as $user_groupall): ?>
+													
+														<option value="<?php echo $user_groupall['group_id']?>"><?php echo $user_groupall['name']?></option>
 														
-														<?php else: ?>
-														
-														<input type="radio" name="https_mobile" value="1" />
+														<?php endforeach; ?>
 
-														是
-														
-														<?php endif; ?> 
+													</optgroup>
 
-														</label>
+												</select>
+												<!--###############################################################-->
+										
+												</div>
 
-														<label class="radio">
+											</div>
+											
+											<div class="control-group">
 
-														<?php if ($https_mobile !== '1'): ?>
+												<label class="control-label">是否审核文章：</label>
 
-														<input type="radio" name="https_mobile" value="0" checked/>
+												<div class="controls">
+												
+													<label class="radio">
+													
+													<?php if ($article_check == '1'): ?>
 
-														否
-														
-														<?php else: ?>
-														
-														<input type="radio" name="https_mobile" value="0" />
+													<input type="radio" name="article_check" value="1" checked />
 
-														否
-														
-														<?php endif; ?> 
+													是
+													
+													<?php else: ?>
+													
+													<input type="radio" name="article_check" value="1" />
 
-														</label>  
+													是
+													<?php endif; ?>
+													</label>
+													
+													<label class="radio">
+													
+													<?php if ($article_check !== '1'): ?>
 
-													</div>
+													<input type="radio" name="article_check" value="0" checked />
+
+													否
+													
+													<?php else: ?>
+
+													<input type="radio" name="article_check" value="0"/>
+
+													否
+													
+													<?php endif; ?> 
+													
+													</label> 
+													
+												</div>
+
+											</div>
+											
+											<div class="control-group">
+
+												<label class="control-label">是否允许作者审核评论：</label>
+
+												<div class="controls">
+
+													<label class="radio">
+													
+													<?php if ($author_check == '1'): ?>
+
+													<input type="radio" name="author_check" value="1" checked/>
+
+													是
+													
+													<?php else: ?>
+													
+													<input type="radio" name="author_check" value="1" />
+
+													是
+													
+													<?php endif; ?> 
+
+													</label>
+
+													<label class="radio">
+
+													<?php if ($author_check !== '1'): ?>
+
+													<input type="radio" name="author_check" value="0" checked/>
+
+													否
+													
+													<?php else: ?>
+													
+													<input type="radio" name="author_check" value="0" />
+
+													否
+													
+													<?php endif; ?> 
+
+													</label>  
 
 												</div>
+
+											</div>
+											
+											<div class="control-group">
+
+												<label class="control-label">PC端https：</label>
+
+												<div class="controls">
+
+													<label class="radio">
+													
+													<?php if ($https_pc == '1'): ?>
+
+													<input type="radio" name="https_pc" value="1" checked/>
+
+													是
+													
+													<?php else: ?>
+													
+													<input type="radio" name="https_pc" value="1" />
+
+													是
+													
+													<?php endif; ?> 
+
+													</label>
+
+													<label class="radio">
+
+													<?php if ($https_pc !== '1'): ?>
+
+													<input type="radio" name="https_pc" value="0" checked/>
+
+													否
+													
+													<?php else: ?>
+													
+													<input type="radio" name="https_pc" value="0" />
+
+													否
+													
+													<?php endif; ?> 
+
+													</label>  
+
+												</div>
+
+											</div>
+											
+											<div class="control-group">
+
+												<label class="control-label">移动端https：</label>
+
+												<div class="controls">
+
+													<label class="radio">
+													
+													<?php if ($https_mobile == '1'): ?>
+
+													<input type="radio" name="https_mobile" value="1" checked/>
+
+													是
+													
+													<?php else: ?>
+													
+													<input type="radio" name="https_mobile" value="1" />
+
+													是
+													
+													<?php endif; ?> 
+
+													</label>
+
+													<label class="radio">
+
+													<?php if ($https_mobile !== '1'): ?>
+
+													<input type="radio" name="https_mobile" value="0" checked/>
+
+													否
+													
+													<?php else: ?>
+													
+													<input type="radio" name="https_mobile" value="0" />
+
+													否
+													
+													<?php endif; ?> 
+
+													</label>  
+
+												</div>
+
+											</div>
 												
 											<div class="form-actions">
 

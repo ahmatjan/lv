@@ -120,29 +120,30 @@ class Test extends CI_Controller {
 
 		echo $this->pagination->create_links();
 		*/
-		$this->load->model('user/user_group');
-		$group_infos=$this->user_group->get_infobygroup_id('3');
-	
-		$permission_views=unserialize($group_infos['permission_view']);
-	
-		$this->load->helper('directory');
-		$maps = directory_map(APPPATH.'controllers');
+		/*
+		//判断用户是否有查看权限
+		$this->load->model(array('user/user_group','user/user_info'));//装载模型
+		//通过用户id查用户组
+		$group_id=$this->user_info->get_usergroup_forid($_SESSION['user_id']);
 		
+		//通过group_id查权限
+		$permission_view=$this->user_group->get_prebygroup_id($group_id);
+		//把权限转成数组
+		$permission_view=unserialize($permission_view);
 		$this->load->helper('array');
-		$b=arrayToString($maps);
-		$b=explode(',',$b);
-		foreach ($b as $k=>$v){
-			if(pathinfo($v, PATHINFO_EXTENSION)=='php'){
-				$b[$k]=strtolower(substr($v,0,-4));	
-			}else{
-				unset($b[$k]);
+		$permission_view=arrayToString($permission_view);
+		//返回页面分段url
+		$urls=uri_string();
+		$urls=explode('/',$urls);//斜线分成数组
+		echo count($urls);
+		foreach ($urls as $url){
+			if(strpos($permission_view, strtolower($url)) !== false){
+				echo $permission_view.'</br>'.$url;
 			}
 		}
-		$e=array_diff($b,$permission_views);
+		*/
 		
-		foreach($e as $n){
-			echo $n.'<br/>';
-		}
+		$this->public_section->is_access('setting\user_manage');
 		/*
 		foreach ($maps as $k=>$v){
 			if(is_int($k)){

@@ -127,7 +127,20 @@ class User_manage extends CI_Controller {
 		
 		$this->load->helper(array('directory','array'));
 		$maps = directory_map(APPPATH.'controllers');
-		$maps=arrayToString($maps);
+		
+		foreach($maps as $k=>$v){
+			if(is_int($k)){
+				$maps_new['1'][]=$v;
+			}
+			if(is_array($v)){
+				foreach($v as $b=>$c){
+					$maps_new['2'][] = $k.$c;
+				}
+			}
+		}
+
+		$maps=arrayToString($maps_new);
+		$maps=str_replace('\\', '/', $maps);
 		$maps=explode(',',$maps);
 		
 		foreach ($maps as $k=>$v){
@@ -161,7 +174,7 @@ class User_manage extends CI_Controller {
 			$data['group_description']='';
 		}
 		
-		$permission_view=unserialize($group_infos['permission_view']);
+		@$permission_view=unserialize($group_infos['permission_view']);
 		
 		if($this->input->post('my_multi_select1')){
 			$data['permission_view1']=$this->input->post('my_multi_select1');//选中的查看权限
@@ -176,7 +189,7 @@ class User_manage extends CI_Controller {
 		}
 		
 		//编辑权限
-		$permission_edit=unserialize($group_infos['permission_edit']);
+		@$permission_edit=unserialize($group_infos['permission_edit']);
 		if($this->input->post('my_multi_select2')){
 			$data['permission_edit1']=$this->input->post('my_multi_select2');//选中的查看权限
 			$data['permission_edit2']=array_diff($maps,$this->input->post('my_multi_select2'));//未选中的查看权限/差集

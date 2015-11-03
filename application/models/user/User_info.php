@@ -16,6 +16,20 @@ class user_info extends CI_Model {
 		}
 	}
 	
+	public function get_username_id($data)
+	{
+	//通过用户名查用户id
+		$sql = "SELECT user_id FROM user_info WHERE user_name = ?"; 
+
+		$query=$this->db->query($sql, array($data));
+
+		if ($query->num_rows() > 0)
+		{
+		   $row = $query->row_array(); 
+			return $row['user_id'];
+		}
+	}
+	
 	public function get_useremail_info($data)
 	{
 	//通过邮箱查用户信息
@@ -31,6 +45,21 @@ class user_info extends CI_Model {
 		}
 	}
 	
+	public function get_useremail_id($data)
+	{
+	//通过邮箱查用户id
+
+		$sql = "SELECT user_id FROM user_info WHERE email = ?"; 
+
+		$query=$this->db->query($sql, array($data));
+
+		if ($query->num_rows() > 0)
+		{
+		   $row = $query->row_array(); 
+			return $row['user_id'];
+		}
+	}
+	
 	//添加用户
 	public function int_username($data)
 	{
@@ -38,7 +67,7 @@ class user_info extends CI_Model {
 		$this->db->insert('user_info', $data);
 	}
 	
-	//添加用户id查用记信息
+	//用户id查用记信息
 	public function get_userinfobyuser_id($user_id)
 	{
 		$sql = "SELECT user_name,nick_name,image FROM user_info WHERE user_id = ?"; 
@@ -84,5 +113,20 @@ class user_info extends CI_Model {
 		$row = $query->result_array();
 		
 		return $row;
+	}
+	
+	//通过用户id查用户组
+	public function get_usergroup_forid($data)
+	{
+	//通过用户id查用户组
+		$sql = "SELECT group_id FROM user_info WHERE user_id = ?"; 
+
+		$query=$this->db->query($sql, array($data));
+
+		if ($query->num_rows() > 0)
+		{
+		   $row = $query->row_array(); 
+			return $row['group_id'];
+		}
 	}
 }

@@ -25,10 +25,9 @@
 <link rel="shortcut icon" href="<?php echo base_url('public/image/favicon.ico')?>" />
 
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
-<!--
-<link href="<?php echo base_url('public/min/?g=css')?>" rel="stylesheet" type="text/css"/>
--->
 
+<link href="<?php echo base_url('public/min/?g=css')?>" rel="stylesheet" type="text/css"/>
+<!--
 <link href="<?php echo base_url('public/css/bootstrap.min.css');?>" rel="stylesheet" type="text/css"/>
 
 <link href="<?php echo base_url('public/css/bootstrap-responsive.min.css');?>" rel="stylesheet" type="text/css"/>
@@ -48,11 +47,13 @@
 <link href="<?php echo base_url('public/css/select2_metro.css')?>" rel="stylesheet" type="text/css"/>
 <!--加载进度条-->
 
+<!--
 <link href="<?php echo base_url('public/css/loading/nprogress.css')?>" rel="stylesheet" type="text/css"/>
 <!--加载进度条-->
 <!--意见反馈回顶部-->
-
+<!--
 <link href="<?php echo base_url('public/css/loading/feedback.css')?>" rel="stylesheet" type="text/css"/>
+-->
 <!--意见反馈回顶部-->
 
 <!-- END GLOBAL MANDATORY STYLES -->

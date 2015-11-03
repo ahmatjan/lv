@@ -42,13 +42,15 @@
 	
 	<?php foreach ($nav as $item): ?>
 
+	<?php if (!empty($item['childs']) || !empty($item['nav_url'])): ?>
+	
 	<?php if (isset($item['active'])): ?>
 	<li class="<?php echo $item['active']?>">
 	<?php else: ?>
 	<li>
 	<?php endif; ?>
 	<!--如果存在链接...-->
-		<?php if (isset($item['nav_url'])): ?>
+		<?php if (!empty($item['nav_url'])): ?>
 
 		<a href="<?php echo site_url($item['nav_url'])?>">
 
@@ -95,7 +97,9 @@
 		<?php endif; ?>
 
 	</li>
-
+	
+	<?php endif; ?>
+	
 	<?php endforeach; ?>
 
 	<?php endif; ?>
