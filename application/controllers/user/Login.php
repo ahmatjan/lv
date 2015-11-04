@@ -12,10 +12,6 @@ class Login extends CI_Controller {
 		//第三方登陆
 		$this->config->load('oauth2');
 		
-		if($this->agent->is_robot()){
-			return;
-		}
-		
 		if($this->user->is_Logged()){
 			redirect(site_url('user/User_center'));
 		}
@@ -251,8 +247,6 @@ class Login extends CI_Controller {
 
 		if($this->agent->is_mobile()){
 			$system_os=$this->agent->mobile();
-		}else if($this->agent->is_robot()){
-			$system_os=$this->agent->robot();
 		}else{
 			$system_os=$this->agent->platform();
 		}

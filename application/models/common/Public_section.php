@@ -68,16 +68,27 @@ class public_section extends CI_Model {
 			if((string)@$ip->code=='0'){
 				$ip_address= (array)$ip->data;
 			}
-			//系统类型
-			if($this->agent->is_mobile()){
-			$system_os=$this->agent->mobile();
-			}else if($this->agent->is_robot()){
+			
+			//系统类型$this->agent->is_robot()
+			if($this->agent->is_robot()){
 				$system_os=$this->agent->robot();
+			}else if($this->agent->is_mobile()){
+				$system_os=$this->agent->mobile();
 			}else{
 				$system_os=$this->agent->platform();
 			}
+			
+			//来源
+			if ($this->agent->is_referral())
+			{
+				$referrer_url=$this->agent->referrer();
+			}else{
+				$referrer_url='';
+			}
+			
 			//把用户访问信息写入数据库
 			$access_report=array(
+				'referrer_url'	=>$referrer_url,
 				'ip'			=>$this->agent->get_ip(),
 				'access_time'	=>date('Y-m-d H:i:s'),
 				'system_os'		=>$system_os,

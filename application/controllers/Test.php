@@ -208,7 +208,9 @@ var_dump($nav_parents);
 
 		*/
 		
-		echo $this->output->is_access();
+		
+		phpinfo();
+
 		/*
 		if(!strpos($permission_views,$url) !== false){
 			if($_SERVER['HTTP_REFERER']!==NULL){

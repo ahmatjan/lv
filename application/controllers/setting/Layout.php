@@ -5,7 +5,6 @@ class Layout extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 			$this->output->https_jump();
-			$this->output->is_access();
 	}
 	
 	public function index()

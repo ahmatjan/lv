@@ -5,7 +5,6 @@ class User_manage extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 			$this->output->https_jump();
-			$this->output->is_access();
 	}
 	
 	public function index()
@@ -67,11 +66,8 @@ class User_manage extends CI_Controller {
 	
 	//管理员登陆用户帐号
 	public function login_user(){
-		
-		//通过用户id登陆
-		$this->load->model('user/user_info');
 
-		if(isset($user_info)){
+		if($this->input->get('user_id')!==NULL){
 			//模拟登陆，把用户信息写入session
 			$this->session->set_userdata('user_id', $this->input->get('user_id'));
 			

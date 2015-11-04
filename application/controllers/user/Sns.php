@@ -6,6 +6,7 @@ class Sns extends CI_Controller {
     {
       	parent::__construct();
     	$this->user->get_userid() AND redirect();
+    	$this->load->model('setting/base_setting');
     }
 
 	public function session($provider = '')
@@ -14,8 +15,8 @@ class Sns extends CI_Controller {
 		$allowed_providers = $this->config->item('oauth2');
 		if ( ! $provider OR ! isset($allowed_providers[$provider]))
 		{
-        	$this->session->set_flashdata('info', '暂不支持'.$provider.'方式登录.');
-            redirect();
+        	$this->session->set_flashdata('error_login', '暂不支持'.$provider.'方式登录.');
+            redirect('user/login');
             return;
 		}
 		$this->load->library('oauth2');
@@ -23,8 +24,8 @@ class Sns extends CI_Controller {
         $args = $this->input->get();
         if ($args AND !isset($args['code']))
         {
-          	$this->session->set_flashdata('info', '授权失败了,可能由于应用设置问题或者用户拒绝授权.<br />具体原因:<br />'.json_encode($args));
-            redirect();
+          	$this->session->set_flashdata('error_login', '授权失败了,可能由于应用设置问题或者用户拒绝授权.<br />具体原因:<br />'.json_encode($args));
+            redirect('user/login');
             return;
         }
         $code = $this->input->get('code', TRUE);
@@ -36,7 +37,8 @@ class Sns extends CI_Controller {
                   }
                   catch (OAuth2_Exception $e)
                   {
-                  	$this->session->set_flashdata('info', '操作失败<pre>'.$e.'</pre>');
+                  	$this->session->set_flashdata('error_login', '操作失败<pre>'.$e.'</pre>');
+                  	redirect('user/login');
                   }
 		}
 		else
@@ -47,29 +49,23 @@ class Sns extends CI_Controller {
 	        	$sns_user = $provider->get_user_info($token);
 				if (is_array($sns_user))
 				{
-					/*
-                    $this->session->set_flashdata('info', '登录成功');
-					$this->session->set_userdata('user', $sns_user);
-                    $this->session->set_userdata('is_login', TRUE);
-                    */
                     
 					//把用户信息写入数据库
 					$this->load->model('user/user_info');
 					//检查用户（uid）是否存在，如果存在不写入数据库只是登陆
-					$uid=$this->user_info->get_username_info($sns_user['uid']);
-					$uid=$uid['uid'];
-					if($uid !== $sns_user['uid']){
+					
+					if($this->user_info->get_useridforuid($sns_user['uid'])===FALSE){
 						//如果用户uid不存在写入
 						 //随机用户名
 	                    $this->load->helper('string');
 						$random_username=substr(random_string('md5'),0,20);
 						
 						$this->load->library('user_agent');//用户代理类
-						//系统类型
-						if($this->agent->is_mobile()){
-							$system_os=$this->agent->mobile();
-						}else if($this->agent->is_robot()){
+						//系统类型$this->agent->is_robot()
+						if($this->agent->is_robot()){
 							$system_os=$this->agent->robot();
+						}else if($this->agent->is_mobile()){
+							$system_os=$this->agent->mobile();
 						}else{
 							$system_os=$this->agent->platform();
 						}
@@ -87,34 +83,42 @@ class Sns extends CI_Controller {
 						'user_name' =>$random_username,
 						'email'		=>'',
 						'passwd'	=>'',
+						'nick_name'	=>$sns_user['screen_name'],
+						'image'		=>$sns_user['image'],
 						'add_ip'	=>$ip,
 						'add_date'	=>$date_now,
 						'status'	=>'1',
 						'system_os'	=>$system_os,
 						'browser'=>$browser_info,
-						'register_group'=>$register_group,
+						'register_style'=>$sns_user['via'],
+						'group_id'=>$register_group,
 						);
 						
 						//入库
 						$this->user_info->int_username($user_info);
 					}
 					
-					$user_id=$this->user_info->get_username_info($sns_user['uid'])['user_id'];
+					$user_id=$this->user_info->get_useridforuid($sns_user['uid']);
+
 					$this->session->set_userdata('user_id', $user_id);
-					
-					if(@$_SESSION['before_access']){
-						redirect($_SESSION['before_access']);
+					$this->session->set_flashdata('setting_success', '登陆成功！');
+					if($this->agent->is_referral()){
+						redirect($this->agent->is_referral());
+					}else{
+						redirect('user/user_center');
 					}
            			
 				}
 				else
 				{
-                    $this->session->set_flashdata('info', '获取用户信息失败');
+                    $this->session->set_flashdata('error_login', '获取用户信息失败');
+                    redirect('user/login');
 				}
 			}
 			catch (OAuth2_Exception $e)
 			{
-                $this->session->set_flashdata('info', '操作失败<pre>'.$e.'</pre>');
+                $this->session->set_flashdata('error_login', '操作失败<pre>'.$e.'</pre>');
+                redirect('user/login');
 			}
 		}
         redirect();

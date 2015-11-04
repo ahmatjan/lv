@@ -30,6 +30,21 @@ class user_info extends CI_Model {
 		}
 	}
 	
+	public function get_useridforuid($uid)
+	{
+	//通过用户名查用户id
+		$sql = "SELECT user_id FROM user_info WHERE uid = ? "; 
+
+		$query=$this->db->query($sql, array($uid));
+
+		$row = $query->row_array();
+		if(isset($row['user_id'])){
+			return $row['user_id'];
+		}else{
+			return FALSE;
+		}
+	}
+	
 	public function get_useremail_info($data)
 	{
 	//通过邮箱查用户信息

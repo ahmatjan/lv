@@ -276,9 +276,6 @@ class MY_Output extends CI_Output
 	public function https_jump (){
 		$this->CI =& get_instance();
 		//session用来记录用户访问设备和https的设置
-		$this->CI->load->library('session');
-		//记录用户的上一个访问页面
-		$this->CI->session->set_userdata('before_access', current_url());
 		
 		//装载模型
 		$this->CI->load->model('setting/base_setting');
@@ -343,25 +340,20 @@ class MY_Output extends CI_Output
 				}  
 			}
 		}
-	}
-	
-	//判断是否有查看权限，如果没有跳转到上一浏览页
-	public function is_access(){
-		$this->CI =& get_instance();
-		$uri_string=uri_string();//当前访问分段url
-		$this->CI->load->helper('string');
-		$str_toal=str_toal($uri_string,'/');
-		if($str_toal>2){//把超过3段的url 截取前两段
-			$uri_string=substr($uri_string,0,strrchr($uri_string,'/'));
+		/*
+		//判断操作系统、浏览器如果有一个返回false 终止程序
+		//系统类型
+		if($this->CI->agent->is_mobile()){
+		$system_os=$this->CI->agent->mobile();
+		}else if($this->CI->agent->is_robot()){
+			$system_os=$this->CI->agent->robot();
+		}else{
+			$system_os=$this->CI->agent->platform();
 		}
 		
-		if($this->CI->user->hasPermission('access',$uri_string)==FALSE){
-			$this->CI->session->set_flashdata('setting_false', '你没有查看权限，不能查看该页面！');
-			if($_SERVER['HTTP_REFERER']){
-				redirect($_SERVER['HTTP_REFERER']);
-			}else{
-				redirect('home');
-			}
+		if($system_os==='Unknown Platform'){
+			exit('拒绝');
 		}
+		*/
 	}
 }
