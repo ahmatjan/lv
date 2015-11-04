@@ -137,6 +137,79 @@ class Test extends CI_Controller {
 		}
 		*/
 		/*
+		//调用淘宝ip库获取ip地址
+		$session_ipcity = $this->session->userdata('country');
+		
+		if(!isset($session_ipcity)){
+			//ip地址不存在
+			//$this->load->library('user_agent');
+			//$ip=$this->agent->get_ip();
+			$ip='222.219.137.84';
+			$url="http://ip.taobao.com/service/getIpInfo.php?ip=".$ip;
+			@$ip=json_decode(file_get_contents($url)); 
+
+			if((string)@$ip->code=='1'){
+
+				return false;
+
+			}
+			if((string)@$ip->code=='0'){
+				$data = (array)$ip->data;
+
+				$this->session->set_userdata($data);
+			}
+
+		}
+		*/
+		/*
+		//获取当前页链接
+		$active=uri_string();
+		$active=strtolower($active);
+		
+		$this->load->model('setting/nav_setting');
+		$nav_parents=$this->nav_setting->get_parent_nav('admin');
+
+		foreach($nav_parents as $v){
+			//$nav_childs=$this->nav_setting->get_child_nav($v['nav_id']);
+			$nav_childs[]=$this->nav_setting->get_child_nav($v['nav_id']);
+		}
+		
+		foreach($nav_parents as $k=>$v){
+			$nav_parents[$k]['childs']=&$nav_childs[$k];
+			if($nav_parents[$k]['nav_url'] == $active){
+				$nav_parents[$k]['active']='active';
+			}
+			
+			//判断权限，如果没有查看权限不显示
+			if(!empty($nav_parents[$k]['nav_url'])){
+				if($this->user->hasPermission('access',$nav_parents[$k]['nav_url'])===false){
+					unset($nav_parents[$k]);
+				}
+			}
+			
+			if(!empty($nav_childs[$k])){
+				foreach($nav_childs[$k] as $b=>$c){
+					if($nav_childs[$k][$b]['nav_child_url'] == $active){
+						$nav_parents[$k]['active']='active';
+					}
+					
+					//判断权限，如果没有查看权限不显示
+					if(!empty($nav_childs[$k][$b]['nav_child_url'])){
+						if($this->user->hasPermission('access',$nav_childs[$k][$b]['nav_child_url'])===false){
+							unset($nav_childs[$k][$b]);
+						}
+					}
+					
+				}
+			}
+			
+		}
+var_dump($nav_parents);
+
+		*/
+		
+		echo $this->output->is_access();
+		/*
 		if(!strpos($permission_views,$url) !== false){
 			if($_SERVER['HTTP_REFERER']!==NULL){
 				$this->session->set_flashdata('setting_false', '你没有权限查看！');

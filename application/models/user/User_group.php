@@ -29,20 +29,7 @@ class user_group extends CI_Model {
 			return $row;
 		}
 	}
-	//通过group_id查查看权限
-	public function get_prebygroup_id($group_id='')
-	{
-		$sql = "SELECT permission_view FROM user_group WHERE group_id=?"; 
 
-		$query=$this->db->query($sql,array($group_id));
-		
-		if ($query->num_rows() > 0)
-		{
-		   $row = $query->row_array(); 
-			return $row['permission_view'];
-		}
-	}
-	
 	public function get_groupall()
 	{
 	//获取所有用户组
@@ -58,9 +45,9 @@ class user_group extends CI_Model {
 	public function int_group($data){
 		//传入一个待添加的数组
 		if(!empty($data['group_id'])){
-			$sql="REPLACE INTO user_group VALUES('".(int)$data['group_id']."',".$this->db->escape($data['name']).",".$this->db->escape($data['description']).",".$this->db->escape($data['permission_view']).",".$this->db->escape($data['permission_edit']).")";
+			$sql="REPLACE INTO user_group VALUES('".(int)$data['group_id']."',".$this->db->escape($data['name']).",".$this->db->escape($data['description']).",".$this->db->escape($data['permission']).")";
 		}else{
-			$sql="INSERT INTO user_group (name,description,permission_view,permission_edit) VALUES (".$this->db->escape($data['name']).",".$this->db->escape($data['description']).",".$this->db->escape($data['permission_view']).",".$this->db->escape($data['permission_edit']).")";
+			$sql="INSERT INTO user_group (name,description,permission) VALUES (".$this->db->escape($data['name']).",".$this->db->escape($data['description']).",".$this->db->escape($data['permission']).")";
 		}
 		
 		$this->db->query($sql);

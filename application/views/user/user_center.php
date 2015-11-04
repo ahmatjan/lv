@@ -1165,7 +1165,7 @@
 
 																<label class="control-label">用户名<span style="color:#B5B1B1">用于登陆且不可修改！</span></label>
 
-																<input type="text" placeholder="用于登陆且不可修改..." value="<?php echo $_SESSION['username']?>" disabled="true" class="m-wrap span8" />
+																<input type="text" placeholder="用于登陆且不可修改..." value="<?php echo $user_name?>" disabled="true" class="m-wrap span8" />
 
 																<label class="control-label">昵称</label>
 

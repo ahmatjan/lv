@@ -6,24 +6,25 @@ class User {
 	private $username;
 	private $permission = array();
 
-	public function __construct($registry) {
-		$this->db = $registry->get('db');
-		$this->request = $registry->get('request');
-		$this->session = $registry->get('session');
+	public function __construct() {
+		$this->CI =& get_instance();//$this->CI调用框架方法
+		$this->CI->load->database();//连接数据库
+		$this->CI->load->library(array('session','user_agent'));//加载session类、用户代理类（用于获取ip地址）
 
-		if (isset($this->session->data['user_id'])) {
-			$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE user_id = '" . (int)$this->session->data['user_id'] . "' AND status = '1'");
+		if (isset($_SESSION['user_id'])) {//如果user_id在session中
+			$user_query = $this->CI->db->query("SELECT * FROM " . $this->CI->db->dbprefix('user_info') . " WHERE user_id = '" . (int)$_SESSION['user_id'] . "' AND status = '1'");
 
-			if ($user_query->num_rows) {
-				$this->user_id = $user_query->row['user_id'];
-				$this->username = $user_query->row['username'];
-				$this->user_group_id = $user_query->row['user_group_id'];
+			if ($user_query->num_rows()) {
+				$this->user_id = $user_query->row_array()['user_id'];
+				$this->username = $user_query->row_array()['user_name'];
+				$this->nickname = $user_query->row_array()['nick_name'];
+				$this->group_id = $user_query->row_array()['group_id'];
+				$this->image = $user_query->row_array()['image'];
 
-				$this->db->query("UPDATE " . DB_PREFIX . "user SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE user_id = '" . (int)$this->session->data['user_id'] . "'");
+				//permission_view查看权限，permission_edit编辑权限
+				$user_group_query = $this->CI->db->query("SELECT permission FROM " . $this->CI->db->dbprefix('user_group') . " WHERE group_id = '" . (int)$user_query->row_array()['group_id'] . "'");
 
-				$user_group_query = $this->db->query("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
-
-				$permissions = unserialize($user_group_query->row['permission']);
+				$permissions = unserialize($user_group_query->row_array()['permission']);//权限
 
 				if (is_array($permissions)) {
 					foreach ($permissions as $key => $value) {
@@ -36,34 +37,8 @@ class User {
 		}
 	}
 
-	public function login($username, $password) {
-		$user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE username = '" . $this->db->escape($username) . "' AND (password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('" . $this->db->escape($password) . "'))))) OR password = '" . $this->db->escape(md5($password)) . "') AND status = '1'");
-
-		if ($user_query->num_rows) {
-			$this->session->data['user_id'] = $user_query->row['user_id'];
-
-			$this->user_id = $user_query->row['user_id'];
-			$this->username = $user_query->row['username'];
-			$this->user_group_id = $user_query->row['user_group_id'];
-
-			$user_group_query = $this->db->query("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
-
-			$permissions = unserialize($user_group_query->row['permission']);
-
-			if (is_array($permissions)) {
-				foreach ($permissions as $key => $value) {
-					$this->permission[$key] = $value;
-				}
-			}
-
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public function logout() {
-		unset($this->session->data['user_id']);
+		unset($_SESSION['user_id']);
 
 		$this->user_id = '';
 		$this->username = '';
@@ -81,15 +56,23 @@ class User {
 		return $this->user_id;
 	}
 
-	public function get_id() {
+	public function get_userid() {
 		return $this->user_id;
 	}
 
 	public function get_username() {
 		return $this->username;
 	}
+	
+	public function get_nickname() {
+		return $this->nickname;
+	}
 
 	public function get_groupId() {
-		return $this->user_group_id;
+		return $this->group_id;
+	}
+	
+	public function get_image() {
+		return $this->image;
 	}
 }

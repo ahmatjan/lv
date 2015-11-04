@@ -49,6 +49,46 @@ class public_section extends CI_Model {
 		
 		$data['mate_author']=$this->base_setting->get_setting('mate_author');
 		
+		//写入一个随机session做为token令牌，用来检查是同一次访问
+		if(!isset($_SESSION['token'])){//如果token不存在或者为空
+			$this->load->helper('string');
+			$token=random_string('sha1');
+			$this->session->set_userdata('token', $token);
+			$this->session->mark_as_temp('token', 24*60*60);
+			
+			//淘宝ip库
+			$ip=$this->agent->get_ip();
+			//$ip='222.219.137.84';
+			$url="http://ip.taobao.com/service/getIpInfo.php?ip=".$ip;
+			@$ip=json_decode(file_get_contents($url)); 
+
+			if((string)@$ip->code=='1'){
+				$ip_address=array();
+			}
+			if((string)@$ip->code=='0'){
+				$ip_address= (array)$ip->data;
+			}
+			//系统类型
+			if($this->agent->is_mobile()){
+			$system_os=$this->agent->mobile();
+			}else if($this->agent->is_robot()){
+				$system_os=$this->agent->robot();
+			}else{
+				$system_os=$this->agent->platform();
+			}
+			//把用户访问信息写入数据库
+			$access_report=array(
+				'ip'			=>$this->agent->get_ip(),
+				'access_time'	=>date('Y-m-d H:i:s'),
+				'system_os'		=>$system_os,
+				'browser'		=>$this->agent->browser().$this->agent->version(),
+				'ip_address'	=>serialize($ip_address),
+				'token'			=>$token,
+			);
+			//直接写入到数据库（因为这个类在model,所以没有再去load->model）
+			$this->db->insert('access_report', $access_report);
+		}
+		
 		return $this->load->view('common/header',$data);
 	}
 	
@@ -74,22 +114,21 @@ class public_section extends CI_Model {
 		$data['text_confirmpassword']=$this->lang->line('text_confirmpassword');
 		$data['text_email']=$this->lang->line('text_email');
 		
-		//从session中获取用户信息
-		if(@$_SESSION['nick_name']){
-			$data['nick_name']=$_SESSION['nick_name'];
-		}else{
+		//用户user类来获取用户信息
+		if(@$this->user->get_nickname()){
+			$data['nick_name']=$this->user->get_nickname();
+		}else {
 			$data['nick_name']='';
 		}
 		
-		if(@$_SESSION['user_image']){
-			//存在http
-			if(strpos($_SESSION['user_image'] ,'http') !== FALSE){
-				$data['user_image']=$_SESSION['user_image'];
+		if(@$this->user->get_image()){
+			if(strpos($this->user->get_image() ,'http') !== FALSE){
+				$data['user_image']=$this->user->get_image();
 			}else{
-				$portrait_img=$this->image->rezice($_SESSION['user_image'],29,29);
+				$portrait_img=$this->image->rezice($this->user->get_image(),29,29);
+				$this->image->rezice($this->user->get_image(),150,150);
 				$data['user_image']=$portrait_img['new_img'];
 			}
-			
 		}else{
 			$data['user_image']='';
 		}
@@ -130,33 +169,6 @@ class public_section extends CI_Model {
 		
 		$data['active']=$active;
 
-		/*
-		$session_ipcity = $this->session->userdata('country');//国家
-		if(isset($session_ipcity)){
-			$data['ip_country']=$this->session->userdata('country');
-		}
-		
-		$session_iparea = $this->session->userdata('area');//地区
-		if(isset($session_iparea)){
-			$data['session_iparea']=$this->session->userdata('area');
-		}
-		
-		$session_ipregion = $this->session->userdata('region');//省
-		if(isset($session_ipregion)){
-			$data['session_ipregion']=$this->session->userdata('region');
-		}
-		
-		$session_ipcity = $this->session->userdata('city');//城市
-		if(isset($session_ipcity)){
-			$data['session_ipcity']=$this->session->userdata('city');
-		}
-		
-		$session_ipcounty = $this->session->userdata('county');//县
-		if(isset($session_ipcounty)){
-			$data['session_ipcounty']=$this->session->userdata('county');
-		}
-		*/
-		
 		//顶布局
 		$this->load->module('common/module_top');
 		$data['module_top'] = $this->module_top->index();
@@ -173,25 +185,29 @@ class public_section extends CI_Model {
 	public function get_usertop(){
 		//判断用户是否已经登陆并做出相应跳转
 		
-		if($this->session->userdata('logged_in')!==TRUE){
+		if(!$this->user->is_Logged()){
 			$this->session->set_flashdata('info_login', '请先登陆，或者注册一个帐号！');//闪出提示信息
 			redirect(site_url('user/login'));
 		}
 		
 		//------------------------------------------------------------------------------------
-		//从session中获取用户信息
-		if(@$_SESSION['nick_name']){
-			$data['nick_name']=$_SESSION['nick_name'];
-		}else{
+		//用户user类来获取用户信息
+		if($this->user->get_nickname()){
+			$data['nick_name']=$this->user->get_nickname();
+		}else {
 			$data['nick_name']='';
 		}
 		
-		if(strpos($_SESSION['user_image'] ,'http') !== FALSE){
-			$data['user_image']=$_SESSION['user_image'];
+		if($this->user->get_image()){
+			if(strpos($this->user->get_image() ,'http') !== FALSE){
+				$data['user_image']=$this->user->get_image();
+			}else{
+				$portrait_img=$this->image->rezice($this->user->get_image(),29,29);
+				$this->image->rezice($this->user->get_image(),150,150);
+				$data['user_image']=$portrait_img['new_img'];
+			}
 		}else{
-			$portrait_img=$this->image->rezice($_SESSION['user_image'],29,29);
-			$this->image->rezice($_SESSION['user_image'],150,150);
-			$data['user_image']=$portrait_img['new_img'];
+			$data['user_image']='';
 		}
 		
 		//获取当前页链接
@@ -236,30 +252,6 @@ class public_section extends CI_Model {
 	
 	//这是网部的公共底部
 	public function get_footer(){
-		//调用淘宝ip库获取ip地址
-		$session_ipcity = $this->session->userdata('country');
-		
-		if(!isset($session_ipcity)){
-			//ip地址不存在
-			$this->load->library('user_agent');
-			$ip=$this->agent->get_ip();
-			//$ip='222.219.137.84';
-			$url="http://ip.taobao.com/service/getIpInfo.php?ip=".$ip;
-			@$ip=json_decode(file_get_contents($url)); 
-
-			if((string)@$ip->code=='1'){
-
-				return false;
-
-			}
-			if((string)@$ip->code=='0'){
-				$data = (array)$ip->data;
-
-				$this->session->set_userdata($data);
-			}
-
-		}
-		
 		return $this->load->view('common/footer');
 	}
 	
@@ -282,14 +274,29 @@ class public_section extends CI_Model {
 			if($nav_parents[$k]['nav_url'] == $active){
 				$nav_parents[$k]['active']='active';
 			}
-			if(!empty($nav_childs[$k])){
-				foreach($nav_childs[$k] as $b){
-					if($b['nav_child_url'] == $active){
-						$nav_parents[$k]['active']='active';
-					}
+			
+			//判断权限，如果没有查看权限不显示
+			if(!empty($nav_parents[$k]['nav_url'])){
+				if($this->user->hasPermission('access',$nav_parents[$k]['nav_url'])===false){
+					unset($nav_parents[$k]);
 				}
 			}
 			
+			if(!empty($nav_childs[$k])){
+				foreach($nav_childs[$k] as $b=>$c){
+					if($nav_childs[$k][$b]['nav_child_url'] == $active){
+						$nav_parents[$k]['active']='active';
+					}
+					
+					//判断权限，如果没有查看权限不显示
+					if(!empty($nav_childs[$k][$b]['nav_child_url'])){
+						if($this->user->hasPermission('access',$nav_childs[$k][$b]['nav_child_url'])===false){
+							unset($nav_childs[$k][$b]);
+						}
+					}
+					
+				}
+			}
 		}
 
 		if($nav_parents && is_array($nav_parents)){

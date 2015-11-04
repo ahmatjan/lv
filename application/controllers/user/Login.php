@@ -11,13 +11,12 @@ class Login extends CI_Controller {
 	{
 		//第三方登陆
 		$this->config->load('oauth2');
-        $data['user'] = $this->session->userdata('user');
 		
 		if($this->agent->is_robot()){
 			return;
 		}
 		
-		if($this->session->userdata('logged_in')===TRUE){
+		if($this->user->is_Logged()){
 			redirect(site_url('user/User_center'));
 		}
 		//----------------------------------------------------------------------------------------------
@@ -51,7 +50,7 @@ class Login extends CI_Controller {
 		//value
 		$error_login=$this->session->flashdata('error_login');
 		$info_login=$this->session->flashdata('info_login');
-		$username=$this->session->userdata('username');
+		$username=$this->user->get_username();
 		if(isset($error_login)){
 			$data['val_username']=$username;
 			$data['error_login'] = $error_login;
@@ -98,15 +97,17 @@ class Login extends CI_Controller {
 			$user_infos=$this->user_info->get_useremail_info($username);
 			if($username===$user_infos['email'] && $password === $user_infos['passwd']){
 				//写入用户信息session
-				$user_session = array(
-						   'user_id'		=> $user_infos['user_id'],
-		                   'username'  		=> $user_infos['user_name'],
-		                   'nick_name'  	=> $user_infos['nick_name'],
-		                   'user_image'  	=> $user_infos['image'],
-		                   'logged_in' 		=> TRUE
-		               );
+				$this->session->set_userdata('user_id', $user_infos['user_id']);
 				
-				$this->session->set_userdata($user_session);
+				//更新访记录到表中记录
+				$this->load->model('tool/report');
+				//是更新access_report表
+				$access_data=array(
+						'user_id'			=>$_SESSION['user_id'],
+						'login_time'		=>date('Y-m-d H:i:s'),
+						'login_type'		=>'登陆页邮箱登陆',
+				);
+				$this->report->updata_tab($access_data);
 				
 				//如果勾选记住帐号
 				if($this->input->post('remember')== TRUE){
@@ -120,7 +121,6 @@ class Login extends CI_Controller {
 				
 		}else{
 				//登陆不成功，把错误信息写入session
-				$this->session->set_userdata('username', $username);
 				$this->session->set_flashdata('error_login', '登陆名或密码不正确！');//闪出错误信息
 				redirect(site_url('user/Login'));
 			}
@@ -132,15 +132,17 @@ class Login extends CI_Controller {
 			
 			if($username===$user_infos['user_name'] && $password === $user_infos['passwd']){
 				//写入用户信息session
-				$user_session = array(
-						   'user_id'		=> $user_infos['user_id'],
-		                   'username'  		=> $user_infos['user_name'],
-		                   'nick_name'  	=> $user_infos['nick_name'],
-		                   'user_image'  	=> $user_infos['image'],
-		                   'logged_in' 		=> TRUE
-		               );
-
-				$this->session->set_userdata($user_session);
+				$this->session->set_userdata('user_id', $user_infos['user_id']);
+				
+				//更新访记录到表中记录
+				$this->load->model('tool/report');
+				//是更新access_report表
+				$access_data=array(
+						'user_id'			=>$_SESSION['user_id'],
+						'login_time'		=>date('Y-m-d H:i:s'),
+						'login_type'		=>'登陆页帐号登陆',
+				);
+				$this->report->updata_tab($access_data);
 				
 				//如果勾选记住帐号   把帐号写入cooke
 				if($this->input->post('remember')== TRUE){
@@ -154,7 +156,6 @@ class Login extends CI_Controller {
 				
 		}else{
 				//登陆不成功，把错误信息写入session
-				$this->session->set_userdata('username', $username);
 				$this->session->set_flashdata('error_login', '登陆名或密码不正确！');//闪出错误信息
 				redirect(site_url('user/login'));
 			}
@@ -174,16 +175,18 @@ class Login extends CI_Controller {
 			$user_infos=$this->user_info->get_useremail_info($username);
 			if($username===$user_infos['email'] && $password === $user_infos['passwd']){
 				
-				//写入用户信息session
-				$user_session = array(
-		                   'user_id'		=> $user_infos['user_id'],
-		                   'username'  		=> $user_infos['user_name'],
-		                   'nick_name'  	=> $user_infos['nick_name'],
-		                   'user_image'  	=> $user_infos['image'],
-		                   'logged_in' 		=> TRUE
-		               );
+				//写入用户id到session
+				$this->session->set_userdata('user_id', $user_infos['user_id']);
 				
-				$this->session->set_userdata($user_session);
+				//更新访记录到表中记录
+				$this->load->model('tool/report');
+				//是更新access_report表
+				$access_data=array(
+						'user_id'			=>$_SESSION['user_id'],
+						'login_time'		=>date('Y-m-d H:i:s'),
+						'login_type'		=>'顶部邮箱登陆',
+				);
+				$this->report->updata_tab($access_data);
 				
 				//如果勾选记住帐号
 				if($this->input->post('remember')== TRUE){
@@ -204,16 +207,18 @@ class Login extends CI_Controller {
 			$user_infos=$this->user_info->get_username_info($username);
 			
 			if($username===$user_infos['user_name'] && $password === $user_infos['passwd']){
-				//写入用户信息session
-				$user_session = array(
-		                   'user_id'		=> $user_infos['user_id'],
-		                   'username'  		=> $user_infos['user_name'],
-		                   'nick_name'  	=> $user_infos['nick_name'],
-		                   'user_image'  	=> $user_infos['image'],
-		                   'logged_in' 		=> TRUE
-		               );
-
-				$this->session->set_userdata($user_session);
+				//写入用户id到session
+				$this->session->set_userdata('user_id', $user_infos['user_id']);
+				
+				//更新访记录到表中记录
+				$this->load->model('tool/report');
+				//是更新access_report表
+				$access_data=array(
+						'user_id'			=>$_SESSION['user_id'],
+						'login_time'		=>date('Y-m-d H:i:s'),
+						'login_type'		=>'顶部帐号登陆',
+				);
+				$this->report->updata_tab($access_data);
 				
 				//如果勾选记住帐号
 				if($this->input->post('remember')== TRUE){
@@ -233,8 +238,7 @@ class Login extends CI_Controller {
 	{
 		$this->load->model('user/user_info');
 		$this->load->helper('string');
-		
-		$random_username=random_string('alnum', 8);
+		$random_username=substr(random_string('md5'),0,20);
 		
 		$username=$this->input->post('username',TRUE);
 		$password=md5($this->input->post('password',TRUE));
@@ -277,7 +281,6 @@ class Login extends CI_Controller {
 					'add_ip'	=>$ip,
 					'add_date'	=>$date_now,
 					'status'	=>'1',
-					'last_login'=>$date_now,
 					'system_os'	=>$system_os,
 					'browser'=>$browser_info,
 					'register_style'=>'email',
@@ -288,18 +291,19 @@ class Login extends CI_Controller {
 				
 				//通过邮箱查用户id
 				$user_id=$this->user_info->get_useremail_id($email);
-				//写入用户信息session
-				$user_session = array(
-						   'user_id'		=> $user_id,
-		                   'username'  		=> $email,
-		                   'nick_name'  	=> $random_username,
-		                   'user_image'  	=> $portrait,
-		                   'logged_in' 		=> TRUE
-		               );
-
-				$this->session->set_userdata($user_session);
-
+				//把用户id写入session
+				$this->session->set_userdata('user_id', $user_id);
 				
+				//更新访记录到表中记录
+				$this->load->model('tool/report');
+				//是更新access_report表
+				$access_data=array(
+						'user_id'			=>$_SESSION['user_id'],
+						'login_time'		=>date('Y-m-d H:i:s'),
+						'login_type'		=>'邮箱注册',
+				);
+				$this->report->updata_tab($access_data);
+
 				redirect(site_url('user/User_center'));
 				
 			}else{
@@ -319,7 +323,6 @@ class Login extends CI_Controller {
 					'add_ip'	=>$ip,
 					'add_date'	=>$date_now,
 					'status'	=>'1',
-					'last_login'=>$date_now,
 					'system_os'	=>$system_os,
 					'browser'=>$browser_info,
 					'register_style'=>'user_name',
@@ -330,15 +333,17 @@ class Login extends CI_Controller {
 				//通过用户名查id
 				$user_id=$this->user_info->get_username_id($username);
 				//写入用户信息session
-				$user_session = array(
-						   'user_id'		=> $user_id,
-		                   'username'  		=> $username,
-		                   'nick_name'  	=> $random_username,
-		                   'user_image'  	=> $portrait,
-		                   'logged_in' 		=> TRUE
-		               );
-
-				$this->session->set_userdata($user_session);
+				$this->session->set_userdata('user_id', $user_id);
+				
+				//更新访记录到表中记录
+				$this->load->model('tool/report');
+				//是更新access_report表
+				$access_data=array(
+						'user_id'			=>$_SESSION['user_id'],
+						'login_time'		=>date('Y-m-d H:i:s'),
+						'login_type'		=>'用户名注册',
+				);
+				$this->report->updata_tab($access_data);
 
 				redirect(site_url('user/user_center'));
 				

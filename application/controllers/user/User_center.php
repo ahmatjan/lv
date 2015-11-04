@@ -35,23 +35,26 @@ class User_center extends CI_Controller {
 								),
 		);
 		
-		//从session中获取用户信息
-		if(@$_SESSION['nick_name']){
-			$data['nick_name']=$_SESSION['nick_name'];
-		}else{
+		//用户user类来获取用户信息
+		if($this->user->get_username()){
+			$data['user_name']=$this->user->get_username();
+		}else {
+			$data['user_name']='';
+		}
+		
+		if($this->user->get_nickname()){
+			$data['nick_name']=$this->user->get_nickname();
+		}else {
 			$data['nick_name']='';
 		}
 		
-		//调用户头像
-		if(@$_SESSION['user_image']){
-			//存在http
-			if(strpos($_SESSION['user_image'] ,'http') !== FALSE){
-				$data['user_image']=$_SESSION['user_image'];
+		if($this->user->get_image()){
+			if(strpos($this->user->get_image() ,'http') !== FALSE){
+				$data['user_image']=$this->user->get_image();
 			}else{
-				$portrait_img=$this->image->rezice($_SESSION['user_image'],203,203);
+				$portrait_img=$this->image->rezice($this->user->get_image(),203,203);
 				$data['user_image']=$portrait_img['new_img'];
 			}
-			
 		}else{
 			$data['user_image']='';
 		}
@@ -88,20 +91,18 @@ class User_center extends CI_Controller {
 	        //echo '修改头像成功';
 	        
 	        //删除原头像
-	        $old_img=$_SESSION['user_image'];
-	        $this->image->del_img($old_img);
+	        $this->image->del_img($this->user->get_image());
 	        
 	        //修改数据库
 	        $up_img='catalog/'.date("Ym").$filename;
-	        //更新session,以便显示
+	        
 	        //生成缩略图
 	        $this->image->rezice($up_img,150,150);
-	        
-	        $this->session->set_userdata('user_image', $up_img);
+
 	        //写入数据库
 	        $this->load->model('user/user_info');
 	        //更新新数据
-	        $this->user_info->updata_img($up_img,$_SESSION['username']);
+	        $this->user_info->updata_img($up_img,$this->user->get_userid());
 	        
 	    }else{
 			echo '修改头像失败';

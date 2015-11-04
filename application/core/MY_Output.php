@@ -10,7 +10,7 @@ class MY_Output extends CI_Output
         // Set the super object to a local variable for use later
 		//$this->CI =& get_instance();
      }
-//替换缓存写入类,在视图输出前压缩html代码
+	//替换缓存写入类,在视图输出前压缩html代码
 	/**
 	 * Display Output
 	 *
@@ -141,6 +141,7 @@ class MY_Output extends CI_Output
 
 		// Does the controller contain a function named _output()?
 		// If so send the output there.  Otherwise, echo it.
+		
 		$compactor = new Compactor(array(
 				'buffer_echo' => false
 		));
@@ -157,6 +158,118 @@ class MY_Output extends CI_Output
 
 		log_message('info', 'Final output sent to browser');
 		log_message('debug', 'Total execution time: '.$elapsed);
+	}
+	
+		// --------------------------------------------------------------------
+
+	/**
+	 * Write Cache
+	 *
+	 * @param	string	$output	Output data to cache
+	 * @return	void
+	 */
+	public function _write_cache($output)
+	{
+		$CI =& get_instance();
+		$path = $CI->config->item('cache_path');
+		$cache_path = ($path === '') ? APPPATH.'cache/' : $path;
+
+		if ( ! is_dir($cache_path) OR ! is_really_writable($cache_path))
+		{
+			log_message('error', 'Unable to write cache file: '.$cache_path);
+			return;
+		}
+
+		$uri = $CI->config->item('base_url')
+			.$CI->config->item('index_page')
+			.$CI->uri->uri_string();
+
+		if (($cache_query_string = $CI->config->item('cache_query_string')) && ! empty($_SERVER['QUERY_STRING']))
+		{
+			if (is_array($cache_query_string))
+			{
+				$uri .= '?'.http_build_query(array_intersect_key($_GET, array_flip($cache_query_string)));
+			}
+			else
+			{
+				$uri .= '?'.$_SERVER['QUERY_STRING'];
+			}
+		}
+
+		$cache_path .= md5($uri);
+
+		if ( ! $fp = @fopen($cache_path, 'w+b'))
+		{
+			log_message('error', 'Unable to write cache file: '.$cache_path);
+			return;
+		}
+
+		if (flock($fp, LOCK_EX))
+		{
+			// If output compression is enabled, compress the cache
+			// itself, so that we don't have to do that each time
+			// we're serving it
+			if ($this->_compress_output === TRUE)
+			{
+				$output = gzencode($output);
+
+				if ($this->get_header('content-type') === NULL)
+				{
+					$this->set_content_type($this->mime_type);
+				}
+			}
+
+			$expire = time() + ($this->cache_expiration * 60);
+
+			// Put together our serialized info.
+			$cache_info = serialize(array(
+				'expire'	=> $expire,
+				'headers'	=> $this->headers
+			));
+
+			$output = $cache_info.'ENDCI--->'.$output;
+
+			/**
+			* 
+			* @var 
+			* 压缩html 待写入缓存
+			*/
+			$compactor = new Compactor(array(
+				'buffer_echo' => false
+			));
+			$output = $compactor->squeeze($output);
+
+			for ($written = 0, $length = strlen($output); $written < $length; $written += $result)
+			{
+				if (($result = fwrite($fp, substr($output, $written))) === FALSE)
+				{
+					break;
+				}
+			}
+
+			flock($fp, LOCK_UN);
+		}
+		else
+		{
+			log_message('error', 'Unable to secure a file lock for file at: '.$cache_path);
+			return;
+		}
+
+		fclose($fp);
+
+		if (is_int($result))
+		{
+			chmod($cache_path, 0640);
+			log_message('debug', 'Cache file written: '.$cache_path);
+
+			// Send HTTP cache-control headers to browser to match file cache settings.
+			$this->set_cache_header($_SERVER['REQUEST_TIME'], $expire);
+		}
+		else
+		{
+			@unlink($cache_path);
+			log_message('error', 'Unable to write the complete cache content at: '.$cache_path);
+		}
 	}
 	
 	//判断跳转https
@@ -228,6 +341,26 @@ class MY_Output extends CI_Output
 
 				    header("Location: ".$xredir); 
 				}  
+			}
+		}
+	}
+	
+	//判断是否有查看权限，如果没有跳转到上一浏览页
+	public function is_access(){
+		$this->CI =& get_instance();
+		$uri_string=uri_string();//当前访问分段url
+		$this->CI->load->helper('string');
+		$str_toal=str_toal($uri_string,'/');
+		if($str_toal>2){//把超过3段的url 截取前两段
+			$uri_string=substr($uri_string,0,strrchr($uri_string,'/'));
+		}
+		
+		if($this->CI->user->hasPermission('access',$uri_string)==FALSE){
+			$this->CI->session->set_flashdata('setting_false', '你没有查看权限，不能查看该页面！');
+			if($_SERVER['HTTP_REFERER']){
+				redirect($_SERVER['HTTP_REFERER']);
+			}else{
+				redirect('home');
 			}
 		}
 	}

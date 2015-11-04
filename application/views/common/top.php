@@ -165,7 +165,7 @@
 
 				<!-- BEGIN TOP NAVIGATION MENU -->              
 				
-				<?php if ($this->session->userdata('logged_in')===TRUE): ?>
+				<?php if ($this->user->is_Logged()): ?>
 
 				<ul class="nav pull-right hidden-phone">
 
@@ -682,7 +682,7 @@
 			}
 		}
 		
-		//如果验证通过    提交
+		//如果验证通过提交
 		if(is_login == 1){
 			$.post("user/login/ajax_login",
 		    {

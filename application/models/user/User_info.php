@@ -82,11 +82,11 @@ class user_info extends CI_Model {
 	}
 	
 	//更新用户头像
-	public function updata_img ($filename,$user_name){
+	public function updata_img ($filename,$user_id){
 		$data = array(
 	        'image' => $filename,
 		);
-		$this->db->where('user_name', $user_name);
+		$this->db->where('user_id', $user_id);
 		$this->db->update('user_info', $data);
 	}
 	

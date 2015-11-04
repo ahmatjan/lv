@@ -9,6 +9,7 @@ class Home extends CI_Controller {
 	
 	public function index()
 	{
+		//$this->output->cache("3600");//缓存页面
 		//if($this->agent->is_robot()){
 			//return;
 		//}

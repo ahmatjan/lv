@@ -5,6 +5,7 @@ class User_manage extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 			$this->output->https_jump();
+			$this->output->is_access();
 	}
 	
 	public function index()
@@ -67,21 +68,12 @@ class User_manage extends CI_Controller {
 	//管理员登陆用户帐号
 	public function login_user(){
 		
-		//传入用户id号
-		$user_id=$this->input->get('user_id');
 		//通过用户id登陆
 		$this->load->model('user/user_info');
-		$user_info=$this->user_info->get_userinfobyuser_id($user_id);
+
 		if(isset($user_info)){
 			//模拟登陆，把用户信息写入session
-			$user_session = array(
-		                   'username'  		=> $user_info['user_name'],
-		                   'nick_name'  	=> $user_info['nick_name'],
-		                   'user_image'  	=> $user_info['image'],
-		                   'logged_in' 		=> TRUE
-		               );
-				
-			$this->session->set_userdata($user_session);
+			$this->session->set_userdata('user_id', $this->input->get('user_id'));
 			
 			$this->session->set_flashdata('setting_success', '登陆用户成功！');
 			redirect('user/user_center');		
@@ -149,7 +141,7 @@ class User_manage extends CI_Controller {
 			}else{
 				unset($maps[$k]);
 			}
-		}//到这这里$maps成了一个纯一维数组，并且去除了html
+		}//到这这里$maps成了一个纯一维数组，并且去除了非php文件
 		
 		//获取用户分组信息
 		$group_infos=array();
@@ -174,29 +166,42 @@ class User_manage extends CI_Controller {
 			$data['group_description']='';
 		}
 		
-		@$permission_view=unserialize($group_infos['permission_view']);
+		/**
+		* $permission=array(
+		*		'access'=>array(
+		* 			'0'=>'',
+		* 			'1'=>''
+		* 		), 
+		* 		'modify'=>array(
+		* 			'0'=>'',
+		* 			'1'=>''
+		* 		)
+		* );
+		* @var 
+		* 
+		*/
+		@$permission=unserialize($group_infos['permission']);//序列化转数组（权限）
 		
 		if($this->input->post('my_multi_select1')){
 			$data['permission_view1']=$this->input->post('my_multi_select1');//选中的查看权限
 			$data['permission_view2']=array_diff($maps,$this->input->post('my_multi_select1'));//未选中的查看权限/差集
 			
-		}elseif(count($permission_view)>1){
-			$data['permission_view1']=$permission_view;
-			$data['permission_view2']=array_diff($maps,$permission_view);
+		}elseif(count($permission['access'])>1){
+			$data['permission_view1']=$permission['access'];
+			$data['permission_view2']=array_diff($maps,$permission['access']);
 		}else{
 			$data['permission_view1']=array();
 			$data['permission_view2']=$maps;
 		}
 		
 		//编辑权限
-		@$permission_edit=unserialize($group_infos['permission_edit']);
 		if($this->input->post('my_multi_select2')){
 			$data['permission_edit1']=$this->input->post('my_multi_select2');//选中的查看权限
 			$data['permission_edit2']=array_diff($maps,$this->input->post('my_multi_select2'));//未选中的查看权限/差集
 			
-		}elseif(count($permission_edit)>1){
-			$data['permission_edit1']=$permission_edit;
-			$data['permission_edit2']=array_diff($maps,$permission_edit);
+		}elseif(count($permission['modify'])>1){
+			$data['permission_edit1']=$permission['modify'];
+			$data['permission_edit2']=array_diff($maps,$permission['modify']);
 		}else{
 			$data['permission_edit1']=array();
 			$data['permission_edit2']=$maps;
@@ -220,11 +225,16 @@ class User_manage extends CI_Controller {
 		* @var 
 		* unserialize($data['permission_view'])                系列化转成数组
 		*/
+		//把查看和修改权限合并成一个二维数组
+		$permission=array(
+				'access'=>$this->input->post('my_multi_select1'),
+				'modify'=>$this->input->post('my_multi_select2'),
+		);
+		
 		$data['group_id']=$this->input->post('group_id');
 		$data['name']=$this->input->post('group_name');
 		$data['description']=$this->input->post('group_description');
-		$data['permission_view']=serialize($this->input->post('my_multi_select1'));
-		$data['permission_edit']=serialize($this->input->post('my_multi_select2'));
+		$data['permission']=serialize($permission);
 		
 		if($this->validation_editgroupifo($data)!==FALSE){
 			//把修改写入数据库

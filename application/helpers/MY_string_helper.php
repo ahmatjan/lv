@@ -18,7 +18,7 @@ function merge_spaces($string){
 //返回某字符在字符串中出现的次数
 function str_toal($str,$re){
 	$arr=explode($re,$str);
-	return count($arr);
+	return count($arr)-1;
 }
 
 /*

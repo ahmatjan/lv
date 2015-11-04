@@ -5,7 +5,7 @@ class Sns extends CI_Controller {
 	public function __construct()
     {
       	parent::__construct();
-    	$this->session->userdata('logged_in') AND redirect();
+    	$this->user->get_userid() AND redirect();
     }
 
 	public function session($provider = '')
@@ -52,23 +52,18 @@ class Sns extends CI_Controller {
 					$this->session->set_userdata('user', $sns_user);
                     $this->session->set_userdata('is_login', TRUE);
                     */
-                    //把用户信息写入session
-                    $user_session = array(
-		                   'username'  		=> $sns_user['uid'],
-		                   'nick_name'  	=> $sns_user['screen_name'],
-		                   'user_image'  	=> trim($sns_user['image']),
-		                   'logged_in' 		=> TRUE
-		               );
-
-					$this->session->set_userdata($user_session);
-					
+                    
 					//把用户信息写入数据库
 					$this->load->model('user/user_info');
-					//检查用户名（uid）是否存在，如果存在不写入数据库只是登陆
-					$user_name=$this->user_info->get_username_info($sns_user['uid']);
-					$user_name=$user_name['user_name'];
-					if(!isset($user_name)){
-						//如果用户信息为空写入
+					//检查用户（uid）是否存在，如果存在不写入数据库只是登陆
+					$uid=$this->user_info->get_username_info($sns_user['uid']);
+					$uid=$uid['uid'];
+					if($uid !== $sns_user['uid']){
+						//如果用户uid不存在写入
+						 //随机用户名
+	                    $this->load->helper('string');
+						$random_username=substr(random_string('md5'),0,20);
+						
 						$this->load->library('user_agent');//用户代理类
 						//系统类型
 						if($this->agent->is_mobile()){
@@ -82,23 +77,30 @@ class Sns extends CI_Controller {
 						$ip=$this->input->ip_address();//ip
 						$browser_info=$this->agent->browser().$this->agent->version();//浏览器类型
 						$date_now=date('Y-m-d H:i:s');//时间
+						//默认注册用户组
+						if($this->base_setting->get_setting('register_group')!==NULL){
+							$register_group=$this->base_setting->get_setting('register_group');
+						}
 						
 						$user_info=array(
-						'user_name' =>$sns_user['uid'],
+						'uid' =>$sns_user['uid'],
+						'user_name' =>$random_username,
 						'email'		=>'',
 						'passwd'	=>'',
 						'add_ip'	=>$ip,
 						'add_date'	=>$date_now,
 						'status'	=>'1',
-						'last_login'=>$date_now,
 						'system_os'	=>$system_os,
 						'browser'=>$browser_info,
-						'register_style'=>$sns_user['via'],
+						'register_group'=>$register_group,
 						);
 						
 						//入库
 						$this->user_info->int_username($user_info);
 					}
+					
+					$user_id=$this->user_info->get_username_info($sns_user['uid'])['user_id'];
+					$this->session->set_userdata('user_id', $user_id);
 					
 					if(@$_SESSION['before_access']){
 						redirect($_SESSION['before_access']);
