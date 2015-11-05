@@ -378,6 +378,7 @@ class public_section extends CI_Model {
 				'access_time'			=>date('Y-m-d H:i:s'),
 				'platform'				=>$platform,
 				'browser'				=>$browser,
+				'robot'					=>$this->agent->robot(),
 				'user_agent'			=>$this->agent->agent_string(),
 		);
 		
