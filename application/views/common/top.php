@@ -441,7 +441,7 @@
 
 						<a class="dropdown-toggle top-login-right" data-toggle="dropdown">
 
-						IP:云南·楚雄
+						<?php echo $ip_address['county'] ? $ip_address['county'] : $ip_address['city'];?>
 
 						</a>
 

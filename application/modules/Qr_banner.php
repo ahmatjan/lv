@@ -5,7 +5,7 @@ class Qr_banner extends CI_Module {
 	
 	public function index()
 	{
-		echo link_tag(base_url('public/modules/qr_banner/css/lrtk.css'));//加载css
-		return $this->load->view('modules/qr_banner','',TRUE);
+		$data['lrtk_css']=base_url('public/modules/qr_banner/css/lrtk.css');//加载css
+		return $this->load->view('modules/qr_banner',$data,TRUE);
 	}
 }

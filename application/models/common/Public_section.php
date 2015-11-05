@@ -128,6 +128,11 @@ class public_section extends CI_Model {
 		}
 		
 		$data['active']=$active;
+		
+		//查询ip_address
+		@$sql = "SELECT ip_address FROM " . $this->db->dbprefix('access_report') . " WHERE token = ?"; 
+		@$query=$this->db->query($sql, array(@$_SESSION['token']));
+		@$data['ip_address'] = unserialize($query->row_array()['ip_address']);
 
 		//顶布局
 		$this->load->module('common/module_top');

@@ -275,7 +275,10 @@ class MY_Output extends CI_Output
 	//判断跳转https
 	public function https_jump (){
 		$this->CI =& get_instance();
-		//session用来记录用户访问设备和https的设置
+		//session记录最后一次访问地址，用来给QQ登陆做跳转
+		$this->CI->load->library('session');
+		$this->CI->session->set_userdata('sns_redirect', current_url());
+		
 		
 		//装载模型
 		$this->CI->load->model('setting/base_setting');
@@ -291,10 +294,11 @@ class MY_Output extends CI_Output
 		$this->CI->load->library('user_agent');
 		
 		$url_ = $_SERVER['SERVER_NAME'];
+		/*
 		if(strpos($url_ ,'www.') !== FALSE){
 			$url_=substr($url_,4);
 		}
-		
+		*/
 		if($this->CI->agent->is_mobile())
 		{
 			//如果使用的是移动端
@@ -303,13 +307,15 @@ class MY_Output extends CI_Output
 					{
 					    $xredir="https://".$url_.$_SERVER["REQUEST_URI"];
 					    header("Location: ".$xredir);
+					    exit();
 					}
 			}else{
 				if(@$_SERVER['HTTPS'] == "on") 
 				{ 
 				    $xredir='http://'.$url_. $_SERVER['REQUEST_URI']; 
 
-				    header("Location: ".$xredir); 
+				    header("Location: ".$xredir);
+				    exit();
 				}  
 			}
 		}
@@ -322,13 +328,7 @@ class MY_Output extends CI_Output
 				{
 				    $xredir="https://".$url_.$_SERVER["REQUEST_URI"];
 				    header("Location: ".$xredir);
-				}else{
-					//已经是https
-					if(strpos($_SERVER['SERVER_NAME'] ,'www.') !== FALSE){
-						
-						$xredir="https://".substr($_SERVER['SERVER_NAME'],4).$_SERVER["REQUEST_URI"];
-				    	header("Location: ".$xredir);
-					}
+				    exit();
 				}
 			}else{
 				//不使用https
@@ -336,7 +336,8 @@ class MY_Output extends CI_Output
 				{ 
 				    $xredir='http://'.$url_. $_SERVER['REQUEST_URI']; 
 
-				    header("Location: ".$xredir); 
+				    header("Location: ".$xredir);
+				    exit();
 				}  
 			}
 		}

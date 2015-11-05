@@ -14,6 +14,8 @@
 <title><?php echo $title.$website_title ?></title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
+<meta property="qc:admins" content="5322127477764601674763757535274771660454" />
+
 <meta content="<?php echo $mate_description?>" name="description" />
 
 <meta content="<?php echo $mate_key?>" name="keywords" />

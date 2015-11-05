@@ -95,9 +95,19 @@ class Sns extends CI_Controller {
 					$user_id=$this->user_info->get_useridforuid($sns_user['uid']);
 
 					$this->session->set_userdata('user_id', $user_id);
+					//更新访记录到表中记录
+					$this->load->model('tool/report');
+					//是更新access_report表
+					$access_data=array(
+							'user_id'			=>$_SESSION['user_id'],
+							'login_time'		=>date('Y-m-d H:i:s'),
+							'login_type'		=>$sns_user['via'].'登陆',
+					);
+					$this->report->updata_tab($access_data);
+					
 					$this->session->set_flashdata('setting_success', '登陆成功！');
-					if($this->agent->is_referral()){
-						redirect($this->agent->is_referral());
+					if($_SESSION['sns_redirect']){
+						redirect($_SESSION['sns_redirect']);
 					}else{
 						redirect('user/user_center');
 					}

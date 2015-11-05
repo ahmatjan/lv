@@ -354,7 +354,7 @@ class Login extends CI_Controller {
 	
 	//退出登陆
 	public function login_out(){
-		session_destroy();
+		unset($_SESSION['user_id']);
 		//$this->session->set_flashdata('info_login', '退出成功！');
 		redirect(site_url('user/login'));
 		

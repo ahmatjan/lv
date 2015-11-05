@@ -208,6 +208,8 @@ var_dump($nav_parents);
 
 		*/
 		
+		
+		/*
 		$select_end=$this->input->get('end');
 		if(!isset($select_end)){
 			$select_end=0;
@@ -226,6 +228,16 @@ var_dump($nav_parents);
 		foreach($row as $k=>$v){
 			echo '<span style="color:red">ID=></span>'.$row[$k]['report_id'].'&nbsp;<span style="color:red">IP</span>=>'.$row[$k]['ip'].'<span style="color:red">访问时间=></span>'.$row[$k]['access_time'].'<span style="color:red">系统类型=></span>'.$row[$k]['platform'].'<span style="color:red">浏览器=></span>'.$row[$k]['browser'].'<br/><br/>';
 		}
+*/
+
+		//查询ip_address
+		$sql = "SELECT ip_address FROM " . $this->db->dbprefix('access_report') . " WHERE token = ?"; 
+		$query=$this->db->query($sql, array($_SESSION['token']));
+		$data['ip_address'] = unserialize($query->row_array()['ip_address']);
+		var_dump($data['ip_address']);
+
+
+
 
 		/*
 		if(!strpos($permission_views,$url) !== false){
