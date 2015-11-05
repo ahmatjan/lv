@@ -7,7 +7,7 @@ class Banner extends CI_Module {
 	{
 		$this->load->model('common/image');
 		$img='catalog/1255.jpg';
-		$data['new_img']=$this->image->rezice($img,1000,70);
+		$data['new_img']=$this->image->rezice($img,1500,100);
 		
 		return $this->load->view('modules/banner',$data,TRUE);
 	}

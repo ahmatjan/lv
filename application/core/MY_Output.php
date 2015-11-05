@@ -340,20 +340,5 @@ class MY_Output extends CI_Output
 				}  
 			}
 		}
-		/*
-		//判断操作系统、浏览器如果有一个返回false 终止程序
-		//系统类型
-		if($this->CI->agent->is_mobile()){
-		$system_os=$this->CI->agent->mobile();
-		}else if($this->CI->agent->is_robot()){
-			$system_os=$this->CI->agent->robot();
-		}else{
-			$system_os=$this->CI->agent->platform();
-		}
-		
-		if($system_os==='Unknown Platform'){
-			exit('拒绝');
-		}
-		*/
 	}
 }

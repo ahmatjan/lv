@@ -1,6 +1,3 @@
 <div style="margin: 1px auto;">
-	<img src="../../../image/catalog/1255.jpg">
-	<!--
-	<img src="<?php echo $new_img['new_img']?>">
-	-->
+	<img class="lazy" style="width: 1500px;height: 70px" data-original="<?php echo $new_img?>">
 </div>

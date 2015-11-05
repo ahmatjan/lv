@@ -7,7 +7,7 @@ class base_setting extends CI_Model {
 	{
 	//传入一个设置名称
 
-		$sql = "SELECT * FROM base_setting WHERE setting_key = ? "; 
+		$sql = "SELECT * FROM " . $this->db->dbprefix('base_setting') . " WHERE setting_key = ? "; 
 
 		$query=$this->db->query($sql, array($key));
 
@@ -25,7 +25,7 @@ class base_setting extends CI_Model {
 			$k=$this->input->utf8($k);
 			$v=$this->input->utf8($v);
 			
-			$sql="UPDATE `base_setting` SET `value`=". $this->db->escape($v) ." WHERE `setting_key`='".$k."'";
+			$sql="UPDATE " . $this->db->dbprefix('base_setting') . " SET `value`=". $this->db->escape($v) ." WHERE `setting_key`='".$k."'";
 			$this->db->query($sql);
 		}
 	}

@@ -5,7 +5,7 @@ class user_group extends CI_Model {
 	public function get_namebygroup_id($group_id='')
 	{
 	//通过给定用户组id查名字
-		$sql = "SELECT name FROM user_group WHERE group_id=?"; 
+		$sql = "SELECT name FROM " . $this->db->dbprefix('user_group') . " WHERE group_id=?"; 
 
 		$query=$this->db->query($sql,array($group_id));
 		
@@ -19,7 +19,7 @@ class user_group extends CI_Model {
 	public function get_infobygroup_id($group_id='')
 	{
 	//通过id号查用户组所有信息
-		$sql = "SELECT * FROM user_group WHERE group_id=?"; 
+		$sql = "SELECT * FROM " . $this->db->dbprefix('user_group') . " WHERE group_id=?"; 
 
 		$query=$this->db->query($sql,array($group_id));
 		
@@ -33,7 +33,7 @@ class user_group extends CI_Model {
 	public function get_groupall()
 	{
 	//获取所有用户组
-		$sql = "SELECT * FROM user_group ORDER BY group_id ASC"; 
+		$sql = "SELECT * FROM " . $this->db->dbprefix('user_group') . " ORDER BY group_id ASC"; 
 
 		$query=$this->db->query($sql);
 
@@ -45,9 +45,9 @@ class user_group extends CI_Model {
 	public function int_group($data){
 		//传入一个待添加的数组
 		if(!empty($data['group_id'])){
-			$sql="REPLACE INTO user_group VALUES('".(int)$data['group_id']."',".$this->db->escape($data['name']).",".$this->db->escape($data['description']).",".$this->db->escape($data['permission']).")";
+			$sql="REPLACE INTO " . $this->db->dbprefix('user_group') . " VALUES('".(int)$data['group_id']."',".$this->db->escape($data['name']).",".$this->db->escape($data['description']).",".$this->db->escape($data['permission']).")";
 		}else{
-			$sql="INSERT INTO user_group (name,description,permission) VALUES (".$this->db->escape($data['name']).",".$this->db->escape($data['description']).",".$this->db->escape($data['permission']).")";
+			$sql="INSERT INTO " . $this->db->dbprefix('user_group') . " (name,description,permission) VALUES (".$this->db->escape($data['name']).",".$this->db->escape($data['description']).",".$this->db->escape($data['permission']).")";
 		}
 		
 		$this->db->query($sql);

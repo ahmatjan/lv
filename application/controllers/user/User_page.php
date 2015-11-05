@@ -42,7 +42,7 @@ class User_page extends CI_Controller {
 		);
 		
 		//通过user_id 查用户信息
-		$data['user_image']=$this->image->rezice($user_infos['image'],255,255)['new_img'];
+		$data['user_image']=$this->image->rezice($user_infos['image'],255,255);
 		$data['nick_name']=$user_infos['nick_name'];
 		
 		$this->load->view('user/user_page',$data);

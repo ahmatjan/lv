@@ -49,56 +49,7 @@ class public_section extends CI_Model {
 		
 		$data['mate_author']=$this->base_setting->get_setting('mate_author');
 		
-		//写入一个随机session做为token令牌，用来检查是同一次访问
-		if(!isset($_SESSION['token'])){//如果token不存在或者为空
-			$this->load->helper('string');
-			$token=random_string('sha1');
-			$this->session->set_userdata('token', $token);
-			$this->session->mark_as_temp('token', 24*60*60);
-			
-			//淘宝ip库
-			$ip=$this->agent->get_ip();
-			//$ip='222.219.137.84';
-			$url="http://ip.taobao.com/service/getIpInfo.php?ip=".$ip;
-			@$ip=json_decode(file_get_contents($url)); 
-
-			if((string)@$ip->code=='1'){
-				$ip_address=array();
-			}
-			if((string)@$ip->code=='0'){
-				$ip_address= (array)$ip->data;
-			}
-			
-			//系统类型$this->agent->is_robot()
-			if($this->agent->is_robot()){
-				$system_os=$this->agent->robot();
-			}else if($this->agent->is_mobile()){
-				$system_os=$this->agent->mobile();
-			}else{
-				$system_os=$this->agent->platform();
-			}
-			
-			//来源
-			if ($this->agent->is_referral())
-			{
-				$referrer_url=$this->agent->referrer();
-			}else{
-				$referrer_url='';
-			}
-			
-			//把用户访问信息写入数据库
-			$access_report=array(
-				'referrer_url'	=>$referrer_url,
-				'ip'			=>$this->agent->get_ip(),
-				'access_time'	=>date('Y-m-d H:i:s'),
-				'system_os'		=>$system_os,
-				'browser'		=>$this->agent->browser().$this->agent->version(),
-				'ip_address'	=>serialize($ip_address),
-				'token'			=>$token,
-			);
-			//直接写入到数据库（因为这个类在model,所以没有再去load->model）
-			$this->db->insert('access_report', $access_report);
-		}
+		$this->access_report();
 		
 		return $this->load->view('common/header',$data);
 	}
@@ -136,9 +87,7 @@ class public_section extends CI_Model {
 			if(strpos($this->user->get_image() ,'http') !== FALSE){
 				$data['user_image']=$this->user->get_image();
 			}else{
-				$portrait_img=$this->image->rezice($this->user->get_image(),29,29);
-				$this->image->rezice($this->user->get_image(),150,150);
-				$data['user_image']=$portrait_img['new_img'];
+				$data['user_image']=$this->image->rezice($this->user->get_image(),29,29);
 			}
 		}else{
 			$data['user_image']='';
@@ -213,9 +162,7 @@ class public_section extends CI_Model {
 			if(strpos($this->user->get_image() ,'http') !== FALSE){
 				$data['user_image']=$this->user->get_image();
 			}else{
-				$portrait_img=$this->image->rezice($this->user->get_image(),29,29);
-				$this->image->rezice($this->user->get_image(),150,150);
-				$data['user_image']=$portrait_img['new_img'];
+				$data['user_image']=$this->image->rezice($this->user->get_image(),29,29);
 			}
 		}else{
 			$data['user_image']='';
@@ -411,5 +358,66 @@ class public_section extends CI_Model {
 		$data['navs']=$nav_parents;
 		
 		return $this->load->view('common/view_sideastop',$data);
+	}
+	
+	//访问统计函数
+	public function access_report(){
+		//系统类型$this->agent->is_robot()
+		$platform=$this->agent->platform();
+		//浏览器
+		$browser=$this->agent->browser().$this->agent->version();
+		//IP
+		$ip=$this->agent->get_ip();
+		//上一级URL
+		$referrer_url=$this->agent->referrer();
+		$flow_report=array(
+				'ip'					=>$ip,
+				'referrer_url'			=>$referrer_url,
+				'current_url'			=>current_url(),
+				'token'					=>@$_SESSION['token'],
+				'access_time'			=>date('Y-m-d H:i:s'),
+				'platform'				=>$platform,
+				'browser'				=>$browser,
+				'user_agent'			=>$this->agent->agent_string(),
+		);
+		
+		//直接写入到数据库（因为这个类在model,所以没有再去load->model）
+		$this->db->insert( $this->db->dbprefix('flow_report') , $flow_report);
+				
+				
+		//判断，如果是蜘蛛，不开session
+		if(!$this->agent->robot()){
+			//写入一个随机session做为token令牌，用来检查是同一次访问
+			if(!isset($_SESSION['token'])){//如果token不存在或者为空
+				$this->load->helper('string');
+				$token=random_string('sha1');
+				$this->session->set_userdata('token', $token);
+				$this->session->mark_as_temp('token', 24*60*60);
+				
+				//淘宝ip库
+				//$ip='222.219.137.84';
+				$url="http://ip.taobao.com/service/getIpInfo.php?ip=".$ip;
+				@$ip=json_decode(file_get_contents($url)); 
+
+				if((string)@$ip->code=='1'){
+					$ip_address=array();
+				}
+				if((string)@$ip->code=='0'){
+					$ip_address= (array)$ip->data;
+				}
+				
+				//把用户访问信息写入数据库
+				$access_report=array(
+					'ip'			=>$this->agent->get_ip(),
+					'access_time'	=>date('Y-m-d H:i:s'),
+					'platform'		=>$platform,
+					'browser'		=>$browser,
+					'ip_address'	=>serialize($ip_address),
+					'token'			=>$token,
+				);
+				//直接写入到数据库（因为这个类在model,所以没有再去load->model）
+				$this->db->insert( $this->db->dbprefix('access_report') , $access_report);
+			}
+		}
 	}
 }

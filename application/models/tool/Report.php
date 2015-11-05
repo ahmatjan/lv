@@ -7,7 +7,7 @@ class Report extends CI_Model {
 	*/
 	//添加访问记录
 	public function get_istokenbytoken($token){
-		$sql = "SELECT report_id FROM access_report WHERE token = ? "; 
+		$sql = "SELECT report_id FROM " . $this->db->dbprefix('access_report') . " WHERE token = ? "; 
 		$query=$this->db->query($sql, array($token));
 		$row = $query->result_array();
 		if(empty($row)){
@@ -22,11 +22,11 @@ class Report extends CI_Model {
 	public function updata_tab($data)
 	{
 		$this->db->where('token', $_SESSION['token']);
-		$this->db->update('access_report', $data);
+		$this->db->update($this->db->dbprefix('access_report') , $data);
 	}
 	
 	//添加
 	public function insert_tab(){
-		$this->db->insert('access_report', $data);
+		$this->db->insert($this->db->dbprefix('access_report') , $data);
 	}
 }

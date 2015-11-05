@@ -52,8 +52,7 @@ class User_center extends CI_Controller {
 			if(strpos($this->user->get_image() ,'http') !== FALSE){
 				$data['user_image']=$this->user->get_image();
 			}else{
-				$portrait_img=$this->image->rezice($this->user->get_image(),203,203);
-				$data['user_image']=$portrait_img['new_img'];
+				$data['user_image']=$this->image->rezice($this->user->get_image(),203,203);
 			}
 		}else{
 			$data['user_image']='';
@@ -96,9 +95,6 @@ class User_center extends CI_Controller {
 	        //修改数据库
 	        $up_img='catalog/'.date("Ym").$filename;
 	        
-	        //生成缩略图
-	        $this->image->rezice($up_img,150,150);
-
 	        //写入数据库
 	        $this->load->model('user/user_info');
 	        //更新新数据

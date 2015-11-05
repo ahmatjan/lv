@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class travel_con extends CI_Model {
 	//读取内容
 	public function get_travel_content($data){
-		$sql = "SELECT * FROM s_spider_travel_info WHERE spider_id = ?";
+		$sql = "SELECT * FROM " . $this->db->dbprefix('s_spider_travel_info') . " WHERE spider_id = ?";
 		$query=$this->db->query($sql, array($data));
 		if ($query->num_rows() > 0)
 		{
@@ -23,7 +23,7 @@ class travel_con extends CI_Model {
 		}
 		$min_repage=($revie_page-1)*8;
 		$max_repage=($revie_page-1)*8+8;
-		$sql = "SELECT * FROM s_spider_travel_review WHERE travel_info_id = ? ORDER BY review_id DESC LIMIT ?,?";
+		$sql = "SELECT * FROM " . $this->db->dbprefix('s_spider_travel_review') . " WHERE travel_info_id = ? ORDER BY review_id DESC LIMIT ?,?";
 		$query=$this->db->query($sql, array($data,$min_repage,$max_repage));
 		if ($query->num_rows() > 0)
 		{
@@ -31,7 +31,7 @@ class travel_con extends CI_Model {
 		}
 		
 		//返回查询条数，用于分页
-		$sql = "SELECT * FROM s_spider_travel_review WHERE travel_info_id = ? ";
+		$sql = "SELECT * FROM " . $this->db->dbprefix('s_spider_travel_review') . " WHERE travel_info_id = ? ";
 		$query=$this->db->query($sql, array($data));
 		$row['count']=$query->num_rows();
 		
@@ -39,7 +39,7 @@ class travel_con extends CI_Model {
 	}
 	
 	public function get_travel_noid(){
-		$sql = "SELECT * FROM s_spider_travel_info ORDER BY add_date DESC LIMIT 10";
+		$sql = "SELECT * FROM " . $this->db->dbprefix('s_spider_travel_info') . " ORDER BY add_date DESC LIMIT 10";
 		$query=$this->db->query($sql);
 		if ($query->num_rows() > 0)
 		{

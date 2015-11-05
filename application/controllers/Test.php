@@ -208,8 +208,24 @@ var_dump($nav_parents);
 
 		*/
 		
+		$select_end=$this->input->get('end');
+		if(!isset($select_end)){
+			$select_end=0;
+		}else{
+			$select_end=$this->input->get('end');
+		}
+		$start=$select_end*100;
+		$end=($select_end+1)*100;
 		
-		phpinfo();
+		$sql = "SELECT * FROM " . $this->db->dbprefix('access_report') . " ORDER BY  report_id ASC LIMIT $start,$end"; 
+
+		$query=$this->db->query($sql);
+
+		$row = $query->result_array(); 
+		
+		foreach($row as $k=>$v){
+			echo '<span style="color:red">ID=></span>'.$row[$k]['report_id'].'&nbsp;<span style="color:red">IP</span>=>'.$row[$k]['ip'].'<span style="color:red">访问时间=></span>'.$row[$k]['access_time'].'<span style="color:red">系统类型=></span>'.$row[$k]['platform'].'<span style="color:red">浏览器=></span>'.$row[$k]['browser'].'<br/><br/>';
+		}
 
 		/*
 		if(!strpos($permission_views,$url) !== false){

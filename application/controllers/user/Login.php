@@ -245,11 +245,7 @@ class Login extends CI_Controller {
 		$browser_info=$this->agent->browser().$this->agent->version();
 		$date_now=date('Y-m-d H:i:s');
 
-		if($this->agent->is_mobile()){
-			$system_os=$this->agent->mobile();
-		}else{
-			$system_os=$this->agent->platform();
-		}
+		$platform=$this->agent->platform();
 		
 		//默认注册用户组
 		if($this->base_setting->get_setting('register_group')!==NULL){
@@ -275,7 +271,7 @@ class Login extends CI_Controller {
 					'add_ip'	=>$ip,
 					'add_date'	=>$date_now,
 					'status'	=>'1',
-					'system_os'	=>$system_os,
+					'platform'	=>$platform,
 					'browser'=>$browser_info,
 					'register_style'=>'email',
 					'group_id'=>$register_group,
@@ -317,7 +313,7 @@ class Login extends CI_Controller {
 					'add_ip'	=>$ip,
 					'add_date'	=>$date_now,
 					'status'	=>'1',
-					'system_os'	=>$system_os,
+					'platform'	=>$platform,
 					'browser'=>$browser_info,
 					'register_style'=>'user_name',
 					'group_id'=>$register_group,

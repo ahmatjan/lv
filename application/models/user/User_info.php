@@ -5,7 +5,7 @@ class user_info extends CI_Model {
 	public function get_username_info($data)
 	{
 	//通过用户名查用户信息
-		$sql = "SELECT * FROM user_info WHERE user_name = ?"; 
+		$sql = "SELECT * FROM " . $this->db->dbprefix('user_info') . " WHERE user_name = ?"; 
 
 		$query=$this->db->query($sql, array($data));
 
@@ -19,7 +19,7 @@ class user_info extends CI_Model {
 	public function get_username_id($data)
 	{
 	//通过用户名查用户id
-		$sql = "SELECT user_id FROM user_info WHERE user_name = ?"; 
+		$sql = "SELECT user_id FROM " . $this->db->dbprefix('user_info') . " WHERE user_name = ?"; 
 
 		$query=$this->db->query($sql, array($data));
 
@@ -33,7 +33,7 @@ class user_info extends CI_Model {
 	public function get_useridforuid($uid)
 	{
 	//通过用户名查用户id
-		$sql = "SELECT user_id FROM user_info WHERE uid = ? "; 
+		$sql = "SELECT user_id FROM " . $this->db->dbprefix('user_info') . " WHERE uid = ? "; 
 
 		$query=$this->db->query($sql, array($uid));
 
@@ -49,7 +49,7 @@ class user_info extends CI_Model {
 	{
 	//通过邮箱查用户信息
 
-		$sql = "SELECT * FROM user_info WHERE email = ?"; 
+		$sql = "SELECT * FROM " . $this->db->dbprefix('user_info') . " WHERE email = ?"; 
 
 		$query=$this->db->query($sql, array($data));
 
@@ -64,7 +64,7 @@ class user_info extends CI_Model {
 	{
 	//通过邮箱查用户id
 
-		$sql = "SELECT user_id FROM user_info WHERE email = ?"; 
+		$sql = "SELECT user_id FROM " . $this->db->dbprefix('user_info') . " WHERE email = ?"; 
 
 		$query=$this->db->query($sql, array($data));
 
@@ -79,13 +79,13 @@ class user_info extends CI_Model {
 	public function int_username($data)
 	{
 		//
-		$this->db->insert('user_info', $data);
+		$this->db->insert( $this->db->dbprefix('user_info') , $data);
 	}
 	
 	//用户id查用记信息
 	public function get_userinfobyuser_id($user_id)
 	{
-		$sql = "SELECT user_name,nick_name,image FROM user_info WHERE user_id = ?"; 
+		$sql = "SELECT user_name,nick_name,image FROM " . $this->db->dbprefix('user_info') . " WHERE user_id = ?"; 
 
 		$query=$this->db->query($sql, array($user_id));
 
@@ -102,12 +102,12 @@ class user_info extends CI_Model {
 	        'image' => $filename,
 		);
 		$this->db->where('user_id', $user_id);
-		$this->db->update('user_info', $data);
+		$this->db->update( $this->db->dbprefix('user_info') , $data);
 	}
 	
 	//通过用户名查用户头像
 	public function get_oldimg ($user_name){
-		$sql = "SELECT image FROM user_info WHERE user_name = ?"; 
+		$sql = "SELECT image FROM " . $this->db->dbprefix('user_info') . " WHERE user_name = ?"; 
 
 		$query=$this->db->query($sql, array($user_name));
 
@@ -121,7 +121,7 @@ class user_info extends CI_Model {
 	//获取所有用户信息用于用户管理
 	//默认获取前20条
 	public function get_userall($start=0,$end=20){
-		$sql = "SELECT user_id , user_name , mobile , email , wechat , QQ , nick_name , status , group_id FROM user_info ORDER BY user_id ASC limit ? , ?"; 
+		$sql = "SELECT user_id , user_name , mobile , email , wechat , QQ , nick_name , status , group_id FROM " . $this->db->dbprefix('user_info') . " ORDER BY user_id ASC limit ? , ?"; 
 
 		$query=$this->db->query($sql, array($start,$end));
 
@@ -134,7 +134,7 @@ class user_info extends CI_Model {
 	public function get_usergroup_forid($data)
 	{
 	//通过用户id查用户组
-		$sql = "SELECT group_id FROM user_info WHERE user_id = ?"; 
+		$sql = "SELECT group_id FROM " . $this->db->dbprefix('user_info') . " WHERE user_id = ?"; 
 
 		$query=$this->db->query($sql, array($data));
 

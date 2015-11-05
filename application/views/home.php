@@ -51,7 +51,7 @@
 
 										<div class="active item">
 
-											<img class="lazy" data-original="<?php echo $img5['new_img']?>" alt="" width="454" height="301">
+											<img class="lazy" data-original="<?php echo $img5?>" alt="" width="454" height="301">
 
 											<div class="carousel-caption">
 

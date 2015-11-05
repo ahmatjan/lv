@@ -62,13 +62,7 @@ class Sns extends CI_Controller {
 						
 						$this->load->library('user_agent');//用户代理类
 						//系统类型$this->agent->is_robot()
-						if($this->agent->is_robot()){
-							$system_os=$this->agent->robot();
-						}else if($this->agent->is_mobile()){
-							$system_os=$this->agent->mobile();
-						}else{
-							$system_os=$this->agent->platform();
-						}
+						$platform=$this->agent->platform();
 						
 						$ip=$this->input->ip_address();//ip
 						$browser_info=$this->agent->browser().$this->agent->version();//浏览器类型
@@ -88,7 +82,7 @@ class Sns extends CI_Controller {
 						'add_ip'	=>$ip,
 						'add_date'	=>$date_now,
 						'status'	=>'1',
-						'system_os'	=>$system_os,
+						'platform'	=>$platform,
 						'browser'=>$browser_info,
 						'register_style'=>$sns_user['via'],
 						'group_id'=>$register_group,

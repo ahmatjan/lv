@@ -13,6 +13,7 @@ class Image extends CI_Model {
 		$old_image = 'image/' . $filename;//输入文件名
 		$new_image = 'image/cache/' . substr($filename, 0, strrpos($filename, '.')) . '-' . $width . 'x' . $height . '.' . $extension;//缓存文件名
 		
+		
 		if (!is_file($new_image) OR (filectime($old_image) > filectime($new_image))) {
 	
 			//如果缓存文件不存在或者缓存文件时间在文件之前
@@ -40,17 +41,19 @@ class Image extends CI_Model {
 				$config['image_library'] = 'gd2';
 				$config['source_image'] = $old_image;
 				$config['new_image'] = $new_image;
-				$config['quality'] = 80;
+				$config['quality'] = '60';
 				$config['create_thumb'] = FALSE;
-				//$config['maintain_ratio'] = TRUE;
-				$config['maintain_ratio'] = FALSE;
+				$config['maintain_ratio'] = TRUE;
 				$config['master_dim'] = $master_dim;
 				$config['width'] = $width;
 				$config['height'] = $height;
+				$config['file_permissions'] = 0777;
 
 				$this->load->library('image_lib', $config); 
 
 				$this->image_lib->resize();
+				
+				$this->image_lib->clear();
 
 			} else {
 				copy($old_image,$new_image);
@@ -62,11 +65,7 @@ class Image extends CI_Model {
 			$new_image='public/image/no_img.gif';
 		}
 		
-		$images=array(
-			'old_img'=>base_url($old_image),
-			'new_img'=>base_url($new_image)
-		);
-		return $images;
+		return base_url($new_image);
 	}
 	
 	public function down_img($filename,$width='',$height=''){
