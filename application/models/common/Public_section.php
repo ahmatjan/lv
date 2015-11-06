@@ -49,7 +49,7 @@ class public_section extends CI_Model {
 		
 		$data['mate_author']=$this->base_setting->get_setting('mate_author');
 		
-		$this->access_report();
+		$this->report_access();
 		
 		return $this->load->view('common/header',$data);
 	}
@@ -130,7 +130,7 @@ class public_section extends CI_Model {
 		$data['active']=$active;
 		
 		//查询ip_address
-		@$sql = "SELECT ip_address FROM " . $this->db->dbprefix('access_report') . " WHERE token = ?"; 
+		@$sql = "SELECT ip_address FROM " . $this->db->dbprefix('report_access') . " WHERE token = ?"; 
 		@$query=$this->db->query($sql, array(@$_SESSION['token']));
 		@$data['ip_address'] = unserialize($query->row_array()['ip_address']);
 
@@ -366,7 +366,7 @@ class public_section extends CI_Model {
 	}
 	
 	//访问统计函数
-	public function access_report(){
+	public function report_access(){
 		//系统类型$this->agent->is_robot()
 		$platform=$this->agent->platform();
 		//浏览器
@@ -375,7 +375,7 @@ class public_section extends CI_Model {
 		$ip=$this->agent->get_ip();
 		//上一级URL
 		$referrer_url=$this->agent->referrer();
-		$flow_report=array(
+		$report_flow=array(
 				'ip'					=>$ip,
 				'referrer_url'			=>$referrer_url,
 				'current_url'			=>current_url(),
@@ -388,7 +388,7 @@ class public_section extends CI_Model {
 		);
 		
 		//直接写入到数据库（因为这个类在model,所以没有再去load->model）
-		$this->db->insert( $this->db->dbprefix('flow_report') , $flow_report);
+		$this->db->insert( $this->db->dbprefix('report_flow') , $report_flow);
 				
 				
 		//判断，如果是蜘蛛，不开session
@@ -413,7 +413,7 @@ class public_section extends CI_Model {
 				}
 				
 				//把用户访问信息写入数据库
-				$access_report=array(
+				$report_access=array(
 					'ip'			=>$this->agent->get_ip(),
 					'access_time'	=>date('Y-m-d H:i:s'),
 					'platform'		=>$platform,
@@ -422,8 +422,20 @@ class public_section extends CI_Model {
 					'token'			=>$token,
 				);
 				//直接写入到数据库（因为这个类在model,所以没有再去load->model）
-				$this->db->insert( $this->db->dbprefix('access_report') , $access_report);
+				$this->db->insert( $this->db->dbprefix('report_access') , $report_access);
 			}
+		}
+		
+		//如果是已知蜘蛛，把蜘蛛写入到report_robot表
+		if($this->agent->robot()){
+			$robot_data=array(
+					'ip'					=>$ip,
+					'robot_name'			=>$this->agent->robot(),
+					'url'					=>current_url(),
+					'access_time'			=>date('Y-m-d H:i:s'),
+			);
+		//直接写入到数据库（因为这个类在model,所以没有再去load->model）
+		$this->db->insert( $this->db->dbprefix('report_robot') , $robot_data);
 		}
 	}
 }

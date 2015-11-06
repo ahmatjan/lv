@@ -97,7 +97,7 @@ class Sns extends CI_Controller {
 					$this->session->set_userdata('user_id', $user_id);
 					//更新访记录到表中记录
 					$this->load->model('tool/report');
-					//是更新access_report表
+					//是更新report_access表
 					$access_data=array(
 							'user_id'			=>$_SESSION['user_id'],
 							'login_time'		=>date('Y-m-d H:i:s'),

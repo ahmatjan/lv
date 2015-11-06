@@ -33,7 +33,7 @@ class User_manage extends CI_Controller {
 								),
 			'setting'		=>array(
 								'name'=>$this->lang->line('heading_title'),
-								'this_url'=>site_url('setting/layout'),
+								'this_url'=>site_url('setting/user_manage'),
 								'url'=>''
 								)
 		);

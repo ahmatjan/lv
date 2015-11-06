@@ -219,7 +219,7 @@ var_dump($nav_parents);
 		$start=$select_end*100;
 		$end=($select_end+1)*100;
 		
-		$sql = "SELECT * FROM " . $this->db->dbprefix('access_report') . " ORDER BY  report_id ASC LIMIT $start,$end"; 
+		$sql = "SELECT * FROM " . $this->db->dbprefix('report_access') . " ORDER BY  report_id ASC LIMIT $start,$end"; 
 
 		$query=$this->db->query($sql);
 
@@ -230,14 +230,8 @@ var_dump($nav_parents);
 		}
 */
 
-		//查询ip_address
-		$sql = "SELECT ip_address FROM " . $this->db->dbprefix('access_report') . " WHERE token = ?"; 
-		$query=$this->db->query($sql, array($_SESSION['token']));
-		$data['ip_address'] = unserialize($query->row_array()['ip_address']);
-		var_dump($data['ip_address']);
-
-
-
+		$this->load->model('tool/report');
+		var_dump($this->report->count_report_access());
 
 		/*
 		if(!strpos($permission_views,$url) !== false){

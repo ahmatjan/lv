@@ -30,9 +30,28 @@ class user_info extends CI_Model {
 		}
 	}
 	
+	public function get_userid_name($data)
+	{
+	//通过用户id查用户名
+		if(!isset($data)){
+			return '';
+		}
+		if(isset($data)){
+			$sql = "SELECT user_name FROM " . $this->db->dbprefix('user_info') . " WHERE user_id = ?"; 
+
+			$query=$this->db->query($sql, array($data));
+
+			if ($query->num_rows() > 0)
+			{
+			   $row = $query->row_array(); 
+				return $row['user_name'];
+			}
+		}
+	}
+	
 	public function get_useridforuid($uid)
 	{
-	//通过用户名查用户id
+	//通过uid查用户id
 		$sql = "SELECT user_id FROM " . $this->db->dbprefix('user_info') . " WHERE uid = ? "; 
 
 		$query=$this->db->query($sql, array($uid));

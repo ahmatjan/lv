@@ -94,7 +94,7 @@
 			</div>
 
 			<div>
-				<a href="<?php echo site_url('user/sns/session/qq')?>" class="btn red btn-block">用QQ直接登陆<i class="m-icon-swapright m-icon-white"></i></a>
+				<a href="<?php echo site_url('user/sns/session/qq')?>" class="btn red btn-block"><img style="background:none" src="<?php echo base_url('public/image/qq_login_ico.png')?>">&nbsp;QQ直接登陆<i class="m-icon-swapright m-icon-white"></i></a>
 				<!--<a href="<?php echo site_url('user/sns/session/weixin')?>" class="btn green btn-block">微信登陆<i class="m-icon-swapright m-icon-white"></i></a>-->
 			</div>
 			

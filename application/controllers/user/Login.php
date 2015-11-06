@@ -97,7 +97,7 @@ class Login extends CI_Controller {
 				
 				//更新访记录到表中记录
 				$this->load->model('tool/report');
-				//是更新access_report表
+				//是更新report_access表
 				$access_data=array(
 						'user_id'			=>$_SESSION['user_id'],
 						'login_time'		=>date('Y-m-d H:i:s'),
@@ -132,7 +132,7 @@ class Login extends CI_Controller {
 				
 				//更新访记录到表中记录
 				$this->load->model('tool/report');
-				//是更新access_report表
+				//是更新report_access表
 				$access_data=array(
 						'user_id'			=>$_SESSION['user_id'],
 						'login_time'		=>date('Y-m-d H:i:s'),
@@ -176,7 +176,7 @@ class Login extends CI_Controller {
 				
 				//更新访记录到表中记录
 				$this->load->model('tool/report');
-				//是更新access_report表
+				//是更新report_access表
 				$access_data=array(
 						'user_id'			=>$_SESSION['user_id'],
 						'login_time'		=>date('Y-m-d H:i:s'),
@@ -208,7 +208,7 @@ class Login extends CI_Controller {
 				
 				//更新访记录到表中记录
 				$this->load->model('tool/report');
-				//是更新access_report表
+				//是更新report_access表
 				$access_data=array(
 						'user_id'			=>$_SESSION['user_id'],
 						'login_time'		=>date('Y-m-d H:i:s'),
@@ -286,7 +286,7 @@ class Login extends CI_Controller {
 				
 				//更新访记录到表中记录
 				$this->load->model('tool/report');
-				//是更新access_report表
+				//是更新report_access表
 				$access_data=array(
 						'user_id'			=>$_SESSION['user_id'],
 						'login_time'		=>date('Y-m-d H:i:s'),
@@ -327,7 +327,7 @@ class Login extends CI_Controller {
 				
 				//更新访记录到表中记录
 				$this->load->model('tool/report');
-				//是更新access_report表
+				//是更新report_access表
 				$access_data=array(
 						'user_id'			=>$_SESSION['user_id'],
 						'login_time'		=>date('Y-m-d H:i:s'),
