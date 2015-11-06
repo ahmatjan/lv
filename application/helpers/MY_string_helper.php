@@ -99,8 +99,8 @@ return $str;
 function strpos_str($a,$b){
 	//如果$a 中存在 $b，则为 true ，否则为 false。
 	if(strpos($a, $b) !== false){
-		return TRUE;
-	}else{
 		return FALSE;
+	}else{
+		return TRUE;
 	}
 }

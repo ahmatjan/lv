@@ -34,9 +34,9 @@ class Report extends CI_Model {
 	public function get_report_accessall($access_start,$access_end)
 	{
 	//
-		$sql = "SELECT * FROM " . $this->db->dbprefix('report_access') . " ORDER BY report_id ASC LIMIT ? , ? "; 
+		$sql = "SELECT * FROM " . $this->db->dbprefix('report_access') . " ORDER BY report_id ASC LIMIT ? , ".$access_end; 
 
-		$query=$this->db->query($sql,array($access_start,$access_end));
+		$query=$this->db->query($sql,array($access_start));
 
 		$row = $query->result_array(); 
 		return $row;
@@ -52,12 +52,13 @@ class Report extends CI_Model {
 	public function get_report_flowall($flow_start,$flow_end)
 	{
 	//
-		$sql = "SELECT * FROM " . $this->db->dbprefix('report_flow') . " ORDER BY flow_id ASC limit ?,?"; 
+		$sql = "SELECT * FROM " . $this->db->dbprefix('report_flow') . " ORDER BY flow_id ASC LIMIT ? , ".$flow_end; 
 
-		$query=$this->db->query($sql,array($flow_start,$flow_end));
+		$query=$this->db->query($sql,array( $flow_start ));
 
 		$row = $query->result_array(); 
 		return $row;
+
 	}
 	
 	//统计report_flow表的记录行数
@@ -70,9 +71,9 @@ class Report extends CI_Model {
 	public function get_report_robotall($robot_start,$robot_end)
 	{
 	//
-		$sql = "SELECT * FROM " . $this->db->dbprefix('report_robot') . " ORDER BY robot_id ASC LIMIT ? , ? "; 
+		$sql = "SELECT * FROM " . $this->db->dbprefix('report_robot') . " ORDER BY robot_id ASC LIMIT ? , ".$robot_end; 
 
-		$query=$this->db->query($sql,array($robot_start,$robot_end));
+		$query=$this->db->query($sql,array($robot_start));
 
 		$row = $query->result_array(); 
 		return $row;

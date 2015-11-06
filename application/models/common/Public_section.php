@@ -418,7 +418,7 @@ class public_section extends CI_Model {
 					'access_time'	=>date('Y-m-d H:i:s'),
 					'platform'		=>$platform,
 					'browser'		=>$browser,
-					'ip_address'	=>serialize($ip_address),
+					'ip_address'	=>serialize(@$ip_address),
 					'token'			=>$token,
 				);
 				//直接写入到数据库（因为这个类在model,所以没有再去load->model）

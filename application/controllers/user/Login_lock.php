@@ -17,8 +17,9 @@ class Login_lock extends CI_Controller {
 		
 		//header
 		$header['title']='锁定帐号';
-		$header['css_page_style']=base_url('public/css/lock.css');
+		$header['css_page_style']=array('public/css/lock.css');
 		$this->public_section->get_header($header);
+		$this->public_section->get_login_top();
 		
 		//text
 		$data['text_username']=$this->lang->line('text_username');

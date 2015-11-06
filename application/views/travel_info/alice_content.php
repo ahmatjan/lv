@@ -187,14 +187,14 @@
 											
 										</ul>
 
-											<?php if ($recount !== NULL && $recount>8): ?><!--记录条数不为空并且可以分页才显示-->
+											<?php if ($recount > $this->base_setting->get_setting('quantity_view')): ?><!--记录条数不为空并且可以分页才显示-->
 											
 											<div class="pagination" style="text-align: center;margin: 5px 0">
 
 												<ul>
 													
 													<li><a href="#">上一页</a></li>
-													<?php for($i=1;$i<floor($recount%8);$i++):?>
+													<?php for($i=1;$i<ceil($recount/$this->base_setting->get_setting('quantity_view'));$i++):?>
 													<li><a href="<?php echo site_url('travel_info/Alice_content?id=').$travels['spider_id'].'&revie_page='.$i?>"><?php echo $i?></a></li>
 													<?php endfor;?>
 													<li><a href="#">下一页</a></li>

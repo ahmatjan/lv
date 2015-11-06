@@ -140,7 +140,7 @@
 																
 																<td class="hidden-480"><div title="<?php echo $report_access['platform'].$report_access['browser']?>"><?php echo substr_cn($report_access['platform'].$report_access['browser'],16)?></td>
 																
-																<td class="hidden-480"><a href="<?php echo site_url('user/user_page?user_id='.$report_access['report_id'])?>" target="_blank" title="<?php echo $report_access['user_name']?>"><?php echo substr_cn($report_access['user_name'],15)?></a></td>
+																<td class="hidden-480"><a href="<?php echo site_url('user/user_page?user_id='.$report_access['user_id'])?>" target="_blank" title="<?php echo $report_access['user_name']?>"><?php echo substr_cn($report_access['user_name'],15)?></a></td>
 																
 															</tr>
 															
@@ -152,27 +152,66 @@
 
 													</table>
 													
+													<?php if(ceil($count_report_access/$item)>1):?><!--总记录数/每页显示条数大于1才显示-->
+													
 													<div class="pagination" style="text-align: center;margin: 5px 0">
 
 													<ul>
+														<?php if($access_active > 1):?>
+														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').($access_active -'1');?>">上一页</a></li>
+														<?php endif;?>
 														
-														<li><a href="#">上一页</a></li>
-
-														<li><a href="#">1</a></li>
-
-														<li><a href="#">2</a></li>
-
-														<li class="active"><a href="#">3</a></li>
-
-														<li><a href="#">4</a></li>
-
-														<li><a href="#">5</a></li>
-
-														<li><a href="#">下一页</a></li>
+														<?php
+															//如果页数大于10 中间分...
+															if(ceil($count_report_access/$item)>10){
+																$access_frevious='6';
+																$access_next=ceil($count_report_access/$item)-(ceil($count_report_access/$item) - 2 );
+															}
+														?>
+															
+														<?php if(isset($access_frevious)):?>
+														<?php for($i=1;$i<$access_frevious;$i++):?>
+														<?php if($i==$access_active):?>
+														<li class="active"><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').$i;?>"><?php echo $i?></a></li>
+														<?php else:?>
+														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').$i;?>"><?php echo $i?></a></li>
+														<?php endif;?>
+														<?php endfor;?>
+														<?php endif;?>
+														
+														<?php if(isset($access_frevious)):?>
+														<li>...</li><!--中间省略的点-->
+														<?php endif;?>
+														
+														<?php if(isset($access_next)):?>
+														<?php for($i=ceil($count_report_access/$item) - 2;$i< ceil($count_report_access/$item); $i++):?>
+														<?php if($i==$access_active):?>
+														<li class="active"><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').$i;?>"><?php echo $i?></a></li>
+														<?php else:?>
+														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').$i;?>"><?php echo $i?></a></li>
+														<?php endif;?>
+														<?php endfor;?>
+														<?php endif;?>
+														
+														<?php if(ceil($count_report_access/$item) <= 10):?>
+														<?php for($i=1;$i<$count_report_access/$item;$i++):?>
+														<?php if($i==$access_active):?>
+														<li class="active"><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').$i;?>"><?php echo $i?></a></li>
+														<?php else:?>
+														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').$i;?>"><?php echo $i?></a></li>
+														<?php endif;?>
+														<?php endfor;?>
+														<?php endif;?>
+														
+														<?php if(ceil($count_report_access/$item) !== $access_active ):?>
+														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').ceil($count_report_access/$item);?>">尾页</a></li>
+														<?php endif;?>
 
 													</ul>
 
 												</div>
+												
+												<?php endif;?>
 
 												</div>
 
@@ -252,19 +291,19 @@
 
 																<td><?php echo $report_flow['flow_id']?></td>
 																
-																<td><div title="<?php echo $report_flow['ip']?>"><?php echo substr($report_flow['ip'],0,10)?></div></td>
+																<td><div title="<?php echo $report_flow['ip']?>"><?php echo substr_cn($report_flow['ip'],10)?></div></td>
 																
-																<td class="hidden-480"><a href="<?php echo $report_flow['referrer_url']?>" title="<?php echo $report_flow['referrer_url']?>" target="_blank"><?php echo strpos_str($report_flow['referrer_url'],'/wwww') ? substr($report_flow['referrer_url'],11,20) : substr($report_flow['referrer_url'],7,16); ?></a></td>
+																<td class="hidden-480"><a href="<?php echo $report_flow['referrer_url']?>" title="<?php echo $report_flow['referrer_url']?>" target="_blank"><?php echo strpos_str($report_flow['referrer_url'],'wwww') ? substr($report_flow['referrer_url'],25,36) : substr($report_flow['referrer_url'],21,32); ?></a></td>
 																
-																<td><a href="<?php echo $report_flow['current_url']?>" title="<?php echo $report_flow['current_url']?>" target="_blank"><?php echo strpos_str($report_flow['current_url'],'/wwww') ? substr($report_flow['current_url'],11,20) : substr($report_flow['current_url'],7,16); ?></a></td>
+																<td><a href="<?php echo $report_flow['current_url']?>" title="<?php echo $report_flow['current_url']?>" target="_blank"><?php echo strpos_str($report_flow['current_url'],'/wwww') ? substr_cn($report_flow['current_url'],11) : substr_cn($report_flow['current_url'],16); ?></a></td>
 																
 																<td><?php echo $report_flow['access_time']?></td>
 																
-																<td><div title="<?php echo $report_flow['platform'].$report_flow['browser']?>"><?php echo substr($report_flow['platform'].$report_flow['browser'],0,15)?></td>
+																<td><div title="<?php echo $report_flow['platform'].$report_flow['browser']?>"><?php echo substr_cn($report_flow['platform'].$report_flow['browser'],15)?></td>
 																
-																<td><div title="<?php echo $report_flow['robot']?>"><?php echo substr($report_flow['robot'],0,8)?></div></td>
+																<td><div title="<?php echo $report_flow['robot']?>"><?php echo substr_cn($report_flow['robot'],8)?></div></td>
 																
-																<td><div title="<?php echo $report_flow['user_agent']?>"><?php echo substr($report_flow['user_agent'],0,12)?></div></td>
+																<td><div title="<?php echo $report_flow['user_agent']?>"><?php echo substr_cn($report_flow['user_agent'],12)?></div></td>
 																
 															</tr>
 
@@ -408,12 +447,14 @@
 															<tr class="odd gradeX">
 
 																<td><input type="checkbox" class="checkboxes" value="<?php echo $report_robot['robot_id']?>" /></td>
+																
+																<td><?php echo $report_robot['robot_id']?></td>
 
 																<td><?php echo $report_robot['ip']?></td>
 																
-																<td class="hidden-480"><?php echo $report_robot['robot_name']?></td>
+																<td class="hidden-480"><?php echo substr_cn($report_robot['robot_name'],4)?></td>
 
-																<td><?php echo $report_robot['url']?></td>
+																<td><a href="<?php echo $report_robot['url']?>" title="<?php echo $report_robot['url']?>"><?php echo substr_cn($report_robot['url'],10)?></a></td>
 																
 																<td><?php echo $report_robot['access_time']?></td>
 
@@ -427,27 +468,66 @@
 
 													</table>
 													
+													<?php if(ceil($count_report_robot/$item)>1):?><!--总记录数/每页显示条数大于1才显示-->
+													
 													<div class="pagination" style="text-align: center;margin: 5px 0">
 
 													<ul>
+														<?php if($robot_active > 1):?>
+														<li><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').($robot_active -'1');?>">上一页</a></li>
+														<?php endif;?>
 														
-														<li><a href="#">上一页</a></li>
-
-														<li><a href="#">1</a></li>
-
-														<li><a href="#">2</a></li>
-
-														<li class="active"><a href="#">3</a></li>
-
-														<li><a href="#">4</a></li>
-
-														<li><a href="#">5</a></li>
-
-														<li><a href="#">下一页</a></li>
+														<?php
+															//如果页数大于10 中间分...
+															if(ceil($count_report_robot/$item)>10){
+																$robot_frevious='6';
+																$robot_next=ceil($count_report_robot/$item)-(ceil($count_report_robot/$item) - 2 );
+															}
+														?>
+															
+														<?php if(isset($robot_frevious)):?>
+														<?php for($i=1;$i<$robot_frevious;$i++):?>
+														<?php if($i==$robot_active):?>
+														<li class="active"><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').$i;?>"><?php echo $i?></a></li>
+														<?php else:?>
+														<li><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').$i;?>"><?php echo $i?></a></li>
+														<?php endif;?>
+														<?php endfor;?>
+														<?php endif;?>
+														
+														<?php if(isset($robot_frevious)):?>
+														<li>...</li><!--中间省略的点-->
+														<?php endif;?>
+														
+														<?php if(isset($robot_next)):?>
+														<?php for($i=ceil($count_report_robot/$item) - 2;$i< ceil($count_report_robot/$item); $i++):?>
+														<?php if($i==$robot_active):?>
+														<li class="active"><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').$i;?>"><?php echo $i?></a></li>
+														<?php else:?>
+														<li><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').$i;?>"><?php echo $i?></a></li>
+														<?php endif;?>
+														<?php endfor;?>
+														<?php endif;?>
+														
+														<?php if(ceil($count_report_robot/$item) <= 10):?>
+														<?php for($i=1;$i<$count_report_robot/$item;$i++):?>
+														<?php if($i==$robot_active):?>
+														<li class="active"><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').$i;?>"><?php echo $i?></a></li>
+														<?php else:?>
+														<li><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').$i;?>"><?php echo $i?></a></li>
+														<?php endif;?>
+														<?php endfor;?>
+														<?php endif;?>
+														
+														<?php if(ceil($count_report_robot/$item) !== $robot_active ):?>
+														<li><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').ceil($count_report_robot/$item);?>">尾页</a></li>
+														<?php endif;?>
 
 													</ul>
 
 												</div>
+												
+												<?php endif;?>
 
 												</div>
 

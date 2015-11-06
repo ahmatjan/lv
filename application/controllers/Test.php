@@ -230,8 +230,10 @@ var_dump($nav_parents);
 		}
 */
 
-		$this->load->model('tool/report');
-		var_dump($this->report->count_report_access());
+
+$this->db->like('referrer_url', 'http:');
+$this->db->from('report_flow');
+echo $this->db->count_all_results(); // Produces an integer, like 17
 
 		/*
 		if(!strpos($permission_views,$url) !== false){

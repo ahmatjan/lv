@@ -168,11 +168,11 @@
 
 																<td class="hidden-480"><?php echo $user_info['user_id']?></td>
 
-																<td><a href="<?php echo site_url('user/user_page?user_id='.$user_info['user_id'])?>" target="_blank"><?php echo $user_info['user_name']?></a></td>
+																<td><a href="<?php echo site_url('user/user_page?user_id='.$user_info['user_id'])?>" target="_blank" title="<?php echo $user_info['user_name']?>"><?php echo substr_cn($user_info['user_name'],9)?></a></td>
 																
 																<?php if(isset($user_info['nick_name'])):?>
 																
-																<td class="hidden-480"><?php echo $user_info['nick_name']?></td>
+																<td class="hidden-480"><div title="<?php echo $user_info['nick_name']?>"><?php echo substr_cn($user_info['nick_name'],9)?></div></td>
 																
 																<?php else : ?>
 																
@@ -192,7 +192,7 @@
 																
 																<?php if(isset($user_info['email'])):?>
 																
-																<td class="hidden-480"><?php echo $user_info['email']?></td>
+																<td class="hidden-480"><div title="<?php echo $user_info['email']?>"><?php echo substr_cn($user_info['email'],10)?></td>
 																
 																<?php else : ?>
 																

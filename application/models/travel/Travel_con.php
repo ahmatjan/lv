@@ -21,19 +21,21 @@ class travel_con extends CI_Model {
 		}else{
 			$revie_page=1;
 		}
-		$min_repage=($revie_page-1)*8;
-		$max_repage=($revie_page-1)*8+8;
-		$sql = "SELECT * FROM " . $this->db->dbprefix('s_spider_travel_review') . " WHERE travel_info_id = ? ORDER BY review_id DESC LIMIT ?,?";
-		$query=$this->db->query($sql, array($data,$min_repage,$max_repage));
+		$min_repage=($revie_page-1)*$this->base_setting->get_setting('quantity_view');
+
+		$sql = "SELECT * FROM " . $this->db->dbprefix('s_spider_travel_review') . " WHERE travel_info_id = ? ORDER BY review_id DESC LIMIT ?,".$this->base_setting->get_setting('quantity_view');
+		$query=$this->db->query($sql, array($data,$min_repage));
 		if ($query->num_rows() > 0)
 		{
 	        $row['reviews'] = $query->result_array();
 		}
 		
 		//返回查询条数，用于分页
-		$sql = "SELECT * FROM " . $this->db->dbprefix('s_spider_travel_review') . " WHERE travel_info_id = ? ";
-		$query=$this->db->query($sql, array($data));
-		$row['count']=$query->num_rows();
+		$this->db->where('travel_info_id', $data);
+		$this->db->from($this->db->dbprefix('s_spider_travel_review'));
+		$count=$this->db->count_all_results();
+		
+		$row['count']=$count;
 		
 		return $row;//返回查询结果
 	}

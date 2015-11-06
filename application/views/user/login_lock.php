@@ -4,16 +4,6 @@
 
 	<div class="page-lock">
 
-		<div class="page-logo">
-
-			<a class="brand" href="<?php echo site_url('home')?>">
-
-			<img src="<?php echo base_url('public/image/logo-big.png')?>" alt="logo" />
-
-			</a>
-
-		</div>
-
 		<div class="page-body">
 
 			<img class="page-lock-img" src="<?php echo base_url('public/image/profile.jpg')?>" alt="">

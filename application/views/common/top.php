@@ -441,7 +441,7 @@
 
 						<a class="dropdown-toggle top-login-right" data-toggle="dropdown">
 
-						<?php echo $ip_address['county'] ? $ip_address['county'] : $ip_address['city'];?>
+						<?php echo @$ip_address['county'] ? @$ip_address['county'] : @$ip_address['city'];?>
 
 						</a>
 

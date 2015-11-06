@@ -52,10 +52,9 @@ class Report_access extends CI_Controller {
 			$access_page=$this->input->get('access_page');
 		}
 		$access_start=($access_page-1)*$this->base_setting->get_setting('quantity_admin');
-		$access_end=($access_page-1)*$this->base_setting->get_setting('quantity_admin')+$this->base_setting->get_setting('quantity_admin');
 		
 		//获取用户访问数组
-		$report_accesss=$this->report->get_report_accessall($access_start,$access_end);
+		$report_accesss=$this->report->get_report_accessall($access_start, $this->base_setting->get_setting('quantity_admin'));
 		foreach ($report_accesss as $k=>$v) {
 			$report_accesss[$k]['ip_address']=unserialize($report_accesss[$k]['ip_address']);
 			$report_accesss[$k]['user_name']=$this->user_info->get_userid_name($report_accesss[$k]['user_id']);
@@ -71,10 +70,9 @@ class Report_access extends CI_Controller {
 			$flow_page=$this->input->get('flow_page');
 		}
 		$flow_start=($flow_page-1)*$this->base_setting->get_setting('quantity_admin');
-		$flow_end=($flow_page-1)*$this->base_setting->get_setting('quantity_admin')+$this->base_setting->get_setting('quantity_admin');
 		
 		//获取用户访问数组
-		$data['report_flows']=$this->report->get_report_flowall($flow_start,$flow_end);
+		$data['report_flows']=$this->report->get_report_flowall($flow_start,$this->base_setting->get_setting('quantity_admin'));
 		//获取流量统计数据结束
 		
 		//开始获取抓取记录
@@ -84,9 +82,8 @@ class Report_access extends CI_Controller {
 			$robot_page=$this->input->get('robot_page');
 		}
 		$robot_start=($robot_page-1)*$this->base_setting->get_setting('quantity_admin');
-		$robot_end=($robot_page-1)*$this->base_setting->get_setting('quantity_admin')+$this->base_setting->get_setting('quantity_admin');
 		//从数据库获取数据
-		$data['report_robots']=$this->report->get_report_robotall($robot_start,$robot_end);
+		$data['report_robots']=$this->report->get_report_robotall($robot_start,$this->base_setting->get_setting('quantity_admin'));
 		//获取抓取记录结束
 		
 		//表的记录条数，用于分页
