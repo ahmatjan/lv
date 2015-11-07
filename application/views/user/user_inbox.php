@@ -120,10 +120,6 @@
 
 	<script src="<?php echo base_url('public/js/jquery.fancybox.pack.js')?>" type="text/javascript" ></script>
 
-	<script src="<?php echo base_url('public/js/wysihtml5-0.3.0.js')?>" type="text/javascript" ></script> 
-
-	<script src="<?php echo base_url('public/js/bootstrap-wysihtml5.js')?>" type="text/javascript" ></script>
-
 	<!-- BEGIN:File Upload Plugin JS files-->
 
 	<script src="<?php echo base_url('public/js/jquery.ui.widget.js')?>"></script>

@@ -9,6 +9,9 @@ class Report_access extends CI_Controller {
 	
 	public function index()
 	{
+		//判断权限
+		$this->public_section->is_access('report/report_access');
+		
 		$this->lang->load('report/report_access');
 		//header部分
 		$header['title']=$this->lang->line('heading_title');

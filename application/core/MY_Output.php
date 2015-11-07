@@ -141,11 +141,15 @@ class MY_Output extends CI_Output
 
 		// Does the controller contain a function named _output()?
 		// If so send the output there.  Otherwise, echo it.
-		
-		$compactor = new Compactor(array(
+		//装载调取基础设置类
+		$CI->load->model('setting/base_setting');
+		//如果启用压缩
+		if($CI->base_setting->get_setting('is_compactor')==TRUE){
+			$compactor = new Compactor(array(
 				'buffer_echo' => false
-		));
-		$output = $compactor->squeeze($output);
+			));
+			$output = $compactor->squeeze($output);
+		}
 		
 		if (method_exists($CI, '_output'))
 		{
@@ -234,10 +238,15 @@ class MY_Output extends CI_Output
 			* @var 
 			* 压缩html 待写入缓存
 			*/
-			$compactor = new Compactor(array(
-				'buffer_echo' => false
-			));
-			$output = $compactor->squeeze($output);
+			//装载调取基础设置类
+			$CI->load->model('setting/base_setting');
+			//如果启用压缩
+			if($CI->base_setting->get_setting('is_compactor')==TRUE){
+				$compactor = new Compactor(array(
+					'buffer_echo' => false
+				));
+				$output = $compactor->squeeze($output);
+			}
 
 			for ($written = 0, $length = strlen($output); $written < $length; $written += $result)
 			{

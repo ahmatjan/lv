@@ -15,6 +15,9 @@
 
 				<!-- BEGIN PAGE CONTENT-->
 				<?php echo $module_page?>
+				
+<!--
+				
 				<div class="row-fluid">
 
 					<div class="span12 news-page">
@@ -46,6 +49,8 @@
 								<div id="myCarousel" class="carousel slide">
 
 									<!-- Carousel items -->
+									
+<!--
 
 									<div class="carousel-inner">
 
@@ -94,7 +99,7 @@
 									</div>
 
 									<!-- Carousel nav -->
-
+<!--
 									<a class="carousel-control left" href="#myCarousel" data-slide="prev">
 
 									<i class="m-icon-big-swapleft m-icon-white"></i>
@@ -160,210 +165,13 @@
 							</div>
 
 							<!--end span5-->
-
-							<div class="span4">
-							
-								<div class="top-news">
-
-									<a href="#" class="btn blue">
-
-									<span>【最中国】古镇.江南.看雪</span>
-
-									<em>
-
-									<i class="icon-tags"></i>
-
-									中国,骑行,徒步,拉萨,云南,雪乡,搭车,拼人,深圳
-
-									</em>
-
-									<i class="icon-plane top-news-icon"></i>
-
-									</a>
-
-								</div>
-
-								<div class="news-blocks">
-
-									<h3><a href="page_news_item.html">Odio dignissimos ducimus</a></h3>
-
-									<div class="news-block-tags">
-
-										<strong>Berlin, Germany</strong>
-
-										<em>2 hours ago</em>
-
-									</div>
-
-									<p><img class="lazy" data-original="public/image/image5.jpg" alt="" height="237" width="357">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-
-									<a href="page_news_item.html" class="news-block-btn">
-
-									Read more
-
-									<i class="m-icon-swapright m-icon-black"></i>                              
-
-									</a>                          
-
-								</div>
-
-								<div class="news-blocks">
-
-									<h3><a href="page_news_item.html">Sanditiis praesentium vo</a></h3>
-
-									<div class="news-block-tags">
-
-										<strong>Ankara, Turkey</strong>
-
-										<em>5 hours ago</em>
-
-									</div>
-
-									<p><img class="lazy" data-original="public/image/image5.jpg" alt="" height="237" width="357">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint praesentium voluptatum delenitioccaecati cupiditate non provident</p>
-
-									<a href="page_news_item.html" class="news-block-btn">
-
-									Read more
-
-									<i class="m-icon-swapright m-icon-black"></i>                              
-
-									</a>                          
-
-								</div>
-
-								<div class="news-blocks">
-
-									<h3><a href="page_news_item.html">Odio dignissimos ducimus</a></h3>
-
-									<div class="news-block-tags">
-
-										<strong>Berlin, Germany</strong>
-
-										<em>2 hours ago</em>
-
-									</div>
-
-									<p><img class="lazy" data-original="public/image/image3.jpg" alt="" height="237" width="357">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint non provident</p>
-
-									<a href="page_news_item.html" class="news-block-btn">
-
-									Read more
-
-									<i class="m-icon-swapright m-icon-black"></i>                              
-
-									</a>                          
-
-								</div>
-
-							</div>
-
-							<!--end span4-->
-
-							<div class="span4">
-
-								<div class="top-news">
-
-									<?php 
-										if(isset($travels)){
-											$count=count($travels)-1;
-											$rand=rand(0,$count);
-											//echo $rand;
-											$travel=$travels[$rand];
-											//var_dump($travel);
-										}
-									?>
-									
-									<a class="btn green">
-
-									<span>【最新结伴】一起拼人去旅行</span>
-
-									<em>
-
-									<i class="icon-tags"></i>
-
-									<?php echo '&nbsp;&nbsp;'.mb_substr($travel['route'],0,14,'utf-8').'...'?>
-
-									</em>
-
-									<i class="icon-globe top-news-icon"></i>
-
-									</a>
-
-								</div>
-								
-								<?php if (isset($travels)): ?>
-								<?php foreach ($travels as $item): ?>
-								<div class="news-blocks" style="border-bottom:1px dashed rgb(196, 196, 196)">
-										
-									<h5 style="margin: 2px 0;padding-left: 65px"><a href="<?php echo site_url('travel_info/Alice_content').'?id='.$item['spider_id']?>"><?php echo $item['title']?></a></h5>
-
-									
-									<div class="news-block-tags">
-									<img style="width: 50px;float: left;margin-right: 15px" class="lazy" data-original="<?php echo $item['user_img']?>" alt="<?php echo $item['user_name']?>">
-									
-									<p>
-									<!--
-									<?php echo mb_substr($item['content'],0,25,'utf-8').'...';?><!--正文-->
-										<div class="news-block-tags" style="padding-left: 65px;color: #6D6D6D">
-
-										<em style="font-style: normal">计划:<?php echo $item['go_date']?></em></br>
-										<em style="font-style: normal">路线:<?php echo $item['route']?></em>
-										<!--
-										<strong><?php echo $item['add_date']?></strong>
-										-->
-
-									</div>
-									</p>
-
-									<a style="padding-left: 65px;color: #C5C5C5" class="news-block-btn">
-
-									<?php echo $item['add_date']?>
-
-									<!--
-									<i class="m-icon-swapright m-icon-black"></i> 
-									-->                             
-
-									</a>   
-									</div>
-								</div>
-								<?php endforeach; ?>
-								<?php endif; ?>
-								<!--
-								<div class="news-blocks">
-
-									<h3><a href="page_news_item.html">Vero eos et accusam</a></h3>
-
-									<div class="news-block-tags">
-
-										<strong>CA, USA</strong>
-
-										<em>3 hours ago</em>
-
-									</div>
-
-									<p><img class="lazy" data-original="public/image/image2.jpg" alt="" height="237" width="357">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-
-									<a href="page_news_item.html" class="news-block-btn">
-
-									Read more
-
-									<i class="m-icon-swapright m-icon-black"></i>                              
-
-									</a>                          
-
-								</div>
-
-								-->
-
-							</div>
-
-							<!--end span3-->
-
+<!--
 						</div>
 
 						<div class="space20"></div>
 
 						<!--摄影墙-->
+<!--
 						<div class="row-fluid">
 
 						<div class="portlet">
@@ -479,7 +287,7 @@
 					</ul>
 
 								<!-- END CALENDAR PORTLET-->
-
+<!--
 							</div>
 
 						</div>
@@ -544,7 +352,7 @@
 							</div>
 
 							<!--end span3-->
-
+<!--
 							<div class="span3">
 
 								<div class="news-blocks">
@@ -598,7 +406,7 @@
 							</div>
 
 							<!--end span3-->
-
+<!--
 							<div class="span6">
 
 								<div class="news-blocks">
@@ -680,7 +488,7 @@
 							</div>
 
 							<!--end span6-->
-
+<!--
 						</div>
 
 						<div class="space20"></div>
@@ -782,6 +590,7 @@
 					</div>
 
 				</div>
+				-->
 
 			<!-- END PAGE CONTAINER--> 
 			

@@ -10,7 +10,7 @@ class User_inbox extends CI_Controller {
 	public function index()
 	{
 		$this->lang->load('user/user_inbox');
-		$header['css_page_style']=array('public/css/bootstrap-tag.css','public/css/bootstrap-wysihtml5.css','public/css/jquery.fancybox.css','public/css/bootstrap-wysihtml5.css','public/css/jquery.fileupload-ui.css','public/css/inbox.css');
+		$header['css_page_style']=array('public/css/bootstrap-tag.css','public/css/jquery.fancybox.css','public/css/jquery.fileupload-ui.css','public/css/inbox.css');
 		
 		$header['title']=$this->lang->line('heading_title');
 		

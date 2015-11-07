@@ -35,7 +35,7 @@ class Home extends CI_Controller {
 		$this->public_section->get_top();
 		
 		$data['img5']=$this->image->rezice('catalog/5.jpg',453,301);
-
+/*
 		//取结伴
 		$travels=$this->travel_con->get_travel_noid();
 		if(isset($travels)){//把网络图片拉回本地
@@ -50,7 +50,7 @@ class Home extends CI_Controller {
 			}
 		}
 		$data['travels']=$travels;//结伴
-		
+		*/
 		$this->load->view('home',$data);
 		$this->public_section->get_footer();
 	}

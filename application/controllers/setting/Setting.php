@@ -9,6 +9,9 @@ class Setting extends CI_Controller {
 	
 	public function index()
 	{
+		//判断权限
+		$this->public_section->is_access('setting/setting');
+		
 		$this->lang->load('setting/setting');
 		//header部分
 		$header['title']=$this->lang->line('heading_title');
@@ -71,6 +74,8 @@ class Setting extends CI_Controller {
 		$data['register_group']=$this->base_setting->get_setting('register_group');
 		
 		$data['visitors_group']=$this->base_setting->get_setting('visitors_group');
+		
+		$data['is_compactor']=$this->base_setting->get_setting('is_compactor');//是否压缩
 		
 		//----------------------------------后台分类设置-----------------------------------------------
 		$this->load->model('setting/nav_setting');
@@ -143,6 +148,9 @@ class Setting extends CI_Controller {
 	
 	//提交网站基础设置
 	public function updata_setting(){
+		//判断权限
+		$this->public_section->is_modify('setting/setting');
+		
 		$this->load->model('setting/base_setting');
 		//接收参数
 		$data['website_name']=$this->input->post('website_name',TRUE);//网站名
@@ -156,8 +164,9 @@ class Setting extends CI_Controller {
 		$data['author_check']=$this->input->post('author_check',TRUE);//是否允许作者审核评论
 		$data['https_pc']=$this->input->post('https_pc',TRUE);//pc
 		$data['https_mobile']=$this->input->post('https_mobile',TRUE);//mobile
-		$data['register_group']=$this->input->post('register_group',TRUE);//mobile
-		$data['visitors_group']=$this->input->post('visitors_group',TRUE);//mobile
+		$data['register_group']=$this->input->post('register_group',TRUE);//默认注册组
+		$data['visitors_group']=$this->input->post('visitors_group',TRUE);//游客访问组
+		$data['is_compactor']=$this->input->post('is_compactor',TRUE);//是否开启压缩
 		
 		if($this->validata_basesetting($data)!==FALSE){
 			$this->base_setting->updata_base_setting($data);

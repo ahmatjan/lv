@@ -79,7 +79,7 @@
 
 				</form>
 
-				页面将在 <span id="mes" style="color:blue">5</span> 秒钟后跳转回上一个页面！
+				页面将在 <span id="mes" style="color:blue">3</span> 秒钟后跳转回上一个页面！
 
 			</div>
 
@@ -123,8 +123,8 @@
 	<?php
 		echo "<script> var url=\"$jump_url\";</script>";
 	?>
-	<script language="javascript" type="text/javascript"> 
-		var i = 5; 
+	<script> 
+		var i = 3; 
 		var intervalid; 
 		intervalid = setInterval("fun()", 1000); 
 		function fun() { 
@@ -138,9 +138,6 @@
 	</script> 
 
 	<!-- END JAVASCRIPTS -->
-<!--
-<script type="text/javascript">  var _gaq = _gaq || [];  _gaq.push(['_setAccount', 'UA-37564768-1']);  _gaq.push(['_setDomainName', 'keenthemes.com']);  _gaq.push(['_setAllowLinker', true]);  _gaq.push(['_trackPageview']);  (function() {    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);  })();</script>
--->
 </body>
 
 <!-- END BODY -->

@@ -438,4 +438,28 @@ class public_section extends CI_Model {
 		$this->db->insert( $this->db->dbprefix('report_robot') , $robot_data);
 		}
 	}
+	
+	
+	public function is_access ($path_name){
+		//判断是否有访问权限，如果没有，返回之前页
+		$path_name=strtolower($path_name);//转小写
+		if($this->user->hasPermission('access',$path_name) !== TRUE){
+			//无权限查看
+			$this->session->set_flashdata('setting_false', '你没有权限查看！');
+			redirect($this->agent->referrer() ? $this->agent->referrer() : 'home');
+			exit();
+		}
+	}
+	
+	public function is_modify ($path_name){
+		//判断是否有修改权限，如果没有，不能提交，反回之前页
+		$path_name=strtolower($path_name);//转小写
+		if($this->user->hasPermission('modify',$path_name) !== TRUE){
+			//无权限修改
+			$this->session->set_flashdata('setting_false', '你没有权限修改！');
+			redirect($this->agent->referrer() ? $this->agent->referrer() : 'home');
+			exit();
+		}
+	}
+	
 }

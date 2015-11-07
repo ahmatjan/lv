@@ -9,6 +9,9 @@ class Article_send extends CI_Controller {
 	
 	public function index()
 	{
+		//判断权限
+		$this->public_section->is_access('article/article_send');
+		
 		$this->lang->load('article/article_send');
 		//header部分
 		$header['title']=$this->lang->line('heading_title');

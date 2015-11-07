@@ -459,6 +459,52 @@
 												</div>
 
 											</div>
+											
+											<div class="control-group">
+
+												<label class="control-label">是否启用输出压缩/缓存压缩：</label>
+
+												<div class="controls">
+
+													<label class="radio">
+													
+													<?php if ($is_compactor == '1'): ?>
+
+													<input type="radio" name="is_compactor" value="1" checked/>
+
+													是
+													
+													<?php else: ?>
+													
+													<input type="radio" name="is_compactor" value="1" />
+
+													是
+													
+													<?php endif; ?> 
+
+													</label>
+
+													<label class="radio">
+
+													<?php if ($is_compactor !== '1'): ?>
+
+													<input type="radio" name="is_compactor" value="0" checked/>
+
+													否
+													
+													<?php else: ?>
+													
+													<input type="radio" name="is_compactor" value="0" />
+
+													否
+													
+													<?php endif; ?> 
+
+													</label>  
+
+												</div>
+
+											</div>
 												
 											<div class="form-actions">
 

@@ -231,9 +231,7 @@ var_dump($nav_parents);
 */
 
 
-$this->db->like('referrer_url', 'http:');
-$this->db->from('report_flow');
-echo $this->db->count_all_results(); // Produces an integer, like 17
+echo $this->agent->referrer() ? $this->agent->referrer() : 'home';
 
 		/*
 		if(!strpos($permission_views,$url) !== false){

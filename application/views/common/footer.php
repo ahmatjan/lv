@@ -10,7 +10,7 @@
 
 				2013 &copy; 旅行兔版权所有！|滇ICP备15003514号-1 | 
 				执行时间：{elapsed_time}秒||执行内存：{memory_usage}
-				
+				<a href="<?php echo site_url('test')?>">测试</a>
 			</div>
 <!--
 			<div class="footer-tools">

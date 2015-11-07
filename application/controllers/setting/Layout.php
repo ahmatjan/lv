@@ -9,6 +9,9 @@ class Layout extends CI_Controller {
 	
 	public function index()
 	{
+		//判断权限
+		$this->public_section->is_access('setting/layout');
+		
 		$this->lang->load('setting/layout');
 		//header部分
 		$header['title']=$this->lang->line('heading_title');
@@ -128,6 +131,9 @@ class Layout extends CI_Controller {
 	
 	//卸载插件
 	public function uninstall_module(){
+		//判断权限
+		$this->public_section->is_modify('setting/layout');
+		
 		$this->load->model('setting/modules_info');
 		$module_id=$this->input->get('module_id');
 		$layout_no=$this->modules_info->getdateby_moduleid($module_id);
@@ -146,6 +152,9 @@ class Layout extends CI_Controller {
 	
 	//安装插件
 	public function install_module(){
+		//判断权限
+		$this->public_section->is_modify('setting/layout');
+		
 		$data['module_id']=$this->input->get('module_id');
 		$data['name']=$this->input->get('name');
 		$data['code']=$this->input->get('code');

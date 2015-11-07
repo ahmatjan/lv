@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-//布局总控服务层
+//布局总控服务层，通页布局
 class Module_page extends CI_Module {
 	public function index(){
 		$this->load->library('user_agent');
@@ -13,11 +13,12 @@ class Module_page extends CI_Module {
 		$this->load->model('common/module');
 		
 		//调路由下的模块
-		$layout=$this->module->get_layout($layout_route);
+		$layout=$this->module->get_layout($layout_route);//调路由
 		
 		//遍历路由下的模块，调相应的module，这里有相应module的参数设置
 		$modules=array();
 		$layout_module=$this->module->get_layout_module($layout['layout_id']);
+		
 		foreach($layout_module as $k=>$v){
 			$modules[$k]=$this->module->get_module($v['module_id']);
 			$modules[$k]['position_within']=$v['position_within'];
@@ -27,14 +28,11 @@ class Module_page extends CI_Module {
 		}
 		
 		//遍历modules,装载对应的位置去重
-		$data=array();
 		foreach($modules as $module){
 			$layouts[] = $module['position_outer'];
 		}
+
 		$layouts=array_unique($layouts);
-		//$data['layouts']=array_unique($layouts);
-		//$data['modules']=$modules;
-		$data=array();
 		
 		foreach($layouts as $layout){
 			if($layout=='top'){

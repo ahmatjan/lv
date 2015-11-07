@@ -9,6 +9,9 @@ class Setting_form extends CI_Controller {
 	
 	public function index()
 	{
+		//判断权限
+		$this->public_section->is_access('setting/setting_form');
+		
 		$this->lang->load('setting/setting_form');
 		//header部分
 		$header['title']=$this->lang->line('heading_title');
@@ -109,6 +112,9 @@ class Setting_form extends CI_Controller {
 	
 	//添加导航
 	public function add_nav(){
+		//判断权限
+		$this->public_section->is_modify('setting/setting_form');
+		
 		$this->load->model('setting/nav_setting');
 		$data['top_navid']=$this->input->post('top_navid');//上一级目录id
 		$data['top_navico']=$this->input->post('top_navico');//一级目录图标

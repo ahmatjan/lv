@@ -9,6 +9,9 @@ class User_manage extends CI_Controller {
 	
 	public function index()
 	{
+		//判断权限
+		$this->public_section->is_access('setting/user_manage');
+		
 		$this->lang->load('setting/user_manage');
 		//header部分
 		$header['title']=$this->lang->line('heading_title');
@@ -66,6 +69,8 @@ class User_manage extends CI_Controller {
 	
 	//管理员登陆用户帐号
 	public function login_user(){
+		//判断权限
+		$this->public_section->is_modify('setting/user_manage');
 
 		if($this->input->get('user_id')!==NULL){
 			//模拟登陆，把用户信息写入session
@@ -81,6 +86,9 @@ class User_manage extends CI_Controller {
 	
 	//编辑用户组
 	public function edit_usergroup(){
+		//判断权限
+		$this->public_section->is_modify('setting/user_manage');
+		
 		$this->lang->load('setting/setting_form');
 		//header部分
 		$header['title']=$this->lang->line('heading_title');
@@ -216,6 +224,9 @@ class User_manage extends CI_Controller {
 	
 	//添加或修改用户组
 	public function edit_groupinfo(){
+		//判断权限
+		$this->public_section->is_modify('setting/user_manage');
+		
 		/**
 		* serialize($this->input->post('my_multi_select1'));  系列化数组
 		* @var 

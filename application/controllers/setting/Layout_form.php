@@ -9,6 +9,9 @@ class Layout_form extends CI_Controller {
 	
 	public function index()
 	{
+		//判断权限
+		$this->public_section->is_access('setting/layout_form');
+		
 		$this->lang->load('setting/layout_form');
 		//header部分
 		$header['title']=$this->lang->line('heading_title');
@@ -93,6 +96,9 @@ class Layout_form extends CI_Controller {
 	//添加一个布局路由
 	function add_layout()
 	{
+		//判断权限
+		$this->public_section->is_modify('setting/layout_form');
+		
 		$data['layout_name']=$this->input->post('layout_name');
 		$data['layout_route']=$this->input->post('layout_route');
 		$data['layout_id']=$this->input->post('layout_id');
@@ -112,6 +118,9 @@ class Layout_form extends CI_Controller {
 	//添加路由布局
 	function add_layout_module()
 	{
+		//判断权限
+		$this->public_section->is_modify('setting/layout_form');
+		
 		$data['layout_module_name']=$this->input->post('layout_module_name');
 		$data['layout_id']=$this->input->post('layout_id');
 		$data['module_id']=$this->input->post('module_id');
