@@ -229,10 +229,33 @@ var_dump($nav_parents);
 			echo '<span style="color:red">ID=></span>'.$row[$k]['report_id'].'&nbsp;<span style="color:red">IP</span>=>'.$row[$k]['ip'].'<span style="color:red">访问时间=></span>'.$row[$k]['access_time'].'<span style="color:red">系统类型=></span>'.$row[$k]['platform'].'<span style="color:red">浏览器=></span>'.$row[$k]['browser'].'<br/><br/>';
 		}
 */
+		header("Content-Type:text/html;charset=utf-8");
+		$this->load->library('lunar');
+		//$d=$this->lunar->getLunarYearName('2015');
+		//$d=$this->lunar->getYearZodiac('2015');
+		//$d=$this->lunar->getJieQi('2015','11','08');
+		$d=$this->lunar->getFestival(date('Y-m-d'),TRUE,'1');
+		
+		echo $d;
+		
+		//echo date('Ymd');
+		
 
 
-echo $this->agent->referrer() ? $this->agent->referrer() : 'home';
 
+
+/*
+
+		//$b=rand(0,30);
+		$b=08;
+		echo $b;
+		$b=substr($b,-2);
+		if(is_int($b/4)){
+			echo $b.'是4的倍数';
+		}else{
+			echo $b.'不是4的倍数';
+		}
+*/
 		/*
 		if(!strpos($permission_views,$url) !== false){
 			if($_SERVER['HTTP_REFERER']!==NULL){
@@ -244,4 +267,37 @@ echo $this->agent->referrer() ? $this->agent->referrer() : 'home';
 		}
 		*/
 	}
+	
+	
+	
+	/**
+	<?php if (isset($module_middle)): ?><!--如果不为空-->
+<div class="row-fluid">
+<div class="span12">
+<!--中-->
+<?php if (is_array($module_middle)): ?><!--如果是一个数组-->
+<?php foreach ($module_middle as $k=>$v): ?><!--遍历-->
+<?php if (count($module_middle) == '1'): ?>
+	<div class="span12">
+<?php elseif (count($module_middle)=='2'): ?>
+	<div class="span6">
+<?php elseif (count($module_middle)=='3'): ?>
+	<div class="span4">
+<?php else: ?>
+	<!--如果是$k是5的倍数，要把margin-left设为0-->
+	<?php if(is_int(substr($k,-2)/4)):?>
+	<div class="span3" style="margin-left: 0">
+	<?php else:?>
+	<div class="span3">
+	<?php endif;?>
+<?php endif; ?>
+<?php echo $module_middle[$k]?><!--输出-->
+	</div>
+<?php endforeach; ?>
+<?php endif; ?>
+	</div>
+</div>
+<?php endif; ?>
+	*/
+	
 }

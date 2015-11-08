@@ -218,64 +218,55 @@
 											
 											<div class="control-group">
 
-												<label class="control-label">内部显示位置：</label>
-
-												<div class="controls">
-
-													<select class="m-wrap span12" name="position_within">
-
-														<?php if ($layout_module['position_within']=='top'): ?>
-														<option value="top">顶部</option>
-														<?php elseif ($layout_module['position_within']=='middle'): ?>
-														<option value="middle">中间</option>
-														<?php elseif ($layout_module['position_within']=='bottom'): ?>
-														<option value="bottom">底部</option>
-														
-														<?php elseif ($layout_module['position_within']=='left'): ?>
-														<option value="left">左边</option>
-														<?php elseif ($layout_module['position_within']=='right'): ?>
-														<option value="right">右边</option>
-														<?php else: ?>
-														<option value="">--请选择一个内部位置--</option>
-														<?php endif; ?>
-														<option value="top">顶部</option>
-														<option value="bottom">底部</option>
-														<option value="left">左边</option>
-														<option value="right">右边</option>
-														<option value="middle">中间</option>
-													</select>
-
-												</div>
-
-											</div>
-											
-											<div class="control-group">
-
 												<label class="control-label">外部显示位置：</label>
 
 												<div class="controls">
 
-													<select class="m-wrap span12" name="position_outer">
+													<select class="m-wrap span12" name="position">
 
-														<?php if ($layout_module['position_outer']=='top'):?>
-														<option value="top">顶部</option>
-														<?php elseif ($layout_module['position_outer']=='middle'): ?>
-														<option value="middle">中间</option>
-														<?php elseif ($layout_module['position_outer']=='bottom'): ?>
-														<option value="bottom">底部</option>
-														
-														<?php elseif ($layout_module['position_outer']=='left'): ?>
-														<option value="left">左边</option>
-														<?php elseif ($layout_module['position_outer']=='right'): ?>
-														<option value="right">右边</option>
-														<?php else: ?>
+														<?php if ($layout_module['position']=='top'):?>
+														<option value="top" selected="selected">内容顶部</option>
 														<option value="">--请选择一个内部位置--</option>
+														<option value="bottom">内容底部</option>
+														<option value="left">内容左边</option>
+														<option value="right">内容右边</option>
+														<option value="middle">页面中间</option>
+														<?php elseif ($layout_module['position']=='middle'): ?>
+														<option value="middle" selected="selected">页面中间</option>
+														<option value="">--请选择一个内部位置--</option>
+														<option value="top">内容顶部</option>
+														<option value="bottom">内容底部</option>
+														<option value="left">内容左边</option>
+														<option value="right">内容右边</option>
+														<?php elseif ($layout_module['position']=='bottom'): ?>
+														<option value="bottom" selected="selected">内容底部</option>
+														<option value="">--请选择一个内部位置--</option>
+														<option value="top">内容顶部</option>
+														<option value="left">内容左边</option>
+														<option value="right">内容右边</option>
+														<option value="middle">页面中间</option>
+														<?php elseif ($layout_module['position']=='left'): ?>
+														<option value="left" selected="selected">内容左边</option>
+														<option value="">--请选择一个内部位置--</option>
+														<option value="top">内容顶部</option>
+														<option value="bottom">内容底部</option>
+														<option value="right">内容右边</option>
+														<option value="middle">页面中间</option>
+														<?php elseif ($layout_module['position']=='right'): ?>
+														<option value="right" selected="selected">内容右边</option>
+														<option value="">--请选择一个内部位置--</option>
+														<option value="top">内容顶部</option>
+														<option value="bottom">内容底部</option>
+														<option value="left">内容左边</option>
+														<option value="middle">页面中间</option>
+														<?php else: ?>
+														<option value="" selected="selected">--请选择一个内部位置--</option>
+														<option value="top">内容顶部</option>
+														<option value="bottom">内容底部</option>
+														<option value="left">内容左侧</option>
+														<option value="right">内容右侧</option>
+														<option value="middle">页面中间</option>
 														<?php endif; ?>
-														<option value="top">顶部</option>
-														<option value="bottom">底部</option>
-														<option value="left">左边</option>
-														<option value="right">右边</option>
-														<option value="middle">中间</option>
 													</select>
 													
 												</div>
@@ -288,7 +279,7 @@
 
 												<div class="controls">
 
-													<input type="text" id="firstName" class="m-wrap span12" placeholder="排序..." name="order" value="<?php echo $layout_module['order']?>">
+													<input type="text" id="firstName" class="m-wrap span12" placeholder="排序..." name="sort" value="<?php echo $layout_module['sort']?>">
 
 												</div>
 
@@ -302,14 +293,15 @@
 
 													<select class="m-wrap span12" name="is_mobile">
 														<?php if ($layout_module['is_mobile']=='1'):?>
-														<option value="1">是</option>
+														<option value="1" selected="selected">是</option>
+														<option value="0">否</option>
 														<?php elseif ($layout_module['is_mobile']=='0'): ?>
-														<option value="0">否</option>
-														<?php else: ?>
-														<option value="">--请选择--</option>
-														<?php endif; ?>
+														<option value="0" selected="selected">否</option>
 														<option value="1">是</option>
-														<option value="0">否</option>
+														<?php else:?>
+														<option value="0" selected="selected">否</option>
+														<option value="1">是</option>
+														<?php endif; ?>
 													</select>
 
 												</div>

@@ -446,8 +446,13 @@ class public_section extends CI_Model {
 		if($this->user->hasPermission('access',$path_name) !== TRUE){
 			//无权限查看
 			$this->session->set_flashdata('setting_false', '你没有权限查看！');
-			redirect($this->agent->referrer() ? $this->agent->referrer() : 'home');
-			exit();
+			if($_SESSION['user_id']){
+				redirect($this->agent->referrer() ? $this->agent->referrer() : 'home');
+				exit();
+			}else{
+				redirect('home');
+				exit();
+			}
 		}
 	}
 	
@@ -457,8 +462,13 @@ class public_section extends CI_Model {
 		if($this->user->hasPermission('modify',$path_name) !== TRUE){
 			//无权限修改
 			$this->session->set_flashdata('setting_false', '你没有权限修改！');
-			redirect($this->agent->referrer() ? $this->agent->referrer() : 'home');
-			exit();
+			if($_SESSION['user_id']){
+				redirect($this->agent->referrer() ? $this->agent->referrer() : 'home');
+				exit();
+			}else{
+				redirect('home');
+				exit();
+			}
 		}
 	}
 	

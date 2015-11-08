@@ -46,9 +46,9 @@ class modules_info extends CI_Model {
 	{
 		//传入一个待添加的数组
 		if(!empty($data['layout_module_id'])){//如果layout_module_id不为空，是更新（修改）
-			$sql="REPLACE INTO " . $this->db->dbprefix('layout_module') . " VALUES('".(int)$data['layout_module_id']."',".$this->db->escape($data['layout_module_name']).",".(int)$data['layout_id'].",".(int)$data['module_id'].",".$this->db->escape($data['position_within']).",".$this->db->escape($data['position_outer']).",".(int)$data['order'].",".(int)$data['is_mobile'].")";
+			$sql="REPLACE INTO " . $this->db->dbprefix('layout_module') . " VALUES('".(int)$data['layout_module_id']."',".$this->db->escape($data['layout_module_name']).",".(int)$data['layout_id'].",".(int)$data['module_id'].",".$this->db->escape($data['position']).",".(int)$data['sort'].",".(int)$data['is_mobile'].")";
 		}else{//否则是添加
-			$sql="INSERT INTO " . $this->db->dbprefix('layout_module') . " (name, layout_id, module_id, position_within, position_outer, `order`, `is_mobile`) VALUES (".$this->db->escape($data['layout_module_name']).",'".(int)$data['layout_id']."','".(int)$data['module_id']."',".$this->db->escape($data['position_within']).",".$this->db->escape($data['position_outer']).",'".(int)$data['order']."','".(int)$data['is_mobile']."')";
+			$sql="INSERT INTO " . $this->db->dbprefix('layout_module') . " (name, layout_id, module_id, position, `sort`, `is_mobile`) VALUES (".$this->db->escape($data['layout_module_name']).",'".(int)$data['layout_id']."','".(int)$data['module_id']."',".$this->db->escape($data['position']).",'".(int)$data['sort']."','".(int)$data['is_mobile']."')";
 		}
 		
 		$this->db->query($sql);

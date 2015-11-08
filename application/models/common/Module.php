@@ -10,7 +10,7 @@ class Module extends CI_Model {
 	}
 	
 	public function get_layout_module ($layout_id){
-		$sql = "SELECT * FROM " . $this->db->dbprefix('layout_module') . " WHERE layout_id = ? ";
+		$sql = "SELECT * FROM " . $this->db->dbprefix('layout_module') . " WHERE layout_id = ? ORDER BY sort ASC";
 		$query=$this->db->query($sql, array($layout_id));
 		return $query->result_array();
 	}
@@ -22,7 +22,7 @@ class Module extends CI_Model {
 	}
 	
 	public function get_position_module ($layout_id,$position){
-		$sql = "SELECT * FROM " . $this->db->dbprefix('layout_module') . " WHERE layout_id = ? AND position_within=?";
+		$sql = "SELECT * FROM " . $this->db->dbprefix('layout_module') . " WHERE layout_id = ? AND position =?";
 		$query=$this->db->query($sql, array($layout_id,$position));
 		return $query->result_array();
 	}

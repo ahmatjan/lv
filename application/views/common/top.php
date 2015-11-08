@@ -440,6 +440,8 @@
 					<li class="dropdown">
 
 						<a class="dropdown-toggle top-login-right" data-toggle="dropdown">
+						
+						<i class="icon-map-marker" style="font-size: 14px;color: #FFF !important"></i>
 
 						<?php echo @$ip_address['county'] ? @$ip_address['county'] : @$ip_address['city'];?>
 
@@ -450,7 +452,9 @@
 					<li class="dropdown">
 
 						<a data-toggle="modal" href="#this-login" class="dropdown-toggle top-login-right">
-
+						
+						<i class="icon-user" style="font-size: 14px;color: #FFF !important"></i>
+						
 						登陆
 
 						</a>
@@ -460,6 +464,8 @@
 					<li class="dropdown">
 
 						<a href="<?php echo site_url('user/login')?>" class="dropdown-toggle top-login-right">
+						
+						<i class=" icon-pencil" style="font-size: 14px;color: #FFF !important"></i>
 
 						注册
 

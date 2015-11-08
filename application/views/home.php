@@ -14,7 +14,7 @@
 			<div class="container-fluid">
 
 				<!-- BEGIN PAGE CONTENT-->
-				<?php echo $module_page?>
+				<?php echo $module_middle?>
 				
 <!--
 				

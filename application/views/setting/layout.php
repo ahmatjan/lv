@@ -402,9 +402,7 @@
 
 																<th class="hidden-480">模块名称</th>
 																
-																<th class="hidden-480">内部位置</th>
-																
-																<th class="hidden-480">外部位置</th>
+																<th class="hidden-480">显示位置</th>
 																
 																<th class="hidden-480">排序</th>
 																
@@ -440,35 +438,19 @@
 																<?php endif; ?>
 																<?php endforeach; ?>
 																
-																<?php if ($layout_module['position_within']=='page'): ?>
-																<td class="hidden-480">通页</td>
-																<?php elseif ($layout_module['position_within']=='left'): ?>
-																<td class="hidden-480">左</td>
-																<?php elseif ($layout_module['position_within']=='right'): ?>
-																<td class="hidden-480">右</td>
-																<?php elseif ($layout_module['position_within']=='top'): ?>
-																<td class="hidden-480">上</td>
-																<?php elseif ($layout_module['position_within']=='bottom'): ?>
-																<td class="hidden-480">底</td>
-																<?php elseif ($layout_module['position_within']=='middle'): ?>
-																<td class="hidden-480">中</td>
+																<?php if ($layout_module['position']=='left'): ?>
+																<td class="hidden-480">内容左侧</td>
+																<?php elseif ($layout_module['position']=='right'): ?>
+																<td class="hidden-480">内容右侧</td>
+																<?php elseif ($layout_module['position']=='top'): ?>
+																<td class="hidden-480">内容顶部</td>
+																<?php elseif ($layout_module['position']=='bottom'): ?>
+																<td class="hidden-480">内容底部</td>
+																<?php elseif ($layout_module['position']=='middle'): ?>
+																<td class="hidden-480">页面中间</td>
 																<?php endif; ?>
 																
-																<?php if ($layout_module['position_outer']=='page'): ?>
-																<td class="hidden-480">通页</td>
-																<?php elseif ($layout_module['position_outer']=='left'): ?>
-																<td class="hidden-480">左</td>
-																<?php elseif ($layout_module['position_outer']=='right'): ?>
-																<td class="hidden-480">右</td>
-																<?php elseif ($layout_module['position_outer']=='top'): ?>
-																<td class="hidden-480">上</td>
-																<?php elseif ($layout_module['position_outer']=='bottom'): ?>
-																<td class="hidden-480">底</td>
-																<?php elseif ($layout_module['position_outer']=='middle'): ?>
-																<td class="hidden-480">中</td>
-																<?php endif; ?>
-																
-																<td class="hidden-480"><?php echo $layout_module['order']?></td>
+																<td class="hidden-480"><?php echo $layout_module['sort']?></td>
 																
 																<?php if ($layout_module['is_mobile']=='1'): ?>
 																<td class="hidden-480">是</td>

@@ -15,8 +15,8 @@ class Home extends CI_Controller {
 		//}
 		//---------------------------------------------------------------------------------------------
 		//块布局
-		$this->load->module('common/module_page');
-		$data['module_page']=$this->module_page->index();
+		$this->load->module('common/module_middle');
+		$data['module_middle']=$this->module_middle->index();
 		
 		//右侧布局
 		$this->load->module('common/module_right');

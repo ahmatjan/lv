@@ -2,7 +2,7 @@
 
 	<a href="#" class="btn blue">
 
-	<span>【最中国】古镇.江南.TF</span>
+	<span>【最中国】古镇.江南.结伴三个</span>
 
 	<em>
 

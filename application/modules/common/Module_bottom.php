@@ -19,21 +19,20 @@ class Module_bottom extends CI_Module {
 		$layout_module=$this->module->get_position_module($layout['layout_id'],'bottom');
 		foreach($layout_module as $k=>$v){
 			$modules[$k]=$this->module->get_module($v['module_id']);
-			$modules[$k]['position_within']=$v['position_within'];
-			$modules[$k]['position_outer']=$v['position_outer'];
-			$modules[$k]['order']=$v['order'];
+			$modules[$k]['position']=$v['position'];
+			$modules[$k]['sort']=$v['sort'];
 			$modules[$k]['is_mobile']=$v['is_mobile'];
 		}
 		
 		$data=array();
 		foreach($modules as $module){//遍历module装载成字串返回给控制器
 			if($this->agent->is_mobile()){//是移动设备
-				if($module['position_within']=='bottom' && $module['is_mobile']==TRUE){
+				if($module['position']=='bottom' && $module['is_mobile']==TRUE){
 				$this->load->module($module['code']);
 				$data['module_bottom'][]=$this->$module['code']->index();
 			}
 			}else{//不是移动设备
-				if($module['position_within']=='bottom'){
+				if($module['position']=='bottom'){
 				$this->load->module($module['code']);
 				$data['module_bottom'][]=$this->$module['code']->index();
 				}

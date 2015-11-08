@@ -72,9 +72,8 @@ class Layout_form extends CI_Controller {
 				'name'=>'',
 				'layout_id'=>'',
 				'module_id'=>'',
-				'position_within'=>'',
-				'position_outer'=>'',
-				'order'=>'10',
+				'position'=>'',
+				'sort'=>'10',
 				'is_mobile'=>'',
 				'layout_name'=>'',
 				'module_name'=>'',
@@ -124,9 +123,8 @@ class Layout_form extends CI_Controller {
 		$data['layout_module_name']=$this->input->post('layout_module_name');
 		$data['layout_id']=$this->input->post('layout_id');
 		$data['module_id']=$this->input->post('module_id');
-		$data['position_within']=$this->input->post('position_within');
-		$data['position_outer']=$this->input->post('position_outer');
-		$data['order']=$this->input->post('order');
+		$data['position']=$this->input->post('position');
+		$data['sort']=$this->input->post('sort');
 		$data['is_mobile']=$this->input->post('is_mobile');
 		$data['layout_module_id']=$this->input->post('layout_module_id');
 		
@@ -169,16 +167,12 @@ class Layout_form extends CI_Controller {
 		if($this->form_validation->validata($data['module_id'],array(array('max_length',2)))!==TRUE){
 			return FALSE;
 		}
-		
-		if($this->form_validation->validata($data['position_within'],array(array('max_length',25)))!==TRUE){
+
+		if($this->form_validation->validata($data['position'],array(array('max_length',25)))!==TRUE){
 			return FALSE;
 		}
 		
-		if($this->form_validation->validata($data['position_outer'],array(array('max_length',25)))!==TRUE){
-			return FALSE;
-		}
-		
-		if($this->form_validation->validata($data['order'],array(array('less_than_equal_to',9999),array('integer')))!==TRUE){
+		if($this->form_validation->validata($data['sort'],array(array('less_than_equal_to',9999),array('integer')))!==TRUE){
 			return FALSE;
 		}
 		

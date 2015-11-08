@@ -132,11 +132,11 @@
 
 																<td class="hidden-480"><?php echo $report_access['report_id']?></td>
 
-																<td><div title="<?php echo $report_access['ip']?>"><?php echo substr_cn($report_access['ip'],10)?></div></td>
+																<td><div title="<?php echo $report_access['ip']?>"><?php echo $report_access['ip']?></div></td>
 															
 																<td class="hidden-480"><?php echo $report_access['access_time']?></td>
 																
-																<td class="hidden-480"><div title="<?php echo $report_access['ip_address']['country'].$report_access['ip_address']['region'].$report_access['ip_address']['region']?>"><?php echo substr_cn($report_access['ip_address']['country'].$report_access['ip_address']['region'].$report_access['ip_address']['region'],22)?></div></td>
+																<td class="hidden-480"><div title="<?php echo $report_access['ip_address']['country'].$report_access['ip_address']['region'].$report_access['ip_address']['region']?>"><?php echo $report_access['ip_address']['region'] ? substr_cn($report_access['ip_address']['region'].$report_access['ip_address']['city'],20) : substr_cn($report_access['ip_address']['country'],20)?></div></td>
 																
 																<td class="hidden-480"><div title="<?php echo $report_access['platform'].$report_access['browser']?>"><?php echo substr_cn($report_access['platform'].$report_access['browser'],16)?></td>
 																
@@ -259,8 +259,6 @@
 
 																<th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_3 .checkboxes" /></th>
 
-																<th>ID</th>
-
 																<th class="hidden-480">IP</th>
 																
 																<th>来源</th>
@@ -287,19 +285,31 @@
 														
 															<tr class="odd gradeX">
 
-																<td><input type="checkbox" class="checkboxes" value="<?php echo $report_flow['flow_id']?>" /></td>
+																<td><div title="<?php echo $report_flow['flow_id']?>"><input type="checkbox" class="checkboxes" value="<?php echo $report_flow['flow_id']?>" /></div></td>
 
-																<td><?php echo $report_flow['flow_id']?></td>
+																<td><div title="<?php echo $report_flow['ip']?>"><?php echo $report_flow['ip']?></div></td>
 																
-																<td><div title="<?php echo $report_flow['ip']?>"><?php echo substr_cn($report_flow['ip'],10)?></div></td>
+																<td class="hidden-480">
+																<!--判断referrer_url是否为空-->
+																<?php if(!empty($report_flow['referrer_url'])):?>
+																<a href="<?php echo $report_flow['referrer_url']?>" title="<?php echo $report_flow['referrer_url']?>" target="_blank"><?php echo strlen(mb_substr($report_flow['referrer_url'],stripos($report_flow['referrer_url'],'.com') + 5,15))>7 ? mb_substr($report_flow['referrer_url'],stripos($report_flow['referrer_url'],'.com') + 5,15) : $report_flow['referrer_url']?></a>
+																<?php else:?>
+																--空--
+																<?php endif;?>
+																</td>
 																
-																<td class="hidden-480"><a href="<?php echo $report_flow['referrer_url']?>" title="<?php echo $report_flow['referrer_url']?>" target="_blank"><?php echo strpos_str($report_flow['referrer_url'],'wwww') ? substr($report_flow['referrer_url'],25,36) : substr($report_flow['referrer_url'],21,32); ?></a></td>
+																<td>
+																	<!--判断current_url是否为空-->
+																<?php if(!empty($report_flow['current_url'])):?>
+																<a href="<?php echo $report_flow['current_url']?>" title="<?php echo $report_flow['current_url']?>" target="_blank"><?php echo strlen(mb_substr($report_flow['current_url'],stripos($report_flow['current_url'],'.com') + 5,15))>7 ? mb_substr($report_flow['current_url'],stripos($report_flow['current_url'],'.com') + 5,15) : $report_flow['current_url']?></a>
+																<?php else:?>
+																<a>--空--</a>
+																<?php endif;?>
+																</td>
 																
-																<td><a href="<?php echo $report_flow['current_url']?>" title="<?php echo $report_flow['current_url']?>" target="_blank"><?php echo strpos_str($report_flow['current_url'],'/wwww') ? substr_cn($report_flow['current_url'],11) : substr_cn($report_flow['current_url'],16); ?></a></td>
+																<td><?php echo mb_substr($report_flow['access_time'],5)?></td>
 																
-																<td><?php echo $report_flow['access_time']?></td>
-																
-																<td><div title="<?php echo $report_flow['platform'].$report_flow['browser']?>"><?php echo substr_cn($report_flow['platform'].$report_flow['browser'],15)?></td>
+																<td><div title="<?php echo $report_flow['platform'].$report_flow['browser']?>"><?php echo substr_cn($report_flow['platform'].$report_flow['browser'],10)?></td>
 																
 																<td><div title="<?php echo $report_flow['robot']?>"><?php echo substr_cn($report_flow['robot'],8)?></div></td>
 																
@@ -423,7 +433,7 @@
 															<tr>
 
 																<th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_5 .checkboxes" /></th>
-
+																
 																<th>ID</th>
 
 																<th class="hidden-480">IP</th>
@@ -446,15 +456,22 @@
 														
 															<tr class="odd gradeX">
 
-																<td><input type="checkbox" class="checkboxes" value="<?php echo $report_robot['robot_id']?>" /></td>
+																<td><span title="<?php echo $report_robot['robot_id']?>"><input type="checkbox" class="checkboxes" value="<?php echo $report_robot['robot_id']?>" /></span></td>
 																
 																<td><?php echo $report_robot['robot_id']?></td>
 
 																<td><?php echo $report_robot['ip']?></td>
 																
-																<td class="hidden-480"><?php echo substr_cn($report_robot['robot_name'],4)?></td>
+																<td class="hidden-480"><?php echo $report_robot['robot_name']?></td>
 
-																<td><a href="<?php echo $report_robot['url']?>" title="<?php echo $report_robot['url']?>"><?php echo substr_cn($report_robot['url'],10)?></a></td>
+																<td>
+																	<!--判断current_url是否为空-->
+																<?php if(!empty($report_robot['url'])):?>
+																<a href="<?php echo $report_robot['url']?>" title="<?php echo $report_robot['url']?>" target="_blank"><?php echo strlen(mb_substr($report_robot['url'],stripos($report_robot['url'],'.com') + 5,15))>7 ? mb_substr($report_robot['url'],stripos($report_robot['url'],'.com') + 5,15) : $report_robot['url']?></a>
+																<?php else:?>
+																<a>--空--</a>
+																<?php endif;?>
+																</td>
 																
 																<td><?php echo $report_robot['access_time']?></td>
 
