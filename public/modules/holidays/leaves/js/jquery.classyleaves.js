@@ -12,6 +12,8 @@ var ClassyLeaves = function(settings) {
     this.widthWindow = 0;
     this.numLeaves = 0;
     this.started = false;
+    //获取主机地址，如： http://lvxingto.com
+    this.localhostPath = getRootPath();
 
     this.__constructor = function(settings) {
         var self = this, pos = 0;
@@ -28,7 +30,7 @@ var ClassyLeaves = function(settings) {
             infinite: true,
             multiplyOnClick: true,
             multiply: 1,
-            folder: 'public/modules/holidays/leaves/images/leaves/',
+            folder: this.localhostPath+'/../public/modules/holidays/leaves/images/leaves/',
             numImages: 8
         }, settings);
         if (this.started === true) {
@@ -243,3 +245,13 @@ var ClassyLeaves = function(settings) {
     
     return this.__constructor(settings);
 };
+
+//获取站点根目录
+ function getRootPath(){
+    var strFullPath=window.document.location.href;
+    var strPath=window.document.location.pathname;
+    var pos=strFullPath.indexOf(strPath);
+    var prePath=strFullPath.substring(0,pos);
+    var postPath=strPath.substring(0,strPath.substr(1).indexOf('/')+1);
+    return(prePath+postPath);
+}

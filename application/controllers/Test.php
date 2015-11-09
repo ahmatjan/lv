@@ -243,9 +243,26 @@ var_dump($nav_parents);
 
 		//echo date('Ymd');
 		
-		$this->load->view('test');
+		//$this->load->view('test');
 
+		//调layout_id
+		$route_all='%';
+		$route_1=$this->uri->segment(1, 'home');
+		$route_2=$this->uri->segment(1).'/'.$this->uri->segment(2);
+		$route_inclode=$this->uri->segment(1).'/%';
+		$sql = "SELECT layout_id FROM " . $this->db->dbprefix('layout') . " WHERE route = ? OR route = ? OR route = ? OR route = ?";
+		$query=$this->db->query($sql, array($route_all,$route_1,$route_2,$route_inclode));
+		//return $query->result_array();
+		$layouts_id=$query->result_array();
+		//调layout_id
+		foreach($layouts_id as $v){
+			$layouts[]=' layout_id = '.$v['layout_id'];
+		}
+		$layouts=implode(' OR ',$layouts);
+		
+		echo "SELECT * FROM " . $this->db->dbprefix('layout_module') . " WHERE  position = middle OR " . $layouts . " ORDER BY sort ASC";
 
+		$this->load->module('common/module_middle');
 /*
 
 		//$b=rand(0,30);

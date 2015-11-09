@@ -46,7 +46,7 @@
 									<?php else: ?>
 									<li>
 									<?php endif; ?>
-									<a href="#tab_1_2" data-toggle="tab">添加布局</a>
+									<a href="#tab_1_2" data-toggle="tab">插件设置</a>
 									</li>
 								
 									<?php if ($tab_position === 'tab_1_3'): ?>
@@ -54,7 +54,7 @@
 									<?php else: ?>
 									<li>
 									<?php endif; ?>
-									<a href="#tab_1_3" data-toggle="tab">添加插件</a>
+									<a href="#tab_1_3" data-toggle="tab">节日管理</a>
 									</li>
 									
 								</ul>
@@ -70,7 +70,7 @@
 
 											<span class="label label-important">提示:</span>&nbsp;
 
-											在这里添加或是修改你的页面路由
+											在这里设置你的节日提示插件
 
 										</p>
 										
@@ -128,7 +128,7 @@
 
 											<span class="label label-important">提示:</span>&nbsp;
 
-											在这里添加或修改一个页面下的插件模块显示布局
+											在这里设置你的节日
 
 										</p>
 										

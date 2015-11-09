@@ -12,7 +12,7 @@ class Holidays extends CI_Controller {
 		//判断权限
 		$this->public_section->is_access('_modules/holidays');
 		
-		$this->lang->load('setting/layout_form');
+		$this->lang->load('_modules/holidays');
 		//header部分
 		$header['title']=$this->lang->line('heading_title');
 		$header['css_page_style']=array('public/css/chosen.css','public/css/daterangepicker.css','public/css/summernote.css','public/css/jquery.fancybox.css','public/css/select2_metro.css','public/css/multi-select-metro.css','public/css/DT_bootstrap.css');
@@ -36,7 +36,7 @@ class Holidays extends CI_Controller {
 								),
 			'setting'		=>array(
 								'name'=>$this->lang->line('heading_title'),
-								'this_url'=>site_url('setting/layout_form'),
+								'this_url'=>site_url('_modules/holidays'),
 								'url'=>''
 								)
 		);
@@ -87,7 +87,7 @@ class Holidays extends CI_Controller {
 		$this->load->model('setting/modules_info');
 		$data['modules_info']=$this->modules_info->get_module_info();
 		
-		$this->load->view('setting/layout_form',$data);
+		$this->load->view('_modules/holidays',$data);
 		
 		$this->public_section->get_footer();
 	}
@@ -96,7 +96,7 @@ class Holidays extends CI_Controller {
 	function add_layout()
 	{
 		//判断权限
-		$this->public_section->is_modify('setting/layout_form');
+		$this->public_section->is_modify('_modules/holidays');
 		
 		$data['layout_name']=$this->input->post('layout_name');
 		$data['layout_route']=$this->input->post('layout_route');
@@ -110,7 +110,7 @@ class Holidays extends CI_Controller {
 		}
 		if($this->validation_route($data)==FALSE){
 			$this->session->set_flashdata('setting_false', '路由操作不成功！');
-			redirect(site_url('setting/layout_form').'?layout_id='.$data['layout_id'].'&tab_position=tab_1_2');
+			redirect(site_url('_modules/holidays').'?layout_id='.$data['layout_id'].'&tab_position=tab_1_2');
 		}
 	}
 	
@@ -118,7 +118,7 @@ class Holidays extends CI_Controller {
 	function add_layout_module()
 	{
 		//判断权限
-		$this->public_section->is_modify('setting/layout_form');
+		$this->public_section->is_modify('_modules/holidays');
 		
 		$data['layout_module_name']=$this->input->post('layout_module_name');
 		$data['layout_id']=$this->input->post('layout_id');
@@ -137,7 +137,7 @@ class Holidays extends CI_Controller {
 		
 		if($this->validation_layout_module() == FALSE){
 			$this->session->set_flashdata('setting_false', '布局模块操作不成功！');
-			redirect(site_url('setting/layout_form').'?layout_module_id='.$data['layout_module_id'].'&tab_position=tab_1_3');
+			redirect(site_url('_modules/holidays').'?layout_module_id='.$data['layout_module_id'].'&tab_position=tab_1_3');
 		}
 	}
 	
