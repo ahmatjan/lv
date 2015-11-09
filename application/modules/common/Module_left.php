@@ -18,7 +18,7 @@ class Module_left extends CI_Module {
 		$modules=array();
 		$layout_module=$this->module->get_position_module($layout['layout_id'],'left');
 		foreach($layout_module as $k=>$v){
-			$modules[$k]=$this->Module->get_module($v['module_id']);
+			$modules[$k]=$this->module->get_module($v['module_id']);
 			$modules[$k]['position']=$v['position'];
 			$modules[$k]['sort']=$v['sort'];
 			$modules[$k]['is_mobile']=$v['is_mobile'];

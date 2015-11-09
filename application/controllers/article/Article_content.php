@@ -40,6 +40,22 @@ class Article_content extends CI_Controller {
 								),
 		);
 		
+		//块布局
+		$this->load->module('common/module_middle');
+		$data['module_middle']=$this->module_middle->index();
+		
+		//左侧布局
+		$this->load->module('common/module_left');
+		$data['module_left'] = $this->module_left->index();
+		
+		//右侧布局
+		$this->load->module('common/module_right');
+		$data['module_right'] = $this->module_right->index();
+		
+		//底部
+		$this->load->module('common/module_bottom');
+		$data['module_bottom'] = $this->module_bottom->index();
+		
 		$this->load->view('article/article_content',$data);
 		$this->public_section->get_footer();
 	}

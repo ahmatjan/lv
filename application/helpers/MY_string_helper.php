@@ -15,12 +15,6 @@ function merge_spaces($string){
     return preg_replace("/\s(?=\s)/","\\1",$string);
 }
 
-//返回某字符在字符串中出现的次数
-function str_toal($str,$re){
-	$arr=explode($re,$str);
-	return count($arr)-1;
-}
-
 /******************************************************************
 
 * PHP截取UTF-8字符串，解决半字符问题。
@@ -36,54 +30,28 @@ function str_toal($str,$re){
 ****************************************************************/
 
 function substr_cn($str,$len)
-
 {
-
-for($i=0;$i<$len;$i++)
-
-{
-
-$temp_str=substr($str,0,1);
-
-if(ord($temp_str) > 127)
-
-{
-
-$i++;
-
-if($i<$len)
-
-{
-
-$new_str[]=substr($str,0,3);
-
-$str=substr($str,3);
-
+	for($i=0;$i<$len;$i++)
+	{
+		$temp_str=substr($str,0,1);
+		if(ord($temp_str) > 127)
+		{
+			$i++;
+			if($i<$len)
+			{
+				$new_str[]=substr($str,0,3);
+				$str=substr($str,3);
+			}
+		}
+		else
+		{
+			$new_str[]=substr($str,0,1);
+			$str=substr($str,1);
+		}
+	}
+	return join($new_str);
 }
 
-}
-
-else
-
-{
-
-$new_str[]=substr($str,0,1);
-
-$str=substr($str,1);
-
-}
-
-}
-
-return join($new_str);
-
-}
-
-
-//获取字符串编码
-function encode($string){
-	return mb_detect_encoding($string, array("ASCII","UTF-8","GB2312","GBK","BIG5"));
-}
 
 //所有编码转utf_8
 function gstr($str)
@@ -93,14 +61,4 @@ if ( !$encode =='UTF-8' ){
 $str = iconv('UTF-8',$encode,$str);
 }
 return $str;
-}
-
-//判断字符串中是否存在某个字符
-function strpos_str($a,$b){
-	//如果$a 中存在 $b，则为 true ，否则为 false。
-	if(strpos($a, $b) !== false){
-		return FALSE;
-	}else{
-		return TRUE;
-	}
 }

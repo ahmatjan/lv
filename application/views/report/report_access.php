@@ -537,7 +537,7 @@
 														<?php endif;?>
 														
 														<?php if(ceil($count_report_robot/$item) !== $robot_active ):?>
-														<li><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').ceil($count_report_robot/$item);?>">尾页</a></li>
+														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&robot_page=').ceil($count_report_robot/$item);?>">尾页</a></li>
 														<?php endif;?>
 
 													</ul>

@@ -229,6 +229,8 @@ var_dump($nav_parents);
 			echo '<span style="color:red">ID=></span>'.$row[$k]['report_id'].'&nbsp;<span style="color:red">IP</span>=>'.$row[$k]['ip'].'<span style="color:red">访问时间=></span>'.$row[$k]['access_time'].'<span style="color:red">系统类型=></span>'.$row[$k]['platform'].'<span style="color:red">浏览器=></span>'.$row[$k]['browser'].'<br/><br/>';
 		}
 */
+
+		/*
 		header("Content-Type:text/html;charset=utf-8");
 		$this->load->library('lunar');
 		//$d=$this->lunar->getLunarYearName('2015');
@@ -237,11 +239,11 @@ var_dump($nav_parents);
 		$d=$this->lunar->getFestival(date('Y-m-d'),TRUE,'1');
 		
 		echo $d;
-		
+		*/
+
 		//echo date('Ymd');
 		
-
-
+		$this->load->view('test');
 
 
 /*
@@ -267,8 +269,6 @@ var_dump($nav_parents);
 		}
 		*/
 	}
-	
-	
 	
 	/**
 	<?php if (isset($module_middle)): ?><!--如果不为空-->
@@ -299,5 +299,21 @@ var_dump($nav_parents);
 </div>
 <?php endif; ?>
 	*/
+	
+	public function ok(){
+		if($this->vd()==TRUE){
+			echo $this->input->post('test');
+		}else{
+			echo '不合法';
+		}
+	}
+	
+	public function vd(){
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('test', 'Username', 'required');
+		if($this->form_validation->run()==TRUE){
+			return TRUE;
+		}
+	}
 	
 }

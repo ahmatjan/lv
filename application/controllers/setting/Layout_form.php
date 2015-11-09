@@ -144,6 +144,9 @@ class Layout_form extends CI_Controller {
 	//验证路由表单
 	public function validation_route($data){
 		$this->load->library('form_validation');
+		//路由名称必填且小于128字符
+		//$this->form_validation->set_rules('test', 'Username', 'required');
+		
 		if($this->form_validation->validata($data['layout_name'],array(array('min_length',2),array('max_length',25),array('required')))!==TRUE){
 			return FALSE;
 		}

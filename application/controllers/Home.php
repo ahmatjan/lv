@@ -18,10 +18,6 @@ class Home extends CI_Controller {
 		$this->load->module('common/module_middle');
 		$data['module_middle']=$this->module_middle->index();
 		
-		//右侧布局
-		$this->load->module('common/module_right');
-		$data['module_right'] = $this->module_right->index();
-		
 		//底部
 		$this->load->module('common/module_bottom');
 		$data['module_bottom'] = $this->module_bottom->index();
@@ -31,6 +27,7 @@ class Home extends CI_Controller {
 		//header部分
 		$header['title']='旅行兔，驴友网，爱摄影，背包客结伴去旅行';
 		$header['css_page_style']=array('public/css/blog.css','public/css/jquery.fancybox.css','public/css/jquery.gritter.css');
+		
 		$this->public_section->get_header($header);
 		$this->public_section->get_top();
 		

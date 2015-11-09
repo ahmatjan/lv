@@ -138,6 +138,8 @@ class public_section extends CI_Model {
 		$this->load->module('common/module_top');
 		$data['module_top'] = $this->module_top->index();
 		
+		$data['body_css']=$this->uri->segment(2, 'home');//返回url 第二段也就是当前视图文件名称，用于设置body class
+		
 		return $this->load->view('common/top',$data);
 	}
 	
@@ -209,6 +211,8 @@ class public_section extends CI_Model {
 		//顶布局
 		$this->load->module('common/module_top');
 		$data['module_top'] = $this->module_top->index();
+		
+		$data['body_css']=$this->uri->segment(2, 'home');//返回url 第二段也就是当前视图文件名称，用于设置body class
 		
 		return $this->load->view('common/user_top',$data);
 	}
@@ -372,7 +376,7 @@ class public_section extends CI_Model {
 		//浏览器
 		$browser=$this->agent->browser().$this->agent->version();
 		//IP
-		$ip=$this->agent->get_ip();
+		$ip=$this->input->ip_address();
 		//上一级URL
 		$referrer_url=$this->agent->referrer();
 		$report_flow=array(
@@ -414,7 +418,7 @@ class public_section extends CI_Model {
 				
 				//把用户访问信息写入数据库
 				$report_access=array(
-					'ip'			=>$this->agent->get_ip(),
+					'ip'			=>$this->input->ip_address(),
 					'access_time'	=>date('Y-m-d H:i:s'),
 					'platform'		=>$platform,
 					'browser'		=>$browser,

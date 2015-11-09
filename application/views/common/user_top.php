@@ -1,4 +1,4 @@
-<body class="page-boxed page-header-fixed">
+<body class="page-boxed page-header-fixed <?php echo $body_css?>">
 
 	<!-- BEGIN HEADER -->
 
