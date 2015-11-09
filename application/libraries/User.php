@@ -25,6 +25,12 @@ class User {
 				$user_group_query = $this->CI->db->query("SELECT permission FROM " . $this->CI->db->dbprefix('user_group') . " WHERE group_id = '" . (int)$user_query->row_array()['group_id'] . "'");
 
 				$permissions = unserialize($user_group_query->row_array()['permission']);//权限
+				$this->CI->config->load('permission');//加载配置文件
+				$ignore = $this->CI->config->item('ignore');
+				foreach($ignore as $igno){
+					$permissions['access'][]=$igno;
+					$permissions['modify'][]=$igno;
+				}
 
 				if (is_array($permissions)) {
 					foreach ($permissions as $key => $value) {

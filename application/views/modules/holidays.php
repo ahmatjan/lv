@@ -1,7 +1,7 @@
 <!--下雪-->
 <script src="<?php echo base_url('public/modules/holidays/jq.snow/jq.snow.js')?>"></script>
 <!--下面是调用方法和参数说明-->
-<!--
+
 <script>
 $(function(){
 	$.fn.snow({ 
@@ -13,7 +13,6 @@ $(function(){
 $("body").css({"background-image":"url(../../../public/image/bg/3.jpg)","background-position-y":"3%",
 "background-repeat":"repeat-y"});
 </script>
--->
 
 <!--落叶-->
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('public/modules/holidays/leaves/css/jquery.classyleaves.css')?>">

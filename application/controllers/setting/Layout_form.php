@@ -110,7 +110,7 @@ class Layout_form extends CI_Controller {
 		}
 		if($this->validation_route($data)==FALSE){
 			$this->session->set_flashdata('setting_false', '路由操作不成功！');
-			redirect(site_url('setting/layout_form').'?layout_id='.$data['layout_id']);
+			redirect(site_url('setting/layout_form').'?layout_id='.$data['layout_id'].'&tab_position=tab_1_2');
 		}
 	}
 	
@@ -128,59 +128,50 @@ class Layout_form extends CI_Controller {
 		$data['is_mobile']=$this->input->post('is_mobile');
 		$data['layout_module_id']=$this->input->post('layout_module_id');
 		
-		if($this->validation_layout_module($data) !== FALSE){
+		if($this->validation_layout_module() !== FALSE){
 			$this->load->model('setting/modules_info');
 			$this->modules_info->int_layout_model($data);
 			$this->session->set_flashdata('setting_success', '布局模块操作成功！');
 			redirect(site_url('setting/layout'));
 		}
 		
-		if($this->validation_layout_module($data) == FALSE){
+		if($this->validation_layout_module() == FALSE){
 			$this->session->set_flashdata('setting_false', '布局模块操作不成功！');
-			redirect(site_url('setting/layout_form').'?layout_module_id='.$data['layout_module_id']);
+			redirect(site_url('setting/layout_form').'?layout_module_id='.$data['layout_module_id'].'&tab_position=tab_1_3');
 		}
 	}
 	
 	//验证路由表单
-	public function validation_route($data){
+	public function validation_route(){
 		$this->load->library('form_validation');
 		//路由名称必填且小于128字符
-		//$this->form_validation->set_rules('test', 'Username', 'required');
+		$this->form_validation->set_rules('layout_name', '布局名称', 'required|max_length[128]');
 		
-		if($this->form_validation->validata($data['layout_name'],array(array('min_length',2),array('max_length',25),array('required')))!==TRUE){
-			return FALSE;
-		}
+		$this->form_validation->set_rules('layout_route', '布局路由', 'required|max_length[128]');
 		
-		if($this->form_validation->validata($data['layout_route'],array(array('min_length',2),array('max_length',255),array('required')))!==TRUE){
+		if($this->form_validation->run()!==TRUE){
 			return FALSE;
 		}
 	}
 	
 	//验证布局模块表单
-	public function validation_layout_module($data){
+	public function validation_layout_module(){
 		$this->load->library('form_validation');
-		if($this->form_validation->validata($data['layout_module_name'],array(array('min_length',2),array('max_length',25),array('required')))!==TRUE){
-			return FALSE;
-		}
 		
-		if($this->form_validation->validata($data['layout_id'],array(array('max_length',2)))!==TRUE){
-			return FALSE;
-		}
+		$this->form_validation->set_rules('layout_module_name', '名称', 'required|max_length[128]');
 		
-		if($this->form_validation->validata($data['module_id'],array(array('max_length',2)))!==TRUE){
-			return FALSE;
-		}
-
-		if($this->form_validation->validata($data['position'],array(array('max_length',25)))!==TRUE){
-			return FALSE;
-		}
+		$this->form_validation->set_rules('layout_id', '布局', 'required|numeric|max_length[11]');
 		
-		if($this->form_validation->validata($data['sort'],array(array('less_than_equal_to',9999),array('integer')))!==TRUE){
-			return FALSE;
-		}
+		$this->form_validation->set_rules('module_id', '插件', 'required|numeric|max_length[11]');
 		
-		if($data['is_mobile'] == 0 || $data['is_mobile'] == 1){
-			return TRUE;
+		$this->form_validation->set_rules('position', '显示位置', 'required|alpha|max_length[128]');
+		
+		$this->form_validation->set_rules('sort', '排序', 'less_than_equal_to[1000000000]');
+		
+		$this->form_validation->set_rules('is_mobile', '手机上显示', 'less_than_equal_to[2]');
+		
+		if($this->form_validation->run()!==TRUE){
+			return FALSE;
 		}
 		
 	}

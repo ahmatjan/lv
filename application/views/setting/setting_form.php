@@ -374,6 +374,8 @@
 												
 												<?php endif; ?>
 												
+												<input type="hidden" name="tab_before" value="<?php echo $tab_before?>" /><!--tab_position-->
+												
 												<?php if (!empty($navs['nav_type'])): ?>
 												
 												<input type="hidden" name="nav_type" value="<?php echo $navs['nav_type']?>" /><!--隐藏域，用于提交类型-->

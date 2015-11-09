@@ -147,6 +147,12 @@ class User_manage extends CI_Controller {
 			}
 		}//到这这里$maps成了一个纯一维数组，并且去除了非php文件
 		
+		//排除前台，公共部分不用管理权限的文件
+		$this->config->load('permission');//加载配置文件
+		$ignore = $this->config->item('ignore');
+		$maps=array_diff($maps,$ignore);
+		//排除前台，公共部分不用管理权限的文件
+		
 		//获取用户分组信息
 		$group_infos=array();
 		if($this->input->get('group_id')!==NULL){

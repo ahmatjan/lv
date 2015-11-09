@@ -241,7 +241,7 @@ class public_section extends CI_Model {
 			if($nav_parents[$k]['nav_url'] == $active){
 				$nav_parents[$k]['active']='active';
 			}
-			
+
 			//判断权限，如果没有查看权限不显示
 			if(!empty($nav_parents[$k]['nav_url'])){
 				if($this->user->hasPermission('access',$nav_parents[$k]['nav_url'])===false){
@@ -265,10 +265,8 @@ class public_section extends CI_Model {
 				}
 			}
 		}
-
-		if($nav_parents && is_array($nav_parents)){
-			$data['nav']=$nav_parents;
-		}
+		
+		$data['nav']=$nav_parents;
 
 		$data['active']=$active;
 		return $this->load->view('common/user_left',$data);

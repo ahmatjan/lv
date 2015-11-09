@@ -649,7 +649,7 @@
 																
 																<?php endif; ?>
 																
-																<td><a href="<?php echo site_url('setting/setting_form').'?nav_id='.$item['nav_id'].'&tab_position=tab_1_3'?>"><span class="label label-success">修改</span></a></td>
+																<td><a href="<?php echo site_url('setting/setting_form').'?nav_id='.$item['nav_id'].'&tab_position=tab_1_3&tab_before=tab_1_2'?>"><span class="label label-success">修改</span></a></td>
 
 															</tr>
 
@@ -690,7 +690,7 @@
 																
 																<?php endif; ?>
 																
-																<td><a href="<?php echo site_url('setting/setting_form').'?nav_child_id='.$childs['nav_child_id'].'&tab_position=tab_1_3'?>"><span class="label label-success">修改</span></a></td>
+																<td><a href="<?php echo site_url('setting/setting_form').'?nav_child_id='.$childs['nav_child_id'].'&tab_position=tab_1_3&tab_before=tab_1_2'?>"><span class="label label-success">修改</span></a></td>
 
 															</tr>
 
@@ -840,7 +840,7 @@
 																
 																<?php endif; ?>
 																
-																<td><a href="<?php echo site_url('setting/setting_form').'?nav_id='.$nav_helper['nav_id'].'&tab_position=tab_1_3'?>"><span class="label label-success">修改</span></a></td>
+																<td><a href="<?php echo site_url('setting/setting_form').'?nav_id='.$nav_helper['nav_id'].'&tab_position=tab_1_3&tab_before=tab_1_3'?>"><span class="label label-success">修改</span></a></td>
 																
 															</tr>
 															
@@ -879,7 +879,7 @@
 																
 																<?php endif; ?>
 																
-																<td><a href="<?php echo site_url('setting/setting_form').'?nav_child_id='.$helper_childs['nav_child_id'].'&tab_position=tab_1_3'?>"><span class="label label-success">修改</span></a></td>
+																<td><a href="<?php echo site_url('setting/setting_form').'?nav_child_id='.$helper_childs['nav_child_id'].'&tab_position=tab_1_3&tab_before=tab_1_3'?>"><span class="label label-success">修改</span></a></td>
 																
 															</tr>
 
@@ -1029,7 +1029,7 @@
 																
 																<?php endif; ?>
 																
-																<td><a href="<?php echo site_url('setting/setting_form').'?nav_id='.$nav_view_top['nav_id'].'&tab_position=tab_1_3'?>"><span class="label label-success">修改</span></a></td>
+																<td><a href="<?php echo site_url('setting/setting_form').'?nav_id='.$nav_view_top['nav_id'].'&tab_position=tab_1_3&tab_before=tab_1_4'?>"><span class="label label-success">修改</span></a></td>
 																
 															</tr>
 															
@@ -1068,7 +1068,7 @@
 																
 																<?php endif; ?>
 																
-																<td><a href="<?php echo site_url('setting/setting_form').'?nav_child_id='.$nav_view_top_childs['nav_child_id'].'&tab_position=tab_1_3'?>"><span class="label label-success">修改</span></a></td>
+																<td><a href="<?php echo site_url('setting/setting_form').'?nav_child_id='.$nav_view_top_childs['nav_child_id'].'&tab_position=tab_1_3&tab_before=tab_1_4'?>"><span class="label label-success">修改</span></a></td>
 																
 															</tr>
 
@@ -1218,7 +1218,7 @@
 																
 																<?php endif; ?>
 																
-																<td><a href="<?php echo site_url('setting/setting_form').'?nav_id='.$nav_admin_top['nav_id']?>"><span class="label label-success">修改</span></a></td>
+																<td><a href="<?php echo site_url('setting/setting_form').'?nav_id='.$nav_admin_top['nav_id'].'&tab_position=tab_1_3&tab_before=tab_1_5'?>"><span class="label label-success">修改</span></a></td>
 																
 															</tr>
 															
@@ -1257,7 +1257,7 @@
 																
 																<?php endif; ?>
 																
-																<td><a href="<?php echo site_url('setting/setting_form').'?nav_child_id='.$nav_admin_top_childs['nav_child_id'].'&tab_position=tab_1_3'?>"><span class="label label-success">修改</span></a></td>
+																<td><a href="<?php echo site_url('setting/setting_form').'?nav_child_id='.$nav_admin_top_childs['nav_child_id'].'&tab_position=tab_1_3&tab_before=tab_1_5'?>"><span class="label label-success">修改</span></a></td>
 																
 															</tr>
 

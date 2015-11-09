@@ -168,7 +168,7 @@ class Setting extends CI_Controller {
 		$data['visitors_group']=$this->input->post('visitors_group',TRUE);//游客访问组
 		$data['is_compactor']=$this->input->post('is_compactor',TRUE);//是否开启压缩
 		
-		if($this->validata_basesetting($data)!==FALSE){
+		if($this->validata_basesetting()!==FALSE){
 			$this->base_setting->updata_base_setting($data);
 			$this->session->set_flashdata('setting_success', '修改网站基础设置成功！');
 			redirect('setting/setting');
@@ -178,52 +178,40 @@ class Setting extends CI_Controller {
 		}
 	}
 	
-	public function validata_basesetting($data)
+	public function validata_basesetting()
 	{
 		//验证表单
 		$this->load->library('form_validation');
-		if($this->form_validation->validata($data['website_name'],array(array('min_length',2),array('max_length',25)))!==TRUE){
-			return FALSE;
-		}
-
-		if($this->form_validation->validata($data['website_title'],array(array('min_length',2),array('max_length',25)))!==TRUE){
-			return FALSE;
-		}
 		
-		if($this->form_validation->validata($data['mate_key'],array(array('min_length',2),array('max_length',120)))!==TRUE){
-			return FALSE;
-		}
+		$this->form_validation->set_rules('website_name', '网站名称', 'required|max_length[128]');
 		
-		if($this->form_validation->validata($data['mate_description'],array(array('min_length',2),array('max_length',255)))!==TRUE){
-			return FALSE;
-		}
+		$this->form_validation->set_rules('website_title', '标题前缀', 'required|max_length[128]');
 		
-		if($this->form_validation->validata($data['mate_author'],array(array('min_length',2),array('max_length',20)))!==TRUE){
-			return FALSE;
-		}
+		$this->form_validation->set_rules('mate_key', '关键词', 'required|max_length[128]');
 		
-		if($this->form_validation->validata($data['quantity_view'],array(array('is_natural'),array('required'),array('max_length',3)))!==TRUE){
-
-			return FALSE;
-		}
+		$this->form_validation->set_rules('mate_description', '描述', 'required|max_length[128]');
 		
-		if($this->form_validation->validata($data['quantity_admin'],array(array('is_natural'),array('required'),array('max_length',3)))!==TRUE){
-			return FALSE;
-		}
+		$this->form_validation->set_rules('mate_author', '作者', 'required|max_length[128]');
 		
-		if($this->form_validation->validata($data['article_check'],array(array('is_natural')))){
-			return FALSE;
-		}
+		$this->form_validation->set_rules('quantity_view', '前台显示条数', 'required|less_than_equal_to[100]');
 		
-		if($this->form_validation->validata($data['author_check'],array(array('is_natural')))){
-			return FALSE;
-		}
+		$this->form_validation->set_rules('quantity_admin', '后台显示条数', 'required|less_than_equal_to[100]');
 		
-		if($this->form_validation->validata($data['https_pc'],array(array('is_natural')))){
-			return FALSE;
-		}
+		$this->form_validation->set_rules('register_group', '注册用户组', 'required|numeric|max_length[11]');
 		
-		if($this->form_validation->validata($data['https_mobile'],array(array('is_natural')))){
+		$this->form_validation->set_rules('visitors_group', '访问组', 'required|numeric|max_length[11]');
+		
+		$this->form_validation->set_rules('article_check', '是否审核文章', 'required|integer|less_than_equal_to[3]');
+		
+		$this->form_validation->set_rules('author_check', '用户审核评论', 'required|integer|less_than_equal_to[3]');
+		
+		$this->form_validation->set_rules('https_pc', 'PC-SLL方式', 'required|integer|less_than_equal_to[3]');
+		
+		$this->form_validation->set_rules('https_mobile', 'MOBILE-SLL方式', 'required|integer|less_than_equal_to[3]');
+		
+		$this->form_validation->set_rules('is_compactor', '压缩输出方式', 'required|integer|less_than_equal_to[3]');
+		
+		if($this->form_validation->run()!==TRUE){
 			return FALSE;
 		}
 		

@@ -105,6 +105,11 @@ class Setting_form extends CI_Controller {
 			);
 		}
 		
+		if($this->input->get('tab_before')){
+			$data['tab_before']=$this->input->get('tab_before');
+		}else{
+			$data['tab_before']='';
+		}
 		
 		$this->load->view('setting/setting_form',$data);
 		$this->public_section->get_footer();
@@ -126,15 +131,19 @@ class Setting_form extends CI_Controller {
 		$data['isedit']=$this->input->post('isedit');//是否允许其它管理员修改
 		$data['nav_id']=$this->input->post('nav_id');//修改传过来的导航id
 		
+		//tab
+		$tab_before=$this->input->post('tab_before');
+		$tab_before=isset($tab_before) ? $tab_before : '';
+		
 		if(!empty($data['top_navid'])){
 			
 			//子目录添加
 			
-			if($this->validation_child($data)!==FALSE){
+			if($this->validation_nav()!==FALSE){
 				
 				$this->nav_setting->int_child_nav($data);
 				$this->session->set_flashdata('setting_success', '二级分类操作成功！');
-				redirect('setting/setting');
+				redirect('setting/setting?tab_position='.$tab_before);
 			}else{
 				
 				$this->session->set_flashdata('setting_false', '二级分类操作不成功！');
@@ -143,10 +152,10 @@ class Setting_form extends CI_Controller {
 		}
 		if(empty($data['top_navid'])){
 			//一级目录添加
-			if($this->validation_parent($data)!==FALSE){
+			if($this->validation_nav()!==FALSE){
 				$this->nav_setting->int_parent_nav($data);
 				$this->session->set_flashdata('setting_success', '一级分类操作成功！');
-				redirect('setting/setting');
+				redirect('setting/setting?tab_position='.$tab_before);
 			}else{
 				$this->session->set_flashdata('setting_false', '一级分类操作不成功！');
 				redirect('setting/setting_form');
@@ -155,67 +164,32 @@ class Setting_form extends CI_Controller {
 	}
 	
 	//验证一级导航表单
-	public function validation_parent($data){
+	public function validation_nav(){
 		$this->load->library('form_validation');
-		if($this->form_validation->validata($data['top_navico'],array(array('min_length',2),array('max_length',25),array('required')))!==TRUE){
-			return FALSE;
+
+		if($this->input->post('top_navid')){
+			$this->form_validation->set_rules('top_navid', '一级导航', 'required|max_length[128]');
+		}
+		if($this->input->post('top_navico')){
+			$this->form_validation->set_rules('top_navico', '导航图标', 'required|max_length[128]');
+		}
+		if($this->input->post('top_navurl')){
+			$this->form_validation->set_rules('top_navurl', '导航路由', 'max_length[128]');
 		}
 		
-		if(!empty($data['top_navurl'])){
-			if($this->form_validation->validata($data['top_navurl'],array(array('max_length',255)))!==TRUE){
-			return FALSE;
-			}
-		}
-		if($this->form_validation->validata($data['navname'],array(array('min_length',2),array('max_length',25),array('required')))!==TRUE){
-			return FALSE;
-		}
+		$this->form_validation->set_rules('navname', '导航名称', 'max_length[128]');
 		
-		if($this->form_validation->validata($data['navstore'],array(array('less_than',10000),array('required')))!==TRUE){
-			return FALSE;
-		}
+		$this->form_validation->set_rules('navstore', '排序', 'max_length[128]');
 		
-		if($this->form_validation->validata($data['navlocation'],array(array('min_length',2),array('max_length',25),array('required')))!==TRUE){
-			return FALSE;
-		}
+		$this->form_validation->set_rules('navlocation', '显示位置', 'max_length[128]');
 		
-		if($this->form_validation->validata($data['isedit'],array(array('alpha_numeric'),array('required')))==TRUE){
-			return FALSE;
-		}
+		$this->form_validation->set_rules('isedit', '编辑', 'max_length[128]');
 		
-		if($this->form_validation->validata($data['isview'],array(array('alpha_numeric'),array('required')))==TRUE){
+		$this->form_validation->set_rules('isview', '显示', 'max_length[128]');
+		
+		if($this->form_validation->run()!==TRUE){
 			return FALSE;
 		}
 	}
-	
-	//验证子目录
-	public function validation_child($data){
-		$this->load->library('form_validation');
-		
-		if($this->form_validation->validata($data['top_navid'],array(array('alpha_numeric'),array('required'),array('max_length',25)))!==TRUE){
-			return FALSE;
-		}
-		
-		if(!empty($data['top_navurl'])){
-			if($this->form_validation->validata($data['top_navurl'],array(array('max_length',255)))!==TRUE){
-			return FALSE;
-			}
-		}
-		
-		if($this->form_validation->validata($data['navname'],array(array('min_length',2),array('max_length',25),array('required')))!==TRUE){
-			return FALSE;
-		}
-		
-		if($this->form_validation->validata($data['navstore'],array(array('less_than',10000),array('required')))!==TRUE){
-			return FALSE;
-		}
-		
-		if($this->form_validation->validata($data['isedit'],array(array('alpha_numeric'),array('required')))==TRUE){
-			return FALSE;
-		}
-		
-		if($this->form_validation->validata($data['isview'],array(array('alpha_numeric'),array('required')))==TRUE){
-			return FALSE;
-		}
-		
-	}
+
 }

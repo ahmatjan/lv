@@ -46,55 +46,56 @@
 	
 	<?php if (isset($item['active'])): ?>
 	<li class="<?php echo $item['active']?>">
+	
 	<?php else: ?>
 	<li>
 	<?php endif; ?>
 	<!--如果存在链接...-->
-		<?php if (!empty($item['nav_url'])): ?>
+	<?php if (!empty($item['nav_url'])): ?>
 
-		<a href="<?php echo site_url($item['nav_url'])?>">
+	<a href="<?php echo site_url($item['nav_url'])?>">
 
+	<?php else: ?>
+	
+	<a href="javascript:;">
+
+	<?php endif; ?>
+
+	<i class="<?php echo 'icon-'.$item['nav_ico']?>"></i> 
+
+	<span class="title"><?php echo $item['nav_name']?></span>
+	
+	<?php if (!empty($item['childs'])): ?>
+	
+	<span class="arrow"></span>
+	
+	<?php endif; ?>
+	
+	</a>
+
+	<?php if (is_array($item['childs']) && !empty($item['childs'])): ?>
+	
+	<ul class="sub-menu">
+
+		<?php foreach ($item['childs'] as $childs): ?>
+
+		<?php if ($childs['nav_child_url'] == $active): ?>
+		<li class="active">
 		<?php else: ?>
-		
-		<a href="javascript:;">
-
+		<li>
 		<?php endif; ?>
 
-		<i class="<?php echo 'icon-'.$item['nav_ico']?>"></i> 
+			<a href="<?php echo site_url($childs['nav_child_url'])?>">
 
-		<span class="title"><?php echo $item['nav_name']?></span>
+			<?php echo $childs['nav_child_name']?></a>
+
+		</li>
 		
-		<?php if (!empty($item['childs'])): ?>
-		
-		<span class="arrow"></span>
-		
-		<?php endif; ?>
-		
-		</a>
+		<?php endforeach; ?>
 
-		<?php if (is_array($item['childs']) && !empty($item['childs'])): ?>
-		
-		<ul class="sub-menu">
-
-			<?php foreach ($item['childs'] as $childs): ?>
-
-			<?php if ($childs['nav_child_url'] == $active): ?>
-			<li class="active">
-			<?php else: ?>
-			<li>
-			<?php endif; ?>
-
-				<a href="<?php echo site_url($childs['nav_child_url'])?>">
-
-				<?php echo $childs['nav_child_name']?></a>
-
-			</li>
-			
-			<?php endforeach; ?>
-
-		</ul>
-		
-		<?php endif; ?>
+	</ul>
+	
+	<?php endif; ?>
 
 	</li>
 	

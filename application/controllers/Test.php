@@ -301,16 +301,19 @@ var_dump($nav_parents);
 	*/
 	
 	public function ok(){
+		$this->load->library('form_validation');
 		if($this->vd()==TRUE){
 			echo $this->input->post('test');
 		}else{
 			echo '不合法';
+			echo form_error('test');
 		}
 	}
 	
 	public function vd(){
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('test', 'Username', 'required');
+		$this->form_validation->set_rules('test', '测试', 'trim|required|min_length[5]|max_length[12]');
+		//$this->form_validation->set_message('test');
 		if($this->form_validation->run()==TRUE){
 			return TRUE;
 		}

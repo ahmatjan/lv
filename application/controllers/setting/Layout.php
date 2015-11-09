@@ -184,19 +184,20 @@ class Layout extends CI_Controller {
 	//验证插件安装数据是否合法
 	public function validate_install_module ($data){
 		$this->load->library('form_validation');
-		if($this->form_validation->validata($data['name'],array(array('min_length',2),array('max_length',25),array('required')))!==TRUE){
+		
+		if($this->form_validation->validata($data['name'],array(array('max_length',128),array('required')))!==TRUE){
 			return FALSE;
 		}
 		
-		if($this->form_validation->validata($data['description'],array(array('min_length',2),array('max_length',255),array('required')))!==TRUE){
+		if($this->form_validation->validata($data['description'],array(array('max_length',128),array('required')))!==TRUE){
 			return FALSE;
 		}
 		
-		if($this->form_validation->validata($data['author'],array(array('min_length',2),array('max_length',25),array('required')))!==TRUE){
+		if($this->form_validation->validata($data['author'],array(array('max_length',128),array('required')))!==TRUE){
 			return FALSE;
 		}
 		
-		if($this->form_validation->validata($data['code'],array(array('min_length',2),array('max_length',25),array('required')))!==TRUE){
+		if($this->form_validation->validata($data['code'],array(array('max_length',128),array('required')))!==TRUE){
 			return FALSE;
 		}
 		

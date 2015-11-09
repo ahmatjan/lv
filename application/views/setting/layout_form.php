@@ -85,7 +85,7 @@
 												<div class="controls">
 
 													<input type="text" id="firstName" class="m-wrap span12" placeholder="路由（网页）名称..." name="layout_name" value="<?php echo $layouts['layout_name']?>">
-
+													
 												</div>
 
 											</div>

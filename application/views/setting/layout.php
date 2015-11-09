@@ -296,11 +296,9 @@
 																<?php if ($module['module_id']): ?>
 																<span class="label label-inverse label-margin">已安装</span>
 																<span class="label label-success label-margin"><a style="color: #FFF" href="<?php echo site_url('setting/layout/uninstall_module').'?module_id='.$module['module_id']?>">卸载</a></span>
-																<span class="label label-success label-margin">管理</span>
 																<?php else: ?>
 																<span class="label label-success label-margin"><a style="color: #FFF;text-decoration:none;" href="<?php echo site_url('setting/layout/install_module').'?module_id='.$module['module_id'].'&name='.$module['name'].'&description='.$module['description'].'&author='.$module['author'].'&code='.$module['code']?>">安&nbsp;装</a></span>
 																<span class="label label-inverse label-margin">卸载</span>
-																<span class="label label-inverse label-margin">管理</span>
 																<?php endif; ?>
 																</td>
 
@@ -458,7 +456,10 @@
 																<td class="hidden-480">否</td>
 																<?php endif; ?>
 
-																<td><span class="label label-success"><a style="color: #FFF" href="<?php echo site_url('setting/layout_form').'?layout_module_id='.$layout_module['layout_module_id'].'&tab_position=tab_1_3'?>">修改</a></span></td>
+																<td>
+																<span class="label label-success"><a style="color: #FFF" href="<?php echo site_url('setting/layout_form').'?layout_module_id='.$layout_module['layout_module_id'].'&tab_position=tab_1_3'?>">修改</a></span>
+																<span class="label label-success label-margin">设置</span>
+																</td>
 
 															</tr>
 															
