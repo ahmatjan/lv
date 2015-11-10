@@ -1,4 +1,4 @@
-<body class="login">
+<body class="login <?php echo $body_css?>">
 
 	<!-- BEGIN HEADER -->
 

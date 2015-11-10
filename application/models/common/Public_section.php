@@ -51,6 +51,8 @@ class public_section extends CI_Model {
 		
 		$this->report_access();
 		
+		//$this->output->enable_profiler(TRUE);
+		
 		return $this->load->view('common/header',$data);
 	}
 	
@@ -145,7 +147,8 @@ class public_section extends CI_Model {
 	
 	//这是登陆的顶部
 	public function get_login_top(){
-		return $this->load->view('common/login_top');
+		$data['body_css']=$this->uri->segment(1) == 'user' ? $this->uri->segment(2) : 'no_find';//返回url 第二段也就是当前视图文件名称，用于设置body class
+		return $this->load->view('common/login_top',$data);
 	}
 	
 	//这是网部后台的顶部
