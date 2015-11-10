@@ -11,8 +11,8 @@ $(function(){
 		newOn: 100		//雪花出现的频率 这个数值越小雪花越多
 	});
 });
-$("body").css({"background-image":"url(../../../public/image/bg/3.jpg)","background-position-y":"3%",
-"background-repeat":"repeat-y"});
+//$("body").css({"background-image":"url(../../../public/image/bg/3.jpg)","background-position-y":"3%",
+//"background-repeat":"repeat-y"});
 </script>
 <?php endif;?>
 <div style="margin: 1px auto;">

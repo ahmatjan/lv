@@ -9,7 +9,7 @@ class Image extends CI_Model {
 			return;
 		}
 		
-		$extension = pathinfo($filename, PATHINFO_EXTENSION);//返回文件名(包括后缀)
+		$extension = pathinfo($filename, PATHINFO_EXTENSION);//返回文件类型
 		$old_image = 'image/' . $filename;//输入文件名
 		$new_image = 'image/cache/' . substr($filename, 0, strrpos($filename, '.')) . '-' . $width . 'x' . $height . '.' . $extension;//缓存文件名
 		
