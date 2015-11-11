@@ -12,19 +12,22 @@ class Module_right extends CI_Module {
 		$layout_module=$this->module->get_layout_module('right');
 		foreach($layout_module as $k=>$v){
 			$modules[$k]=$this->module->get_module($v['module_id']);
+			$modules[$k]['position']=$v['position'];
 			$modules[$k]['is_mobile']=$v['is_mobile'];
 		}
 		
 		$data=array();
 		foreach($modules as $module){//遍历module装载成字串返回给控制器
 			if($this->agent->is_mobile()){//是移动设备
-				if($module['is_mobile']==TRUE){
+				if($module['is_mobile']==TRUE && $module['position'] == 'right'){
 				$this->load->module($module['code']);
 				$data['module_right'][]=$this->$module['code']->index();
 			}
 			}else{//不是移动设备
-				$this->load->module($module['code']);
-				$data['module_right'][]=$this->$module['code']->index();
+				if($module['position'] == 'right'){
+					$this->load->module($module['code']);
+					$data['module_right'][]=$this->$module['code']->index();
+				}
 			}
 		}
 

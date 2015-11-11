@@ -87,6 +87,12 @@ class Login extends CI_Controller {
 		
 		$username=$this->input->post('username',TRUE);
 		$password=md5($this->input->post('password',TRUE));
+		if(!isset($username) || !isset($password)){
+			//登陆不成功，把错误信息写入session
+			$this->session->set_flashdata('error_login', '用户名密码不能为空！');//闪出错误信息
+			redirect(site_url('user/Login'));
+			exit();
+		}
 		
 		if(preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i',$username) && strlen($username)>3){
 			//邮箱登陆

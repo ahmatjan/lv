@@ -12,19 +12,22 @@ class Module_middle extends CI_Module {
 		
 		foreach($layout_module as $k=>$v){
 			$modules[$k]=$this->module->get_module($v['module_id']);
+			$modules[$k]['position']=$v['position'];
 			$modules[$k]['is_mobile']=$v['is_mobile'];
 		}
 		
 		$data=array();
 		foreach($modules as $module){//遍历module装载成字串返回给控制器
 			if($this->agent->is_mobile()){//是移动设备
-				if($module['is_mobile']==TRUE){
+				if($module['is_mobile']==TRUE && $module['position'] == 'middle'){
 					$this->load->module($module['code']);
 					$data['module_middle'][]=$this->$module['code']->index();
 				}
 			}else{//不是移动设备
-				$this->load->module($module['code']);
-				$data['module_middle'][]=$this->$module['code']->index();
+				if($module['position'] == 'middle'){
+					$this->load->module($module['code']);
+					$data['module_middle'][]=$this->$module['code']->index();
+				}
 			}
 		}
 

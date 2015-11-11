@@ -20,6 +20,9 @@ $(function(){
 <script src="<?php echo base_url('public/modules/holidays/banner/howdydo-bar.js')?>"></script>
 
 <DIV id="howdy">
+<!--
+<img class="lazy" style="margin: 0 auto" data-original="<?php echo $new_img?>">
+-->
 <img class="lazy" style="margin: 0 auto" data-original="<?php echo $new_img?>">
 
 <?php 
