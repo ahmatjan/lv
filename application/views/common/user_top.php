@@ -453,7 +453,7 @@
 	<!-- END HEADER -->
 	
 	<!--电脑端42像素的点位-->
-	<div class="hidden-phone hidden-tablet" style="height:42px"></div>
+	<div class="hidden-phone hidden-tablet holidays_" style="height:42px"></div>
 	<!--电脑端42像素的点位-->
 	
 	<!--这个是网站顶部-->

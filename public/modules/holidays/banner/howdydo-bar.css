@@ -1,0 +1,95 @@
+
+#howdy {
+	COLOR: #f8e7db; FONT-SIZE: 17px;margin-top:42px;
+	z-index:998;
+}
+#howdy SPAN#heading {
+	COLOR: #fff; FONT-SIZE: 14px; FONT-WEIGHT: bold
+}
+#howdy SMALL {
+	COLOR: #f8e7db; FONT-SIZE: 12px
+}
+#howdy A {
+	COLOR: #fff
+}
+#howdy A:link {
+	COLOR: #fff
+}
+#howdy A:visited {
+	COLOR: #fff
+}
+#howdy A:hover {
+	
+}
+#howdy A:unknown {
+	
+}
+.howdydo-style {
+	BORDER-BOTTOM: #999 0px solid; TEXT-ALIGN: center; BACKGROUND-COLOR: #0362fd; -moz-box-shadow: 0px 3px 5px #999; -webkit-box-shadow: 0px 3px 5px #999; box-shadow: 0px 3px 5px #999
+}
+#howdydo-wrapper {
+	Z-INDEX: 100; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; WIDTH: 100%; PADDING-RIGHT: 0px; OVERFLOW: visible; PADDING-TOP: 0px
+}
+.howdydo-box {
+	PADDING-LEFT: 0px; WIDTH: 100%; PADDING-RIGHT: 0px; DISPLAY: none;
+}
+#howdydo-close {
+	POSITION: relative; BOTTOM: 10px;text-align:right;margin-right:30px;margin-top:-20px
+}
+#howdydo-close  a{
+	color:#FFF;
+	text-decoration:none;
+}
+#howdydo-open {
+	POSITION: relative; PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; TOP: 0px; RIGHT: 0px; PADDING-TOP: 10px;margin-top:42px;
+}
+#howdydo-open  a{
+	color:#FFF;
+	text-decoration:none;
+}
+.howdydo-hover {
+	POSITION: relative; TOP: 0px; LEFT: 0px
+}
+.howdydo-scroll {
+	POSITION: relative; TOP: 0px; LEFT: 0px
+}
+.howdydo-push {
+	POSITION: relative; MARGIN-BOTTOM: 1px; FLOAT: left; CLEAR: both
+}
+#howdy .holidays-title{
+	position:absolute;
+	right:20%;
+	height:250px;
+	width: 160px;
+	top: 10%;
+	-webkit-box-shadow:rgb(0, 0, 0) -7px 0px 18px 0px;
+	-moz-box-shadow:rgb(0, 0, 0) -7px 0px 18px 0px;
+	box-shadow:rgb(0, 0, 0) -7px 0px 18px 0px;
+	background-color:rgba(0, 0, 0, 0.207843);
+}
+#howdy .hol-middle{
+	float:left;
+	padding-left:24px;
+	padding-top:10px;
+}
+#howdy .fes-date{
+	position:absolute;
+	bottom:10px;
+	right:25px;
+}
+#howdy .holidays-title h2{
+	width:40px;
+	margin-top:25px;
+	float:left;
+	font-size:40px;
+	margin-right:5px;
+	max-height:150px;
+}
+#howdy .holidays-title h5{
+	width:18px;
+	max-height:200px;
+	font-size:18px;
+	line-height:20px;
+	float:left;
+	margin-right:10px;
+}

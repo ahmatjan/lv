@@ -41,7 +41,7 @@ class Image extends CI_Model {
 				$config['image_library'] = 'gd2';
 				$config['source_image'] = $old_image;
 				$config['new_image'] = $new_image;
-				$config['quality'] = '60';
+				$config['quality'] = $this->config->item('img_size');
 				$config['create_thumb'] = FALSE;
 				$config['maintain_ratio'] = TRUE;
 				$config['master_dim'] = $master_dim;

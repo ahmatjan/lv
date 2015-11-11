@@ -23,60 +23,22 @@ class Holidays extends CI_Module {
 		//如果节日存在
 		if(isset($festival)){
 			$this->load->helper('directory');//加载目录辅助函数
-			$img_path=WWW_PATH.'/public/modules/holidays/image/'.$festival_py.'/';//原图路径
+			$img_path=WWW_PATH.'/image/modules/holidays/'.$festival_py.'/';//原图路径
 			$map = directory_map($img_path);
 			//从数组中随机取一个图片出来
 			$img=array_rand($map);
-			$img=$map[$img];
+			$img='/modules/holidays/'.$festival_py.'/'.$map[$img];
 			
-			$new_img=$this->new_img($img,$festivals,$festival_py);
+			$this->load->model('image');
 			
-			$data['new_img']=base_url($new_img);
+			$new_img=$this->image->rezice($img,'1920','700');
+			
+			$data['new_img']=$new_img;
 		}else{
 			$data['new_img']='';
 		}
+		$data['festivals']=$festivals;
 		
 		return $this->load->view('modules/holidays',$data,TRUE);
-	}
-	
-	public function new_img ($img,$festivals,$festival_py){
-		//给缓存图片加前缀
-		$newimg='new_'.$img;
-		//判断缓存图片是否存在
-		$cachefile=WWW_PATH.'/image/cache/modules/holidays';//缓存目录
-		$imgpath=WWW_PATH.'/public/modules/holidays/image/'.$festival_py.'/';//原图路径
-		if(!is_dir($cachefile.'/'.$festival_py)){
-			//不存在
-			$res=mkdir(iconv("UTF-8", "GBK", $cachefile.'/'.$festival_py),0777,true); //创建多级目录
-		}
-		
-		if(is_file($cachefile.'/'.$festival_py.'/'.$newimg)){
-			//缓存图片存在，直接返回缓存图片
-			$new_='/image/cache/modules/holidays/'.$festival_py.'/'.$newimg;
-		}
-
-		if(!is_file($cachefile.'/'.$festival_py.'/'.$newimg)){
-			//给图片添加水印，并生成新的图片，缓存在cache文件夹下
-			$config['image_library'] = 'gd2';
-			$config['source_image'] = $imgpath.$img;
-			$config['wm_text'] = $festivals['name'];
-			$config['wm_type'] = 'text';
-			$config['wm_font_path'] = WWW_PATH.'/public/font/niao.ttf';
-			$config['wm_font_size'] = '20';
-			$config['quality'] = '90';
-			$config['wm_font_color'] = 'ffffff';
-			$config['wm_vrt_alignment'] = 'middle';
-			$config['wm_hor_alignment'] = 'center';
-			$config['wm_padding'] = '90';
-			$config['new_image'] = $cachefile.'/'.$festival_py.'/'.$newimg;
-			$config['create_thumb'] = FALSE;
-
-			$this->load->library('image_lib', $config); 
-			
-			$this->image_lib->watermark();
-			echo $this->image_lib->display_errors();
-			$new_='/image/cache/modules/holidays/'.$festival_py.'/'.$newimg;
-		}
-		return $new_;
 	}
 }
