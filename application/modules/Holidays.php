@@ -22,22 +22,10 @@ class Holidays extends CI_Module {
 		$data['festival']=$festival;
 		//如果节日存在
 		if(isset($festival)){
-			$this->load->helper('directory');//加载目录辅助函数
-			$img_path=WWW_PATH.'/image/modules/holidays/'.$festival_py.'/';//原图路径
-			$map = directory_map($img_path);
-			//从数组中随机取一个图片出来
-			$img=array_rand($map);
-			$img='/modules/holidays/'.$festival_py.'/'.$map[$img];
-			
-			$this->load->model('image');
-			
-			$new_img=$this->image->rezice($img,'1920','700');
-			
-			$data['new_img']=$new_img;
+			$data['festivals']=$festivals;
 		}else{
-			$data['new_img']='';
+			$data['festivals']='';
 		}
-		$data['festivals']=$festivals;
 		
 		return $this->load->view('modules/holidays',$data,TRUE);
 	}

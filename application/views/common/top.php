@@ -2,7 +2,8 @@
 
 	<!-- BEGIN HEADER -->
 
-	<div class="header navbar navbar-inverse navbar-fixed-top hidden-phone hidden-tablet">
+	<!--<div class="header navbar navbar-inverse navbar-fixed-top hidden-phone hidden-tablet">-->
+	<div class="header navbar navbar-inverse navbar-fixed-top">
 
 		<!-- BEGIN TOP NAVIGATION BAR -->
 
@@ -154,13 +155,13 @@
 				<!-- END HORIZANTAL MENU -->
 
 				<!-- BEGIN RESPONSIVE MENU TOGGLER -->
-
+<!--手机平板上的下拉菜单
 				<a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
 
 				<img src="<?php echo base_url('public/image/menu-toggler.png') ?>" alt="" />
 
 				</a>          
-
+-->
 				<!-- END RESPONSIVE MENU TOGGLER -->            
 
 				<!-- BEGIN TOP NAVIGATION MENU -->              
@@ -403,13 +404,13 @@
 
 						<img class="user-image lazy" data-original="<?php echo $user_image ?>" alt="<?php echo $nick_name?>" />
 
-						<span class="username"><?php echo $nick_name?></span>
+						<span class="username  hidden-phone"><?php echo $nick_name?></span>
 
-						<i class="icon-angle-down"></i>
+						<i class="icon-angle-down  hidden-phone"></i>
 
 						</a>
 
-						<ul class="dropdown-menu">
+						<ul class="dropdown-menu  hidden-phone">
 
 							<li><a href="<?php echo site_url('user/user_center') ?>"><i class="icon-user"></i> My Profile</a></li>
 
@@ -432,6 +433,8 @@
 					<!-- END USER LOGIN DROPDOWN -->
 
 				</ul>
+				
+				<img class="user-image-phone lazy visible-phone" data-original="<?php echo $user_image ?>" alt="<?php echo $nick_name?>" />
 				
 				<?php else: ?>
 
@@ -632,7 +635,7 @@
 	<!--开始移动端顶部-->
 	
 	<!--电脑端42像素的点位-->
-	<div class="hidden-phone hidden-tablet holidays_" style="height:42px"></div>
+	<div class="hidden-phone hidden-tablet" style="height:42px"></div>
 	<!--电脑端42像素的点位-->
 	
 	<!--这个是网站顶部-->

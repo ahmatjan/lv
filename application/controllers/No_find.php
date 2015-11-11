@@ -23,6 +23,7 @@ class No_find extends CI_Controller {
 		$data=array();
 		
 		$this->load->view('no_find',$data);
+		$this->public_section->get_mobile_footer();
 		//$this->public_section->get_footer();
 	}
 }

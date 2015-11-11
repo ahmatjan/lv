@@ -3,7 +3,7 @@
 	
 		<!-- BEGIN SIDEBAR -->
 
-		<?php $this->public_section->get_view_sideastop();?>
+		<?php //$this->public_section->get_view_sideastop();?>
 
 		<!-- END SIDEBAR -->
 

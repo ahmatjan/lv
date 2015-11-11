@@ -148,6 +148,27 @@ class public_section extends CI_Model {
 	//这是登陆的顶部
 	public function get_login_top(){
 		$data['body_css']=$this->uri->segment(1) == 'user' ? $this->uri->segment(2) : 'no_find';//返回url 第二段也就是当前视图文件名称，用于设置body class
+		
+		//用户user类来获取用户信息
+		if(@$this->user->get_nickname()){
+			$data['nick_name']=$this->user->get_nickname();
+		}else {
+			$data['nick_name']='';
+		}
+		
+		if(@$this->user->get_image()){
+			if(strpos($this->user->get_image() ,'http') !== FALSE){
+				$data['user_image']=$this->user->get_image();
+			}else{
+				$data['user_image']=$this->image->rezice($this->user->get_image(),29,29);
+			}
+		}else{
+			$data['user_image']='';
+		}
+		
+		//顶布局
+		$this->load->module('common/module_top');
+		$data['module_top'] = $this->module_top->index();
 		return $this->load->view('common/login_top',$data);
 	}
 	

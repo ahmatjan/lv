@@ -5446,3 +5446,11 @@ Datatables Plugin(in v1.3)
 .breadcrumb{
 	margin-bottom: 0px;
 }
+.user-image-phone{
+	float: right;
+	padding: 6px 10px;
+	-webkit-border-radius:50% !important;
+	-moz-border-radius:50% !important;
+	border-radius:50% !important;
+	background:none;
+}

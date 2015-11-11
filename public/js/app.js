@@ -385,15 +385,16 @@ var App = function () {
                 }
             });
     }
-
+/*
     var handleGoTop = function () {
         /* set variables locally for increased performance */
+        /*
         jQuery('.footer').on('click', '.go-top', function (e) {
                 App.scrollTo();
                 e.preventDefault();
             });
     }
-
+*/
     var handlePortletTools = function () {
         jQuery('body').on('click', '.portlet .tools a.remove', function (e) {
             e.preventDefault();
@@ -735,7 +736,7 @@ var App = function () {
             handleHorizontalMenu(); // handles horizontal menu
             handleSidebarToggler(); // handles sidebar hide/show            
             handleFixInputPlaceholderForIE(); // fixes/enables html5 placeholder attribute for IE9, IE8
-            handleGoTop(); //handles scroll to top functionality in the footer
+            //handleGoTop(); //handles scroll to top functionality in the footer
             handleTheme(); // handles style customer tool
 
             //ui component handlers

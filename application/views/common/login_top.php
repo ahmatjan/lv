@@ -2,7 +2,7 @@
 
 	<!-- BEGIN HEADER -->
 
-	<div class="header navbar navbar-inverse navbar-fixed-top hidden-phone hidden-tablet">
+	<div class="header navbar navbar-inverse navbar-fixed-top">
 
 		<!-- BEGIN TOP NAVIGATION BAR -->
 
@@ -19,6 +19,9 @@
 				</a>
 
 				<!-- END LOGO -->
+				<?php if ($this->user->is_Logged()): ?>
+				<img class="user-image-phone" src="<?php echo $user_image ?>" alt="<?php echo $nick_name?>" />
+				<?php endif;?>
 
 		<!-- END TOP NAVIGATION BAR -->
 			</div>
@@ -27,5 +30,8 @@
 	<!--开始移动端顶部-->
 	
 	<!--电脑端42像素的点位-->
-	<div class="hidden-phone hidden-tablet" style="height:50px"></div>
+	<div class="hidden-phone hidden-tablet" style="height:42px"></div>
 	<!--电脑端42像素的点位-->
+	<!--这个是网站顶部-->
+	<?php echo $module_top?>
+	<!--这个是网站顶部-->
