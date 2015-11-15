@@ -97,6 +97,13 @@ class Login extends CI_Controller {
 		if(preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i',$username) && strlen($username)>3){
 			//邮箱登陆
 			$user_infos=$this->user_info->get_useremail_info($username);
+			
+			if($user_infos['status'] == FALSE){
+				$this->session->set_flashdata('error_login', '帐号已被禁止登陆！');//闪出错误信息
+				redirect(site_url('user/Login'));
+				exit();
+			}
+			
 			if($username===$user_infos['email'] && $password === $user_infos['passwd']){
 				//写入用户信息session
 				$this->session->set_userdata('user_id', $user_infos['user_id']);
@@ -131,6 +138,12 @@ class Login extends CI_Controller {
 		if(!preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i',$username) && strlen($username)>3){
 			//帐号登陆
 			$user_infos=$this->user_info->get_username_info($username);
+			
+			if($user_infos['status'] == FALSE){
+				$this->session->set_flashdata('error_login', '帐号已被禁止登陆！');//闪出错误信息
+				redirect(site_url('user/Login'));
+				exit();
+			}
 			
 			if($username===$user_infos['user_name'] && $password === $user_infos['passwd']){
 				//写入用户信息session
@@ -371,6 +384,11 @@ class Login extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->model('user/user_info');
 		
+		if($user_infos['email'] == $email){
+			$this->session->set_flashdata('error_login', '邮箱已经注册！');//闪出错误信息
+			return FALSE;
+		}
+		
 		$user_infos=$this->user_info->get_useremail_info($username);
 			
 		$this->form_validation->set_rules('username', 'Username', 'required|valid_email|min_length[5]|max_length[96]');
@@ -378,9 +396,6 @@ class Login extends CI_Controller {
 		$this->form_validation->set_rules('password', 'Password', 'required|min_length[5]|max_length[25]');
 		if ($this->form_validation->run() == TRUE && $username==$email && $user_infos['email'] !== $email && $password == $rpassword){
 			return TRUE;
-		}
-		if($user_infos['email'] == $email){
-			$this->session->set_flashdata('error_login', '邮箱已经注册！');//闪出错误信息
 		}
 	}
 	

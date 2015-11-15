@@ -5454,3 +5454,4 @@ Datatables Plugin(in v1.3)
 	border-radius:50% !important;
 	background:none;
 }
+.tab-content li .portrait{margin-top:expression(100-this.height/2);max-height:203px}/* max-height可限制图片的最大高度 */

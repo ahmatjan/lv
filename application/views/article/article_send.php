@@ -129,7 +129,7 @@
 														<option value="">云南</option>
 
 													</select>
-													<select  class="m-wrap span6">
+													<select  class="m-wrap span6 margin-bottom15">
 
 														<option value="">楚雄</option>
 
@@ -154,7 +154,7 @@
 														<option value="">云南</option>
 
 													</select>
-													<select  class="m-wrap span6">
+													<select  class="m-wrap span6 margin-bottom15">
 
 														<option value="">楚雄</option>
 

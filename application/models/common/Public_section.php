@@ -395,6 +395,7 @@ class public_section extends CI_Model {
 	public function report_access(){
 		//系统类型$this->agent->is_robot()
 		$platform=$this->agent->platform();
+		
 		//浏览器
 		$browser=$this->agent->browser().$this->agent->version();
 		//IP

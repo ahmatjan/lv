@@ -244,12 +244,102 @@ var_dump($nav_parents);
 		//echo date('Ymd');
 		
 		//$this->load->view('test');
+		
+		$page=$this->input->get('');
+		
+		$this->load->library('pagination');
 
-		//调layout_id
-		$str = "age:30 weight:60kg";
-		sscanf($str,"age:%d weight:%dkg",$age,$weight);
-		// 显示类型和值
-		var_dump($age,$weight);
+		$config['full_tag_open'] = '<ul>';
+		$config['full_tag_close'] = '</ul>';
+		$config['first_link'] = '首页';
+		$config['last_link'] = '尾页';
+		$config['first_tag_open'] = '<li>';
+		$config['next_tag_open'] = '<li>';
+		$config['prev_tag_open'] = '<li>';
+		$config['last_tag_open'] = '<li>';
+		$config['cur_tag_open'] = '<li>';
+		$config['num_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+		$config['next_tag_close'] = '</li>';
+		$config['last_tag_close'] = '</li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['cur_tag_close'] = '</li>';
+		$config['num_tag_close'] = '</li>';
+		$config['next_link'] = '下一页';
+		$config['prev_link'] = '上一页';
+		$config['base_url'] = site_url('test');
+		$config['total_rows'] = 200;
+		$config['per_page'] = 40;
+		$config['page_query_string']=TRUE;
+		$config['query_string_segment'] ='aab';
+
+		$this->pagination->initialize($config);
+
+		echo $this->pagination->create_links();
+		
+		$config1['full_tag_open'] = '<ul>';
+		$config1['full_tag_close'] = '</ul>';
+		$config1['first_link'] = '首页';
+		$config1['last_link'] = '尾页';
+		$config1['first_tag_open'] = '<li>';
+		$config1['next_tag_open'] = '<li>';
+		$config1['prev_tag_open'] = '<li>';
+		$config1['last_tag_open'] = '<li>';
+		$config1['cur_tag_open'] = '<li>';
+		$config1['num_tag_open'] = '<li>';
+		$config1['first_tag_close'] = '</li>';
+		$config1['next_tag_close'] = '</li>';
+		$config1['last_tag_close'] = '</li>';
+		$config1['prev_tag_close'] = '</li>';
+		$config1['cur_tag_close'] = '</li>';
+		$config1['num_tag_close'] = '</li>';
+		$config1['next_link'] = '下一页';
+		$config1['prev_link'] = '上一页';
+		$config1['base_url'] = site_url('test');
+		$config1['total_rows'] = 200;
+		$config1['per_page'] = 20;
+		$config1['page_query_string']=TRUE;
+		$config1['query_string_segment'] ='1aacccccc';
+
+		$this->pagination->initialize($config1);
+
+		echo $this->pagination->create_links();
+		
+		
+		$config2['full_tag_open'] = '<ul>';
+		$config2['full_tag_close'] = '</ul>';
+		$config2['first_link'] = '首页';
+		$config2['last_link'] = '尾页';
+		$config2['first_tag_open'] = '<li>';
+		$config2['next_tag_open'] = '<li>';
+		$config2['prev_tag_open'] = '<li>';
+		$config2['last_tag_open'] = '<li>';
+		$config2['cur_tag_open'] = '<li>';
+		$config2['num_tag_open'] = '<li>';
+		$config2['first_tag_close'] = '</li>';
+		$config2['next_tag_close'] = '</li>';
+		$config2['last_tag_close'] = '</li>';
+		$config2['prev_tag_close'] = '</li>';
+		$config2['cur_tag_close'] = '</li>';
+		$config2['num_tag_close'] = '</li>';
+		$config2['next_link'] = '下一页';
+		$config2['prev_link'] = '上一页';
+		$config2['base_url'] = site_url('test');
+		$config2['total_rows'] = 200;
+		$config2['per_page'] = 20;
+		$config2['page_query_string']=TRUE;
+		$config2['query_string_segment'] ='2hhhhaab';
+
+		$this->pagination->initialize($config2);
+
+		echo $this->pagination->create_links();
+		
+		
+		$this->load->model('tool/report');
+		$b=$this->report->count_unkow();
+		var_dump($b);
+		
+		
 		/*
 
 		//$b=rand(0,30);

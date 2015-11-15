@@ -51,7 +51,7 @@
 									
 										<ul class="unstyled profile-nav span3 user_portrait">
 
-											<li><img style="width: 203px;height: 203px" class="lazy" data-original="<?php echo $user_image?>" alt="<?php echo $nick_name?>" /> <a data-toggle="modal" href="#portrait" class="profile-edit">编辑</a></li>
+											<li><img class="lazy portrait" data-original="<?php echo $user_image?>" alt="<?php echo $nick_name?>" /> <a data-toggle="modal" href="#portrait" class="profile-edit">编辑</a></li>
 
 											<li><a href="#">我的好友<span>3</span></a></li>
 

@@ -63,6 +63,14 @@
 									<?php endif; ?>
 									<a href="#tab_1_5" data-toggle="tab">抓取统计</a>
 									</li>
+									
+									<?php if ($tab_position === 'tab_1_6'): ?>
+									<li class="active">
+									<?php else: ?>
+									<li>
+									<?php endif; ?>
+									<a href="#tab_1_6" data-toggle="tab">未知抓取</a>
+									</li>
 
 								</ul>
 
@@ -152,67 +160,13 @@
 
 													</table>
 													
-													<?php if(ceil($count_report_access/$item)>1):?><!--总记录数/每页显示条数大于1才显示-->
 													
 													<div class="pagination" style="text-align: center;margin: 5px 0">
 
-													<ul>
-														<?php if($access_active > 1):?>
-														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').($access_active -'1');?>">上一页</a></li>
-														<?php endif;?>
-														
-														<?php
-															//如果页数大于10 中间分...
-															if(ceil($count_report_access/$item)>10){
-																$access_frevious='6';
-																$access_next=ceil($count_report_access/$item)-(ceil($count_report_access/$item) - 2 );
-															}
-														?>
-															
-														<?php if(isset($access_frevious)):?>
-														<?php for($i=1;$i<$access_frevious;$i++):?>
-														<?php if($i==$access_active):?>
-														<li class="active"><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').$i;?>"><?php echo $i?></a></li>
-														<?php else:?>
-														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').$i;?>"><?php echo $i?></a></li>
-														<?php endif;?>
-														<?php endfor;?>
-														<?php endif;?>
-														
-														<?php if(isset($access_frevious)):?>
-														<li>...</li><!--中间省略的点-->
-														<?php endif;?>
-														
-														<?php if(isset($access_next)):?>
-														<?php for($i=ceil($count_report_access/$item) - 2;$i< ceil($count_report_access/$item); $i++):?>
-														<?php if($i==$access_active):?>
-														<li class="active"><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').$i;?>"><?php echo $i?></a></li>
-														<?php else:?>
-														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').$i;?>"><?php echo $i?></a></li>
-														<?php endif;?>
-														<?php endfor;?>
-														<?php endif;?>
-														
-														<?php if(ceil($count_report_access/$item) <= 10):?>
-														<?php for($i=1;$i<$count_report_access/$item;$i++):?>
-														<?php if($i==$access_active):?>
-														<li class="active"><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').$i;?>"><?php echo $i?></a></li>
-														<?php else:?>
-														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').$i;?>"><?php echo $i?></a></li>
-														<?php endif;?>
-														<?php endfor;?>
-														<?php endif;?>
-														
-														<?php if(ceil($count_report_access/$item) !== $access_active ):?>
-														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&access_page=').ceil($count_report_access/$item);?>">尾页</a></li>
-														<?php endif;?>
-
-													</ul>
+												<?php echo $access_page;?>
 
 												</div>
 												
-												<?php endif;?>
-
 												</div>
 
 											</div>
@@ -325,67 +279,16 @@
 
 													</table>
 													
-													<?php if(ceil($count_report_flow/$item)>1):?><!--总记录数/每页显示条数大于1才显示-->
-													
 													<div class="pagination" style="text-align: center;margin: 5px 0">
 
 													<ul>
-														<?php if($flow_active > 1):?>
-														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&flow_page=').($flow_active -'1');?>">上一页</a></li>
-														<?php endif;?>
-														
-														<?php
-															//如果页数大于10 中间分...
-															if(ceil($count_report_flow/$item)>10){
-																$flow_frevious='6';
-																$flow_next=ceil($count_report_flow/$item)-(ceil($count_report_flow/$item) - 2 );
-															}
-														?>
-															
-														<?php if(isset($flow_frevious)):?>
-														<?php for($i=1;$i<$flow_frevious;$i++):?>
-														<?php if($i==$flow_active):?>
-														<li class="active"><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&flow_page=').$i;?>"><?php echo $i?></a></li>
-														<?php else:?>
-														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&flow_page=').$i;?>"><?php echo $i?></a></li>
-														<?php endif;?>
-														<?php endfor;?>
-														<?php endif;?>
-														
-														<?php if(isset($flow_frevious)):?>
-														<li>...</li><!--中间省略的点-->
-														<?php endif;?>
-														
-														<?php if(isset($flow_next)):?>
-														<?php for($i=ceil($count_report_flow/$item) - 2;$i< ceil($count_report_flow/$item); $i++):?>
-														<?php if($i==$flow_active):?>
-														<li class="active"><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&flow_page=').$i;?>"><?php echo $i?></a></li>
-														<?php else:?>
-														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&flow_page=').$i;?>"><?php echo $i?></a></li>
-														<?php endif;?>
-														<?php endfor;?>
-														<?php endif;?>
-														
-														<?php if(ceil($count_report_flow/$item) <= 10):?>
-														<?php for($i=1;$i<$count_report_flow/$item;$i++):?>
-														<?php if($i==$flow_active):?>
-														<li class="active"><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&flow_page=').$i;?>"><?php echo $i?></a></li>
-														<?php else:?>
-														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&flow_page=').$i;?>"><?php echo $i?></a></li>
-														<?php endif;?>
-														<?php endfor;?>
-														<?php endif;?>
-														
-														<?php if(ceil($count_report_flow/$item) !== $flow_active ):?>
-														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&flow_page=').ceil($count_report_flow/$item);?>">尾页</a></li>
-														<?php endif;?>
+													
+													<?php echo $flow_page?>
 
 													</ul>
 
 												</div>
 												
-												<?php endif;?>
-
 												</div>
 
 											</div>
@@ -485,67 +388,14 @@
 
 													</table>
 													
-													<?php if(ceil($count_report_robot/$item)>1):?><!--总记录数/每页显示条数大于1才显示-->
-													
 													<div class="pagination" style="text-align: center;margin: 5px 0">
 
 													<ul>
-														<?php if($robot_active > 1):?>
-														<li><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').($robot_active -'1');?>">上一页</a></li>
-														<?php endif;?>
-														
-														<?php
-															//如果页数大于10 中间分...
-															if(ceil($count_report_robot/$item)>10){
-																$robot_frevious='6';
-																$robot_next=ceil($count_report_robot/$item)-(ceil($count_report_robot/$item) - 2 );
-															}
-														?>
-															
-														<?php if(isset($robot_frevious)):?>
-														<?php for($i=1;$i<$robot_frevious;$i++):?>
-														<?php if($i==$robot_active):?>
-														<li class="active"><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').$i;?>"><?php echo $i?></a></li>
-														<?php else:?>
-														<li><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').$i;?>"><?php echo $i?></a></li>
-														<?php endif;?>
-														<?php endfor;?>
-														<?php endif;?>
-														
-														<?php if(isset($robot_frevious)):?>
-														<li>...</li><!--中间省略的点-->
-														<?php endif;?>
-														
-														<?php if(isset($robot_next)):?>
-														<?php for($i=ceil($count_report_robot/$item) - 2;$i< ceil($count_report_robot/$item); $i++):?>
-														<?php if($i==$robot_active):?>
-														<li class="active"><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').$i;?>"><?php echo $i?></a></li>
-														<?php else:?>
-														<li><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').$i;?>"><?php echo $i?></a></li>
-														<?php endif;?>
-														<?php endfor;?>
-														<?php endif;?>
-														
-														<?php if(ceil($count_report_robot/$item) <= 10):?>
-														<?php for($i=1;$i<$count_report_robot/$item;$i++):?>
-														<?php if($i==$robot_active):?>
-														<li class="active"><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').$i;?>"><?php echo $i?></a></li>
-														<?php else:?>
-														<li><a href="<?php echo site_url('report/report_robot?tab_position=tab_1_3&robot_page=').$i;?>"><?php echo $i?></a></li>
-														<?php endif;?>
-														<?php endfor;?>
-														<?php endif;?>
-														
-														<?php if(ceil($count_report_robot/$item) !== $robot_active ):?>
-														<li><a href="<?php echo site_url('report/report_access?tab_position=tab_1_3&robot_page=').ceil($count_report_robot/$item);?>">尾页</a></li>
-														<?php endif;?>
-
+														<?php echo $robot_page?>
 													</ul>
 
 												</div>
 												
-												<?php endif;?>
-
 												</div>
 
 											</div>
@@ -557,6 +407,112 @@
 									</div>
 									
 									<!--抓取统计-->
+									
+									<!--未知统计-->
+									
+									<?php if ($tab_position === 'tab_1_6'): ?>
+									<div class="tab-pane active" id="tab_1_6">
+									<?php else :?>
+									<div class="tab-pane" id="tab_1_6">
+									<?php endif;?>
+
+										<p>
+
+											<span class="label label-important">提示:</span>&nbsp;
+
+											这里显示所有的流量统计，一个页面算一个流量，但是不包括机器人访问
+
+										</p>
+									
+										<div class="span12 responsive" data-tablet="span12 fix-offset" data-desktop="span12">
+
+											<!-- BEGIN EXAMPLE TABLE PORTLET-->
+
+											<div class="portlet box grey">
+
+												<div class="portlet-title">
+
+													<div class="caption"><i class="icon-user"></i>抓取统计</div>
+
+												</div>
+
+												<div class="portlet-body">
+
+													<table class="table table-striped table-bordered table-hover" id="sample_6">
+
+														<thead>
+
+															<tr>
+
+																<th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_6 .checkboxes" /></th>
+																
+																<th>ID</th>
+
+																<th class="hidden-480">IP</th>
+																
+																<th>浏览器</th>
+																
+																<th>代理</th>
+																
+																<th>URL</th>
+																
+																<th>抓取时间</th>
+
+															</tr>
+
+														</thead>
+
+														<tbody>
+
+															<?php if ($report_unknows && is_array($report_unknows)): ?>
+															<?php foreach ($report_unknows as $report_unknow): ?>
+															<!--判断它是一个数组并且不为空 -->
+														
+															<tr class="odd gradeX">
+
+																<td><span title="<?php echo $report_unknow['robot_id']?>"><input type="checkbox" class="checkboxes" value="<?php echo $report_unknow['robot_id']?>" /></span></td>
+																
+																<td><?php echo $report_unknow['robot_id']?></td>
+
+																<td><?php echo $report_unknow['ip']?></td>
+																
+																<td class="hidden-480"><?php echo $report_unknow['browser']?></td>
+
+																<td><?php echo $report_unknow['user_agent']?></td>
+																
+																<td><?php echo $report_unknow['current_url']?></td>
+																
+																<td><?php echo $report_unknow['access_time']?></td>
+
+															</tr>
+
+															<?php endforeach; ?>
+															
+															<?php endif; ?>
+															
+														</tbody>
+
+													</table>
+													
+													<div class="pagination" style="text-align: center;margin: 5px 0">
+
+													<ul>
+														<?php echo $unknow_page?>
+													</ul>
+
+												</div>
+												
+												</div>
+
+											</div>
+
+											<!-- END EXAMPLE TABLE PORTLET-->
+
+										</div>
+
+									</div>
+									
+									<!--未知抓取-->
 
 								</div>
 

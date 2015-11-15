@@ -34,9 +34,9 @@ class Report extends CI_Model {
 	public function get_report_accessall($access_start,$access_end)
 	{
 	//
-		$sql = "SELECT * FROM " . $this->db->dbprefix('report_access') . " ORDER BY report_id ASC LIMIT ? , ".$access_end; 
+		$sql = "SELECT * FROM " . $this->db->dbprefix('report_access') . " ORDER BY report_id ASC LIMIT " . $access_start . " , " . $access_end; 
 
-		$query=$this->db->query($sql,array($access_start));
+		$query=$this->db->query($sql);
 
 		$row = $query->result_array(); 
 		return $row;
@@ -52,9 +52,9 @@ class Report extends CI_Model {
 	public function get_report_flowall($flow_start,$flow_end)
 	{
 	//
-		$sql = "SELECT * FROM " . $this->db->dbprefix('report_flow') . " ORDER BY flow_id ASC LIMIT ? , ".$flow_end; 
+		$sql = "SELECT * FROM " . $this->db->dbprefix('report_flow') . " ORDER BY flow_id ASC LIMIT " . $flow_start . " , " . $flow_end; 
 
-		$query=$this->db->query($sql,array( $flow_start ));
+		$query=$this->db->query($sql);
 
 		$row = $query->result_array(); 
 		return $row;
@@ -71,9 +71,9 @@ class Report extends CI_Model {
 	public function get_report_robotall($robot_start,$robot_end)
 	{
 	//
-		$sql = "SELECT * FROM " . $this->db->dbprefix('report_robot') . " ORDER BY robot_id ASC LIMIT ? , ".$robot_end; 
+		$sql = "SELECT * FROM " . $this->db->dbprefix('report_robot') . " ORDER BY robot_id ASC LIMIT " . (int)$robot_start . " , " . (int)$robot_end; 
 
-		$query=$this->db->query($sql,array($robot_start));
+		$query=$this->db->query($sql);
 
 		$row = $query->result_array(); 
 		return $row;
@@ -83,6 +83,24 @@ class Report extends CI_Model {
 	public function count_report_robot(){
 		$count=$this->db->count_all('report_robot');
 		return $count;
+	}
+	
+	//未知抓取
+	public function unknowspider ($start,$end){
+		$sql = "SELECT * FROM " . $this->db->dbprefix('report_flow') . " WHERE browser is null OR platform = 'Unknown Platform' AND robot is null ORDER BY flow_id ASC LIMIT " . (int)$start . " , " . (int)$end; 
+		
+		$query=$this->db->query($sql);
+
+		$row = $query->result_array(); 
+		return $row;
+	}
+	
+	//统计未知抓取的记录行数
+	public function count_unkow(){
+		$sql="SELECT count(*) FROM " . $this->db->dbprefix('report_flow') . " WHERE browser is null OR platform = 'Unknown Platform' AND robot is null";
+		$query=$this->db->query($sql);
+		$row=$query->num_rows();
+		return $row;
 	}
 	
 }

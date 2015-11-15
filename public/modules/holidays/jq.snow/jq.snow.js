@@ -3,7 +3,8 @@
 	$.fn.snow = function(options){
 	
 			var $flake 			= $('<div id="snowbox" />').css({'position': 'absolute', 'top': '-50px','z-index':'999'}).html('&#10052;'),
-				documentHeight 	= $(document).height(),
+				documentHeight 	= $(window).height(),
+				//documentHeight 	= $(document).height(),
 				documentWidth	= $(document).width(),
 				defaults		= {
 									minSize		: 10,		//雪花的最小尺寸
