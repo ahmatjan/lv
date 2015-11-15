@@ -470,17 +470,24 @@
 														
 															<tr class="odd gradeX">
 
-																<td><span title="<?php echo $report_unknow['robot_id']?>"><input type="checkbox" class="checkboxes" value="<?php echo $report_unknow['robot_id']?>" /></span></td>
+																<td><span title="<?php echo $report_unknow['flow_id']?>"><input type="checkbox" class="checkboxes" value="<?php echo $report_unknow['flow_id']?>" /></span></td>
 																
-																<td><?php echo $report_unknow['robot_id']?></td>
+																<td><?php echo $report_unknow['flow_id']?></td>
 
 																<td><?php echo $report_unknow['ip']?></td>
 																
 																<td class="hidden-480"><?php echo $report_unknow['browser']?></td>
 
-																<td><?php echo $report_unknow['user_agent']?></td>
+																<td><div title="<?php echo $report_unknow['user_agent']?>"><?php echo substr_cn($report_unknow['user_agent'],12)?></div></td>
 																
-																<td><?php echo $report_unknow['current_url']?></td>
+																<td>
+																	<!--判断current_url是否为空-->
+																<?php if(!empty($report_unknow['current_url'])):?>
+																<a href="<?php echo $report_unknow['current_url']?>" title="<?php echo $report_unknow['current_url']?>" target="_blank"><?php echo strlen(mb_substr($report_unknow['current_url'],stripos($report_unknow['current_url'],'.com') + 5,15))>7 ? mb_substr($report_unknow['current_url'],stripos($report_unknow['current_url'],'.com') + 5,15) : $report_unknow['current_url']?></a>
+																<?php else:?>
+																--空--
+																<?php endif;?>
+																</td>
 																
 																<td><?php echo $report_unknow['access_time']?></td>
 

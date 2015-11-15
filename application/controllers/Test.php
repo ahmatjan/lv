@@ -244,7 +244,7 @@ var_dump($nav_parents);
 		//echo date('Ymd');
 		
 		//$this->load->view('test');
-		
+		/*
 		$page=$this->input->get('');
 		
 		$this->load->library('pagination');
@@ -338,7 +338,9 @@ var_dump($nav_parents);
 		$this->load->model('tool/report');
 		$b=$this->report->count_unkow();
 		var_dump($b);
+		*/
 		
+		echo $this->load->view('template/forgot_email','',TRUE);
 		
 		/*
 

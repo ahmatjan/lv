@@ -366,7 +366,37 @@ class Login extends CI_Controller {
 	
 	//找回密码
 	public function forgot(){
-		var_dump($this->input->post());
+		$this->load->model('setting/base_setting');
+		$email = $this->input->post('forgot_email');
+		$this->load->helper('string');
+		$data['token']=sha1(rand());
+		
+		//发送邮件
+		$config['protocol'] = 'smtp';//采用smtp方式
+    	$config['smtp_port'] = 25;//端口
+    	$config['smtp_host'] = 'smtp.qq.com';//简便起见，只支持163邮箱
+    	//$config['smtp_user'] = 'xcalder@foxmail.com';//你的邮箱帐号
+    	$config['smtp_user'] = 'sender@lvxingto.com';//你的邮箱帐号
+    	$config['smtp_pass'] = 'dylfj22649978';//你的邮箱密码
+    	$config['charset'] = 'utf-8';
+    	$config['smtp_timeout'] = 30;
+    	$config['newline'] = "\r\n";
+		$config['crlf'] = "\r\n";
+    	$config['wordwrap'] = TRUE;
+    	$config['mailtype'] = "html";
+    	$this->load->library('email');//加载email类
+    	$this->email->initialize($config);//参数配置 
+    	$this->email->from('sender@lvxingto.com', $this->base_setting->get_setting('website_name').'，自动发送');
+    	$this->email->to($email);
+    	$this->email->subject('找回密码——'.$this->base_setting->get_setting('website_name'));
+    	$this->email->message($this->load->view('template/forgot_email',$data,TRUE));    //显示发送邮件的结果，加载到res_view.php视图文件中
+    	if(!$this->email->send()){
+    		echo $this->email->print_debugger(array());
+    		
+    		//echo "<font color='red' size='10px'>邮件发送失败，可能是由您的发件人或者密码填写不匹配造成</font>";
+    	}else{
+    		echo "<font color='red' size='10px'>邮件发送成功</font>"; 
+    		}
 		
 		//redirect('user/User_center', 'location');
 	}

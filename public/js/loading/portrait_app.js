@@ -5,7 +5,7 @@ $(window).load(function() {
 	{
 		thumbBox: '.thumbBox',
 		spinner: '.spinner',
-		imgSrc: '../../public/image/image2.jpg'
+		imgSrc: '../../public/image/demo.jpg'
 	}
 	var cropper = $('.imageBox').cropbox(options);
 	$('#upload-file').on('change', function(){

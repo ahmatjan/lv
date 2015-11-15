@@ -142,7 +142,7 @@
 
 						<i class="icon-envelope"></i>
 
-						<input class="m-wrap placeholder-no-fix" type="text" placeholder="<?php echo $text_ent_email?>" name="email" />
+						<input class="m-wrap placeholder-no-fix" type="text" placeholder="<?php echo $text_ent_email?>" name="forgot_email" />
 
 					</div>
 
@@ -151,6 +151,12 @@
 			</div>
 
 			<div class="form-actions">
+			
+				<label>
+					
+					未绑定邮箱？<a>通过用户名申诉</a>
+					
+				</label>
 
 				<button type="button" id="back-btn" class="btn">
 
