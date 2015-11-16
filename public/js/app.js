@@ -934,3 +934,34 @@ $(function(){
 		feedbackCnt.hasClass(FBCLASS) ? close() : open();
 	});	
 });
+
+$(document).ready(function() {
+// Override summernotes image manager
+	$('button[data-event=\'showImageDialog\']').attr('data-toggle', 'image').removeAttr('data-event');
+	
+	$(document).delegate('button[data-toggle=\'image\']', 'click', function() {
+		$('#modal-image').remove();
+		
+		$(this).parents('.note-editor').find('.note-editable').focus();
+				
+		$.ajax({
+			url: location.protocol+'//'+window.location.host+'/common/filemanager',
+			dataType: 'html',
+			/*
+			beforeSend: function() {
+				$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+				$('#button-image').prop('disabled', true);
+			},
+			complete: function() {
+				$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+				$('#button-image').prop('disabled', false);
+			},
+			*/
+			success: function(html) {
+				$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+	
+				$('#modal-image').modal('show');
+			}
+		});	
+	});
+});

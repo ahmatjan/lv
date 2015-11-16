@@ -11,8 +11,8 @@ class nav_setting extends CI_Model {
 
 		$query=$this->db->query($sql, array($nav_class));
 
-			$row = $query->result_array(); 
-			return $row;
+		$row = $query->result_array(); 
+		return $row;
 	}
 	
 	//添加或更新一级目录

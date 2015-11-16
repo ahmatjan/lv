@@ -5,6 +5,7 @@ class Informations extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 			$this->output->https_jump();
+			$this->load->model('setting/information');
 	}
 	
 	public function index()
@@ -46,101 +47,36 @@ class Informations extends CI_Controller {
 		$data['tab_position']=$this->input->get('tab_position');
 		
 		//处理接收数据
-		$this->load->model('setting/base_setting');
-
-		$data['website_name']=$this->base_setting->get_setting('website_name');
-
-		
-		$data['website_title']=$this->base_setting->get_setting('website_title');
-		
-		$data['mate_key']=$this->base_setting->get_setting('mate_key');
-		
-		$data['mate_description']=$this->base_setting->get_setting('mate_description');
-		
-		$data['mate_author']=$this->base_setting->get_setting('mate_author');
-		
-		$data['quantity_view']=$this->base_setting->get_setting('quantity_view');
-		
-		$data['quantity_admin']=$this->base_setting->get_setting('quantity_admin');
-		
-		$data['article_check']=$this->base_setting->get_setting('article_check');
-		
-		$data['author_check']=$this->base_setting->get_setting('author_check');
-		
-		$data['https_pc']=$this->base_setting->get_setting('https_pc');
-		
-		$data['https_mobile']=$this->base_setting->get_setting('https_mobile');
-		
-		$data['register_group']=$this->base_setting->get_setting('register_group');
-		
-		$data['visitors_group']=$this->base_setting->get_setting('visitors_group');
-		
-		$data['is_compactor']=$this->base_setting->get_setting('is_compactor');//是否压缩
-		
-		//----------------------------------后台分类设置-----------------------------------------------
-		$this->load->model('setting/nav_setting');
-		$nav_parents=$this->nav_setting->get_parent_nav('admin');
-
-		foreach($nav_parents as $v){
-			//$nav_childs=$this->nav_setting->get_child_nav($v['nav_id']);
-			$nav_childs[]=$this->nav_setting->get_child_nav($v['nav_id']);
+		$data['informations'] = $this->information->select_informationall();
+	
+		if($this->input->get('information_id')!==NULL){
+			$informations=$this->information->select_information_forid($this->input->get('information_id'));
+		}
+		if(@isset($informations)){
+			$data['title']=$informations['title'];
+			$data['author']=$informations['author'];
+			$data['class']=$informations['class'];
+			$data['content']=$informations['content'];
+			$data['position']=$informations['position'];
+		}else{
+			$data['title']='';
+			$data['author']='';
+			$data['class']='';
+			$data['content']='';
+			$data['position']='';
 		}
 		
-		foreach($nav_parents as $k=>$v){
-			$nav_parents[$k]['childs']=&$nav_childs[$k];
-		}
-		
-		$data['navs']=$nav_parents;
-		
-		
-		//----------------------------------帮助中心分类设置-----------------------------------------------
-		//$this->load->model('setting/nav_setting');
-		$nav_helpers=$this->nav_setting->get_parent_nav('helper');
-
-		foreach($nav_helpers as $nav_helper){
-			//$nav_childs=$this->nav_setting->get_child_nav($v['nav_id']);
-			$nav_helper_childs[]=$this->nav_setting->get_child_nav($nav_helper['nav_id']);
-		}
-		
-		foreach($nav_helpers as $k=>$v){
-			$nav_helpers[$k]['childs']=&$nav_helper_childs[$k];
-		}
-		
-		$data['nav_helpers']=$nav_helpers;
-		
-		//----------------------------------前台顶部列表-----------------------------------------------
-		$nav_view_tops=$this->nav_setting->get_parent_nav('view_top');
-
-		foreach($nav_view_tops as $nav_view_top){
-			//$nav_childs=$this->nav_setting->get_child_nav($v['nav_id']);
-			$nav_view_top_childs[]=$this->nav_setting->get_child_nav($nav_view_top['nav_id']);
-		}
-		
-		foreach($nav_view_tops as $k=>$v){
-			$nav_view_tops[$k]['childs']=&$nav_view_top_childs[$k];
-		}
-		
-		$data['nav_view_tops']=$nav_view_tops;
-		//var_dump($data['nav_view_tops']);
-		
-		//----------------------------------后台顶部列表-----------------------------------------------
-		$nav_admin_tops=$this->nav_setting->get_parent_nav('admin_top');
-
-		foreach($nav_admin_tops as $nav_admin_top){
-			//$nav_childs=$this->nav_setting->get_child_nav($v['nav_id']);
-			$nav_admin_top_childs[]=$this->nav_setting->get_child_nav($nav_admin_top['nav_id']);
-		}
-		
-		foreach($nav_admin_tops as $k=>$v){
-			$nav_admin_tops[$k]['childs']=&$nav_admin_top_childs[$k];
-		}
-		
-		$data['nav_admin_tops']=$nav_admin_tops;
-		//var_dump($data['nav_admin_tops']);
-		
-		//用户组
-		$this->load->model('user/user_group');
-		$data['user_groupalls']=$this->user_group->get_groupall();
+		$data['select_position']=array(
+				'register_rule'=>'注册条款',
+				'values'=>'网站价值观',
+				'healper'=>'网站帮助',
+				'user_healper'=>'用户中心帮助'
+			);
+			
+		$data['select_rules']=array(
+				'rule'=>'规则',
+				'helper'=>'帮助'
+			);
 		
 		$this->load->view('setting/information',$data);
 		$this->public_section->get_footer();

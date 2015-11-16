@@ -15,4 +15,30 @@ class Information extends CI_Model {
 		
 		$this->db->query($sql);
 	}
+	
+	//获取所有的文章
+	public function select_informationall(){
+		$sql = "SELECT * FROM " . $this->db->dbprefix('information') . " ORDER BY information_id ASC"; 
+
+		$query=$this->db->query($sql);
+
+		$row = $query->result_array(); 
+		return $row;
+	}
+	
+	//用id查文章信息
+	public function select_information_forid($id){
+		$sql = "SELECT * FROM " . $this->db->dbprefix('information') . " WHERE information_id = ? "; 
+
+		$query=$this->db->query($sql, array($id));
+
+		if ($query->num_rows() > 0)
+		{
+		   $row = $query->row_array(); 
+			
+		}else{
+			$row = FALSE;
+		}
+		return $row;
+	}
 }

@@ -4017,19 +4017,19 @@
 
     var tplButtonInfo = {
       picture: function (lang) {
-        return tplIconButton('fa fa-picture-o icon-picture', {
+        return tplIconButton('icon-picture', {
           event: 'showImageDialog',
           title: lang.image.image
         });
       },
       link: function (lang) {
-        return tplIconButton('fa fa-link icon-link', {
+        return tplIconButton('icon-link', {
           event: 'showLinkDialog',
           title: lang.link.link
         });
       },
       video: function (lang) {
-        return tplIconButton('fa fa-youtube-play icon-play', {
+        return tplIconButton('icon-play', {
           event: 'showVideoDialog',
           title: lang.video.video
         });
@@ -4043,7 +4043,7 @@
                          '</div>' +
                          '<div class="note-dimension-display"> 1 x 1 </div>' +
                        '</ul>';
-        return tplIconButton('fa fa-table icon-table', {
+        return tplIconButton('icon-table', {
           title: lang.table.table,
           dropdown: dropdown
         });
@@ -4059,7 +4059,7 @@
                  '</a></li>';
         }, '');
 
-        return tplIconButton('fa fa-magic icon-magic', {
+        return tplIconButton('icon-magic', {
           title: lang.style.style,
           dropdown: '<ul class="dropdown-menu">' + items + '</ul>'
         });
@@ -4068,7 +4068,7 @@
         var items = options.fontNames.reduce(function (memo, v) {
           if (!agent.isFontInstalled(v)) { return memo; }
           return memo + '<li><a data-event="fontName" href="#" data-value="' + v + '">' +
-                          '<i class="fa fa-check icon-ok"></i> ' + v +
+                          '<i class="icon-ok"></i> ' + v +
                         '</a></li>';
         }, '');
         var label = '<span class="note-current-fontname">' +
@@ -4082,7 +4082,7 @@
       fontsize: function (lang, options) {
         var items = options.fontSizes.reduce(function (memo, v) {
           return memo + '<li><a data-event="fontSize" href="#" data-value="' + v + '">' +
-                          '<i class="fa fa-check icon-ok"></i> ' + v +
+                          '<i class="icon-ok"></i> ' + v +
                         '</a></li>';
         }, '');
 
@@ -4094,7 +4094,7 @@
       },
 
       color: function (lang) {
-        var colorButtonLabel = '<i class="fa fa-font icon-font" style="color:black;background-color:yellow !important;"></i>';
+        var colorButtonLabel = '<i class="icon-font" style="color:black;background-color:yellow !important;"></i>';
         var colorButton = tplButton(colorButtonLabel, {
           className: 'note-recent-color',
           title: lang.color.recent,
@@ -4130,82 +4130,82 @@
         return colorButton + moreButton;
       },
       bold: function (lang) {
-        return tplIconButton('fa fa-bold icon-bold', {
+        return tplIconButton('icon-bold', {
           event: 'bold',
           title: lang.font.bold
         });
       },
       italic: function (lang) {
-        return tplIconButton('fa fa-italic icon-italic', {
+        return tplIconButton('icon-italic', {
           event: 'italic',
           title: lang.font.italic
         });
       },
       underline: function (lang) {
-        return tplIconButton('fa fa-underline icon-underline', {
+        return tplIconButton('icon-underline', {
           event: 'underline',
           title: lang.font.underline
         });
       },
       strikethrough: function (lang) {
-        return tplIconButton('fa fa-strikethrough icon-strikethrough', {
+        return tplIconButton('icon-strikethrough', {
           event: 'strikethrough',
           title: lang.font.strikethrough
         });
       },
       superscript: function (lang) {
-        return tplIconButton('fa fa-superscript icon-superscript', {
+        return tplIconButton('icon-superscript', {
           event: 'superscript',
           title: lang.font.superscript
         });
       },
       subscript: function (lang) {
-        return tplIconButton('fa fa-subscript icon-subscript', {
+        return tplIconButton('icon-subscript', {
           event: 'subscript',
           title: lang.font.subscript
         });
       },
       clear: function (lang) {
-        return tplIconButton('fa fa-eraser icon-eraser', {
+        return tplIconButton(' icon-eraser', {
           event: 'removeFormat',
           title: lang.font.clear
         });
       },
       ul: function (lang) {
-        return tplIconButton('fa fa-list-ul icon-list-ul', {
+        return tplIconButton('icon-list-ul', {
           event: 'insertUnorderedList',
           title: lang.lists.unordered
         });
       },
       ol: function (lang) {
-        return tplIconButton('fa fa-list-ol icon-list-ol', {
+        return tplIconButton('icon-list-ol', {
           event: 'insertOrderedList',
           title: lang.lists.ordered
         });
       },
       paragraph: function (lang) {
-        var leftButton = tplIconButton('fa fa-align-left icon-align-left', {
+        var leftButton = tplIconButton('icon-align-left', {
           title: lang.paragraph.left,
           event: 'justifyLeft'
         });
-        var centerButton = tplIconButton('fa fa-align-center icon-align-center', {
+        var centerButton = tplIconButton('icon-align-center', {
           title: lang.paragraph.center,
           event: 'justifyCenter'
         });
-        var rightButton = tplIconButton('fa fa-align-right icon-align-right', {
+        var rightButton = tplIconButton('icon-align-right', {
           title: lang.paragraph.right,
           event: 'justifyRight'
         });
-        var justifyButton = tplIconButton('fa fa-align-justify icon-align-justify', {
+        var justifyButton = tplIconButton('icon-align-justify', {
           title: lang.paragraph.justify,
           event: 'justifyFull'
         });
 
-        var outdentButton = tplIconButton('fa fa-outdent icon-indent-left', {
+        var outdentButton = tplIconButton('icon-indent-left', {
           title: lang.paragraph.outdent,
           event: 'outdent'
         });
-        var indentButton = tplIconButton('fa fa-indent icon-indent-right', {
+        var indentButton = tplIconButton('icon-indent-right', {
           title: lang.paragraph.indent,
           event: 'indent'
         });
@@ -4219,7 +4219,7 @@
                          '</div>' +
                        '</div>';
 
-        return tplIconButton('fa fa-align-left icon-align-left', {
+        return tplIconButton('icon-align-left', {
           title: lang.paragraph.paragraph,
           dropdown: dropdown
         });
@@ -4227,48 +4227,48 @@
       height: function (lang, options) {
         var items = options.lineHeights.reduce(function (memo, v) {
           return memo + '<li><a data-event="lineHeight" href="#" data-value="' + parseFloat(v) + '">' +
-                          '<i class="fa fa-check icon-ok"></i> ' + v +
+                          '<i class="icon-ok"></i> ' + v +
                         '</a></li>';
         }, '');
 
-        return tplIconButton('fa fa-text-height icon-text-height', {
+        return tplIconButton('icon-text-height', {
           title: lang.font.height,
           dropdown: '<ul class="dropdown-menu">' + items + '</ul>'
         });
 
       },
       help: function (lang) {
-        return tplIconButton('fa fa-question icon-question', {
+        return tplIconButton('icon-question', {
           event: 'showHelpDialog',
           title: lang.options.help
         });
       },
       fullscreen: function (lang) {
-        return tplIconButton('fa fa-arrows-alt icon-fullscreen', {
+        return tplIconButton('icon-fullscreen', {
           event: 'fullscreen',
           title: lang.options.fullscreen
         });
       },
       codeview: function (lang) {
-        return tplIconButton('fa fa-code icon-code', {
+        return tplIconButton('icon-code', {
           event: 'codeview',
           title: lang.options.codeview
         });
       },
       undo: function (lang) {
-        return tplIconButton('fa fa-undo icon-undo', {
+        return tplIconButton('icon-undo', {
           event: 'undo',
           title: lang.history.undo
         });
       },
       redo: function (lang) {
-        return tplIconButton('fa fa-repeat icon-repeat', {
+        return tplIconButton('icon-repeat', {
           event: 'redo',
           title: lang.history.redo
         });
       },
       hr: function (lang) {
-        return tplIconButton('fa fa-minus icon-minus', {
+        return tplIconButton('icon-minus', {
           event: 'insertHorizontalRule',
           title: lang.hr.insert
         });
@@ -4277,11 +4277,11 @@
 
     var tplPopovers = function (lang, options) {
       var tplLinkPopover = function () {
-        var linkButton = tplIconButton('fa fa-edit icon-edit', {
+        var linkButton = tplIconButton('icon-edit', {
           title: lang.link.edit,
           event: 'showLinkDialog'
         });
-        var unlinkButton = tplIconButton('fa fa-unlink icon-unlink', {
+        var unlinkButton = tplIconButton('icon-unlink', {
           title: lang.link.unlink,
           event: 'unlink'
         });
@@ -4309,23 +4309,23 @@
           value: '0.25'
         });
 
-        var leftButton = tplIconButton('fa fa-align-left icon-align-left', {
+        var leftButton = tplIconButton('icon-align-left', {
           title: lang.image.floatLeft,
           event: 'floatMe',
           value: 'left'
         });
-        var rightButton = tplIconButton('fa fa-align-right icon-align-right', {
+        var rightButton = tplIconButton('icon-align-right', {
           title: lang.image.floatRight,
           event: 'floatMe',
           value: 'right'
         });
-        var justifyButton = tplIconButton('fa fa-align-justify icon-align-justify', {
+        var justifyButton = tplIconButton('icon-align-justify', {
           title: lang.image.floatNone,
           event: 'floatMe',
           value: 'none'
         });
 
-        var removeButton = tplIconButton('fa fa-trash-o icon-trash', {
+        var removeButton = tplIconButton('icon-trash', {
           title: lang.image.remove,
           event: 'removeMedia',
           value: 'none'

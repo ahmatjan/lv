@@ -84,16 +84,6 @@
 
 													<div class="caption"><i class="icon-user"></i>文章列表</div>
 
-													<div class="actions">
-
-														<a href="<?php echo site_url('setting/setting_form')?>" class="btn blue"><i class="icon-pencil"></i>
-
-														添加
-
-														</a>    
-														
-													</div>
-
 												</div>
 
 												<div class="portlet-body">
@@ -106,19 +96,15 @@
 
 																<th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_2 .checkboxes" /></th>
 
-																<th>名称</th>
+																<th>标题</th>
 																
-																<th class="hidden-480">上一级目录</th>
+																<th class="hidden-480">作者</th>
 
-																<th class="hidden-480">图标</th>
+																<th class="hidden-480">添加时间</th>
 
-																<th>链接</th>
+																<th>类型</th>
 																
 																<th>显示位置</th>
-																
-																<th class="hidden-480">是否显示</th>
-																
-																<th class="hidden-480">允许修改</th>
 																
 																<th>修改</th>
 
@@ -128,90 +114,25 @@
 
 														<tbody>
 
-															<?php foreach ($navs as $item): ?>
+															<?php foreach ($informations as $information): ?>
 
 															<tr class="odd gradeX">
 
-																<td><input type="checkbox" class="checkboxes" value="<?php echo $item['nav_id']?>" /></td>
+																<td><input type="checkbox" class="checkboxes" value="<?php echo $information['information_id']?>" /></td>
 
-																<td><?php echo $item['nav_name']?></td>
+																<td><?php echo $information['title']?></td>
 																
-																<td>-----无-----</td>
+																<td class="hidden-480"><?php echo $information['author']?></td>
 
-																<td class="hidden-480"><i class="<?php echo 'icon-'.$item['nav_ico']?>"></i><?php echo $item['nav_ico']?></td>
-
-																<td class="hidden-480"><?php echo $item['nav_url']?></td>
+																<td class="hidden-480"><?php echo $information['addtime']?></td>
 																
-																<td><?php echo $item['nav_class']?></td>
+																<td><?php echo $information['class']?></td>
 																
-																<?php if ($item['view_start']==FALSE):?>
+																<td><?php echo $information['position']?></td>
 																
-																<td class="hidden-480">否</td>
-																
-																<?php else: ?>
-
-																<td class="hidden-480">是</td>
-																
-																<?php endif; ?>
-																
-																<?php if ($item['edit_start']==FALSE):?>
-																
-																<td class="hidden-480">否</td>
-																
-																<?php else: ?>
-
-																<td class="hidden-480">是</td>
-																
-																<?php endif; ?>
-																
-																<td><a href="<?php echo site_url('setting/setting_form').'?nav_id='.$item['nav_id'].'&tab_position=tab_1_3&tab_before=tab_1_2'?>"><span class="label label-success">修改</span></a></td>
+																<td><a href="<?php echo site_url('setting/informations?tab_position=tab_1_3&information_id='.$information['information_id']);?>"><span class="label label-success">修改</span></a></td>
 
 															</tr>
-
-															<?php if ($item['childs'] && is_array($item['childs'])): ?>
-															<?php foreach ($item['childs'] as $childs): ?>
-															
-															<tr class="odd gradeX">
-
-																<td><input type="checkbox" class="checkboxes" value="<?php echo $childs['nav_child_id']?>" /></td>
-
-																<td><?php echo $item['nav_name'].'=>'.$childs['nav_child_name']?></td>
-																
-																<td class="hidden-480"><?php echo $item['nav_name']?></td>
-
-																<td class="hidden-480">-----无-----</td>
-
-																<td><?php echo $childs['nav_child_url']?></td>
-																
-																<td><?php echo $item['nav_class']?></td>
-																
-																<?php if ($childs['view_start']==FALSE):?>
-																
-																<td class="hidden-480">否</td>
-																
-																<?php else: ?>
-
-																<td class="hidden-480">是</td>
-																
-																<?php endif; ?>
-																
-																<?php if ($childs['edit_start']==FALSE):?>
-																
-																<td class="hidden-480">否</td>
-																
-																<?php else: ?>
-
-																<td class="hidden-480">是</td>
-																
-																<?php endif; ?>
-																
-																<td><a href="<?php echo site_url('setting/setting_form').'?nav_child_id='.$childs['nav_child_id'].'&tab_position=tab_1_3&tab_before=tab_1_2'?>"><span class="label label-success">修改</span></a></td>
-
-															</tr>
-
-															<?php endforeach; ?>
-
-															<?php endif; ?>
 
 															<?php endforeach; ?>
 
@@ -251,7 +172,7 @@
 
 												<div class="controls">
 
-													<input type="text" id="firstName" class="m-wrap span12" placeholder="文章标题..." name="title" value="">
+													<input type="text" id="firstName" class="m-wrap span12" placeholder="文章标题..." name="title" value="<?php echo $title?>">
 
 												</div>
 
@@ -264,10 +185,21 @@
 												<div class="controls">
 
 													<select class="small m-wrap" tabindex="1" name="class">
+													
+														<?php if(!isset($class)):?>
 
-														<option value="rule">规则</option>
-
-														<option value="helper">帮助</option>
+														<option value="" selected="selected">请选择</option>
+														
+														<?php endif;?>
+														<option value="">请选择</option>
+														<?php foreach($select_rules as $k=>$v):?>
+														<?php if($k==$class):?>
+														<option value="<?php echo $k?>" selected="selected"><?php echo $v?></option>
+														<?php else:?>
+														<option value="<?php echo $k?>"><?php echo $v?></option>
+														<?php endif;?>
+														
+														<?php endforeach;?>
 
 													</select>
 
@@ -282,14 +214,21 @@
 												<div class="controls">
 
 													<select class="small m-wrap" tabindex="1" name="position">
+													
+														<?php if(empty($position)):?>
 
-														<option value="register_rule">注册条款</option>
+														<option value="" selected="selected">请选择一个位置</option>
+														
+														<?php endif;?>
+														<option value="">请选择一个位置</option>
+														<?php foreach($select_position as $k=>$v):?>
+														<?php if($position == $k):?>
+														<option value="<?php echo $k?>" selected="selected"><?php echo $v?></option>
+														<?php else:?>
+														<option value="<?php echo $k?>"><?php echo $v?></option>
+														<?php endif;?>
 
-														<option value="values">网站价值观</option>
-
-														<option value="healper">网站帮助</option>
-
-														<option value="user_healper">用户中心帮助</option>
+														<?php endforeach;?>
 
 													</select>
 
@@ -305,7 +244,7 @@
 												<div class="controls">
 
 													<textarea id="editor-post" name="information_content">
-													
+														<?php echo $content?>
 													</textarea>
 
 												</div>
@@ -414,7 +353,7 @@
 		
 		//公告
 		$('#editor-post').summernote({
-			height: 350,
+			height: 250,
 			toolbar: [
 			//[groupname, [button list]]
 			  
@@ -423,7 +362,8 @@
 			['fontsize', ['fontsize']],
 			['para', ['ul', 'ol', 'paragraph']],
 			['height', ['height']],
-			['insert',['picture','video','link','table']]
+			['insert',['picture','video','link','table']],
+			['misc',['codeview']]
 		  ]
 		});
 
