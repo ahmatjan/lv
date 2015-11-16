@@ -163,4 +163,54 @@ class user_info extends CI_Model {
 			return $row['group_id'];
 		}
 	}
+	
+	//把信息写入forgot表
+	public function add_forgot($data){
+		unset($data['username']);
+		$data['status']='1';
+		$data['addtime']=date('Y-m-d H:i:s');
+		$this->db->insert($this->db->dbprefix('forgot'), $data);
+	}
+	
+	//统计同一个邮箱记录条数
+	public function total_forgot($email){
+		$this->db->where('email', $email);
+		$this->db->from($this->db->dbprefix('forgot'));
+		return $this->db->count_all_results();
+	}
+	//统计用户id记录条数
+	public function total_forgot_id($user_id){
+		$this->db->where('user_id', $user_id);
+		$this->db->from($this->db->dbprefix('forgot'));
+		return $this->db->count_all_results();
+	}
+	
+	//通过token来查forgot表信息
+	public function user_id_token($token){
+		$sql = "SELECT * FROM " . $this->db->dbprefix('forgot') . " WHERE token = ?"; 
+
+		$query=$this->db->query($sql, array($token));
+
+		if ($query->num_rows() > 0)
+		{
+		   $row = $query->row_array(); 
+		}else{
+			$row = FALSE;
+		}
+		return $row;
+	}
+	
+	//修改用户密码user_info表
+	public function updata_password($passwd,$user_id){
+		$sql="UPDATE ".$this->db->dbprefix('user_info')." set passwd = '".md5($passwd)."' WHERE user_id=".(int)$user_id;
+		$query = $this->db->query($sql);
+		return $query;
+	}
+	
+	//更新forgot表的状态为不可修改
+	public function updata_forgot_status($forgot_id){
+		$sql="UPDATE ".$this->db->dbprefix('forgot')." set status = 0  WHERE forgot_id = ".(int)$forgot_id;
+		$query = $this->db->query($sql);
+		return $query;
+	}
 }

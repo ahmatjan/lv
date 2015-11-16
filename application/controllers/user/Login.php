@@ -5,13 +5,11 @@ class Login extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 			$this->output->https_jump();
+			$this->load->model('user/user_info');
 	}
 	
 	public function index()
 	{
-		//第三方登陆
-		$this->config->load('oauth2');
-		
 		if($this->user->is_Logged()){
 			redirect(site_url('user/User_center'));
 		}
@@ -78,6 +76,102 @@ class Login extends CI_Controller {
 		$this->load->view('user/login.php',$data);
 		
 		//$this->public_section->get_footer();
+	}
+	//修改密码
+	public function edit_password(){
+		if($this->user->is_Logged()){
+			redirect(site_url('user/User_center'));
+		}
+		//----------------------------------------------------------------------------------------------
+		
+		$this->lang->load('user/edit_password');
+		
+		//header
+		$header['title']=$this->lang->line('heading_title');
+		$header['css_page_style']=array('public/css/login.css','public/css/loading/ystep.css');
+		$this->public_section->get_header($header);
+		$this->public_section->get_login_top();
+		
+		//text
+		$data['text_username']=$this->lang->line('text_username');
+		$data['text_password']=$this->lang->line('text_password');
+		$data['text_confirmpassword']=$this->lang->line('text_confirmpassword');
+		$data['text_submit']=$this->lang->line('text_submit');
+		
+		//value
+		$error_login=$this->session->flashdata('error_login');
+		$info_login=$this->session->flashdata('info_login');
+		$username=$this->user->get_username();
+		if(isset($error_login)){
+			$data['error_login'] = $error_login;
+		}else{
+			$data['error_login']='';
+		}
+		
+		if(isset($info_login)){
+			$data['info_login'] = $info_login;
+		}else{
+			$data['info_login']='';
+		}
+		
+		//通过forgot表里的token来查用户的id
+		if($this->input->get('token')!==NULL){
+			$user_infos=$this->user_info->user_id_token($this->input->get('token'));
+		}else{
+			$data['error_login']='改密申请不存在！';//闪出错误信息
+		}
+		
+		if(isset($user_infos)){
+			$data['user_name']=$this->user_info->get_userid_name($user_infos['user_id']);
+		}else{
+			$data['user_name']='';
+		}
+		if(isset($user_infos) && date($user_infos['addtime'],strtotime('+1 day')) > date('Y-m-d H:i:s')){
+			$data['error_login']='申请超时，请重新申请！';//闪出错误信息
+		}
+		if(isset($user_infos) && $user_infos['status']==FALSE){
+			$data['error_login']='请不要重复提交！';//闪出错误信息
+		}
+		
+		//bottom
+		$data['text_signupbottom']=$this->lang->line('text_signupbottom');
+		
+		$data['token']=$this->input->get('token');
+		
+		$this->load->view('user/edit_password',$data);
+		
+		//$this->public_section->get_footer();
+	}
+	
+	public function edit_password_cofin(){
+		//header
+		$header['title']=$this->lang->line('heading_title');
+		$header['css_page_style']=array('public/css/login.css','public/css/loading/ystep.css');
+		$this->public_section->get_header($header);
+		$this->public_section->get_login_top();
+		
+		$forget_info=$this->user_info->user_id_token($this->input->get('token'));
+		if($this->input->get('token')==NULL || $forget_info == FALSE){
+			$this->session->set_flashdata('error_login', '改密申请不存在！');//闪出错误信息
+			redirect(site_url('user/login/edit_password'));
+			exit();
+		}
+		if($forget_info['status']==FALSE){
+			$this->session->set_flashdata('error_login', '请不要重复提交！');//闪出错误信息
+			redirect(site_url('user/login/edit_password'));
+			exit();
+		}
+		
+		if($this->input->post('password') === $this->input->post('cofin_password')){
+			$edit_passwd=$this->user_info->updata_password($this->input->post('password'),$forget_info['user_id']);
+			if($edit_passwd!==FALSE){
+				$data['info_login']= '密码修改成功！';//闪出错误信息
+				$this->user_info->updata_forgot_status($forget_info['forgot_id']);
+			}else{
+				$data['error_login']= '密码修改失败！';//闪出错误信息
+			}
+		}
+		$this->load->view('user/edit_password_result',$data);
 	}
 	
 	//登陆
@@ -366,39 +460,61 @@ class Login extends CI_Controller {
 	
 	//找回密码
 	public function forgot(){
-		$this->load->model('setting/base_setting');
 		$email = $this->input->post('forgot_email');
-		$this->load->helper('string');
-		$data['token']=sha1(rand());
-		
-		//发送邮件
-		$config['protocol'] = 'smtp';//采用smtp方式
-    	$config['smtp_port'] = 25;//端口
-    	$config['smtp_host'] = 'smtp.qq.com';//简便起见，只支持163邮箱
-    	//$config['smtp_user'] = 'xcalder@foxmail.com';//你的邮箱帐号
-    	$config['smtp_user'] = 'sender@lvxingto.com';//你的邮箱帐号
-    	$config['smtp_pass'] = 'dylfj22649978';//你的邮箱密码
-    	$config['charset'] = 'utf-8';
-    	$config['smtp_timeout'] = 30;
-    	$config['newline'] = "\r\n";
-		$config['crlf'] = "\r\n";
-    	$config['wordwrap'] = TRUE;
-    	$config['mailtype'] = "html";
-    	$this->load->library('email');//加载email类
-    	$this->email->initialize($config);//参数配置 
-    	$this->email->from('sender@lvxingto.com', $this->base_setting->get_setting('website_name').'，自动发送');
-    	$this->email->to($email);
-    	$this->email->subject('找回密码——'.$this->base_setting->get_setting('website_name'));
-    	$this->email->message($this->load->view('template/forgot_email',$data,TRUE));    //显示发送邮件的结果，加载到res_view.php视图文件中
-    	if(!$this->email->send()){
-    		echo $this->email->print_debugger(array());
-    		
-    		//echo "<font color='red' size='10px'>邮件发送失败，可能是由您的发件人或者密码填写不匹配造成</font>";
-    	}else{
-    		echo "<font color='red' size='10px'>邮件发送成功</font>"; 
-    		}
-		
-		//redirect('user/User_center', 'location');
+		if(preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i',$email) && strlen($email)>3){
+			//填写的是邮箱
+			$this->load->model(array('setting/base_setting','user/user_info'));
+			$this->load->helper('string');
+			$data['token']=sha1(rand());
+			//通过邮箱查用户信息
+			$user_infos=$this->user_info->get_useremail_info($email);
+			if(count($user_infos)<1){
+				//查不到用户信息
+				$this->session->set_flashdata('error_login', '用户不存在！');//闪出错误信息
+				redirect('user/login', 'location');
+				exit();
+			}
+			//如果邮箱或id 超过三次，当天不能再申请
+			if($this->user_info->total_forgot($email) >= '3' || $this->user_info->total_forgot_id($user_infos['user_id']) >= '3'){
+				$this->session->set_flashdata('error_login', '申请次数太多，请明天再来！');//闪出错误信息
+				redirect('user/login', 'location');
+				exit();
+			}
+			$data['username']=$user_infos['user_name'];
+			$data['user_id']=$user_infos['user_id'];
+			$data['email']=$email;
+			
+			//发送邮件
+			$config['protocol'] = 'smtp';//采用smtp方式
+	    	$config['smtp_port'] = 25;//端口
+	    	$config['smtp_host'] = 'smtp.qq.com';//简便起见，只支持163邮箱
+	    	//$config['smtp_user'] = 'xcalder@foxmail.com';//你的邮箱帐号
+	    	$config['smtp_user'] = 'sender@lvxingto.com';//你的邮箱帐号
+	    	$config['smtp_pass'] = 'dylfj22649978';//你的邮箱密码
+	    	$config['charset'] = 'utf-8';
+	    	$config['smtp_timeout'] = 30;
+	    	$config['newline'] = "\r\n";
+			$config['crlf'] = "\r\n";
+	    	$config['wordwrap'] = TRUE;
+	    	$config['mailtype'] = "html";
+	    	$this->load->library('email');//加载email类
+	    	$this->email->initialize($config);//参数配置 
+	    	$this->email->from('sender@lvxingto.com', $this->base_setting->get_setting('website_name').'，自动发送');
+	    	$this->email->to($email);
+	    	$this->email->subject('找回密码——'.$this->base_setting->get_setting('website_name'));
+	    	$this->email->message($this->load->view('template/forgot_email',$data,TRUE));//显示发送邮件的结果，加载到res_view.php视图文件中
+	    	if($this->email->send()){
+	    		//发送成功
+	    		//把记录写入forgot表
+	    		$this->user_info->add_forgot($data);
+	    		//提示信息
+	    		$this->session->set_flashdata('info_login', '邮件发送成功，请登陆邮箱查看！');//闪出错误信息
+				redirect('user/login', 'location');
+	    	}
+		}else{
+			$this->session->set_flashdata('error_login', '请填写正确的邮箱地址！');//闪出错误信息
+			redirect('user/login', 'location');
+		}
 	}
 	
 	//退出登陆

@@ -97,7 +97,7 @@ class Report extends CI_Model {
 	
 	//统计未知抓取的记录行数
 	public function count_unkow(){
-		$sql="SELECT count(*) FROM " . $this->db->dbprefix('report_flow') . " WHERE browser is null OR platform = 'Unknown Platform' AND robot is null";
+		$sql="SELECT flow_id FROM " . $this->db->dbprefix('report_flow') . " WHERE browser is null OR platform = 'Unknown Platform' AND robot is null";
 		$query=$this->db->query($sql);
 		$row=$query->num_rows();
 		return $row;

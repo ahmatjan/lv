@@ -340,7 +340,7 @@ var_dump($nav_parents);
 		var_dump($b);
 		*/
 		
-		echo $this->load->view('template/forgot_email','',TRUE);
+		echo "Tomorrow:",date('Y-m-d H:i:s',strtotime('+1 day'));
 		
 		/*
 
