@@ -1,7 +1,7 @@
 <?php if(strpos($festival,'冬')!==FALSE || strpos($festival,'雪')!==FALSE):?>
 <!--下雪-->
-<script src="<?php echo base_url('public/modules/holidays/jq.snow/jq.snow.js')?>"></script>
-<link href="<?php echo base_url('public/modules/holidays/jq.snow/holidays.css');?>" rel="stylesheet" type="text/css"/>
+<script src="<?php echo base_url('public/min/?f=public/modules/holidays/jq.snow/jq.snow.js')?>"></script>
+<link href="<?php echo base_url('public/min/?f=public/modules/holidays/jq.snow/holidays.css');?>" rel="stylesheet" type="text/css"/>
 <!--下面是调用方法和参数说明-->
 
 <script>

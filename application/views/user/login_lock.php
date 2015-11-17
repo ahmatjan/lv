@@ -48,25 +48,25 @@
 
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 
-	<script src="<?php echo base_url('public/js/jquery.slimscroll.min.js')?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.slimscroll.min.js')?>" type="text/javascript"></script>
 
-	<script src="<?php echo base_url('public/js/jquery.blockui.min.js')?>" type="text/javascript"></script>  
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.blockui.min.js')?>" type="text/javascript"></script>  
 
-	<script src="<?php echo base_url('public/js/jquery.cookie.min.js')?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.cookie.min.js')?>" type="text/javascript"></script>
 
-	<script src="<?php echo base_url('public/js/jquery.uniform.min.js')?>" type="text/javascript" ></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.uniform.min.js')?>" type="text/javascript" ></script>
 
 	<!-- END CORE PLUGINS -->
 
 	<!-- BEGIN PAGE LEVEL PLUGINS -->
 
-	<script src="<?php echo base_url('public/js/jquery.backstretch.min.js')?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.backstretch.min.js')?>" type="text/javascript"></script>
 
 	<!-- END PAGE LEVEL PLUGINS -->   
 
-	<script src="<?php echo base_url('public/js/app.js')?>"></script>  
+	<script src="<?php echo base_url('public/min/?f=public/js/app.js')?>"></script>  
 
-	<script src="<?php echo base_url('public/js/lock.js')?>"></script>      
+	<script src="<?php echo base_url('public/min/?f=public/js/lock.js')?>"></script>      
 
 	<script>
 

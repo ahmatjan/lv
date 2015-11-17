@@ -79,20 +79,20 @@
 
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 
-	<script src="<?php echo base_url('public/js/jquery.slimscroll.js')?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.slimscroll.js')?>" type="text/javascript"></script>
 
-	<script src="<?php echo base_url('public/js/jquery.blockui.js')?>" type="text/javascript"></script>  
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.blockui.js')?>" type="text/javascript"></script>  
 
-	<script src="<?php echo base_url('public/js/jquery.cookie.js')?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.cookie.js')?>" type="text/javascript"></script>
 
-	<script src="<?php echo base_url('public/js/jquery.uniform.js')?>" type="text/javascript" ></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.uniform.js')?>" type="text/javascript" ></script>
 	
-	<script src="<?php echo base_url('public/js/jquery.gritter.js')?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.gritter.js')?>" type="text/javascript"></script>
 
 	<!-- END CORE PLUGINS -->
 
-	<script src="<?php echo base_url('public/js/app.js')?>"></script>  
-	<script src="<?php echo base_url('public/js/index.js')?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/app.js')?>"></script>  
+	<script src="<?php echo base_url('public/min/?f=public/js/index.js')?>" type="text/javascript"></script>
 
 	<script type="text/javascript">
 	

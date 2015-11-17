@@ -339,7 +339,7 @@ var_dump($nav_parents);
 		$b=$this->report->count_unkow();
 		var_dump($b);
 		*/
-		$this->load->view('test');
+		echo md5('123456789');
 		/*
 
 		//$b=rand(0,30);

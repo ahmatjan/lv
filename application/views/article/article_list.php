@@ -411,17 +411,17 @@
 
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 
-	<script src="<?php echo base_url('public/js/jquery.slimscroll.min.js')?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.slimscroll.min.js')?>" type="text/javascript"></script>
 
-	<script src="<?php echo base_url('public/js/jquery.blockui.min.js')?>" type="text/javascript"></script>  
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.blockui.min.js')?>" type="text/javascript"></script>  
 
-	<script src="<?php echo base_url('public/js/jquery.cookie.min.js')?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.cookie.min.js')?>" type="text/javascript"></script>
 
-	<script src="<?php echo base_url('public/js/jquery.uniform.min.js')?>" type="text/javascript" ></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.uniform.min.js')?>" type="text/javascript" ></script>
 
 	<!-- END CORE PLUGINS -->
 
-	<script src="<?php echo base_url('public/js/app.js')?>"></script>      
+	<script src="<?php echo base_url('public/min/?f=public/js/app.js')?>"></script>      
 
 	<script>
 

@@ -290,50 +290,50 @@
 	
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 
-	<script src="<?php echo base_url('public/js/jquery.slimscroll.min.js')?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.slimscroll.min.js')?>" type="text/javascript"></script>
 
-	<script src="<?php echo base_url('public/js/jquery.blockui.min.js')?>" type="text/javascript"></script>  
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.blockui.min.js')?>" type="text/javascript"></script>  
 
-	<script src="<?php echo base_url('public/js/jquery.cookie.min.js')?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.cookie.min.js')?>" type="text/javascript"></script>
 
-	<script src="<?php echo base_url('public/js/jquery.uniform.min.js')?>" type="text/javascript" ></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.uniform.min.js')?>" type="text/javascript" ></script>
 	
-	<script src="<?php echo base_url('public/js/jquery.validate.js')?>" type="text/javascript" ></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.validate.js')?>" type="text/javascript" ></script>
 
 	<!-- END CORE PLUGINS -->
 
 	<!-- BEGIN PAGE LEVEL PLUGINS -->
 
-	<script type="text/javascript" src="<?php echo base_url('public/js/bootstrap-fileupload.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/bootstrap-fileupload.js')?>"></script>
 
-	<script type="text/javascript" src="<?php echo base_url('public/js/chosen.jquery.min.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/chosen.jquery.min.js')?>"></script>
 	
-	<script type="text/javascript" src="<?php echo base_url('public/js/select2.min.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/select2.min.js')?>"></script>
 
-	<script type="text/javascript" src="<?php echo base_url('public/js/bootstrap-datetimepicker.js')?>"></script>
-	<script type="text/javascript" src="<?php echo base_url('public/js/jquery.inputmask.bundle.min.js')?>"></script>
-	<script type="text/javascript" src="<?php echo base_url('public/js/jquery.input-ip-address-control-1.0.min.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/bootstrap-datetimepicker.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/jquery.inputmask.bundle.min.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/jquery.input-ip-address-control-1.0.min.js')?>"></script>
 
-	<script type="text/javascript" src="<?php echo base_url('public/js/date.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/date.js')?>"></script>
 	
-	<script type="text/javascript" src="<?php echo base_url('public/js/jquery.multi-select.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/jquery.multi-select.js')?>"></script>
 
-	<script type="text/javascript" src="<?php echo base_url('public/js/daterangepicker.js')?>"></script> 
+	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/daterangepicker.js')?>"></script> 
 	
-	<script type="text/javascript" src="<?php echo base_url('public/js/jquery.dataTables.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/jquery.dataTables.js')?>"></script>
 	
-	<script type="text/javascript" src="<?php echo base_url('public/js/DT_bootstrap.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/DT_bootstrap.js')?>"></script>
 
 	<!-- END PAGE LEVEL PLUGINS -->
 
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 
-	<script src="<?php echo base_url('public/js/setting.js')?>"></script>
-	<script src="<?php echo base_url('public/js/app.js')?>"></script>
-	<script src="<?php echo base_url('public/js/form-samples.js')?>"></script>
-	<script src="<?php echo base_url('public/js/form-components.js')?>"></script>
-	<script src="<?php echo base_url('public/js/table-managed.js')?>"></script>
-	<script src="<?php echo base_url('public/js/summernote.min.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/setting.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/app.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/form-samples.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/form-components.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/table-managed.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/summernote.min.js')?>"></script>
 
 	<!-- END PAGE LEVEL SCRIPTS -->
 

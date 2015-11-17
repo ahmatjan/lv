@@ -27,7 +27,7 @@
 	</div>
 	<!-- END FOOTER -->
 
-<script src="<?php echo base_url('public/js/jquery.lazyload.js')?>" type="text/javascript"></script>
+<script src="<?php echo base_url('public/min/?f=public/js/jquery.lazyload.js')?>" type="text/javascript"></script>
 <!--延迟加载图片-->
 <script>
 	$(function() {
@@ -58,7 +58,7 @@ if(window.console&&window.console.error){
 });
 </script>
 <!--加载进度条-->
-<script src="<?php echo base_url('public/js/loading/nprogress.js')?>" type="text/javascript"></script>
+<script src="<?php echo base_url('public/min/?f=public/js/loading/nprogress.js')?>" type="text/javascript"></script>
 <script>
     $('body').show();
     $('.version').text(NProgress.version);

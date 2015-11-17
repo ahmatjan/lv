@@ -102,67 +102,67 @@
 
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 
-	<script src="<?php echo base_url('public/js/breakpoints.min.js')?>" type="text/javascript"></script>  
+	<script src="<?php echo base_url('public/min/?f=public/js/breakpoints.min.js')?>" type="text/javascript"></script>  
 
-	<script src="<?php echo base_url('public/js/jquery.slimscroll.min.js')?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.slimscroll.min.js')?>" type="text/javascript"></script>
 
-	<script src="<?php echo base_url('public/js/jquery.blockui.min.js')?>" type="text/javascript"></script>  
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.blockui.min.js')?>" type="text/javascript"></script>  
 
-	<script src="<?php echo base_url('public/js/jquery.cookie.min.js')?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.cookie.min.js')?>" type="text/javascript"></script>
 
-	<script src="<?php echo base_url('public/js/jquery.uniform.min.js')?>" type="text/javascript" ></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.uniform.min.js')?>" type="text/javascript" ></script>
 
 	<!-- END CORE PLUGINS -->
 
 	<!-- BEGIN PAGE LEVEL PLUGINS -->
 
-	<script src="<?php echo base_url('public/js/bootstrap-tag.js')?>" type="text/javascript" ></script> 
+	<script src="<?php echo base_url('public/min/?f=public/js/bootstrap-tag.js')?>" type="text/javascript" ></script> 
 
-	<script src="<?php echo base_url('public/js/jquery.fancybox.pack.js')?>" type="text/javascript" ></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.fancybox.pack.js')?>" type="text/javascript" ></script>
 
 	<!-- BEGIN:File Upload Plugin JS files-->
 
-	<script src="<?php echo base_url('public/js/jquery.ui.widget.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.ui.widget.js')?>"></script>
 
 	<!-- The Templates plugin is included to render the upload/download listings -->
 
-	<script src="<?php echo base_url('public/js/tmpl.min.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/tmpl.min.js')?>"></script>
 
 	<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
 
-	<script src="<?php echo base_url('public/js/load-image.min.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/load-image.min.js')?>"></script>
 
 	<!-- The Canvas to Blob plugin is included for image resizing functionality -->
 
-	<script src="<?php echo base_url('public/js/canvas-to-blob.min.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/canvas-to-blob.min.js')?>"></script>
 
 	<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
 
-	<script src="<?php echo base_url('public/js/jquery.iframe-transport.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.iframe-transport.js')?>"></script>
 
 	<!-- The basic File Upload plugin -->
 
-	<script src="<?php echo base_url('public/js/jquery.fileupload.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.fileupload.js')?>"></script>
 
 	<!-- The File Upload file processing plugin -->
 
-	<script src="<?php echo base_url('public/js/jquery.fileupload-fp.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.fileupload-fp.js')?>"></script>
 
 	<!-- The File Upload user interface plugin -->
 
-	<script src="<?php echo base_url('public/js/jquery.fileupload-ui.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/jquery.fileupload-ui.js')?>"></script>
 
 	<!-- The XDomainRequest Transport is included for cross-domain file deletion for IE8+ -->
 
-	<!--[if gte IE 8]><script src="<?php echo base_url('public/js/jquery.xdr-transport.js')?>"></script><![endif]-->
+	<!--[if gte IE 8]><script src="<?php echo base_url('public/min/?f=public/js/jquery.xdr-transport.js')?>"></script><![endif]-->
 
 	<!-- END:File Upload Plugin JS files-->
 
 	<!-- END PAGE LEVEL PLUGINS -->
 
-	<script src="<?php echo base_url('public/js/app.js')?>"></script>      
+	<script src="<?php echo base_url('public/min/?f=public/js/app.js')?>"></script>      
 
-	<script src="<?php echo base_url('public/js/inbox.js')?>"></script>    
+	<script src="<?php echo base_url('public/min/?f=public/js/inbox.js')?>"></script>    
 
 	<script>
 
