@@ -7,18 +7,14 @@ class public_section extends CI_Model {
 	//这是一个只包含css/js等引入的公共头部
 	public function get_header($header=array())
 	{
-		$this->load->helper('array');
-		//把css样式组成字符串
-		
-		$data['css_page_style']=arrayToString($header['css_page_style']);
-		/*
 		if(isset($header['css_page_style'])){
-			$data['css_page_style']=$header['css_page_style'];
+			$this->load->helper('array');
+			//把css样式组成字符串
+			$data['css_page_style']=arrayToString($header['css_page_style']);	
 		}else{
 			$data['css_page_style']='';
 		}
-		*/
-			
+		
 		if(isset($header['meta'])){
 			$data['meta']=$header['meta'];
 		}else{
@@ -428,7 +424,7 @@ class public_section extends CI_Model {
 				$this->session->mark_as_temp('token', 24*60*60);
 				
 				//淘宝ip库
-				//$ip='222.219.137.84';
+				$ip='222.219.137.84';
 				$url="http://ip.taobao.com/service/getIpInfo.php?ip=".$ip;
 				@$ip=json_decode(file_get_contents($url)); 
 

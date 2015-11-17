@@ -339,7 +339,16 @@ var_dump($nav_parents);
 		$b=$this->report->count_unkow();
 		var_dump($b);
 		*/
-		echo md5('123456789');
+		$this->public_section->get_header();
+		$this->load->model(array('tool/linkage','tool/report'));
+		//$b=$this->linkage->get_provinces();
+		$b=$this->linkage->get_city('530000');
+		
+		//$b=$this->report->get_ipaddress($_SESSION['token']);
+		var_dump($b);
+		$this->load->view('test');
+		
+		
 		/*
 
 		//$b=rand(0,30);

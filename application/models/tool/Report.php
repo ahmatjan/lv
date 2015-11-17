@@ -103,4 +103,16 @@ class Report extends CI_Model {
 		return $row;
 	}
 	
+	//通过token获取ip值
+	public function get_ipaddress($token){
+		$sql = "SELECT ip_address FROM " . $this->db->dbprefix('report_access') . " WHERE token = ? "; 
+
+		$query=$this->db->query($sql, array($token));
+
+		if ($query->num_rows() > 0)
+		{
+		   $row = $query->row_array(); 
+			return unserialize($row['ip_address']);
+		}
+	}
 }

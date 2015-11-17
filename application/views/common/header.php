@@ -59,8 +59,9 @@
 <!-- END GLOBAL MANDATORY STYLES -->
 
 <!-- BEGIN PAGE LEVEL STYLES -->
-
+<?php if(!empty($css_page_style)):?>
 <link href="<?php echo base_url('public/min/?f=').$css_page_style?>" rel="stylesheet" type="text/css"/>
+<?php endif;?>
 
 <!--
 <?php if ($css_page_style !== NULL && is_array($css_page_style)): ?>
