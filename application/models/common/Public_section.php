@@ -424,7 +424,7 @@ class public_section extends CI_Model {
 				$this->session->mark_as_temp('token', 24*60*60);
 				
 				//淘宝ip库
-				$ip='222.219.137.84';
+				//$ip='222.219.137.84';
 				$url="http://ip.taobao.com/service/getIpInfo.php?ip=".$ip;
 				@$ip=json_decode(file_get_contents($url)); 
 

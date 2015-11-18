@@ -13,16 +13,28 @@ class Linkages extends CI_Controller {
 	{
 		$ip_address=$this->report->get_ipaddress($_SESSION['token']);
 		
-		if(isset($ip_address['region'])){
-			$provinces['shen']=$ip_address['region'];
+		if(!empty($ip_address['region_id'])){
+			$region_id = $ip_address['region_id'];
 		}else{
-			$provinces['shen']='云南省';
+			$region_id = '530000';
+		}
+		
+		if(!empty($ip_address['city_id'])){
+			$city_id = $ip_address['city_id'];
+		}else{
+			$city_id = '532300';
 		}
 
 		$province=$this->linkage->get_provinces();
+		$province = $this->sort_array($province,$region_id);
 		//遍历省
 		foreach($province as $k=>$v){//遍历省
-			$city = $this->linkage->get_city($province[$k]['code']);//读取城市信息
+			if($province[$k]['code'] == $region_id){
+				$city = $this->linkage->get_city($province[$k]['code']);//读取城市信息
+				$city=$this->sort_array($city,$city_id);
+			}else{
+				$city = $this->linkage->get_city($province[$k]['code']);//读取城市信息
+			}
 			
 			$data[$k]['p']['name']=$province[$k]['name'];//组装第一层省的名称
 			$data[$k]['p']['code']=$province[$k]['code'];//组装第一层省的代码
@@ -40,5 +52,21 @@ class Linkages extends CI_Controller {
 		}
 		//var_dump($data);
 		echo json_encode($data);
+	}
+	
+	//对数组进行排序，把当前所在省，市，县排在最前面
+	public function sort_array($arr=array(),$val_code=''){
+		
+		if(is_array($arr) && !empty($arr) && isset($val_code)){
+			$count=count($arr);
+			for($i=1;$i<$count;$i++){
+				if($arr[$i]['code'] == $val_code){
+					$arr1[]=$arr[$i];
+					unset($arr[$i]);
+				}
+			}
+			$arr=array_merge($arr1,$arr);
+		}
+		return $arr;
 	}
 }

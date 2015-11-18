@@ -93,7 +93,7 @@ class Report_access extends CI_Controller {
 
 		$report_accesss=$this->report->get_report_accessall($access_start, $this->base_setting->get_setting('quantity_admin'));
 		foreach ($report_accesss as $k=>$v) {
-			$report_accesss[$k]['ip_address']=unserialize($report_accesss[$k]['ip_address']);
+			$report_accesss[$k]['ip_address']=@unserialize($report_accesss[$k]['ip_address']);
 			$report_accesss[$k]['user_name']=$this->user_info->get_userid_name($report_accesss[$k]['user_id']);
 		}
 		
