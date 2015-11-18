@@ -339,15 +339,38 @@ var_dump($nav_parents);
 		$b=$this->report->count_unkow();
 		var_dump($b);
 		*/
-		$this->public_section->get_header();
-		$this->load->model(array('tool/linkage','tool/report'));
-		//$b=$this->linkage->get_provinces();
-		$b=$this->linkage->get_city('530000');
 		
-		//$b=$this->report->get_ipaddress($_SESSION['token']);
-		var_dump($b);
+		
+		$this->public_section->get_header();
+		//$this->load->model(array('tool/linkage','tool/report'));
+		//$b=$this->linkage->get_provinces();
+		//var_dump($b);
+		//echo json_encode($b);
+		
 		$this->load->view('test');
 		
+		
+		/*
+		//文件路径 
+		$file_path= WWW_PATH."/public/area.json"; 
+		//判断是否有这个文件 
+		if(file_exists($file_path)){ 
+			if($fp=fopen($file_path,"a+")){ 
+			//读取文件 
+			$conn=fread($fp,filesize($file_path)); 
+			//替换字符串 
+			fclose($fp);
+			}
+		}
+		
+		$j=json_decode($conn);
+		echo $conn;
+		*/
+		/*
+		foreach($j as $d){
+			var_dump($d);
+		}
+		*/
 		
 		/*
 
