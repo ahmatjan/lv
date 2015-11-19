@@ -320,7 +320,7 @@
 
 	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/daterangepicker.js')?>"></script> 
 	
-	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/jquery.dataTables.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/jquery.dataTables.min.js')?>"></script>
 	
 	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/DT_bootstrap.js')?>"></script>
 

@@ -91,9 +91,9 @@
 	<!--用min方式加载-->
 	<!--[if lt IE 9]>
 
-	<script src="<?php echo base_url('public/js/excanvas.min.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/excanvas.min.js')?>"></script>
 
-	<script src="<?php echo base_url('public/js/respond.min.js')?>"></script>  
+	<script src="<?php echo base_url('public/min/?f=public/js/respond.min.js')?>"></script>  
 
 	<![endif]-->  
 
