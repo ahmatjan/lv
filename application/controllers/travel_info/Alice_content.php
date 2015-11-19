@@ -10,12 +10,14 @@ class Alice_content extends CI_Controller {
 	public function index()
 	{
 		$this->load->model(array('travel/travel_con','common/image'));
+		/*
 		if($this->input->get('id')!==null){
 			$travel_id=$this->input->get('id');
 		}else{
 			//redirect(site_url('travel_info/alice_content'));
 			show_404();
 		}
+		*/
 		$travel_contents=$this->travel_con->get_travel_content($travel_id);
 		
 		if(empty($travel_contents)){

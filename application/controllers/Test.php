@@ -340,12 +340,9 @@ var_dump($nav_parents);
 		var_dump($b);
 		*/
 		
+		//三级联动
 		
 		$this->public_section->get_header();
-		//$this->load->model(array('tool/linkage','tool/report'));
-		//$b=$this->linkage->get_provinces();
-		//var_dump($b);
-		//echo json_encode($b);
 		
 		$this->load->view('test');
 		
@@ -425,4 +422,13 @@ var_dump($nav_parents);
 </div>
 <?php endif; ?>
 	*/
+	
+	public function img(){
+		$url = base_url('image/catalog/5.jpg');
+		//file_get_contents($url,true); 可以读取远程图片，也可以读取本地图片
+		$img = file_get_contents($url,true);
+		//使用图片头输出浏览器
+		header("Content-Type: image/jpeg;text/html; charset=utf-8");
+		echo $img;
+	}
 }

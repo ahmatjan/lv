@@ -505,6 +505,52 @@
 												</div>
 
 											</div>
+											
+											<div class="control-group">
+
+												<label class="control-label">是否以文件方式缓存图片：</label>
+
+												<div class="controls">
+
+													<label class="radio">
+													
+													<?php if ($ist_cachefile == '1'): ?>
+
+													<input type="radio" name="ist_cachefile" value="1" checked/>
+
+													是
+													
+													<?php else: ?>
+													
+													<input type="radio" name="ist_cachefile" value="1" />
+
+													是
+													
+													<?php endif; ?> 
+
+													</label>
+
+													<label class="radio">
+
+													<?php if ($ist_cachefile !== '1'): ?>
+
+													<input type="radio" name="ist_cachefile" value="0" checked/>
+
+													否
+													
+													<?php else: ?>
+													
+													<input type="radio" name="ist_cachefile" value="0" />
+
+													否
+													
+													<?php endif; ?> 
+
+													</label>  
+
+												</div>
+
+											</div>
 												
 											<div class="form-actions">
 
