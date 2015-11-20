@@ -15,7 +15,7 @@
 
 				<a class="brand" href="<?php echo site_url('home')?>">
 
-				<img src="<?php echo base_url('public/image/logo.png') ?>" alt="logo" />
+				<img src="<?php echo $logo ?>" alt="logo" />
 
 				</a>
 

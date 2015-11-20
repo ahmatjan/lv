@@ -47,29 +47,52 @@ class Image extends CI_Model {
 					
 					$this->load->library('image_lib');
 					
-					if($width_orig < $height_orig && $width >= $height){
-						$master_dim='width';
-					}else{
-						$master_dim='height';
-					}
 					//处理缓存图
 					$config['image_library'] = 'gd2';
 					$config['source_image'] = $old_image;
 					$config['new_image'] = $new_image;
 					$config['quality'] = $this->config->item('img_size');
 					$config['create_thumb'] = FALSE;
-					$config['maintain_ratio'] = TRUE;
-					$config['master_dim'] = $master_dim;
+					$config['maintain_ratio'] = FALSE;
+					$config['master_dim'] = 'width';
 					$config['width'] = $width;
 					$config['height'] = $height;
 					$config['file_permissions'] = 0777;
-
+					
 					$this->image_lib->initialize($config);
-
+					
 					$this->image_lib->resize();
 					
 					$this->image_lib->clear();
-
+					
+					//添加水印
+					$this->load->model('setting/base_setting');
+					$watermark=$this->base_setting->get_setting('is_watermark');
+					if($watermark == TRUE){//添加水印
+						if($width > 300 || $height > 300){
+							$config1['image_library'] = 'gd2';
+							$config1['source_image'] = $new_image;
+							$config1['new_image'] = $new_image;
+							$config1['quality'] = $this->config->item('img_size');
+							$config1['create_thumb'] = FALSE;
+							$config1['maintain_ratio'] = FALSE;
+							$config1['wm_text'] = 'lvxingto.com';
+							$config1['wm_type'] = 'text';
+							$config1['wm_font_path'] = WWW_PATH.'/public/font/niao.ttf';//字体
+							$config1['wm_font_size'] = '12';
+							$config1['wm_font_color'] = 'ffffff';
+							$config1['wm_vrt_alignment'] = 'bottom';
+							$config1['wm_hor_alignment'] = 'right';
+							$config1['wm_padding'] = '-15';
+							$config['file_permissions'] = 0777;
+							$config['wm_hor_offset'] = '0';
+							
+							$this->image_lib->initialize($config1);
+							$this->image_lib->watermark();
+							$this->image_lib->clear();
+						}
+					}
+					
 				} else {
 					copy($old_image,$new_image);
 				}
@@ -79,7 +102,10 @@ class Image extends CI_Model {
 				$new_image='public/image/no_img.gif';
 			}
 			
-			return base_url($new_image);
+			//二进制输出图片
+			return site_url('common/tools/image_cache?image='.$new_image.'&cache_time='.$cache_time);
+			
+			//return base_url($new_image);本地图片调取
 		}else{
 			//Header("HTTP/1.1 303 See Other"); //这条语句可以不写
 			return site_url('common/tools/url_image?image='.$filename.'&width='.$width.'&height='.$height.'&cache_time='.$cache_time);

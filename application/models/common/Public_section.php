@@ -138,6 +138,8 @@ class public_section extends CI_Model {
 		
 		$data['body_css']=$this->uri->segment(2, 'home');//返回url 第二段也就是当前视图文件名称，用于设置body class
 		
+		$data['logo'] = $this->image->rezice(base_url('public/image/logo.png'),104,22);
+		
 		return $this->load->view('common/top',$data);
 	}
 	
@@ -186,11 +188,7 @@ class public_section extends CI_Model {
 		}
 		
 		if($this->user->get_image()){
-			if(strpos($this->user->get_image() ,'http') !== FALSE){
-				$data['user_image']=$this->user->get_image();
-			}else{
-				$data['user_image']=$this->image->rezice($this->user->get_image(),29,29);
-			}
+			$data['user_image']=$this->image->rezice($this->user->get_image(),29,29);
 		}else{
 			$data['user_image']='';
 		}

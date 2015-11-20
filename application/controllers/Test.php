@@ -345,6 +345,7 @@ var_dump($nav_parents);
 		
 		$this->public_section->get_header();
 		
+		echo $this->user->get_image();
 		
 		$this->load->view('test');
 		
