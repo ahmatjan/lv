@@ -514,15 +514,15 @@
 
 													<label class="radio">
 													
-													<?php if ($ist_cachefile == '1'): ?>
+													<?php if ($is_watermark == '1'): ?>
 
-													<input type="radio" name="ist_cachefile" value="1" checked/>
+													<input type="radio" name="is_watermark" value="1" checked/>
 
 													是
 													
 													<?php else: ?>
 													
-													<input type="radio" name="ist_cachefile" value="1" />
+													<input type="radio" name="is_watermark" value="1" />
 
 													是
 													
@@ -532,15 +532,15 @@
 
 													<label class="radio">
 
-													<?php if ($ist_cachefile !== '1'): ?>
+													<?php if ($is_watermark !== '1'): ?>
 
-													<input type="radio" name="ist_cachefile" value="0" checked/>
+													<input type="radio" name="is_watermark" value="0" checked/>
 
 													否
 													
 													<?php else: ?>
 													
-													<input type="radio" name="ist_cachefile" value="0" />
+													<input type="radio" name="is_watermark" value="0" />
 
 													否
 													

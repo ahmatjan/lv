@@ -14,7 +14,8 @@ class Image extends CI_Model {
 	*/
 	public function rezice($filename='',$width='',$height='',$cache_time='1800')
 	{
-		if($this->base_setting->get_setting('ist_cachefile') == '1'){
+		if(!preg_match('/http:\/\/[\w.]+[\w\/]*[\w.]*\??[\w=&\+\%]*/is',$filename)){
+
 			//以文件方式缓存图片
 			if(!is_file('image/' . $filename)){
 				return;
@@ -43,6 +44,9 @@ class Image extends CI_Model {
 				list($width_orig, $height_orig) = getimagesize($old_image);
 
 				if ($width_orig != $width OR $height_orig != $height) {//如果图片尺寸不相等
+					
+					$this->load->library('image_lib');
+					
 					if($width_orig < $height_orig && $width >= $height){
 						$master_dim='width';
 					}else{
@@ -60,7 +64,7 @@ class Image extends CI_Model {
 					$config['height'] = $height;
 					$config['file_permissions'] = 0777;
 
-					$this->load->library('image_lib', $config); 
+					$this->image_lib->initialize($config);
 
 					$this->image_lib->resize();
 					
@@ -71,28 +75,14 @@ class Image extends CI_Model {
 				}
 			}
 			//panduan缓存文件是否存在
-			
 			if(!is_file(WWW_PATH . '/' . $new_image)){
 				$new_image='public/image/no_img.gif';
 			}
 			
 			return base_url($new_image);
 		}else{
-			//以二进制流输出图片
-			$extension = pathinfo($filename, PATHINFO_EXTENSION);//返回文件类型
-			$old_image = 'image/' . $filename;//输入文件名
-			list($width_orig, $height_orig) = getimagesize($old_image);//获取文件高宽
-			if ($width_orig != $width OR $height_orig != $height) {//如果图片尺寸不相等
-				if($width_orig < $height_orig && $width >= $height){
-					$master_dim='width';
-				}else{
-					$master_dim='height';
-				}
-				//处理缓存图
-				
-			} else {
-				copy($old_image,$new_image);
-			}
+			//Header("HTTP/1.1 303 See Other"); //这条语句可以不写
+			return site_url('common/tools/url_image?image='.$filename.'&width='.$width.'&height='.$height.'&cache_time='.$cache_time);
 		}
 	}
 	

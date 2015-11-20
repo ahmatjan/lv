@@ -77,7 +77,7 @@ class Setting extends CI_Controller {
 		
 		$data['is_compactor']=$this->base_setting->get_setting('is_compactor');//是否压缩
 		
-		$data['ist_cachefile']=$this->base_setting->get_setting('ist_cachefile');//是否以文件方式缓存图片
+		$data['is_watermark']=$this->base_setting->get_setting('is_watermark');//是否以文件方式缓存图片
 		
 		//----------------------------------后台分类设置-----------------------------------------------
 		$this->load->model('setting/nav_setting');
@@ -169,7 +169,7 @@ class Setting extends CI_Controller {
 		$data['register_group']=$this->input->post('register_group',TRUE);//默认注册组
 		$data['visitors_group']=$this->input->post('visitors_group',TRUE);//游客访问组
 		$data['is_compactor']=$this->input->post('is_compactor',TRUE);//是否开启压缩
-		$data['ist_cachefile']=$this->input->post('ist_cachefile',TRUE);//是否开启压缩
+		$data['is_watermark']=$this->input->post('is_watermark',TRUE);//是否开启压缩
 		
 		if($this->validata_basesetting()!==FALSE){
 			$this->base_setting->updata_base_setting($data);
@@ -214,7 +214,7 @@ class Setting extends CI_Controller {
 		
 		$this->form_validation->set_rules('is_compactor', '压缩输出方式', 'required|integer|less_than_equal_to[3]');
 		
-		$this->form_validation->set_rules('ist_cachefile', '是否文件方式缓存图片', 'required|integer|less_than_equal_to[3]');
+		$this->form_validation->set_rules('is_watermark', '是否添加水印', 'required|integer|less_than_equal_to[3]');
 		
 		if($this->form_validation->run()!==TRUE){
 			return FALSE;

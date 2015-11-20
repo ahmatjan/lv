@@ -50,7 +50,9 @@
 
 	</div>
 
-	<p><img class="lazy" data-original="public/image/image1.jpg" alt="" width="454" height="301">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+	<p><img class="lazy" data-original="<?php echo $img1;?>">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+	
+	<p><img src="<?php echo $img4?>"></p>
 
 	<a href="page_news_item.html" class="news-block-btn">
 
@@ -74,7 +76,7 @@
 
 	</div>
 
-	<p><img class="lazy" data-original="public/image/image4.jpg" alt="" width="454" height="301">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+	<p><img class="lazy" data-original="<?php echo $img2;?>">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
 
 	<a href="page_news_item.html" class="news-block-btn">
 
