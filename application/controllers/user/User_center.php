@@ -49,11 +49,7 @@ class User_center extends CI_Controller {
 		}
 		
 		if($this->user->get_image()){
-			if(strpos($this->user->get_image() ,'http') !== FALSE){
-				$data['user_image']=$this->user->get_image();
-			}else{
-				$data['user_image']=$this->image->rezice($this->user->get_image(),203,203);
-			}
+			$data['user_image']=$this->image->rezice($this->user->get_image(),203,203);
 		}else{
 			$data['user_image']='';
 		}

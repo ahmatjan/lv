@@ -103,9 +103,9 @@ class Image extends CI_Model {
 			}
 			
 			//二进制输出图片
-			return site_url('common/tools/image_cache?image='.$new_image.'&cache_time='.$cache_time);
+			//return site_url('common/tools/image_cache?image='.$new_image.'&cache_time='.$cache_time);
 			
-			//return base_url($new_image);本地图片调取
+			return base_url($new_image);//本地图片调取
 		}else{
 			//Header("HTTP/1.1 303 See Other"); //这条语句可以不写
 			return site_url('common/tools/url_image?image='.$filename.'&width='.$width.'&height='.$height.'&cache_time='.$cache_time);

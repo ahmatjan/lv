@@ -57,8 +57,8 @@ class Tools extends CI_Controller {
 				$imgsrc=imagecreatefrompng($url);
 				break;
 			default:
-				$imgsrc='';
-				echo 'Unable to display the image';
+				@$imgsrc=imagecreatefrompng($url);
+				//echo 'Unable to display the image';
 				break;
 		}
 		
@@ -99,7 +99,9 @@ class Tools extends CI_Controller {
 	    		imagepng($image);
 				break;
 			default:
-				echo 'Unable to display the image';
+				header('Content-Type: image/png');
+	    		imagepng($image);
+				//echo 'Unable to display the image';
 				break;
 		}
 	    imagedestroy($image);
@@ -111,6 +113,20 @@ class Tools extends CI_Controller {
 		
 		ini_set("memory_limit", "60M");
 		$img_infos = getimagesize($url);//获取图片信息
+		$types = array(1 => 'gif', 2 => 'jpeg', 3 => 'png');
+		$mime = (isset($types[$img_infos[2]])) ? 'image/'.$types[$img_infos[2]] : 'image/jpg';
+		if($mime == 'image/gif' && $img_infos['0'] < 200){
+			$image=imagecreatefromgif($url);
+			header("Pragma: cache");
+			$offset = 30*60*60*24; // cache 1 month
+			$ExpStr = "Expires: ".gmdate("D, d M Y H:i:s", time() + $offset)." GMT";
+			
+			header($ExpStr);
+			header('Content-Type: image/gif');
+	    	imagegif($image);
+	    	imagedestroy($image);
+	    	exit();
+		}
 		
 		switch($img_infos[2])
 		{
@@ -124,7 +140,8 @@ class Tools extends CI_Controller {
 				$image=imagecreatefrompng($url);
 				break;
 			default:
-				echo 'Unable to display the image';
+				@$imgsrc=imagecreatefrompng($url);
+				//echo 'Unable to display the image';
 				break;
 		}
 		
@@ -148,7 +165,9 @@ class Tools extends CI_Controller {
 	    		imagepng($image);
 				break;
 			default:
-				echo 'Unable to display the image';
+				header('Content-Type: image/png');
+	    		imagepng($image);
+				//echo 'Unable to display the image';
 				break;
 		}
 	    imagedestroy($image);
