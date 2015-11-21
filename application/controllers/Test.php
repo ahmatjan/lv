@@ -343,10 +343,7 @@ var_dump($nav_parents);
 		//三级联动
 		
 		
-		$this->public_section->get_header();
-		
-		
-		echo WWW_PATH.'image/online_pic';
+		//$this->public_section->get_header();
 		
 		$this->load->view('test');
 		

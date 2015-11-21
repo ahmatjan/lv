@@ -1,6 +1,6 @@
 <!-- BEGIN SAMPLE TABLE PORTLET-->
 
-<div class="portlet box blue" style="margin-top: 0 !important">
+<div class="portlet box blue filemanager">
 
 	<div class="portlet-title">
 
@@ -11,6 +11,23 @@
 			<a href="javascript:;" class="reload" title="刷新"></a>
 
 			<a href="javascript:;" class="remove" title="关闭"></a>
+
+		</div>
+
+	</div>
+	
+	<div class="portlet-t">
+
+		<div class="caption">
+		<a href="#" class="btn icn-only" title="上一级"><i class="icon-hand-left"></i></a>
+		<a href="#" class="btn icn-only green" title="上一级"><i class="icon-upload-alt m-icon-white" title="上传"></i></a>
+		<a href="#" class="btn icn-only" title="上一级"><i class="icon-folder-close m-icon-white" title="新建"></i></a>
+		<a href="#" class="btn icn-only red" title="上一级"><i class="icon-trash" title="删除"></i></a>
+		</div>
+
+		<div class="tools">
+
+		<input class="m-wrap" type="text" /><button class="btn green" type="button">搜索!</button>
 
 		</div>
 
