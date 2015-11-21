@@ -107,8 +107,85 @@ class Image extends CI_Model {
 			
 			return base_url($new_image);//本地图片调取
 		}else{
-			//Header("HTTP/1.1 303 See Other"); //这条语句可以不写
-			return site_url('common/tools/url_image?image='.$filename.'&width='.$width.'&height='.$height.'&cache_time='.$cache_time);
+			//远程读取，绽放加水印，会拖慢速度
+			//return site_url('common/tools/url_image?image='.$filename.'&width='.$width.'&height='.$height.'&cache_time='.$cache_time);
+			
+			//把图片下载到本地
+			if(!isset($filename)){
+				$new_image='public/image/no_img.gif';
+				return base_url($new_image);//本地图片调取
+				exit();
+			}
+			
+			$old_filename = md5($filename).'.gif';//原图名称
+			$new_filename = md5($filename).'-'.$width.'-'.$height.'.gif';//新图片名称
+			$new_image = 'image/cache/online_pic/'.$new_filename;//新图路径
+			$path = WWW_PATH . '/image/cache/online_pic';//网络图文缓存件夹路径
+			if (!is_dir($path)) {//如果文件夹不存在创建
+				@mkdir($path, 0777);
+			}
+			if (!is_dir(WWW_PATH.'/image/online_pic')) {//如果文件夹不存在创建
+				@mkdir(WWW_PATH.'/image/online_pic', 0777);
+			}
+			
+			if(!is_file('image/online_pic/' . $old_filename)){//原图不存在
+				$this->download_remote_file_with_curl($filename,'image/online_pic/'.$old_filename);
+			}
+			
+			if(!is_file($new_image)){
+				$this->load->library('image_lib');
+				
+				//处理缓存图
+				$config['image_library'] = 'gd2';
+				$config['source_image'] = 'image/online_pic/'.$old_filename;
+				$config['new_image'] = $new_image;
+				$config['quality'] = $this->config->item('img_size');
+				$config['create_thumb'] = FALSE;
+				$config['maintain_ratio'] = FALSE;
+				$config['master_dim'] = 'width';
+				$config['width'] = $width;
+				$config['height'] = $height;
+				$config['file_permissions'] = 0777;
+				
+				$this->image_lib->initialize($config);
+				
+				$this->image_lib->resize();
+				
+				//添加水印
+				$this->load->model('setting/base_setting');
+				$watermark=$this->base_setting->get_setting('is_watermark');
+				if($watermark == TRUE){//添加水印
+					if($width > 300 || $height > 300){
+						$config1['image_library'] = 'gd2';
+						$config1['source_image'] = $new_image;
+						$config1['new_image'] = $new_image;
+						$config1['quality'] = $this->config->item('img_size');
+						$config1['create_thumb'] = FALSE;
+						$config1['maintain_ratio'] = FALSE;
+						$config1['wm_text'] = 'lvxingto.com';
+						$config1['wm_type'] = 'text';
+						$config1['wm_font_path'] = WWW_PATH.'/public/font/niao.ttf';//字体
+						$config1['wm_font_size'] = '12';
+						$config1['wm_font_color'] = 'ffffff';
+						$config1['wm_vrt_alignment'] = 'bottom';
+						$config1['wm_hor_alignment'] = 'right';
+						$config1['wm_padding'] = '-15';
+						$config['file_permissions'] = 0777;
+						$config['wm_hor_offset'] = '0';
+						
+						$this->image_lib->initialize($config1);
+						$this->image_lib->watermark();
+					}
+				}
+				$this->image_lib->clear();
+			}
+				
+			//panduan缓存文件是否存在
+			if(!is_file(WWW_PATH . '/' . $new_image)){
+				$new_image='public/image/no_img.gif';
+			}
+			
+			return base_url($new_image);//本地图片调取
 		}
 	}
 	
@@ -141,5 +218,21 @@ class Image extends CI_Model {
 				unlink($file_name);
 			}
 		}
+	}
+	
+	//下载远程图片到本地
+	function download_remote_file_with_curl($file_url, $save_to)
+	{
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_POST, 0); 
+		curl_setopt($ch,CURLOPT_URL,$file_url); 
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+		$file_content = curl_exec($ch);
+		curl_close($ch);
+ 
+		$downloaded_file = fopen($save_to, 'w');
+		fwrite($downloaded_file, $file_content);
+		fclose($downloaded_file);
+ 
 	}
 }

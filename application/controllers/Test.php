@@ -344,18 +344,9 @@ var_dump($nav_parents);
 		
 		
 		$this->public_section->get_header();
-		/*
-		$ctx = stream_context_create(array( 
-        'http' => array( 
-            'timeout' => 1    //设置超时
-            ) 
-        ) 
-    ); 
-    echo file_get_contents("http://qzapp.qlogo.cn/qzapp/101189685/8BE6CA9A4D9FEEEC5C7327B6DE090CD6/30", 0, $ctx); 
-    */
-    
-    	$b=getimagesize("http://qzapp.qlogo.cn/qzapp/101189685/8BE6CA9A4D9FEEEC5C7327B6DE090CD6/30");
-    	var_dump($b);
+		
+		
+		echo WWW_PATH.'image/online_pic';
 		
 		$this->load->view('test');
 		

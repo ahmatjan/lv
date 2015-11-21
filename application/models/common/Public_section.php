@@ -82,11 +82,7 @@ class public_section extends CI_Model {
 		}
 		
 		if(@$this->user->get_image()){
-			if(strpos($this->user->get_image() ,'http') !== FALSE){
-				$data['user_image']=$this->user->get_image();
-			}else{
-				$data['user_image']=$this->image->rezice($this->user->get_image(),29,29);
-			}
+			$data['user_image']=$this->image->rezice($this->user->get_image(),29,29);
 		}else{
 			$data['user_image']='';
 		}

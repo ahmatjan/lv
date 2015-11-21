@@ -1,16 +1,27 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+//这个远程图片处理类暂时作废
 class Tools extends CI_Controller {
 	
 	public function url_image(){
 		$url=$this->input->get('image');
 		$no_img=base_url('public/image/no_img.gif');
-		if(@fopen( $url, 'r' ) == FALSE)
-		{
-		   //文件不存在
-		   $url=$no_img;
-		}
+		
+		$ch = curl_init();
+	    $timeout = 10;
+	    curl_setopt ($ch, CURLOPT_URL, $url);
+	    curl_setopt($ch, CURLOPT_HEADER, 1);
+	    curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+	    curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+
+	    $contents = curl_exec($ch);
+	    //echo $contents;
+	    if (preg_match("/404/", $contents)){
+	    	$url=$no_img;
+	        //echo '文件不存在';
+	    }
+		
 		if($this->input->get('width')==NULL){
 			$width= '100';
 		}else{
@@ -27,6 +38,17 @@ class Tools extends CI_Controller {
 		// 读取图片
 		ini_set("memory_limit", "60M");
 		$img_infos = getimagesize($url);//获取图片信息
+		if($img_infos['2'] !== 'gif' && $img_infos['2'] !== 'png' && $img_infos['2'] !== 'jpeg'){
+			$imgsrc=imagecreatefromgif($no_img);
+			header("Pragma: cache");
+			$offset = 30*60*60*24; // cache 1 month
+			$ExpStr = "Expires: ".gmdate("D, d M Y H:i:s", time() + $offset)." GMT";
+			header($ExpStr);
+			header('Content-Type: image/gif');
+	    	imagegif($imgsrc);
+	    	imagedestroy($imgsrc);
+	    	exit();
+		}
 		
 		if($img_infos['0'] > $img_infos['1'] && $width > $height){//都是宽比高大
 			$n_x=$width;
@@ -57,8 +79,7 @@ class Tools extends CI_Controller {
 				$imgsrc=imagecreatefrompng($url);
 				break;
 			default:
-				@$imgsrc=imagecreatefrompng($url);
-				//echo 'Unable to display the image';
+				echo 'Unable to display the image';
 				break;
 		}
 		
@@ -99,9 +120,7 @@ class Tools extends CI_Controller {
 	    		imagepng($image);
 				break;
 			default:
-				header('Content-Type: image/png');
-	    		imagepng($image);
-				//echo 'Unable to display the image';
+				echo 'Unable to display the image';
 				break;
 		}
 	    imagedestroy($image);
