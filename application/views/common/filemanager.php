@@ -35,14 +35,19 @@
 
 	<div class="portlet-body">
 
-		<?php if(is_array($file_manage) && !empty($file_manage)):?>
-		<?php foreach($file_manage as $flies):?>
+		<?php
+		if(is_array($file_manage) && !empty($file_manage)){
+			foreach($file_manage as $flies){
+				
+			}
+		}else{
+			echo '<li>文件目录为空</li>';
+		}
+		?>
 		<li><img src="<?php echo base_url('image/cache/catalog/1-260x173.jpg')?>"></li>
 		<li><img src="<?php echo base_url('image/cache/catalog/1-260x173.jpg')?>"></li>
 		<li><img src="<?php echo base_url('image/cache/catalog/1-260x173.jpg')?>"></li>
 		<li><img src="<?php echo base_url('image/cache/catalog/1-260x173.jpg')?>"></li>
-		<?php endforeach;?>
-		<?php endif;?>
 
 	</div>
 

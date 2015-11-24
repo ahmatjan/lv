@@ -344,6 +344,9 @@ var_dump($nav_parents);
 		
 		
 		//$this->public_section->get_header();
+		$file = '123/33.jpg';
+		echo pathinfo($file, PATHINFO_EXTENSION);
+		
 		
 		$this->load->view('test');
 		

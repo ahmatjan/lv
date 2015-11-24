@@ -227,6 +227,9 @@ class User_manage extends CI_Controller {
 			$data['permission_edit2']=$maps;
 		}
 		
+		if(empty($permission['file_manager'])){
+			$permission['file_manager']=array();
+		}
 		if($this->input->post('my_multi_select3')){
 			$data['file_manager1']=$permission['file_manager'];
 			$data['file_manager2']=array_diff($maps_image,$permission['file_manager']);
