@@ -47,16 +47,18 @@ class Image extends CI_Model {
 					
 					$this->load->library('image_lib');
 					
-					//处理缓存图
+					//处理缓存图  保持原始纵横比  缩放
 					$config['image_library'] = 'gd2';
 					$config['source_image'] = $old_image;
 					$config['new_image'] = $new_image;
 					$config['quality'] = $this->config->item('img_size');
 					$config['create_thumb'] = FALSE;
-					$config['maintain_ratio'] = FALSE;
-					$config['master_dim'] = 'width';
-					$config['width'] = $width;
-					$config['height'] = $height;
+					//$config['master_dim'] = $master_dim;
+					if($width_orig/$width > $height_orig/$height){//数值越大 说明要剪的部分越多
+						$config['height'] = $height;
+					}else{
+						$config['width'] = $width;
+					}
 					$config['file_permissions'] = 0777;
 					
 					$this->image_lib->initialize($config);
@@ -64,6 +66,41 @@ class Image extends CI_Model {
 					$this->image_lib->resize();
 					
 					$this->image_lib->clear();
+					
+					//图像剪裁
+					
+					//处理缓存图  不保持原始纵横比  剪裁
+					list($width_ct, $height_ct) = getimagesize($new_image);
+					if($width_ct > $width){
+						$ct_x = ($width_ct - $width)/2;
+					}else{
+						$ct_x = '0';
+					}
+					
+					if($height_ct > $height){
+						$ct_y = ($height_ct - $height)/2;
+					}else{
+						$ct_y = '0';
+					}
+					
+					
+					
+					$config2['source_image'] = $new_image;
+					$config2['new_image'] = $new_image;
+					$config2['quality'] = 100;
+					$config2['maintain_ratio'] = FALSE;
+					$config2['width'] = $width;
+					$config2['height'] = $height;
+					$config2['x_axis'] = $ct_x;
+					$config2['y_axis'] = $ct_y;
+					$config2['file_permissions'] = 0777;
+					
+					$this->image_lib->initialize($config2);
+					
+					$this->image_lib->crop();
+					
+					$this->image_lib->clear();
+					
 					
 					//添加水印
 					$this->load->model('setting/base_setting');
@@ -73,9 +110,7 @@ class Image extends CI_Model {
 							$config1['image_library'] = 'gd2';
 							$config1['source_image'] = $new_image;
 							$config1['new_image'] = $new_image;
-							$config1['quality'] = $this->config->item('img_size');
-							$config1['create_thumb'] = FALSE;
-							$config1['maintain_ratio'] = FALSE;
+							$config1['quality'] = 100;
 							$config1['wm_text'] = 'lvxingto.com';
 							$config1['wm_type'] = 'text';
 							$config1['wm_font_path'] = WWW_PATH.'/public/font/niao.ttf';//字体
@@ -141,15 +176,53 @@ class Image extends CI_Model {
 				$config['new_image'] = $new_image;
 				$config['quality'] = $this->config->item('img_size');
 				$config['create_thumb'] = FALSE;
-				$config['maintain_ratio'] = FALSE;
-				$config['master_dim'] = 'width';
-				$config['width'] = $width;
-				$config['height'] = $height;
+				//$config['maintain_ratio'] = FALSE;
+				//$config['master_dim'] = 'width';
+				list($width_orig, $height_orig) = getimagesize('image/online_pic/'.$old_filename);
+				if($width_orig/$width > $height_orig/$height){//数值越大 说明要剪的部分越多
+					$config['height'] = $height;
+				}else{
+					$config['width'] = $width;
+				}
 				$config['file_permissions'] = 0777;
 				
 				$this->image_lib->initialize($config);
 				
 				$this->image_lib->resize();
+				
+				//图像剪裁
+					
+				//处理缓存图  不保持原始纵横比  剪裁
+				list($width_ct, $height_ct) = getimagesize($new_image);
+				if($width_ct > $width){
+					$ct_x = ($width_ct - $width)/2;
+				}else{
+					$ct_x = '0';
+				}
+				
+				if($height_ct > $height){
+					$ct_y = ($height_ct - $height)/2;
+				}else{
+					$ct_y = '0';
+				}
+				
+				
+				
+				$config2['source_image'] = $new_image;
+				$config2['new_image'] = $new_image;
+				$config2['quality'] = 100;
+				$config2['maintain_ratio'] = FALSE;
+				$config2['width'] = $width;
+				$config2['height'] = $height;
+				$config2['x_axis'] = $ct_x;
+				$config2['y_axis'] = $ct_y;
+				$config2['file_permissions'] = 0777;
+				
+				$this->image_lib->initialize($config2);
+				
+				$this->image_lib->crop();
+				
+				$this->image_lib->clear();
 				
 				//添加水印
 				$this->load->model('setting/base_setting');
@@ -159,9 +232,9 @@ class Image extends CI_Model {
 						$config1['image_library'] = 'gd2';
 						$config1['source_image'] = $new_image;
 						$config1['new_image'] = $new_image;
-						$config1['quality'] = $this->config->item('img_size');
+						$config1['quality'] = 100;
 						$config1['create_thumb'] = FALSE;
-						$config1['maintain_ratio'] = FALSE;
+						//$config1['maintain_ratio'] = FALSE;
 						$config1['wm_text'] = 'lvxingto.com';
 						$config1['wm_type'] = 'text';
 						$config1['wm_font_path'] = WWW_PATH.'/public/font/niao.ttf';//字体

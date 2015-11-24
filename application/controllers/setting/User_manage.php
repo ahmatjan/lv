@@ -123,6 +123,16 @@ class User_manage extends CI_Controller {
 		
 		$this->load->helper(array('directory','array'));
 		$maps = directory_map(APPPATH.'controllers');
+		$maps_image = directory_map(WWW_PATH.'/image',1);//图片文件夹权限
+		
+		foreach($maps_image as $ma_k=>$ma_v){
+			if(strpos($ma_v, '.') == TRUE){
+				unset($maps_image[$ma_k]);
+			}
+		}
+		foreach($maps_image as $map_k=>$map_v){
+			$maps_image[$map_k] = substr($maps_image[$map_k],0,strlen($maps_image[$map_k])-1);
+		}//图片文件夹权限
 		
 		foreach($maps as $k=>$v){
 			if(is_int($k)){
@@ -216,6 +226,17 @@ class User_manage extends CI_Controller {
 			$data['permission_edit1']=array();
 			$data['permission_edit2']=$maps;
 		}
+		
+		if($this->input->post('my_multi_select3')){
+			$data['file_manager1']=$permission['file_manager'];
+			$data['file_manager2']=array_diff($maps_image,$permission['file_manager']);
+		}elseif(count($permission['file_manager'])>1){
+			$data['file_manager1']=$permission['file_manager'];
+			$data['file_manager2']=array_diff($maps_image,$permission['file_manager']);
+		}else{
+			$data['file_manager1']=array();
+			$data['file_manager2']=$maps_image;
+		}
 
 		//group_id
 		if($this->input->get('group_id')!==NULL){
@@ -242,6 +263,7 @@ class User_manage extends CI_Controller {
 		$permission=array(
 				'access'=>$this->input->post('my_multi_select1'),
 				'modify'=>$this->input->post('my_multi_select2'),
+				'file_manager'=>$this->input->post('my_multi_select3'),
 		);
 		
 		$data['group_id']=$this->input->post('group_id');

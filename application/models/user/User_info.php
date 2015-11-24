@@ -213,4 +213,18 @@ class user_info extends CI_Model {
 		$query = $this->db->query($sql);
 		return $query;
 	}
+	
+	
+	//通过用户id查用户注册时间
+	public function get_useraddtime ($user_id){
+		$sql = "SELECT add_date FROM " . $this->db->dbprefix('user_info') . " WHERE user_id = ?"; 
+
+		$query=$this->db->query($sql, array($user_id));
+
+		if ($query->num_rows() > 0)
+		{
+		   $row = $query->row_array(); 
+			return $row['add_date'];
+		}
+	}
 }

@@ -52,7 +52,7 @@
 
 	<p><img class="lazy" data-original="<?php echo $img1;?>">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
 	
-	<p><img src="<?php echo $img4?>"></p>
+	<p><img src="<?php echo $img4;?>"></p>
 
 	<a href="page_news_item.html" class="news-block-btn">
 

@@ -30,7 +30,7 @@
 
 	</div>
 
-	<p><img class="lazy" data-original="public/image/image5.jpg" alt="" height="237" width="357">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+	<p><img class="lazy" data-original="<?php echo $img1?>" alt="" height="237" width="357">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
 
 	<a href="page_news_item.html" class="news-block-btn">
 
@@ -54,7 +54,7 @@
 
 	</div>
 
-	<p><img class="lazy" data-original="public/image/image5.jpg" alt="" height="237" width="357">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint praesentium voluptatum delenitioccaecati cupiditate non provident</p>
+	<p><img class="lazy" data-original="<?php echo $img2?>" alt="" height="237" width="357">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint praesentium voluptatum delenitioccaecati cupiditate non provident</p>
 
 	<a href="page_news_item.html" class="news-block-btn">
 
@@ -78,7 +78,7 @@
 
 	</div>
 
-	<p><img class="lazy" data-original="public/image/image3.jpg" alt="" height="237" width="357">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint non provident</p>
+	<p><img class="lazy" data-original="<?php echo $img3?>" alt="" height="237" width="357">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint non provident</p>
 
 	<a href="page_news_item.html" class="news-block-btn">
 

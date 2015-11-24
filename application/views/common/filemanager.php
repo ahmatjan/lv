@@ -25,7 +25,7 @@
 		<a href="#" class="btn icn-only red" title="上一级"><i class="icon-trash" title="删除"></i></a>
 		</div>
 
-		<div class="tools">
+		<div class="tools hidden-phone hidden-tablet">
 
 		<input class="m-wrap" type="text" /><button class="btn green" type="button">搜索!</button>
 
@@ -35,87 +35,14 @@
 
 	<div class="portlet-body">
 
-		<table class="table table-hover">
-
-			<thead>
-
-				<tr>
-
-					<th>#</th>
-
-					<th>First Name</th>
-
-					<th>Last Name</th>
-
-					<th class="hidden-480">Username</th>
-
-					<th>Status</th>
-
-				</tr>
-
-			</thead>
-
-			<tbody>
-
-				<tr>
-
-					<td>1</td>
-
-					<td>Mark</td>
-
-					<td>Otto</td>
-
-					<td class="hidden-480">makr124</td>
-
-					<td><span class="label label-success">Approved</span></td>
-
-				</tr>
-
-				<tr>
-
-					<td>2</td>
-
-					<td>Jacob</td>
-
-					<td>Nilson</td>
-
-					<td class="hidden-480">jac123</td>
-
-					<td><span class="label label-info">Pending</span></td>
-
-				</tr>
-
-				<tr>
-
-					<td>3</td>
-
-					<td>Larry</td>
-
-					<td>Cooper</td>
-
-					<td class="hidden-480">lar</td>
-
-					<td><span class="label label-warning">Suspended</span></td>
-
-				</tr>
-
-				<tr>
-
-					<td>3</td>
-
-					<td>Sandy</td>
-
-					<td>Lim</td>
-
-					<td class="hidden-480">sanlim</td>
-
-					<td><span class="label label-danger">Blocked</span></td>
-
-				</tr>
-
-			</tbody>
-
-		</table>
+		<?php if(is_array($file_manage) && !empty($file_manage)):?>
+		<?php foreach($file_manage as $flies):?>
+		<li><img src="<?php echo base_url('image/cache/catalog/1-260x173.jpg')?>"></li>
+		<li><img src="<?php echo base_url('image/cache/catalog/1-260x173.jpg')?>"></li>
+		<li><img src="<?php echo base_url('image/cache/catalog/1-260x173.jpg')?>"></li>
+		<li><img src="<?php echo base_url('image/cache/catalog/1-260x173.jpg')?>"></li>
+		<?php endforeach;?>
+		<?php endif;?>
 
 	</div>
 

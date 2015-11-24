@@ -158,6 +158,42 @@
 
 										</div>
 										
+										<div class="control-group">
+
+											<label class="control-label">图片管理权限：</label>
+
+											<div class="controls">
+
+												<select multiple="multiple" id="my_multi_select3" name="my_multi_select3[]">
+												
+													<optgroup label="没有管理权限">
+													
+													<?php foreach ($file_manager2 as $file_manager2_): ?>
+													<!--遍历控制器-->
+
+														<option><?php echo $file_manager2_;?></option>
+
+													<?php endforeach; ?>
+													
+													</optgroup>
+													
+													<optgroup label="已有管理权限">
+
+														<?php foreach ($file_manager1 as $file_manager1_): ?>
+														<!--遍历控制器文件夹下内容-->
+													
+														<option selected="selected"><?php echo $file_manager1_;?></option>
+														
+														<?php endforeach; ?>
+
+													</optgroup>
+													
+												</select>
+
+											</div>
+
+										</div>
+										
 										<div class="form-actions">
 										
 												<input type="hidden" name="group_id" value="<?php echo $group_id?>">

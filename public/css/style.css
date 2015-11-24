@@ -5447,3 +5447,22 @@ Datatables Plugin(in v1.3)
 .filemanager{
 	margin-top: 0;
 }
+.filemanager .caption{
+	float: left;
+	margin-left: 15px
+}
+.filemanager .tools{
+	float: right;
+	margin-right: 15px
+}
+.filemanager .portlet-body{
+	border-top:1px solid rgb(230, 230, 230);
+	overflow-y: auto;
+	max-height: 500px;
+}
+.filemanager .portlet-body li{
+	width: 120px;
+	list-style: none;
+	float: left;
+	margin: 7px;
+}

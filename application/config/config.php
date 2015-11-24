@@ -503,4 +503,4 @@ $config['proxy_ips'] = '';
 
 
 //处理图片的质量
-$config['img_size'] = '90';
+$config['img_size'] = '60';

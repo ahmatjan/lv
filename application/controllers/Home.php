@@ -31,7 +31,6 @@ class Home extends CI_Controller {
 		$this->public_section->get_header($header);
 		$this->public_section->get_top();
 		
-		$data['img5']=$this->image->rezice('catalog/5.jpg',453,301);
 /*
 		//取结伴
 		$travels=$this->travel_con->get_travel_noid();
