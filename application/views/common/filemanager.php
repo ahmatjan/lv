@@ -34,16 +34,23 @@
 	</div>
 
 	<div class="portlet-body">
-
-		<?php
-		if(is_array($file_manage) && !empty($file_manage)){
-			foreach($file_manage as $flies){
-				
-			}
-		}else{
-			echo '<li>文件目录为空</li>';
-		}
-		?>
+		<?php if(is_array($images) && !empty($images) && !isset($error_info)):?>
+		<?php foreach($images as $image):?>
+		<?php if($image['type']=='directory'):?>
+			<li>
+				<a href="<?php echo $image['href']?>">
+				<i class="icon-folder-open"></i>
+				<div class="filename green"><?php echo $image['name']?></div>
+				</a>
+			</li>
+		<?php else:?>
+		<?php endif;?>
+		<?php endforeach;?>
+		<?php elseif(isset($error_info)):?>
+			<li><?php echo $error_info;?></li>
+		<?php else:?>
+		<li>文件目录为空</li>
+		<?php endif;?>
 		<li><img src="<?php echo base_url('image/cache/catalog/1-260x173.jpg')?>"></li>
 		<li><img src="<?php echo base_url('image/cache/catalog/1-260x173.jpg')?>"></li>
 		<li><img src="<?php echo base_url('image/cache/catalog/1-260x173.jpg')?>"></li>
