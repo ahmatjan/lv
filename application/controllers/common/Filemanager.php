@@ -6,8 +6,8 @@ class Filemanager extends CI_Controller {
 		parent::__construct();
 			$this->output->https_jump();
 			$this->load->helper('directory');
-			$this->load->model('user/user_group');
-			$this->load->model('user/user_info');
+			$this->load->model(array('user/user_group','user/user_info','common/image'));
+			//$this->load->model('user/user_info');
 	}
 	
 	public function index() {
@@ -29,33 +29,35 @@ class Filemanager extends CI_Controller {
 		}
 		
 		//输入文件名
-		if($this->input->get('filter_name')){
-			$filter_name = rtrim(str_replace(array('../', '..\\', '..', '*'), '', $this->input->get['filter_name']), '/');
+		if($this->input->get('filter_name') !== NULL){
+			$filter_name = rtrim(str_replace(array('../', '..\\', '..', '*'), '', $this->input->get('filter_name')), '/');
 		} else {
 			$filter_name = null;
 		}
 		
 		//输入文件夹名
-		if (isset($this->input->get['directory'])) {
-			$directory = rtrim(WWW_PATH . '/image/' . str_replace(array('../', '..\\', '..'), '', $this->input->get['directory']), '/');
+		if ($this->input->get('directory') !== NULL) {
+			$directory = rtrim(WWW_PATH . '/image/' . str_replace(array('../', '..\\', '..'), '', $this->input->get('directory')), '/');
 		} else {
 			$directory = $directory;
 		}
-
+		
 		//页码
-		if (isset($this->input->get['page'])) {
-			$page = $this->input->get['page'];
+		if ($this->input->get('page') !== NULL) {
+			$page = $this->input->get('page');
 		} else {
 			$page = 1;
 		}
 		
 		//读取文件夹
 		$directories = glob($directory . '/' . $filter_name . '*', GLOB_ONLYDIR);
-		if(!empty($img_permission) && is_array($directories)){
-			$i_count = strlen(WWW_PATH);
-			foreach($directories as $d_k=>$d_v){
-				if(!in_array(mb_substr($directories[$d_k],$i_count + 7),$img_permission)){
-					unset($directories[$d_k]);
+		if ($this->input->get('directory') == NULL) {
+			if(!empty($img_permission) && is_array($directories)){
+				$i_count = strlen(WWW_PATH);
+				foreach($directories as $d_k=>$d_v){
+					if(!in_array(mb_substr($directories[$d_k],$i_count + 7),$img_permission)){
+						unset($directories[$d_k]);
+					}
 				}
 			}
 		}
@@ -80,45 +82,122 @@ class Filemanager extends CI_Controller {
 		$images = array_splice($images, ($page - 1) * 16, 16);
 		
 		$this->load->helper('string');
+		$data['images'][] = array();
+		
 		foreach ($images as $image) {
 			$name = str_split(basename($image), 14);
 
 			if (is_dir($image)) {
 				$url = '';
 
-				if (isset($this->input->get['target'])) {
-					$url .= '&target=' . $this->input->get['target'];
+				if ($this->input->get('target') !== NULL) {
+					$url .= '&target=' . $this->input->get('target');
 				}
 
-				if (isset($this->input->get['thumb'])) {
-					$url .= '&thumb=' . $this->input->get['thumb'];
+				if ($this->input->get('thumb') !== NULL) {
+					$url .= '&thumb=' . $this->input->get('thumb');
 				}
 
 				$data['images'][] = array(
-					'thumb' => '',
-					'name'  => implode(' ', $name),
-					'type'  => 'directory',
-					'path'  => substr_cn($image, strlen(WWW_PATH . '/image')),
-					'href'  => site_url('common/filemanager?token=' . $this->session->data['token'] . '&directory=' . urlencode(substr_cn($image, strlen(WWW_PATH . '/image' . 'catalog/'))) . $url)
+					'thumb' => '',//缩略图，用于图片管理显示
+					'name'  => implode(' ', $name),//名称，用于图片管理显示
+					'type'  => 'directory',//类型
+					'path'  => substr($image, strlen(WWW_PATH . '/image') + 1),//路径，用于操作文件
+					'href'  => site_url('common/filemanager?directory=' . urlencode(substr($image, strlen(WWW_PATH . '/image') + 1)) . $url)//链接，用于打开文件，或文件夹
 				);
 			} elseif (is_file($image)) {
-				// Find which protocol to use to pass the full image link back
-				if ($this->input->server['HTTPS']) {
-					$server = HTTPS_CATALOG;
-				} else {
-					$server = HTTP_CATALOG;
-				}
-
 				$data['images'][] = array(
-					'thumb' => $this->model_tool_image->resize(substr_cn($image, strlen(WWW_PATH . '/image')), 100, 100),
+					'thumb' => $this->image->rezice(substr($image, strlen(WWW_PATH . '/image') + 1), 120, 77),
 					'name'  => implode(' ', $name),
 					'type'  => 'image',
-					'path'  => substr_cn($image, strlen(WWW_PATH . '/image')),
-					'href'  => base_url() . 'image/' . substr_cn($image, strlen(WWW_PATH . '/image'))
+					'path'  => substr($image, strlen(WWW_PATH . '/image') + 1),
+					'href'  => base_url() . 'image/' . substr($image, strlen(WWW_PATH . '/image') + 1)
 				);
 			}
 		}
 		
+		if ($this->input->get('directory') !== NULL) {
+			$data['directory'] = urlencode($this->input->get('directory'));
+		} else {
+			$data['directory'] = '';
+		}
+
+		if ($this->input->get('filter_name') !== NULL) {
+			$data['filter_name'] = $this->input->get('filter_name');
+		} else {
+			$data['filter_name'] = '';
+		}
+
+		// Return the target ID for the file manager to set the value
+		if ($this->input->get('target') !== NULL) {
+			$data['target'] = $this->input->get('target');
+		} else {
+			$data['target'] = '';
+		}
+
+		// Return the thumbnail for the file manager to show a thumbnail
+		if ($this->input->get('thumb') !== NULL) {
+			$data['thumb'] = $this->input->get('thumb');
+		} else {
+			$data['thumb'] = '';
+		}
+
+		// Parent
+		$url = '';
+
+		if ($this->input->get('directory') !== NULL) {
+			$pos = strrpos($this->input->get('directory'), '/');
+
+			if ($pos) {
+				$url .= '&directory=' . urlencode(substr($this->input->get('directory'), 0, $pos));
+			}
+		}
+
+		if ($this->input->get['target'] !== NULL) {
+			$url .= '&target=' . $this->input->get('target');
+		}
+
+		if ($this->input->get('thumb') !== NULL) {
+			$url .= '&thumb=' . $this->input->get('thumb');
+		}
+
+		$data['parent'] = site_url('common/filemanager' . $url);
+
+		// Refresh
+		$url = '';
+
+		if ($this->input->get('directory') !== NULL) {
+			$url .= '&directory=' . urlencode($this->input->get('directory'));
+		}
+
+		if ($this->input->get('target') !== NULL) {
+			$url .= '&target=' . $this->input->get('target');
+		}
+
+		if ($this->input->get('thumb') !== NULL) {
+			$url .= '&thumb=' . $this->input->get('thumb');
+		}
+
+		$data['refresh'] = site_url('common/filemanager' . $url);
+
+		$url = '';
+
+		if ($this->input->get('directory') !== NULL) {
+			$url .= '&directory=' . urlencode(html_entity_decode($this->input->get('directory'), ENT_QUOTES, 'UTF-8'));
+		}
+
+		if ($this->input->get('filter_name') !== NULL) {
+			$url .= '&filter_name=' . urlencode(html_entity_decode($this->input->get('filter_name'), ENT_QUOTES, 'UTF-8'));
+		}
+
+		if ($this->input->get('target') !== NULL) {
+			$url .= '&target=' . $this->input->get('target');
+		}
+
+		if ($this->input->get('thumb') !== NULL) {
+			$url .= '&thumb=' . $this->input->get('thumb');
+		}
+		//var_dump($data['images']);
 		$this->load->view('common/filemanager',$data);
 	}
 

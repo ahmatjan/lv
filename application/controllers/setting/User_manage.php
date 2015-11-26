@@ -126,7 +126,8 @@ class User_manage extends CI_Controller {
 		$maps_image = directory_map(WWW_PATH.'/image',1);//图片文件夹权限
 		
 		foreach($maps_image as $ma_k=>$ma_v){
-			if(strpos($ma_v, '.') == TRUE){
+			//排除不管理的文件夹
+			if(strpos($maps_image[$ma_k], '.') == TRUE || $maps_image[$ma_k] == 'cache\\'){
 				unset($maps_image[$ma_k]);
 			}
 		}

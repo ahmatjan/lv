@@ -343,10 +343,7 @@ var_dump($nav_parents);
 		//三级联动
 		
 		
-		//$this->public_section->get_header();
-		$file = '123/33.jpg';
-		echo pathinfo($file, PATHINFO_EXTENSION);
-		
+		$this->public_section->get_header();
 		
 		$this->load->view('test');
 		

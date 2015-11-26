@@ -5477,3 +5477,6 @@ Datatables Plugin(in v1.3)
 .filemanager .portlet-body li i{
 	font-size: 76px;
 }
+.filemanager .portlet-body li .filename-i{
+	margin: 0 5px;
+}
