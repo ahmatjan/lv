@@ -53,12 +53,14 @@ class Informations extends CI_Controller {
 			$informations=$this->information->select_information_forid($this->input->get('information_id'));
 		}
 		if(@isset($informations)){
+			$data['information_id']=$this->input->get('information_id');
 			$data['title']=$informations['title'];
 			$data['author']=$informations['author'];
 			$data['class']=$informations['class'];
 			$data['content']=$informations['content'];
 			$data['position']=$informations['position'];
 		}else{
+			$data['information_id']='';
 			$data['title']='';
 			$data['author']='';
 			$data['class']='';
@@ -90,6 +92,7 @@ class Informations extends CI_Controller {
 		$this->form_validation->set_rules('information_content', '文章内容', 'required|min_length[5]|max_length[2000]');
 		$this->form_validation->set_rules('position', '显示位置', 'required|min_length[5]|max_length[25]');
 		if ($this->form_validation->run() == TRUE){
+			$data['information_id']=$this->input->post('information_id');
 			$data['title']=$this->input->post('title');
 			$data['class']=$this->input->post('class');
 			$data['position']=$this->input->post('position');

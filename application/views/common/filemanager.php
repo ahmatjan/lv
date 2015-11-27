@@ -8,9 +8,9 @@
 
 		<div class="tools">
 
-			<a href="javascript:;" class="reload" title="刷新"></a>
+			<a href="<?php echo $refresh; ?>" id="button-refresh" class="reload" title="刷新"></a>
 
-			<a href="javascript:;" class="remove" title="关闭"></a>
+			<a href="javascript:;" data-dismiss="modal" class="remove" title="关闭"></a>
 
 		</div>
 
@@ -19,15 +19,15 @@
 	<div class="portlet-t">
 
 		<div class="caption">
-		<a href="#" class="btn icn-only" title="上一级"><i class="icon-hand-left"></i></a>
-		<a href="#" class="btn icn-only green" title="上一级"><i class="icon-upload-alt m-icon-white" title="上传"></i></a>
-		<a href="#" class="btn icn-only" title="上一级"><i class="icon-folder-close m-icon-white" title="新建"></i></a>
-		<a href="#" class="btn icn-only red" title="上一级"><i class="icon-trash" title="删除"></i></a>
+		<a href="<?php echo $parent;?>" id="button-parent" class="btn icn-only" title="上一级"><i class="icon-hand-left"></i></a>
+		<button type="button" data-toggle="tooltip" id="button-upload" class="btn icn-only green" title="上传"><i class="icon-upload-alt m-icon-white" title="上传"></i></button>
+		<button type="button" data-toggle="tooltip" id="button-folder" class="btn icn-only" title="新建"><i class="icon-folder-close m-icon-white" title="新建"></i></button>
+		<button type="button" data-toggle="tooltip" id="button-delete" class="btn icn-only red" title="删除"><i class="icon-trash" title="删除"></i></button>
 		</div>
 
 		<div class="tools hidden-phone hidden-tablet">
 
-		<input class="m-wrap" type="text" /><button class="btn green" type="button">搜索!</button>
+		<input class="m-wrap" type="text" /><button type="button" data-toggle="tooltip" id="button-search" class="btn green" type="button">搜索</button>
 
 		</div>
 
@@ -41,16 +41,16 @@
 			<li>
 				<a href="<?php echo $image['href']?>" class="directory">
 				<i class="icon-folder-open"></i>
-				<div class="filename"><input class="filename-i" type="checkbox" name="path[]" value="<?php echo $image['path']; ?>" /><span><?php echo $image['name']?></span></div>
 				</a>
+				<div class="filename"><input class="filename-i" type="checkbox" name="path[]" value="<?php echo $image['path']; ?>" /><span><?php echo $image['name']?></span></div>
 			</li>
 		<?php endif;?>
 		<?php if(@$image['type']=='image'):?>
 			<li>
 				<a href="<?php echo $image['href']?>" class="thumbnail">
 				<img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" />
-				<div class="filename"><input class="filename-i" type="checkbox" name="path[]" value="<?php echo $image['path']; ?>" /><span><?php echo $image['name']?></span></div>
 				</a>
+				<div class="filename"><input class="filename-i" type="checkbox" name="path[]" value="<?php echo $image['path']; ?>" /><span><?php echo $image['name']?></span></div>
 			</li>
 		<?php endif;?>
 		<?php endforeach;?>
@@ -66,13 +66,13 @@
 		<li><img src="<?php echo base_url('image/cache/catalog/1-260x173.jpg')?>"></li>
 		<li><img src="<?php echo base_url('image/cache/catalog/1-260x173.jpg')?>"></li>
 		-->
+		<div class="pagination"><?php echo $pagination; ?></div>
 
 	</div>
 
 </div>
 
 <!-- END SAMPLE TABLE PORTLET-->
-<!--<script src="<?php echo base_url('public/min/f=public/js/loading/filemanager.js')?>" type="text/javascript"></script>-->
 <script type="text/javascript">
 $('a.thumbnail').on('click', function(e) {
 	e.preventDefault();
@@ -96,6 +96,7 @@ $('a.thumbnail').on('click', function(e) {
 	<?php } ?>
 
 	$('#modal-image').modal('hide');
+	$('#modal-backdrop').modal('hide');
 });
 
 $('a.directory').on('click', function(e) {
@@ -127,9 +128,10 @@ $('input[name=\'search\']').on('keydown', function(e) {
 		$('#button-search').trigger('click');
 	}
 });
-
 $('#button-search').on('click', function(e) {
-	var url = 'index.php?route=common/filemanager&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>';
+	//var url = '<?php echo site_url()?>common/filemanager?directory=<?php echo $directory; ?>';
+	var c = '/';
+	var url = location.protocol+c+c+window.location.host+'/common/filemanager?directory=<?php echo $directory; ?>';
 		
 	var filter_name = $('input[name=\'search\']').val();
 	
@@ -160,24 +162,26 @@ $('#button-upload').on('click', function() {
     	clearInterval(timer);
 	}
 		
+	var c = '/';
+	//var url = location.protocol+c+c+window.location.host+'/common/filemanager?directory=<?php echo $directory; ?>';
 	timer = setInterval(function() {
 		if ($('#form-upload input[name=\'file\']').val() != '') {
 			clearInterval(timer);
 			
 			$.ajax({
-				url: 'index.php?route=common/filemanager/upload&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
+				url: location.protocol+c+c+window.location.host+'/common/filemanager/up_load?directory=<?php echo $directory; ?>',
 				type: 'post',		
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
 				cache: false,
 				contentType: false,
-				processData: false,		
+				processData: false,	
 				beforeSend: function() {
-					$('#button-upload i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+					$('#button-upload i').replaceWith('<i class="icon-upload-alt m-icon-white"></i>');
 					$('#button-upload').prop('disabled', true);
 				},
 				complete: function() {
-					$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
+					$('#button-upload i').replaceWith('<i class="icon-upload-alt m-icon-white"></i>');
 					$('#button-upload').prop('disabled', false);
 				},
 				success: function(json) {
@@ -187,7 +191,6 @@ $('#button-upload').on('click', function() {
 					
 					if (json['success']) {
 						alert(json['success']);
-						
 						$('#button-refresh').trigger('click');
 					}
 				},			
@@ -198,16 +201,15 @@ $('#button-upload').on('click', function() {
 		}
 	}, 500);
 });
-
 $('#button-folder').popover({
 	html: true,
 	placement: 'bottom',
 	trigger: 'click',
-	title: '<?php echo $entry_folder; ?>',
+	title: '新建文件夹',
 	content: function() {
 		html  = '<div class="input-group">';
-		html += '  <input type="text" name="folder" value="" placeholder="<?php echo $entry_folder; ?>" class="form-control">';
-		html += '  <span class="input-group-btn"><button type="button" title="<?php echo $button_folder; ?>" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></span>';
+		html += '  <input type="text" name="folder" value="" placeholder="新建文件夹" class="form-control">';
+		html += '  <span class="input-group-btn"><button type="button" title="确定" id="button-create" class="btn btn-primary"><i class="icon-ok"></i>确定</button></span>';
 		html += '</div>';
 		
 		return html;	
@@ -215,9 +217,11 @@ $('#button-folder').popover({
 });
 
 $('#button-folder').on('shown.bs.popover', function() {
+	var c = '/';
+	//var url = location.protocol+c+c+window.location.host+'/common/filemanager?directory=<?php echo $directory; ?>';
 	$('#button-create').on('click', function() {
 		$.ajax({
-			url: 'index.php?route=common/filemanager/folder&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
+			url: location.protocol+c+c+window.location.host+'/common/filemanager/folder?directory=<?php echo $directory; ?>',
 			type: 'post',		
 			dataType: 'json',
 			data: 'folder=' + encodeURIComponent($('input[name=\'folder\']').val()),
@@ -246,9 +250,11 @@ $('#button-folder').on('shown.bs.popover', function() {
 });
 
 $('#modal-image #button-delete').on('click', function(e) {
-	if (confirm('<?php echo $text_confirm; ?>')) {
+	if (confirm('确定删除？')) {
+		var c = '/';
+		//var url = location.protocol+c+c+window.location.host+'/common/filemanager?directory=<?php echo $directory; ?>';
 		$.ajax({
-			url: 'index.php?route=common/filemanager/delete&token=<?php echo $token; ?>',
+			url: location.protocol+c+c+window.location.host+'/common/filemanager/delete',
 			type: 'post',		
 			dataType: 'json',
 			data: $('input[name^=\'path\']:checked'),

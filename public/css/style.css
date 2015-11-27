@@ -5459,6 +5459,7 @@ Datatables Plugin(in v1.3)
 	border-top:1px solid rgb(230, 230, 230);
 	overflow-y: auto;
 	max-height: 500px;
+	padding: 0 !important;
 }
 .filemanager .portlet-body li{
 	width: 120px;
@@ -5479,4 +5480,24 @@ Datatables Plugin(in v1.3)
 }
 .filemanager .portlet-body li .filename-i{
 	margin: 0 5px;
+}
+.filemanager .tools .reload{
+	color: #000 !important;
+}
+.filemanager .pagination{
+	width: 100%;
+	margin: 5px 0;
+	text-align: center;
+}
+.filemanager .pagination li{
+	width: auto;
+	float: none;
+	margin: 0;
+}
+.filemanager .pagination li a{
+	float: none;
+	width: auto;
+}
+.note-editor .btn-sm{
+	padding: 3px 10px;
 }

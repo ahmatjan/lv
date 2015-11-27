@@ -1399,6 +1399,7 @@
      * @param {File} file
      * @return {Promise} - then: sDataUrl
      */
+	  
     var readFileAsDataURL = function (file) {
       return $.Deferred(function (deferred) {
         $.extend(new FileReader(), {
@@ -1412,7 +1413,7 @@
         }).readAsDataURL(file);
       }).promise();
     };
-  
+ 
     /**
      * create `<image>` from url string
      *

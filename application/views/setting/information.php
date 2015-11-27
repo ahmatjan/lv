@@ -253,6 +253,8 @@
 											<!--文本编辑器-->
 											
 											<div class="form-actions">
+											
+												<input type="hidden" value="<?php echo $information_id;?>" name="information_id">
 
 												<button type="submit" class="btn blue">提交</button>
 
