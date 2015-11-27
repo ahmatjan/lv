@@ -12,6 +12,7 @@ class Login extends CI_Controller {
 	{
 		if($this->user->is_Logged()){
 			redirect(site_url('user/User_center'));
+			exit();
 		}
 		//----------------------------------------------------------------------------------------------
 		
@@ -62,16 +63,18 @@ class Login extends CI_Controller {
 		}
 		
 		//如果cookie存在，直接读
-		//加载cookie辅助函数
-		$this->load->helper('cookie');
-		if(get_cookie('username')){
-			$data['val_username']=get_cookie('username');
+		if(isset($_COOKIE['username'])){
+			$data['val_username']=$_COOKIE['username'];
 		}else{
 			$data['val_username']='';
 		}
 		
 		//bottom
 		$data['text_signupbottom']=$this->lang->line('text_signupbottom');
+		
+		$this->load->model('setting/information');
+		$data['values'] = $this->information->select_information_forposition('values');//价值观
+		$data['register_rule'] = $this->information->select_information_forposition('register_rule');//注册条款
 		
 		$this->load->view('user/login.php',$data);
 		
@@ -214,10 +217,8 @@ class Login extends CI_Controller {
 				
 				//如果勾选记住帐号
 				if($this->input->post('remember')== TRUE){
-					//加载cookie辅助函数
-					$this->load->helper('cookie');
 					//写入到cookie
-					set_cookie('username',$this->input->post('username'));
+					setcookie("username", $this->input->post('username'), time() + 60*60*24*30,"/");
 				}
 				
 				redirect(site_url('user/user_center'));
@@ -255,10 +256,10 @@ class Login extends CI_Controller {
 				
 				//如果勾选记住帐号   把帐号写入cooke
 				if($this->input->post('remember')== TRUE){
-					//加载cookie辅助函数
-					$this->load->helper('cookie');
+					
 					//写入到cookie
-					set_cookie('username',$this->input->post('username'));
+					setcookie("username", $this->input->post('username'), time() + 60*60*24*30,
+					"/");
 				}
 				
 				redirect(site_url('user/user_center'));
@@ -299,7 +300,8 @@ class Login extends CI_Controller {
 				
 				//如果勾选记住帐号
 				if($this->input->post('remember')== TRUE){
-					
+					//写入到cookie
+					setcookie("username", $this->input->post('username'), time() + 60*60*24*30,"/");
 				}
 				
 				//返回true
@@ -331,7 +333,8 @@ class Login extends CI_Controller {
 				
 				//如果勾选记住帐号
 				if($this->input->post('remember')== TRUE){
-					
+					//写入到cookie
+					setcookie("username", $this->input->post('username'), time() + 60*60*24*30,"/");
 				}
 				//返回true
 				echo '1';
@@ -368,6 +371,12 @@ class Login extends CI_Controller {
 		//加载目录辅助函数
 		$this->load->helper('directory');
 		$portraits=directory_map('image/portrait/');
+		$img_type = array("jpg","jpeg","png","gif","JPG","JPEG","PNG","GIF");
+		foreach($portraits as $k=>$v){
+			if(!in_array(pathinfo($portraits[$k], PATHINFO_EXTENSION),$img_type)){
+				array_splice($portraits,$k);
+			}
+		}
 		$portrait=array_rand($portraits, 1);
 		$portrait='portrait/'.$portraits[$portrait];
 		

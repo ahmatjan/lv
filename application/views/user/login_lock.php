@@ -6,21 +6,23 @@
 
 		<div class="page-body">
 
-			<img class="page-lock-img" src="<?php echo base_url('public/image/profile.jpg')?>" alt="">
+			<img class="page-lock-img" src="<?php echo $user_image;?>" alt="<?php echo $user_name;?>">
 
 			<div class="page-lock-info">
 
-				<h1>Bob Nilson</h1>
+				<h1><?php echo $user_name;?></h1>
 
-				<span>bob@keenthemes.com</span>
+				<span><?php echo $user_email;?></span>
 
-				<span><em>Locked</em></span>
+				<span><em>锁定</em></span>
 
-				<form class="form-search" action="index.html">
+				<form action="<?php echo site_url('user/login/user_login')?>" method="post" enctype="multipart/form-data">
 
 					<div class="input-append">
 
-						<input type="text" class="m-wrap" placeholder="Password">
+						<input type="password" name="password" class="m-wrap" placeholder="请输入密码...">
+						
+						<input type="hidden" name="username" value="<?php echo $user_name;?>"/>
 
 						<button type="submit" class="btn blue icn-only"><i class="m-icon-swapright m-icon-white"></i></button>
 

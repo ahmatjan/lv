@@ -418,7 +418,7 @@
 
 						<ul class="dropdown-menu  hidden-phone">
 
-							<li><a href="<?php echo site_url('user/user_center') ?>"><i class="icon-user"></i> My Profile</a></li>
+							<li><a href="<?php echo site_url('user/user_center') ?>"><i class="icon-user"></i> 个人中心</a></li>
 
 							<li><a href="<?php echo site_url('user/calendar')?>"><i class="icon-calendar"></i> 计划</a></li>
 
@@ -428,7 +428,7 @@
 
 							<li class="divider"></li>
 
-							<li><a href="extra_lock.html"><i class="icon-lock"></i> Lock Screen</a></li>
+							<li><a href="<?php echo site_url('user/Login_lock')?>"><i class="icon-lock"></i> 锁定帐号</a></li>
 
 							<li><a href="<?php echo site_url('user/login/login_out')?>"><i class="icon-key"></i> 退出</a></li>
 

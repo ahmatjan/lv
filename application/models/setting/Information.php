@@ -41,4 +41,23 @@ class Information extends CI_Model {
 		}
 		return $row;
 	}
+	
+	//用位置查文章信息
+	public function select_information_forposition($position){
+		$sql = "SELECT * FROM " . $this->db->dbprefix('information') . " WHERE position = ? "; 
+
+		$query=$this->db->query($sql, array($position));
+
+		if ($query->num_rows() > 0)
+		{
+		   $row = $query->row_array(); 
+			
+		}else{
+			$row = array(
+				'title'=>'',
+				'content'=>''
+			);
+		}
+		return $row;
+	}
 }

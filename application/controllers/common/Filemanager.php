@@ -25,6 +25,12 @@ class Filemanager extends CI_Controller {
 			$directory = WWW_PATH.'/image';
 		}
 		
+		//如果用户文件夹不存在 ，创建
+		if (!is_dir($directory)) {//如果文件夹不存在创建
+			@mkdir($directory, 0777,TRUE);
+		}
+		
+		
 		if(!isset($user_groupid)){
 			$data['error_info'] = '登陆超时，请重新登陆！';
 		}
@@ -38,7 +44,7 @@ class Filemanager extends CI_Controller {
 		
 		//输入文件夹名
 		if ($this->input->get('directory') !== NULL) {
-			$directory = rtrim(WWW_PATH . '/image/' . str_replace(array('../', '..\\', '..'), '', $this->input->get('directory')), '/');
+			$directory = rtrim($directory .'/'. str_replace(array('../', '..\\', '..'), '', $this->input->get('directory')), '/');
 		} else {
 			$directory = $directory;
 		}
@@ -232,27 +238,40 @@ class Filemanager extends CI_Controller {
 	public function up_load() {
 		$this->load->language('common/filemanager');
 
+		@$user_groupid=$this->user->get_groupId();
+		
+		$img_permission=$this->user_group->get_infobygroup_id($user_groupid);//权限
+		$img_permission=$img_permission['permission'];
+		@$img_permission = unserialize($img_permission)['file_manager'];
+		
+		if(empty($img_permission)){//如果文件权限为空
+			$directory = WWW_PATH.'/image/user/'.date('Y-m-d',strtotime($this->user_info->get_useraddtime($user_groupid))).'/'.$this->user->get_userid();
+		}else{
+			$directory = WWW_PATH.'/image';
+		}
+		
+		if(!isset($user_groupid)){
+			$data['error_info'] = '登陆超时，请重新登陆！';
+		}
+
 		$json = array();
 
 		// Make sure we have the correct directory
 		if ($this->input->get('directory') !== NULL) {
-			$directory = rtrim(WWW_PATH.'/image/'. str_replace(array('../', '..\\', '..'), '', $this->input->get('directory')), '/');
-		} else {
-			$directory = WWW_PATH . '/image/';
+			$directory = rtrim($directory . '/' . str_replace(array('../', '..\\', '..'), '', $this->input->get('directory')), '/');
 		}
 
 		// Check its a directory
 		if (!is_dir($directory)) {
 			$json['error'] = '目录不存在！';
 		}
-
 		if (!$json) {
 			if (!empty($_FILES["file"]["name"]) && is_file($_FILES["file"]["tmp_name"])) {
 				
 				//重命名文件
 				$filename = date('U').'-'.rand(100,199).'.'.pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
 			
-				$config['upload_path']          = WWW_PATH . '/image/' . $this->input->get('directory');
+				$config['upload_path']          = $directory;
                 $config['allowed_types']        = 'gif|jpg|png|jpeg|x-png|pjpeg';
                 $config['file_name']     		= $filename;
                 $config['file_ext_tolower']     = TRUE;
@@ -263,7 +282,8 @@ class Filemanager extends CI_Controller {
                 $this->upload->initialize($config);
                 
                 if($this->upload->do_upload('file') !== TRUE){
-					$json['error'] = '上传失败！';
+					//$json['error'] = '上传失败！';
+					$json['error'] = $this->upload->display_errors('<p>', '</p>');
 				}else{
 					$json['success'] = '上传成功';
 				}
@@ -277,6 +297,22 @@ class Filemanager extends CI_Controller {
 	//新建文件夹
 	public function folder(){
 		$this->load->language('common/filemanager');
+		
+		@$user_groupid=$this->user->get_groupId();
+		
+		$img_permission=$this->user_group->get_infobygroup_id($user_groupid);//权限
+		$img_permission=$img_permission['permission'];
+		@$img_permission = unserialize($img_permission)['file_manager'];
+		
+		if(empty($img_permission)){//如果文件权限为空
+			$directory = WWW_PATH.'/image/user/'.date('Y-m-d',strtotime($this->user_info->get_useraddtime($user_groupid))).'/'.$this->user->get_userid();
+		}else{
+			$directory = WWW_PATH.'/image';
+		}
+		
+		if(!isset($user_groupid)){
+			$data['error_info'] = '登陆超时，请重新登陆！';
+		}
 
 		$json = array();
 
@@ -287,9 +323,7 @@ class Filemanager extends CI_Controller {
 		}
 		*/
 		if ($this->input->get('directory') !== NULL) {
-			$directory = rtrim(WWW_PATH . '/image/' . str_replace(array('../', '..\\', '..'), '', $this->input->get('directory')), '/');
-		} else {
-			$directory = WWW_PATH . '/image/';
+			$directory = rtrim($directory .'/'. str_replace(array('../', '..\\', '..'), '', $this->input->get('directory')), '/');
 		}
 
 		// Check its a directory
@@ -325,7 +359,7 @@ class Filemanager extends CI_Controller {
 	//删除
 	public function delete(){
 		$this->load->language('common/filemanager');
-
+		
 		$json = array();
 
 		// Check user has permission
@@ -342,7 +376,7 @@ class Filemanager extends CI_Controller {
 
 		// Loop through each path to run validations
 		foreach ($paths as $path) {
-			$path = rtrim(WWW_PATH . '/image/' . str_replace(array('../', '..\\', '..'), '', $path), '/');
+			$path = rtrim(WWW_PATH.'/image' . str_replace(array('../', '..\\', '..'), '', $path), '/');
 
 			// Check path exsists
 			if ($path == WWW_PATH . '/image') {
@@ -355,7 +389,7 @@ class Filemanager extends CI_Controller {
 		if (!$json) {
 			// Loop through each path
 			foreach ($paths as $path) {
-				$path = rtrim(WWW_PATH . '/image/' . str_replace(array('../', '..\\', '..'), '', $path), '/');
+				$path = rtrim(WWW_PATH.'/image/' . str_replace(array('../', '..\\', '..'), '', $path), '/');
 
 				// If path is just a file delete it
 				if (is_file($path)) {

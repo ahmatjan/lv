@@ -136,6 +136,12 @@ class public_section extends CI_Model {
 		
 		$data['logo'] = base_url('public/image/logo.png');
 		
+		if(isset($_COOKIE['username'])){
+			$data['user_name']=$_COOKIE['username'];
+		}else{
+			$data['user_name']='';
+		}
+		
 		return $this->load->view('common/top',$data);
 	}
 	

@@ -345,6 +345,11 @@ var_dump($nav_parents);
 		
 		$this->public_section->get_header();
 		
+		$value = "my cookie value";
+
+// 发送一个简单的 cookie
+setcookie("TestCookie",$value);
+		
 		$this->load->view('test');
 		
 		

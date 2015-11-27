@@ -412,7 +412,7 @@
 
 						<ul class="dropdown-menu  hidden-phone">
 
-							<li><a href="<?php echo site_url('user/user_center') ?>"><i class="icon-user"></i> My Profile</a></li>
+							<li><a href="<?php echo site_url('user/user_center') ?>"><i class="icon-user"></i> 个人中心</a></li>
 
 							<li><a href="<?php echo site_url('user/calendar')?>"><i class="icon-calendar"></i>计划</a></li>
 
@@ -516,7 +516,7 @@
 
 						<i class="icon-user"></i>
 
-						<input class="m-wrap placeholder-no-fix m-bottom luser_name" type="text" placeholder="帐号" name="username"/>
+						<input class="m-wrap placeholder-no-fix m-bottom luser_name" type="text" placeholder="帐号" name="username" value="<?php echo $user_name;?>"/>
 
 					</div>
 

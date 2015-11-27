@@ -304,15 +304,13 @@
 
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 
-			<h3>注册条款</h3>
+			<h5><?php echo $values['title'];?></h5>
 
 		</div>
 
 		<div class="modal-body">
 
-			<a class="btn red" data-toggle="modal" href="#notlong" alt="" style="position: absolute; top: 50%; right: 12px">Not So Long Modal</a>
-
-			<img style="height: 800px" src="<?php echo base_url('public/image/KwPYo.jpg')?>">
+			<?php echo $values['content'];?>
 
 		</div>
 
@@ -330,15 +328,13 @@
 
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 
-			<h3>网站价值观</h3>
+			<h5><?php echo $register_rule['title']?></h5>
 
 		</div>
 
 		<div class="modal-body">
 
-			<a class="btn red" data-toggle="modal" href="#notlong" alt="" style="position: absolute; top: 50%; right: 12px">Not So Long Modal</a>
-
-			<img style="height: 800px" src="<?php echo base_url('public/image/KwPYo.jpg')?>">
+			<?php echo $register_rule['content']?>
 
 		</div>
 

@@ -9,10 +9,22 @@ class Login_lock extends CI_Controller {
 	
 	public function index()
 	{
-		//if($this->agent->is_robot()){
-			//return;
-		//}
+		if($this->agent->is_robot()){
+			show_404();
+		}
 		//----------------------------------------------------------------------------------------------
+		if(!isset($_SESSION['user_id'])){
+			$this->session->set_flashdata('info_login', '锁定超时，请重新登陆！');
+			redirect(site_url('user/login'));
+			exit();
+		}
+		
+		if(isset($_COOKIE['username'])){
+			//写入到cookie
+			setcookie("username", $this->user->get_username(), time() + 60*60,"/");
+		}
+		
+		unset($_SESSION['user_id']);
 		$this->lang->load('user/login');
 		
 		//header
@@ -41,6 +53,26 @@ class Login_lock extends CI_Controller {
 		
 		//bottom
 		$data['text_signupbottom']=$this->lang->line('text_signupbottom');
+		
+		if(isset($_COOKIE["username"])){//如果cookie存在
+			$this->load->model('user/user_info');
+			$username=$_COOKIE["username"];
+			if(preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i',$username)){//如果是邮箱
+				$user_info = $this->user_info->get_useremail_info($username);
+				$data['user_name']=$user_info['user_name'];
+				$data['user_email']=$user_info['email'];
+				$data['user_image']=$this->image->rezice($user_info['image'],200,200);
+			}else{
+				$user_info = $this->user_info->get_username_info($username);
+				$data['user_name']=$user_info['user_name'];
+				$data['user_email']=$user_info['email'];
+				$data['user_image']=$this->image->rezice($user_info['image'],200,200);
+			}
+		}else{
+			$data['user_name']='';
+			$data['user_email']='';
+			$data['user_image']='';
+		}
 		
 		$this->load->view('user/login_lock.php',$data);
 	}
