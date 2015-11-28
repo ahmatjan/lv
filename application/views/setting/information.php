@@ -236,6 +236,17 @@
 
 											</div>
 											
+											<div class="control-group">
+
+												<label class="control-label">排序</label>
+
+												<div class="controls">
+
+													<input type="text" id="firstName" class="m-wrap span12" placeholder="排序" name="order" value="<?php echo $order?>">
+												</div>
+
+											</div>
+											
 											<!--文本编辑器-->
 											<div class="control-group">
 

@@ -59,6 +59,7 @@ class Informations extends CI_Controller {
 			$data['class']=$informations['class'];
 			$data['content']=$informations['content'];
 			$data['position']=$informations['position'];
+			$data['order']=$informations['order'];
 		}else{
 			$data['information_id']='';
 			$data['title']='';
@@ -66,19 +67,13 @@ class Informations extends CI_Controller {
 			$data['class']='';
 			$data['content']='';
 			$data['position']='';
+			$data['order']='0';
 		}
 		
-		$data['select_position']=array(
-				'register_rule'=>'注册条款',
-				'values'=>'网站价值观',
-				'healper'=>'网站帮助',
-				'user_healper'=>'用户中心帮助'
-			);
+		$this->config->load('permission');//加载配置文件
+		$data['select_position']=$this->config->item('infomation_position');
 			
-		$data['select_rules']=array(
-				'rule'=>'规则',
-				'helper'=>'帮助'
-			);
+		$data['select_rules']=$this->config->item('infomation_rules');
 		
 		$this->load->view('setting/information',$data);
 		$this->public_section->get_footer();
@@ -90,12 +85,14 @@ class Informations extends CI_Controller {
 		$this->form_validation->set_rules('title', '文章标题', 'required|min_length[2]|max_length[128]');
 		$this->form_validation->set_rules('class', '文章类型', 'required|max_length[96]');
 		$this->form_validation->set_rules('information_content', '文章内容', 'required|min_length[5]|max_length[2000]');
-		$this->form_validation->set_rules('position', '显示位置', 'required|min_length[5]|max_length[25]');
+		$this->form_validation->set_rules('position', '显示位置', 'required|max_length[25]');
+		$this->form_validation->set_rules('order', '排序', 'required|integer');
 		if ($this->form_validation->run() == TRUE){
 			$data['information_id']=$this->input->post('information_id');
 			$data['title']=$this->input->post('title');
 			$data['class']=$this->input->post('class');
 			$data['position']=$this->input->post('position');
+			$data['order']=$this->input->post('order');
 			$data['author']=$this->user->get_username();
 			$data['information_content']=$this->input->post('information_content');
 			$this->load->model('setting/information');//装载模型
@@ -104,7 +101,7 @@ class Informations extends CI_Controller {
 			redirect('setting/informations?tab_position=tab_1_2');
 		}else{
 			$this->session->set_flashdata('setting_false', '文章操作失败！');
-			redirect('setting/informations?tab_position=tab_1_3');
+			redirect('setting/informations?tab_position=tab_1_3&information_id='.$this->input->get('information_id'));
 		}
 		
 	}

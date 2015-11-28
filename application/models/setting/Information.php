@@ -7,10 +7,10 @@ class Information extends CI_Model {
 		//传入一个待添加的数组
 		if(isset($data['information_id'])){
 			//id不为空是更新
-			$sql="REPLACE INTO " . $this->db->dbprefix('information') . " VALUES ('".(int)$data['information_id']."',".$this->db->escape($data['title']).",".$this->db->escape($data['author']).",'".date("Y-m-d H:m:s")."',".$this->db->escape($data['class']).",".$this->db->escape($data['information_content']).",".$this->db->escape($data['position']).")";
+			$sql="REPLACE INTO " . $this->db->dbprefix('information') . " VALUES ('".(int)$data['information_id']."',".$this->db->escape($data['title']).",".$this->db->escape($data['author']).",'".date("Y-m-d H:m:s")."',".$this->db->escape($data['class']).",".$this->db->escape($data['information_content']).",".$this->db->escape($data['position']).",".(int)$data['order'].")";
 		}else{
 			//id为空是新添加
-			$sql="INSERT INTO " . $this->db->dbprefix('information') . " (title, author, addtime, class, content, position) VALUES (".$this->db->escape($data['title']).",".$this->db->escape($data['author']).",'".date("Y-m-d H:m:s")."',".$this->db->escape($data['class']).",".$this->db->escape($data['information_content']).",".$this->db->escape($data['position']).")";
+			$sql="INSERT INTO " . $this->db->dbprefix('information') . " (title, author, addtime, class, content, position, order) VALUES (".$this->db->escape($data['title']).",".$this->db->escape($data['author']).",'".date("Y-m-d H:m:s")."',".$this->db->escape($data['class']).",".$this->db->escape($data['information_content']).",".$this->db->escape($data['position']).",".(int)$data['order'].")";
 		}
 		
 		$this->db->query($sql);
@@ -59,5 +59,17 @@ class Information extends CI_Model {
 			);
 		}
 		return $row;
+	}
+	
+	public function get_informationall($class='',$position='')
+	{
+	//查询所有符合的文章
+		$sql = "SELECT * FROM " . $this->db->dbprefix('information') . " WHERE class = ? AND position = ? ORDER BY  'order' ASC"; 
+
+		$query=$this->db->query($sql,array($class,$position));
+
+		$row = $query->result_array(); 
+		return $row;
+		
 	}
 }

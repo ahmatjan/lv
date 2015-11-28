@@ -183,6 +183,11 @@ class Login extends CI_Controller {
 		$this->load->model('user/user_info');
 		
 		$username=$this->input->post('username',TRUE);
+		if(empty($username)){
+			//登陆不成功，把错误信息写入session
+			$this->session->set_flashdata('error_login', '用户名、邮箱，密码不能为空！');//闪出错误信息
+			redirect(site_url('user/login'));
+		}
 		$password=md5($this->input->post('password',TRUE));
 		if(!isset($username) || !isset($password)){
 			//登陆不成功，把错误信息写入session
@@ -219,6 +224,8 @@ class Login extends CI_Controller {
 				if($this->input->post('remember')== TRUE){
 					//写入到cookie
 					setcookie("username", $this->input->post('username'), time() + 60*60*24*30,"/");
+				}else{
+					setcookie("username", $this->input->post('username'), time() + 60*30,"/");//记住30分钟
 				}
 				
 				redirect(site_url('user/user_center'));
@@ -226,7 +233,7 @@ class Login extends CI_Controller {
 		}else{
 				//登陆不成功，把错误信息写入session
 				$this->session->set_flashdata('error_login', '登陆名或密码不正确！');//闪出错误信息
-				redirect(site_url('user/Login'));
+				redirect(site_url('user/login'));
 			}
 		}
 		
@@ -260,6 +267,8 @@ class Login extends CI_Controller {
 					//写入到cookie
 					setcookie("username", $this->input->post('username'), time() + 60*60*24*30,
 					"/");
+				}else{
+					setcookie("username", $this->input->post('username'), time() + 60*30,"/");//记住30分钟
 				}
 				
 				redirect(site_url('user/user_center'));
@@ -302,6 +311,8 @@ class Login extends CI_Controller {
 				if($this->input->post('remember')== TRUE){
 					//写入到cookie
 					setcookie("username", $this->input->post('username'), time() + 60*60*24*30,"/");
+				}else{
+					setcookie("username", $this->input->post('username'), time() + 60*30,"/");//记住30分钟
 				}
 				
 				//返回true
@@ -335,6 +346,8 @@ class Login extends CI_Controller {
 				if($this->input->post('remember')== TRUE){
 					//写入到cookie
 					setcookie("username", $this->input->post('username'), time() + 60*60*24*30,"/");
+				}else{
+					setcookie("username", $this->input->post('username'), time() + 60*30,"/");//记住30分钟
 				}
 				//返回true
 				echo '1';

@@ -5501,3 +5501,7 @@ Datatables Plugin(in v1.3)
 .note-editor .btn-sm{
 	padding: 3px 10px;
 }
+.helper-list ul , .helper-list ul li{
+	float: left;
+	margin: 5px 10px 5px 0;
+}

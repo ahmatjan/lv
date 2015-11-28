@@ -18,13 +18,13 @@ class Login_lock extends CI_Controller {
 			redirect(site_url('user/login'));
 			exit();
 		}
-		
-		if(isset($_COOKIE['username'])){
+		if(!isset($_COOKIE['username'])){
 			//写入到cookie
-			setcookie("username", $this->user->get_username(), time() + 60*60,"/");
+			setcookie("username", $this->user->get_username(), time() + 60*30,"/");
 		}
 		
 		unset($_SESSION['user_id']);
+		
 		$this->lang->load('user/login');
 		
 		//header
