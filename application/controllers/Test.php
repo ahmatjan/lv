@@ -343,14 +343,22 @@ var_dump($nav_parents);
 		//三级联动
 		
 		
-		$this->public_section->get_header();
+		//$this->public_section->get_header();
 		
-		$value = "my cookie value";
-
-// 发送一个简单的 cookie
-setcookie("TestCookie",$value);
+		//$str = 'about/helper/con?position=about_us';
+		//echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
 		
-		$this->load->view('test');
+		
+		
+		
+		//echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+		
+		
+		$this->load->library('user_agent');
+		echo $this->agent->get_page_url();
+		
+		show_error('lokkkkk');
+		//$this->load->view('test');
 		
 		
 		/*

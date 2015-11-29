@@ -264,9 +264,29 @@ class public_section extends CI_Model {
 
 			//判断权限，如果没有查看权限不显示
 			if(!empty($nav_parents[$k]['nav_url'])){
+				if(strpos($nav_parents[$k]['nav_url'],'?') !== FALSE){//如果链接有问号
+					if(substr_count($nav_parents[$k]['nav_url'],'/') <= 1){//如果链接有问号，/有1个
+						if($this->user->hasPermission('access',substr($nav_parents[$k]['nav_url'],0,stripos($nav_parents[$k]['nav_url'],'?')))===false){//截取控制器部分，判断权限
+							unset($nav_parents[$k]);
+						}
+						//echo substr($nav_parents[$k]['nav_url'],0,stripos($nav_parents[$k]['nav_url'],'?'));
+					}else{//有问号，/超过1个
+						if($this->user->hasPermission('access',substr($nav_parents[$k]['nav_url'],0,strpos($nav_parents[$k]['nav_url'],'/',stripos($nav_parents[$k]['nav_url'],'/') + 2)))===false){//截取判断权限
+							unset($nav_parents[$k]);
+						}
+						//echo substr($nav_parents[$k]['nav_url'],0,strpos($nav_parents[$k]['nav_url'],'/',stripos($nav_parents[$k]['nav_url'],'/') + 2));	
+					}
+				}else{//没有问号，直接判断权限
+					if($this->user->hasPermission('access',$nav_parents[$k]['nav_url'])===false){
+						unset($nav_parents[$k]);
+					}
+				}
+				
+				/*
 				if($this->user->hasPermission('access',$nav_parents[$k]['nav_url'])===false){
 					unset($nav_parents[$k]);
 				}
+				*/
 			}
 			
 			if(!empty($nav_childs[$k])){
@@ -390,23 +410,44 @@ class public_section extends CI_Model {
 	//访问统计函数
 	public function report_access(){
 		//系统类型$this->agent->is_robot()
-		$platform=$this->agent->platform();
+		if($this->agent->platform()){
+			$platform=$this->agent->platform();
+		}else{
+			$platform = NULL;
+		}
 		
 		//浏览器
-		$browser=$this->agent->browser().$this->agent->version();
+		if($this->agent->browser()){
+			$browser = $this->agent->browser().$this->agent->version();
+		}else{
+			$browser = NULL;
+		}
+		
 		//IP
 		$ip=$this->input->ip_address();
 		//上一级URL
-		$referrer_url=$this->agent->referrer();
+		if($this->agent->referrer()){
+			$referrer_url=$this->agent->referrer();
+		}else{
+			$referrer_url= NULL;
+		}
+		
+		//判断机器人
+		if($this->agent->robot()){
+			$robot = $this->agent->robot();
+		}else{
+			$robot = NULL;
+		}
+		
 		$report_flow=array(
 				'ip'					=>$ip,
 				'referrer_url'			=>$referrer_url,
-				'current_url'			=>current_url(),
+				'current_url'			=>$this->agent->get_page_url(),
 				'token'					=>@$_SESSION['token'],
 				'access_time'			=>date('Y-m-d H:i:s'),
 				'platform'				=>$platform,
 				'browser'				=>$browser,
-				'robot'					=>$this->agent->robot(),
+				'robot'					=>$robot,
 				'user_agent'			=>$this->agent->agent_string(),
 		);
 		
@@ -415,7 +456,7 @@ class public_section extends CI_Model {
 				
 				
 		//判断，如果是蜘蛛，不开session
-		if(!$this->agent->robot()){
+		if($this->agent->is_robot() == FALSE && strpos($this->agent->platform(),'Unknown') === FALSE && $this->agent->browser() !== NULL){
 			//写入一个随机session做为token令牌，用来检查是同一次访问
 			if(!isset($_SESSION['token'])){//如果token不存在或者为空
 				$this->load->helper('string');
@@ -454,7 +495,7 @@ class public_section extends CI_Model {
 			$robot_data=array(
 					'ip'					=>$ip,
 					'robot_name'			=>$this->agent->robot(),
-					'url'					=>current_url(),
+					'url'					=>$this->agent->get_page_url(),
 					'access_time'			=>date('Y-m-d H:i:s'),
 			);
 		//直接写入到数据库（因为这个类在model,所以没有再去load->model）
