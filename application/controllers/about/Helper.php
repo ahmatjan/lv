@@ -28,9 +28,9 @@ class Helper extends CI_Controller {
 		$data['text_title_helper']=$this->lang->line('text_title_helper');
 		
 		$informations=array();
-		if($this->input->get('position') !== NULL){
+		if($this->uri->segment(2) !== NULL){
 			$this->load->model('setting/information');
-			$informations = $this->information->get_informationall('helper',$this->input->get('position'));
+			$informations = $this->information->get_informationall('helper',$this->uri->segment(2));
 		}
 		
 		if(empty($informations)){
@@ -42,7 +42,7 @@ class Helper extends CI_Controller {
 			
 		//遍历$select_position
 		foreach($select_position as $k=>$v){
-			if($this->input->get('position') == $k){
+			if($this->uri->segment(2) == $k){
 				$position_name=$select_position[$k];
 				$position_url=site_url('about/helper?position=').$k;
 			}
@@ -77,9 +77,9 @@ class Helper extends CI_Controller {
 		$this->lang->load('about/helper');
 		
 		$informations=array();
-		if($this->input->get('information_id') !== NULL){
+		if($this->uri->segment(3) !== NULL){
 			$this->load->model('setting/information');
-			$informations=$this->information->select_information_forid($this->input->get('information_id'));
+			$informations=$this->information->select_information_forid($this->uri->segment(3));
 		}
 		
 		if(empty($informations)){
@@ -109,9 +109,9 @@ class Helper extends CI_Controller {
 		
 		//遍历$select_position
 		foreach($select_position as $k=>$v){
-			if($this->input->get('position') == $k){
+			if($this->uri->segment(2) == $k){
 				$position_name=$select_position[$k];
-				$position_url=site_url('about/helper?position=').$k;
+				$position_url=site_url('about/helper/'.$k);
 			}
 		}
 			
@@ -126,7 +126,7 @@ class Helper extends CI_Controller {
 								),
 			'setting'		=>array(
 								'name'=> isset($informations['title']) ? $informations['title'] : '没有内容',
-								'this_url'=> isset($informations['title']) ? site_url('about/helper/content?position='.$this->input->get('position').'&information_id='.$informations['information_id']) : site_url(),
+								'this_url'=> isset($informations['title']) ? site_url('about/helper/content/'.$this->uri->segment(2).'/'.$informations['information_id']) : site_url(),
 								'url'=>''
 								),
 		);
