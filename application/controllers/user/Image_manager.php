@@ -26,11 +26,11 @@ class Image_manager extends CI_Controller {
 		$data['breadcrumbs']=array(
 			'home'			=>array(
 								'name'=>$this->lang->line('text_home'),
-								'url'=>site_url('user/User_center')
+								'url'=>site_url()
 								),
 			'user_center'		=>array(
 								'name'=>$this->lang->line('text_user_home'),
-								'url'=>site_url('user/user_center')
+								'url'=>site_url('user')
 								),
 			'setting'		=>array(
 								'name'=>$this->lang->line('heading_title'),

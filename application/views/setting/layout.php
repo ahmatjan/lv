@@ -143,6 +143,8 @@
 																<th>布局名称</th>
 
 																<th class="hidden-480">路由</th>
+																
+																<th class="hidden-480">路由别称</th>
 
 																<th>修改</th>
 
@@ -163,6 +165,8 @@
 																<td><?php echo $layout['layout_name']?></td>
 
 																<td class="hidden-480"><a href="<?php echo site_url($layout['route'])?>"><?php echo $layout['route']?></a></td>
+																
+																<td class="hidden-480"><?php echo $layout['another_route']?></a></td>
 
 																<td>
 																<span class="label label-success"><a href="<?php echo site_url('setting/layout_form').'?layout_id='.$layout['layout_id'].'&tab_position=tab_1_2'?>" style="color: #FFF">修改</a></span>

@@ -11,7 +11,7 @@ class Login extends CI_Controller {
 	public function index()
 	{
 		if($this->user->is_Logged()){
-			redirect(site_url('user/User_center'));
+			redirect(site_url('user'));
 			exit();
 		}
 		//----------------------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ class Login extends CI_Controller {
 	//修改密码
 	public function edit_password(){
 		if($this->user->is_Logged()){
-			redirect(site_url('user/User_center'));
+			redirect(site_url('user'));
 		}
 		//----------------------------------------------------------------------------------------------
 		
@@ -228,7 +228,7 @@ class Login extends CI_Controller {
 					setcookie("username", $this->input->post('username'), time() + 60*30,"/");//记住30分钟
 				}
 				
-				redirect(site_url('user/user_center'));
+				redirect(site_url('user'));
 				
 		}else{
 				//登陆不成功，把错误信息写入session
@@ -271,7 +271,7 @@ class Login extends CI_Controller {
 					setcookie("username", $this->input->post('username'), time() + 60*30,"/");//记住30分钟
 				}
 				
-				redirect(site_url('user/user_center'));
+				redirect(site_url('user'));
 				
 		}else{
 				//登陆不成功，把错误信息写入session
@@ -429,7 +429,7 @@ class Login extends CI_Controller {
 				);
 				$this->report->updata_tab($access_data);
 
-				redirect(site_url('user/User_center'));
+				redirect(site_url('user'));
 				
 			}else{
 				redirect(site_url('user/login'));
@@ -470,14 +470,14 @@ class Login extends CI_Controller {
 				);
 				$this->report->updata_tab($access_data);
 
-				redirect(site_url('user/user_center'));
+				redirect(site_url('user'));
 				
 			}else{
 				redirect(site_url('user/login'));
 			}
 		}
 		
-		redirect('user/User_center', 'location');
+		redirect('user', 'location');
 	}
 	
 	//找回密码

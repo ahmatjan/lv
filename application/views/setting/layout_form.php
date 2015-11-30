@@ -102,6 +102,18 @@
 
 											</div>
 											
+											<div class="control-group">
+
+												<label class="control-label">路由别名：</label>
+
+												<div class="controls">
+
+													<input type="text" id="firstName" class="m-wrap span12" placeholder="路由（控制器文件的路径，例如：user/user_center）..." name="layout_another_route" value="<?php echo $layouts['another_route']?>">
+
+												</div>
+
+											</div>
+											
 											<div class="form-actions">
 
 												<input type="hidden" name="layout_id" value="<?php echo $layouts['layout_id']?>">

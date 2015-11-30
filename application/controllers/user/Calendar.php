@@ -35,7 +35,7 @@ class calendar extends CI_Controller {
 								),
 			'user_center'		=>array(
 								'name'=>$this->lang->line('text_user_home'),
-								'url'=>site_url('user/user_center')
+								'url'=>site_url('user')
 								),
 			'setting'		=>array(
 								'name'=>$this->lang->line('heading_title'),

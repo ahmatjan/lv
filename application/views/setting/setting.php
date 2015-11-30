@@ -116,7 +116,7 @@
 									
 										<!-- BEGIN FORM-->
 
-										<form id="base-setting" action="<?php echo site_url('setting/Setting/updata_setting')?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+										<form id="base-setting" action="<?php echo site_url('setting/setting/updata_setting')?>" method="post" enctype="multipart/form-data" class="form-horizontal">
 
 											<div class="control-group">
 
@@ -508,7 +508,7 @@
 											
 											<div class="control-group">
 
-												<label class="control-label">是否以文件方式缓存图片：</label>
+												<label class="control-label" title="图片高或宽超过300px添加水印">添加水印：</label>
 
 												<div class="controls">
 
@@ -639,11 +639,9 @@
 
 																<th>名称</th>
 																
-																<th class="hidden-480">上一级目录</th>
-
-																<th class="hidden-480">图标</th>
-
 																<th>链接</th>
+																
+																<th class="hidden-480">链接别称</th>
 																
 																<th>显示位置</th>
 																
@@ -667,11 +665,9 @@
 
 																<td><?php echo $item['nav_name']?></td>
 																
-																<td>-----无-----</td>
-
-																<td class="hidden-480"><i class="<?php echo 'icon-'.$item['nav_ico']?>"></i><?php echo $item['nav_ico']?></td>
-
 																<td class="hidden-480"><?php echo $item['nav_url']?></td>
+																
+																<td class="hidden-480"><?php echo $item['another_url']?></td>
 																
 																<td><?php echo $item['nav_class']?></td>
 																
@@ -708,11 +704,9 @@
 
 																<td><?php echo $item['nav_name'].'=>'.$childs['nav_child_name']?></td>
 																
-																<td class="hidden-480"><?php echo $item['nav_name']?></td>
-
-																<td class="hidden-480">-----无-----</td>
-
 																<td><?php echo $childs['nav_child_url']?></td>
+																
+																<td><?php echo $childs['another_child_url']?></td>
 																
 																<td><?php echo $item['nav_class']?></td>
 																
@@ -834,11 +828,9 @@
 
 																<th>名称</th>
 
-																<th class="hidden-480">上一级目录</th>
-
-																<th class="hidden-480">图标</th>
-																
 																<th>链接</th>
+																
+																<th class="hidden-480">链接别称</th>
 																
 																<th class="hidden-480">显示</th>
 																
@@ -860,11 +852,9 @@
 
 																<td><?php echo $nav_helper['nav_name']?></td>
 
-																<td>-----无-----</td>
-
-																<td class="hidden-480"><i class="<?php echo 'icon-'.$nav_helper['nav_ico']?>"></i><?php echo $nav_helper['nav_ico']?></td>
-
 																<td><?php echo $nav_helper['nav_url']?></td>
+																
+																<td class="hidden-480"><?php echo $nav_helper['another_url']?></td>
 																
 																<?php if ($nav_helper['view_start']==FALSE):?>
 																
@@ -899,11 +889,9 @@
 
 																<td><?php echo $nav_helper['nav_name'].'=>'.$helper_childs['nav_child_name']?></td>
 																
-																<td><?php echo $nav_helper['nav_name']?></td>
-
-																<td class="hidden-480">-----无-----</td>
-
 																<td><?php echo $helper_childs['nav_child_url']?></td>
+																
+																<td class="hidden-480"><?php echo $helper_childs['another_child_url']?></td>
 
 																<?php if ($helper_childs['view_start']==FALSE):?>
 																
@@ -1023,11 +1011,9 @@
 
 																<th>名称</th>
 
-																<th class="hidden-480">上一级目录</th>
-
-																<th class="hidden-480">图标</th>
-																
 																<th>链接</th>
+																
+																<th class="hidden-480">链接别称</th>
 																
 																<th class="hidden-480">显示</th>
 																
@@ -1049,11 +1035,9 @@
 
 																<td><?php echo $nav_view_top['nav_name']?></td>
 
-																<td>-----无-----</td>
-
-																<td class="hidden-480"><i class="<?php echo 'icon-'.$nav_view_top['nav_ico']?>"></i><?php echo $nav_view_top['nav_ico']?></td>
-
 																<td><?php echo $nav_view_top['nav_url']?></td>
+																
+																<td class="hidden-480"><?php echo $nav_view_top['another_url']?></td>
 																
 																<?php if ($nav_view_top['view_start']==FALSE):?>
 																
@@ -1088,11 +1072,9 @@
 
 																<td><?php echo $nav_view_top['nav_name'].'=>'.$nav_view_top_childs['nav_child_name']?></td>
 																
-																<td><?php echo $nav_view_top['nav_name']?></td>
-
-																<td class="hidden-480">-----无-----</td>
-
 																<td><?php echo $nav_view_top_childs['nav_child_url']?></td>
+																
+																<td class="hidden-480"><?php echo $nav_view_top_childs['another_child_url']?></td>
 
 																<?php if ($nav_view_top_childs['view_start']==FALSE):?>
 																
@@ -1212,11 +1194,9 @@
 
 																<th>名称</th>
 
-																<th class="hidden-480">上一级目录</th>
-
-																<th class="hidden-480">图标</th>
-																
 																<th>链接</th>
+																
+																<th class="hidden-480">链接别称</th>
 																
 																<th class="hidden-480">显示</th>
 																
@@ -1238,11 +1218,9 @@
 
 																<td><?php echo $nav_admin_top['nav_name']?></td>
 
-																<td>-----无-----</td>
-
-																<td class="hidden-480"><i class="<?php echo 'icon-'.$nav_admin_top['nav_ico']?>"></i><?php echo $nav_admin_top['nav_ico']?></td>
-
 																<td><?php echo $nav_admin_top['nav_url']?></td>
+																
+																<td class="hidden-480"><?php echo $nav_admin_top['another_url']?></td>
 																
 																<?php if ($nav_admin_top['view_start']==FALSE):?>
 																
@@ -1277,11 +1255,9 @@
 
 																<td><?php echo $nav_admin_top['nav_name'].'=>'.$nav_admin_top_childs['nav_child_name']?></td>
 																
-																<td><?php echo $nav_admin_top['nav_name']?></td>
-
-																<td class="hidden-480">-----无-----</td>
-
 																<td><?php echo $nav_admin_top_childs['nav_child_url']?></td>
+																
+																<td class="hidden-480"><?php echo $nav_admin_top_childs['another_child_url']?></td>
 
 																<?php if ($nav_admin_top_childs['view_start']==FALSE):?>
 																

@@ -245,7 +245,8 @@ class public_section extends CI_Model {
 	//这是用户后台左侧栏
 	public function get_column_left(){
 		//获取当前页链接
-		$active=uri_string();
+		$active = $this->uri->segment(1);
+		$active .= '/'.$this->uri->segment(2);
 		$active=strtolower($active);
 		
 		$this->load->model('setting/nav_setting');
@@ -263,25 +264,16 @@ class public_section extends CI_Model {
 			}
 
 			//判断权限，如果没有查看权限不显示
-			if(!empty($nav_parents[$k]['nav_url'])){
-				if(strpos($nav_parents[$k]['nav_url'],'?') !== FALSE){//如果链接有问号
-					if(substr_count($nav_parents[$k]['nav_url'],'/') <= 1){//如果链接有问号，/有1个
-						if($this->user->hasPermission('access',substr($nav_parents[$k]['nav_url'],0,stripos($nav_parents[$k]['nav_url'],'?')))===false){//截取控制器部分，判断权限
-							unset($nav_parents[$k]);
-						}
-						//echo substr($nav_parents[$k]['nav_url'],0,stripos($nav_parents[$k]['nav_url'],'?'));
-					}else{//有问号，/超过1个
-						if($this->user->hasPermission('access',substr($nav_parents[$k]['nav_url'],0,strpos($nav_parents[$k]['nav_url'],'/',stripos($nav_parents[$k]['nav_url'],'/') + 2)))===false){//截取判断权限
-							unset($nav_parents[$k]);
-						}
-						//echo substr($nav_parents[$k]['nav_url'],0,strpos($nav_parents[$k]['nav_url'],'/',stripos($nav_parents[$k]['nav_url'],'/') + 2));	
+			if(!empty($nav_parents[$k]['another_url'])){
+				if(substr_count($nav_parents[$k]['another_url'],'/') <= 1){//\/有1个
+					if($this->user->hasPermission('access',$nav_parents[$k]['another_url'])===false){
+						unset($nav_parents[$k]);
 					}
-				}else{//没有问号，直接判断权限
-					if($this->user->hasPermission('access',$nav_parents[$k]['nav_url'])===false){
+				}else{//，/超过1个
+					if($this->user->hasPermission('access',substr($nav_parents[$k]['another_url'],0,strpos($nav_parents[$k]['another_url'],'/',stripos($nav_parents[$k]['another_url'],'/') + 2)))===false){//截取判断权限
 						unset($nav_parents[$k]);
 					}
 				}
-				
 				/*
 				if($this->user->hasPermission('access',$nav_parents[$k]['nav_url'])===false){
 					unset($nav_parents[$k]);
@@ -296,12 +288,17 @@ class public_section extends CI_Model {
 					}
 					
 					//判断权限，如果没有查看权限不显示
-					if(!empty($nav_childs[$k][$b]['nav_child_url'])){
-						if($this->user->hasPermission('access',$nav_childs[$k][$b]['nav_child_url'])===false){
-							unset($nav_childs[$k][$b]);
+					if(!empty($nav_childs[$k][$b]['another_child_url'])){
+						if(substr_count($nav_childs[$k][$b]['another_child_url'],'/') <= 1){//\/有1个
+							if($this->user->hasPermission('access',$nav_childs[$k][$b]['another_child_url'])===false){
+								unset($nav_childs[$k][$b]);
+							}
+						}else{//，/超过1个
+							if($this->user->hasPermission('access',substr($nav_childs[$k][$b]['another_child_url'],0,strpos($nav_childs[$k][$b]['another_child_url'],'/',stripos($nav_childs[$k][$b]['another_child_url'],'/') + 2)))===false){//截取判断权限
+								unset($nav_childs[$k][$b]);
+							}
 						}
 					}
-					
 				}
 			}
 		}

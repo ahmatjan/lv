@@ -109,7 +109,7 @@ class Sns extends CI_Controller {
 					if($_SESSION['sns_redirect']){
 						redirect($_SESSION['sns_redirect']);
 					}else{
-						redirect('user/user_center');
+						redirect('user');
 					}
            			
 				}

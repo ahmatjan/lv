@@ -35,7 +35,7 @@ class Setting_form extends CI_Controller {
 								),
 			'user_center'		=>array(
 								'name'=>$this->lang->line('text_user_home'),
-								'url'=>site_url('user/User_center')
+								'url'=>site_url('user')
 								),
 			'setting'		=>array(
 								'name'=>$this->lang->line('heading_title'),
@@ -69,6 +69,7 @@ class Setting_form extends CI_Controller {
 				'nav_ico'=>$nav_parent['nav_ico'],//一级目录图标
 				'nav_class'=>$nav_parent['nav_class'],//显示位置
 				'nav_url'=>$nav_parent['nav_url'],//一级链接
+				'another_url'=>$nav_parent['another_url'],//链接别称
 				'nav_store'=>$nav_parent['store'],//一级排序
 				'nav_edit_start'=>$nav_parent['edit_start'],//能否被其它管理员修改
 				'nav_view_start'=>$nav_parent['view_start'],//是否显示
@@ -86,6 +87,7 @@ class Setting_form extends CI_Controller {
 				'nav_ico'=>'',//一级目录图标
 				'nav_class'=>'',//显示位置
 				'nav_url'=>$nav_child['nav_child_url'],//一级链接
+				'another_url'=>$nav_child['another_child_url'],//一级链接
 				'nav_store'=>$nav_child['store'],//一级排序
 				'nav_edit_start'=>$nav_child['edit_start'],//能否被其它管理员修改
 				'nav_view_start'=>$nav_child['view_start'],//是否显示
@@ -99,6 +101,7 @@ class Setting_form extends CI_Controller {
 				'nav_ico'=>'',//一级目录图标
 				'nav_class'=>'',//显示位置
 				'nav_url'=>'',//一级链接
+				'another_url'=>'',//一级链接
 				'nav_store'=>'0',//一级排序
 				'nav_edit_start'=>'',//能否被其它管理员修改
 				'nav_view_start'=>'',//是否显示
@@ -125,6 +128,7 @@ class Setting_form extends CI_Controller {
 		$data['top_navico']=$this->input->post('top_navico');//一级目录图标
 		$data['navname']=$this->input->post('navname');//导航名
 		$data['top_navurl']=$this->input->post('top_navurl');//导航链接
+		$data['another_url']=$this->input->post('another_url');//导航链接
 		$data['navstore']=$this->input->post('navstore');//导航排序
 		$data['navlocation']=$this->input->post('navlocation');//导航显示位置
 		$data['isview']=$this->input->post('isview');//是否显示
@@ -175,6 +179,9 @@ class Setting_form extends CI_Controller {
 		}
 		if($this->input->post('top_navurl')){
 			$this->form_validation->set_rules('top_navurl', '导航路由', 'max_length[128]');
+		}
+		if($this->input->post('another_url')){
+			$this->form_validation->set_rules('another_url', '导航路由', 'max_length[128]');
 		}
 		
 		$this->form_validation->set_rules('navname', '导航名称', 'max_length[128]');

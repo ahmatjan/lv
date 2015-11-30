@@ -44,10 +44,10 @@ class layout_info extends CI_Model {
 		//传入一个待添加的数组
 		if(!empty($data['layout_id'])){
 			//id不为空是更新
-			$sql="REPLACE INTO " . $this->db->dbprefix('layout') . " VALUES('".(int)$data['layout_id']."',".$this->db->escape($data['layout_name']).",".$this->db->escape($data['layout_route']).")";
+			$sql="REPLACE INTO " . $this->db->dbprefix('layout') . " VALUES('".(int)$data['layout_id']."',".$this->db->escape($data['layout_name']).",".$this->db->escape($data['layout_route']).",".$this->db->escape($data['layout_another_route']).")";
 		}else{
 			//id为空是新添加
-			$sql="INSERT INTO " . $this->db->dbprefix('layout') . " (layout_name, route) VALUES (".$this->db->escape($data['layout_name']).",".$this->db->escape($data['layout_route']).")";
+			$sql="INSERT INTO " . $this->db->dbprefix('layout') . " (layout_name, route,another_route) VALUES (".$this->db->escape($data['layout_name']).",".$this->db->escape($data['layout_route']).",".$this->db->escape($data['layout_another_route']).")";
 		}
 		
 		$this->db->query($sql);

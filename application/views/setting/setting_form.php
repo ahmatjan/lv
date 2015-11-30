@@ -222,6 +222,26 @@
 												
 												<div class="control-group">
 
+													<label class="control-label" title="用于判断权限">链接别称：</label>
+
+													<div class="controls">
+													
+														<?php if (!empty($navs['another_url'])): ?>
+
+														<input type="text" name="another_url" class="m-wrap span12" placeholder="一级目录跳转，二级目录应该有..." value="<?php echo $navs['another_url']?>">
+														
+														<?php else: ?>
+														
+														<input type="text" name="another_url" class="m-wrap span12" placeholder="一级目录跳转，二级目录应该有...">
+														
+														<?php endif; ?>
+
+													</div>
+
+												</div>
+												
+												<div class="control-group">
+
 													<label class="control-label">排序：</label>
 
 													<div class="controls">

@@ -52,3 +52,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'home';
 $route['404_override'] = 'no_find';
 $route['translate_uri_dashes'] = FALSE;
+
+
+//路由规则
+//帮助中心
+$route['helper/([a-zA-Z_-]+)/:num'] = 'about/helper/content';//帮助中心文章
+$route['helper/([a-zA-Z_-]+)'] = 'about/helper/index';//帮助中心列表
+
+//个人中心
+$route['user'] = 'user/user_center/index';//帮助中心列表

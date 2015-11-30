@@ -30,11 +30,11 @@ class User_inbox extends CI_Controller {
 								),
 			'user_center'		=>array(
 								'name'=>$this->lang->line('text_user_home'),
-								'url'=>site_url('user/user_center')
+								'url'=>site_url('user')
 								),
 			'setting'		=>array(
 								'name'=>$this->lang->line('heading_title'),
-								'this_url'=>site_url('user/User_inbox'),
+								'this_url'=>site_url('user/user_inbox'),
 								'url'=>''
 								),
 		);

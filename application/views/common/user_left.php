@@ -1,6 +1,6 @@
 <!-- BEGIN SIDEBAR -->
 
-<div class="page-sidebar nav-collapse collapse hidden-phone">
+<div class="page-sidebar nav-collapse collapse hidden-phone page-sidebar-admin">
 
 <!-- BEGIN SIDEBAR MENU -->        
 
@@ -53,7 +53,7 @@
 	<!--如果存在链接...-->
 	<?php if (!empty($item['nav_url'])): ?>
 
-	<a href="<?php echo site_url($item['nav_url'])?>">
+	<a href="<?php echo site_url($item['nav_url'])?>" target="_black">
 
 	<?php else: ?>
 	
@@ -85,7 +85,7 @@
 		<li>
 		<?php endif; ?>
 
-			<a href="<?php echo site_url($childs['nav_child_url'])?>">
+			<a href="<?php echo site_url($childs['nav_child_url'])?>" target="_black">
 
 			<?php echo $childs['nav_child_name']?></a>
 

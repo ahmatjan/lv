@@ -32,7 +32,7 @@ class User_manage extends CI_Controller {
 								),
 			'user_center'	=>array(
 								'name'=>$this->lang->line('text_user_home'),
-								'url'=>site_url('user/User_center')
+								'url'=>site_url('user')
 								),
 			'setting'		=>array(
 								'name'=>$this->lang->line('heading_title'),
@@ -77,7 +77,7 @@ class User_manage extends CI_Controller {
 			$this->session->set_userdata('user_id', $this->input->get('user_id'));
 			
 			$this->session->set_flashdata('setting_success', '登陆用户成功！');
-			redirect('user/user_center');		
+			redirect('user');		
 		}else{
 			$this->session->set_flashdata('setting_false', '登陆用户失败用户id不存在！');
 			redirect('setting/user_manage');
@@ -112,7 +112,7 @@ class User_manage extends CI_Controller {
 								),
 			'user_center'		=>array(
 								'name'=>$this->lang->line('text_user_home'),
-								'url'=>site_url('user/User_center')
+								'url'=>site_url('user')
 								),
 			'setting'		=>array(
 								'name'=>$this->lang->line('heading_title'),

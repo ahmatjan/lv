@@ -412,7 +412,7 @@
 
 						<ul class="dropdown-menu  hidden-phone">
 
-							<li><a href="<?php echo site_url('user/user_center') ?>"><i class="icon-user"></i> 个人中心</a></li>
+							<li><a href="<?php echo site_url('user') ?>"><i class="icon-user"></i> 个人中心</a></li>
 
 							<li><a href="<?php echo site_url('user/calendar')?>"><i class="icon-calendar"></i>计划</a></li>
 

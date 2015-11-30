@@ -32,7 +32,7 @@ class Layout_form extends CI_Controller {
 								),
 			'user_center'	=>array(
 								'name'=>$this->lang->line('text_user_home'),
-								'url'=>site_url('user/User_center')
+								'url'=>site_url('user')
 								),
 			'setting'		=>array(
 								'name'=>$this->lang->line('heading_title'),
@@ -55,6 +55,7 @@ class Layout_form extends CI_Controller {
 				'layout_id'=>'',
 				'layout_name'=>'',
 				'route'=>'',
+				'another_route'=>'',
 			);
 		}
 		
@@ -100,6 +101,7 @@ class Layout_form extends CI_Controller {
 		
 		$data['layout_name']=$this->input->post('layout_name');
 		$data['layout_route']=$this->input->post('layout_route');
+		$data['layout_another_route']=$this->input->post('layout_another_route');
 		$data['layout_id']=$this->input->post('layout_id');
 		
 		if($this->validation_route($data)!==FALSE){
@@ -148,6 +150,8 @@ class Layout_form extends CI_Controller {
 		$this->form_validation->set_rules('layout_name', '布局名称', 'required|max_length[128]');
 		
 		$this->form_validation->set_rules('layout_route', '布局路由', 'required|max_length[128]');
+		
+		$this->form_validation->set_rules('layout_another_route', '路由别称', 'required|max_length[128]');
 		
 		if($this->form_validation->run()!==TRUE){
 			return FALSE;

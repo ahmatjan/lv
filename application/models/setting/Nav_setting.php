@@ -20,9 +20,9 @@ class nav_setting extends CI_Model {
 	{
 		//传入一个待添加的数组
 		if(!empty($data['nav_id'])){
-			$sql="REPLACE INTO " . $this->db->dbprefix('nav_parent') . " VALUES('".(int)$data['nav_id']."',".$this->db->escape($data['navname']).",".$this->db->escape($data['top_navico']).",".$this->db->escape($data['navlocation']).",".$this->db->escape($data['top_navurl']).",'".(int)$data['navstore']."','".(int)$data['isedit']."','".(int)$data['isview']."')";
+			$sql="REPLACE INTO " . $this->db->dbprefix('nav_parent') . " VALUES('".(int)$data['nav_id']."',".$this->db->escape($data['navname']).",".$this->db->escape($data['top_navico']).",".$this->db->escape($data['navlocation']).",".$this->db->escape($data['top_navurl']).",".$this->db->escape($data['another_url']).",'".(int)$data['navstore']."','".(int)$data['isedit']."','".(int)$data['isview']."')";
 		}else{
-			$sql="INSERT INTO " . $this->db->dbprefix('nav_parent') . " (nav_name, nav_ico,nav_class,nav_url,store,edit_start,view_start) VALUES (".$this->db->escape($data['navname']).",".$this->db->escape($data['top_navico']).",".$this->db->escape($data['navlocation']).",".$this->db->escape($data['top_navurl']).",'".(int)$data['navstore']."','".(int)$data['isedit']."','".(int)$data['isview']."')";
+			$sql="INSERT INTO " . $this->db->dbprefix('nav_parent') . " (nav_name, nav_ico,nav_class,nav_url,another_url,store,edit_start,view_start) VALUES (".$this->db->escape($data['navname']).",".$this->db->escape($data['top_navico']).",".$this->db->escape($data['navlocation']).",".$this->db->escape($data['top_navurl']).",".$this->db->escape($data['another_url']).",'".(int)$data['navstore']."','".(int)$data['isedit']."','".(int)$data['isview']."')";
 		}
 		
 		$this->db->query($sql);
@@ -91,9 +91,9 @@ class nav_setting extends CI_Model {
 	{
 		//传入一个待添加的数组
 		if(!empty($data['nav_id'])){
-			$sql="REPLACE INTO " . $this->db->dbprefix('nav_child') . " VALUES('".(int)$data['nav_id']."','".(int)$data['top_navid']."',".$this->db->escape($data['navname']).",".$this->db->escape($data['top_navurl']).",'".(int)$data['navstore']."','".(int)$data['isedit']."','".(int)$data['isview']."')";
+			$sql="REPLACE INTO " . $this->db->dbprefix('nav_child') . " VALUES('".(int)$data['nav_id']."','".(int)$data['top_navid']."',".$this->db->escape($data['navname']).",".$this->db->escape($data['top_navurl']).",".$this->db->escape($data['another_url']).",'".(int)$data['navstore']."','".(int)$data['isedit']."','".(int)$data['isview']."')";
 		}else{
-			$sql="INSERT INTO " . $this->db->dbprefix('nav_child') . " (parent_id,nav_child_name,nav_child_url,store,edit_start,view_start) VALUES ('".(int)$data['top_navid']."',".$this->db->escape($data['navname']).",".$this->db->escape($data['top_navurl']).",'".(int)$data['navstore']."','".(int)$data['isedit']."','".(int)$data['isview']."')";
+			$sql="INSERT INTO " . $this->db->dbprefix('nav_child') . " (parent_id,nav_child_name,nav_child_url,another_child_url,store,edit_start,view_start) VALUES ('".(int)$data['top_navid']."',".$this->db->escape($data['navname']).",".$this->db->escape($data['top_navurl']).",".$this->db->escape($data['another_url']).",'".(int)$data['navstore']."','".(int)$data['isedit']."','".(int)$data['isview']."')";
 		}
 		
 		$this->db->query($sql);
