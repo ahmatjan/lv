@@ -5516,10 +5516,7 @@ Datatables Plugin(in v1.3)
 	.page-sidebar-helper , .page-sidebar-admin{
 		border:1px solid rgb(237, 237, 237);
 		min-height: 100% !important;
-		-webkit-box-shadow:rgba(122, 122, 122, 0.721569) -4px -4px 17px 0px;
-		-moz-box-shadow:rgba(122, 122, 122, 0.721569) -4px -4px 17px 0px;
-		box-shadow:rgba(122, 122, 122, 0.721569) -4px -4px 17px 0px;
-		background-color:rgb(247, 247, 247);
+		background-color:rgb(250, 250, 250) !important;
 	}
 	.home .span3{
 		border:1px solid rgba(217, 217, 217, 0.380392);

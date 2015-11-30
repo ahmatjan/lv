@@ -453,7 +453,7 @@ class public_section extends CI_Model {
 				
 				
 		//判断，如果是蜘蛛，不开session
-		if($this->agent->is_robot() == FALSE && strpos($this->agent->platform(),'Unknown') === FALSE && $this->agent->browser() !== NULL){
+		if($this->agent->is_robot() == FALSE && strpos($this->agent->platform(),'Unknown') == FALSE && $this->agent->browser() != NULL && $this->agent->platform() != NULL){
 			//写入一个随机session做为token令牌，用来检查是同一次访问
 			if(!isset($_SESSION['token'])){//如果token不存在或者为空
 				$this->load->helper('string');

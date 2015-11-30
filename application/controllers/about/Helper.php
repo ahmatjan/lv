@@ -44,7 +44,7 @@ class Helper extends CI_Controller {
 		foreach($select_position as $k=>$v){
 			if($this->uri->segment(2) == $k){
 				$position_name=$select_position[$k];
-				$position_url=site_url('about/helper?position=').$k;
+				$position_url=site_url('helper/'.$k);
 			}
 		}
 			
@@ -111,7 +111,7 @@ class Helper extends CI_Controller {
 		foreach($select_position as $k=>$v){
 			if($this->uri->segment(2) == $k){
 				$position_name=$select_position[$k];
-				$position_url=site_url('about/helper/'.$k);
+				$position_url=site_url('helper/'.$k);
 			}
 		}
 			
@@ -126,7 +126,7 @@ class Helper extends CI_Controller {
 								),
 			'setting'		=>array(
 								'name'=> isset($informations['title']) ? $informations['title'] : '没有内容',
-								'this_url'=> isset($informations['title']) ? site_url('about/helper/content/'.$this->uri->segment(2).'/'.$informations['information_id']) : site_url(),
+								'this_url'=> isset($informations['title']) ? site_url('helper/'.$this->uri->segment(2).'/'.$informations['information_id']) : site_url(),
 								'url'=>''
 								),
 		);
