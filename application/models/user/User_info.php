@@ -16,6 +16,20 @@ class user_info extends CI_Model {
 		}
 	}
 	
+	public function get_userid_info($user_id)
+	{
+	//通过用户ID查用户信息
+		$sql = "SELECT * FROM " . $this->db->dbprefix('user_info') . " WHERE user_id = ?"; 
+
+		$query=$this->db->query($sql, array($user_id));
+
+		if ($query->num_rows() > 0)
+		{
+		   $row = $query->row_array(); 
+			return $row;
+		}
+	}
+	
 	public function get_username_id($data)
 	{
 	//通过用户名查用户id
@@ -225,6 +239,26 @@ class user_info extends CI_Model {
 		{
 		   $row = $query->row_array(); 
 			return $row['add_date'];
+		}
+	}
+	
+	//用户信息修改
+	public function updata_userinfo($data){
+		$user_info=array(
+			'user_name'					=>$data['user_name'],
+			'mobile'					=>$data['mobile'],
+			'email'						=>$data['email'],
+			'wechat'					=>$data['wechat'],
+			'QQ'						=>$data['qq'],
+			'nick_name'					=>$data['nick_name'],
+			'username_edit'				=>'1',
+		);
+		//更新user_info表
+		$this->db->where('user_id', $this->user->get_userid());
+		if($this->db->update('user_info', $user_info) == TRUE){
+			return TRUE;
+		}else{
+			return FALSE;
 		}
 	}
 }

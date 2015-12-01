@@ -148,9 +148,11 @@ var App = function () {
             } else {
                 height = sidebar.height() + 20;
             }
+            /*
             if (height >= content.height()) {
                 content.attr('style', 'min-height:' + height + 'px !important');
-            } 
+            }
+            */
         }          
     }
 

@@ -33,19 +33,48 @@
 
 							<ul class="nav nav-tabs">
 
-								<li class="active"><a href="#tab_1_1" data-toggle="tab">个人信息</a></li>
+								<?php if ($tab_position === 'tab_1_1' || $tab_position == NULL): ?>
+								<li class="active">
+								<?php else: ?>
+								<li>
+								<?php endif; ?>
+								<a href="#tab_1_1" data-toggle="tab">个人信息</a>
+								</li>
 
-								<li><a href="#tab_1_3" data-toggle="tab">资料修改</a></li>
+								<?php if ($tab_position === 'tab_1_3'): ?>
+								<li class="active">
+								<?php else: ?>
+								<li>
+								<?php endif; ?>
+								<a href="#tab_1_3" data-toggle="tab">资料修改</a>
+								</li>
 
-								<li><a href="#tab_1_4" data-toggle="tab">交易管理</a></li>
+								<?php if ($tab_position === 'tab_1_4'): ?>
+								<li class="active">
+								<?php else: ?>
+								<li>
+								<?php endif; ?>
+								<a href="#tab_1_4" data-toggle="tab">交易管理</a>
+								</li>
 
-								<li><a href="#tab_1_6" data-toggle="tab">帮助</a></li>
+								<?php if ($tab_position === 'tab_1_6'): ?>
+								<li class="active">
+								<?php else: ?>
+								<li>
+								<?php endif; ?>
+								<a href="#tab_1_6" data-toggle="tab">帮助</a>
+								</li>
 
 							</ul>
 
 							<div class="tab-content">
+							
+								<?php if($tab_position === 'tab_1_1' || $tab_position == NULL):?>
 
 								<div class="tab-pane row-fluid active" id="tab_1_1">
+								<?php else:?>
+								<div class="tab-pane row-fluid" id="tab_1_1">
+								<?php endif;?>
 								
 									<div class="span12 user-info1">
 									
@@ -63,21 +92,21 @@
 
 												<h1><?php echo $nick_name?></h1>
 
-												<p>我还是一个正直忠诚、勤奋求实的人，会不断追求人格的自我完善；明显的特点是乐观自信、温和开朗、稳重宽厚，因此，我人际关系和谐，适应环境能力较强...</p>
+												<p><?php echo isset($user_infos['signature']) ? $user_infos['signature'] : '你还没有设置简介...<a href="'.site_url('user?tab_position=tab_1_3').'">点此设置</a>' ;?></p>
 
-												<p><a href="#">www.mywebsite.com</a></p>
+												<!--<p><a href="#">www.mywebsite.com</a></p>-->
 
 												<ul class="unstyled inline">
 
-													<li><i class="icon-map-marker"></i>我还是一个正直忠诚、勤奋求实的人</li>
+													<li><i class="icon-map-marker"></i><?php echo isset($user_infos['hobby']) ? $user_infos['hobby'] : '请完善...' ;?></li>
 
-													<li><i class="icon-calendar"></i> 18 Jan 1982</li>
+													<li><i class="icon-calendar"></i><?php echo isset($user_infos['birthday']) ? $user_infos['birthday'] : '请完善...' ;?></li>
 
-													<li><i class="icon-briefcase"></i> Design</li>
+													<li><i class="icon-briefcase"></i><?php echo isset($user_infos['job']) ? $user_infos['job'] : '请完善...' ;?></li>
 
-													<li><i class="icon-star"></i> Top Seller</li>
+													<li><i class="icon-star"></i><?php echo isset($user_infos['location']) ? $user_infos['location'] : '请完善...' ;?></li>
 
-													<li><i class="icon-heart"></i> BASE Jumping</li>
+													<li><i class="icon-heart"></i>资料完善度：20%</li>
 
 												</ul>
 
@@ -1120,8 +1149,14 @@
 								</div>
 
 								<!--end tab-pane-->
+								
+								<?php if($tab_position === 'tab_1_3'):?>
 
+								<div class="tab-pane row-fluid profile-account active" id="tab_1_3">
+								<?php else:?>
 								<div class="tab-pane row-fluid profile-account" id="tab_1_3">
+
+								<?php endif;?>
 
 									<div class="row-fluid">
 
@@ -1161,51 +1196,77 @@
 
 														<div style="height: auto;" id="accordion1-1" class="accordion collapse">
 
-															<form action="#">
+															<form action="<?php echo site_url('user/user_center/edit_userinfo')?>" method="post" enctype="multipart/form-data">
 
 																<label class="control-label">用户名<span style="color:#B5B1B1">用于登陆且不可修改！</span></label>
 
-																<input type="text" placeholder="用于登陆且不可修改..." value="<?php echo $user_name?>" disabled="true" class="m-wrap span8" />
+																<?php if($user_infos['username_edit'] == '0' && $user_infos['register_style'] !== 'user_name' && $user_infos['register_style'] !== 'email'):?>
+																<input type="text" placeholder="第三方登陆用户可以修改一次..." value="<?php echo $user_name?>" class="m-wrap span8" name="user_name" title="第三方登陆用户可以修改一次"/>
+																<?php else:?>
+																<input type="text" placeholder="用于登陆且不可修改..." value="<?php echo $user_name?>" disabled="true" class="m-wrap span8" name="user_name" />
+																<?php endif;?>
+																
+																<label class="control-label">邮箱</label>
+
+																<input type="text" placeholder="填写你的邮箱..." class="m-wrap span8" value="<?php echo $email;?>" name="email"/>
+																
+																<label class="control-label">微信</label>
+
+																<input type="text" placeholder="填写你的微信号..." class="m-wrap span8" value="<?php echo $wechat;?>" name="wechat"/>
+																
+																<label class="control-label">QQ</label>
+
+																<input type="text" placeholder="填写你的QQ号..." class="m-wrap span8" value="<?php echo $qq ;?>" name="qq" />
 
 																<label class="control-label">昵称</label>
 
-																<input type="text" placeholder="填写你的昵称..." class="m-wrap span8" />
+																<input type="text" placeholder="填写你的昵称..." class="m-wrap span8" value="<?php echo $nick_name;?>" name="nick_name"/>
 
 																<label class="control-label">手机号</label>
 
-																<input type="text" placeholder="填写你的手机号..." class="m-wrap span8" />
+																<input type="text" placeholder="填写你的手机号..." class="m-wrap span8" value="<?php echo $mobile?>" name="mobile"/>
 
 																<label class="control-label">兴趣爱好</label>
 
-																<input type="text" placeholder="请填写你的兴趣爱好..." class="m-wrap span8" />
+																<input type="text" placeholder="请填写你的兴趣爱好..." class="m-wrap span8" value="<?php echo $hobby;?>" name="hobby"/>
 
 																<label class="control-label">职业</label>
 
-																<input type="text" placeholder="请填写你的职业..." class="m-wrap span8" />
+																<input type="text" placeholder="请填写你的职业..." class="m-wrap span8" value="<?php echo $job; ?>" name="job"/>
 
 																<label class="control-label">所在地</label>
 
 																<div class="controls">
 
-																	<input type="text" placeholder="请选择你的所在地..." class="m-wrap span8" />
+																	<div class="selectList"> 
+																	<select class="province" name="location[]"> 
+																	<option>请选择</option> 
+																	</select> 
+																	<select class="city" name="location[]"> 
+																	<option>请选择</option> 
+																	</select> 
+																	<select class="district" name="location[]"> 
+																	<option>请选择</option> 
+																	</select> 
+																	</div>
 
-																	<p class="help-block"><span class="muted">国家地区->省->市</span></p>
+																	<p class="help-block"><span class="muted">省->市->县</span></p>
 
 																</div>
 
 																<label class="control-label">个人简介</label>
 
-																<textarea class="span8 m-wrap" rows="3" placeholder="请选择你的所在地..."></textarea>
+																<textarea class="span8 m-wrap" rows="3" placeholder="个人简介（个性签名）..." name="signature"><?php echo $signature?></textarea>
 
 																<label class="control-label">个人博客</label>
 
-																<input type="text" placeholder="填写QQ空间、新浪博客或微博的链接..." class="m-wrap span8" />
+																<input type="text" placeholder="填写QQ空间、新浪博客或微博的链接..." class="m-wrap span8" value="<?php echo $blog?>" name="blog"/>
 
 																<div class="submit-btn">
 
-																	<a href="#" class="btn green">保存</a>
+																	<button type="submit" class="btn green">保存</button>
 
-																	<a href="#" class="btn">取消</a>
+																	<button type="reset" class="btn">取消</button>
 
 																</div>
 
@@ -1428,8 +1489,13 @@
 								</div>
 
 								<!--end tab-pane-->
+								
+								<?php if($tab_position == 'tab_1_4'):?>
 
+								<div class="tab-pane active" id="tab_1_4">
+								<?php else:?>
 								<div class="tab-pane" id="tab_1_4">
+								<?php endif;?>
 
 									<div class="row-fluid add-portfolio">
 
@@ -1614,8 +1680,14 @@
 								</div>
 
 								<!--end tab-pane-->
+								
+								<?php if($tab_position == 'tab_1_6'):?>
+								<div class="tab-pane row-fluid active" id="tab_1_6">
+								<?php else:?>
 
 								<div class="tab-pane row-fluid" id="tab_1_6">
+								
+								<?php endif;?>
 
 									<div class="row-fluid">
 
@@ -2336,6 +2408,8 @@
 	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/bootstrap-fileupload.js')?>"></script>
 
 	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/chosen.jquery.min.js')?>"></script>
+	
+	<script src="<?php echo base_url('public/min/?f=public/js/loading/linkage.js')?>" type="text/javascript"></script>
 
 	<!-- END PAGE LEVEL PLUGINS -->
 

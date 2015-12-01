@@ -343,7 +343,7 @@ var_dump($nav_parents);
 		//三级联动
 		
 		
-		//$this->public_section->get_header();
+		$this->public_section->get_header();
 		
 		//$str = 'about/helper/con?position=about_us';
 		//echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
@@ -353,12 +353,16 @@ var_dump($nav_parents);
 		
 		//echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
 		
+		/*
+		if(stripos('Unknown pubccx','Unknown') === FALSE){
+			echo '不包含';
+		}else{
+			echo '包含';
+		}
+		*/
 		
-		$this->load->library('user_agent');
-		echo $this->agent->get_page_url();
 		
-		show_error('lokkkkk');
-		//$this->load->view('test');
+		$this->load->view('test');
 		
 		
 		/*
