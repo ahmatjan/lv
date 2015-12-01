@@ -362,6 +362,10 @@ var_dump($nav_parents);
 		*/
 		
 		
+		$this->load->library('calendar');
+		
+		
+		
 		$this->load->view('test');
 		
 		

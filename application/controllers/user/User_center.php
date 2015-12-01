@@ -150,6 +150,14 @@ class User_center extends CI_Controller {
 			$data['qq']='';
 		}
 		
+		if($this->input->post('year') && $this->input->post('month') && $this->input->post('day')){
+			$data['birthday'] = $this->input->post('year').'-'.$this->input->post('month').'-'.$this->input->post('day');
+		}elseif(isset($users['birthday'])){
+			$data['birthday'] = $users['birthday'];
+		}else{
+			$data['birthday'] = '';
+		}
+		
 		$this->load->view('user/user_center',$data);
 		$this->public_section->get_footer();
 	}
@@ -158,6 +166,7 @@ class User_center extends CI_Controller {
 		if($this->validation_edit() !== FALSE){
 			//验证通过
 			$data['user_name'] = $this->input->post('user_name');
+			$data['old_user_name'] = $this->input->post('old_user_name');
 			$data['mobile'] = $this->input->post('mobile');
 			$data['email'] = $this->input->post('email');
 			$data['wechat'] = $this->input->post('wechat');

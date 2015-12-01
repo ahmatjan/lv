@@ -1201,51 +1201,51 @@
 																<label class="control-label">用户名<span style="color:#B5B1B1">用于登陆且不可修改！</span></label>
 
 																<?php if($user_infos['username_edit'] == '0' && $user_infos['register_style'] !== 'user_name' && $user_infos['register_style'] !== 'email'):?>
-																<input type="text" placeholder="第三方登陆用户可以修改一次..." value="<?php echo $user_name?>" class="m-wrap span8" name="user_name" title="第三方登陆用户可以修改一次"/>
+																<input type="text" placeholder="第三方登陆用户可以修改一次..." value="<?php echo $user_name?>" class="m-wrap span12" name="user_name" title="第三方登陆用户可以修改一次"/>
 																<?php else:?>
-																<input type="text" placeholder="用于登陆且不可修改..." value="<?php echo $user_name?>" disabled="true" class="m-wrap span8" name="user_name" />
+																<input type="text" placeholder="用于登陆且不可修改..." value="<?php echo $user_name?>" disabled="true" class="m-wrap span12" name="user_name" />
 																<?php endif;?>
 																
 																<label class="control-label">邮箱</label>
 
-																<input type="text" placeholder="填写你的邮箱..." class="m-wrap span8" value="<?php echo $email;?>" name="email"/>
+																<input type="text" placeholder="填写你的邮箱..." class="m-wrap span12" value="<?php echo $email;?>" name="email"/>
 																
 																<label class="control-label">微信</label>
 
-																<input type="text" placeholder="填写你的微信号..." class="m-wrap span8" value="<?php echo $wechat;?>" name="wechat"/>
+																<input type="text" placeholder="填写你的微信号..." class="m-wrap span12" value="<?php echo $wechat;?>" name="wechat"/>
 																
 																<label class="control-label">QQ</label>
 
-																<input type="text" placeholder="填写你的QQ号..." class="m-wrap span8" value="<?php echo $qq ;?>" name="qq" />
+																<input type="text" placeholder="填写你的QQ号..." class="m-wrap span12" value="<?php echo $qq ;?>" name="qq" />
 
 																<label class="control-label">昵称</label>
 
-																<input type="text" placeholder="填写你的昵称..." class="m-wrap span8" value="<?php echo $nick_name;?>" name="nick_name"/>
+																<input type="text" placeholder="填写你的昵称..." class="m-wrap span12" value="<?php echo $nick_name;?>" name="nick_name"/>
 
 																<label class="control-label">手机号</label>
 
-																<input type="text" placeholder="填写你的手机号..." class="m-wrap span8" value="<?php echo $mobile?>" name="mobile"/>
-
+																<input type="text" placeholder="填写你的手机号..." class="m-wrap span12" value="<?php echo $mobile?>" name="mobile"/>
+																
 																<label class="control-label">兴趣爱好</label>
 
-																<input type="text" placeholder="请填写你的兴趣爱好..." class="m-wrap span8" value="<?php echo $hobby;?>" name="hobby"/>
+																<input type="text" placeholder="请填写你的兴趣爱好..." class="m-wrap span12" value="<?php echo $hobby;?>" name="hobby"/>
 
 																<label class="control-label">职业</label>
 
-																<input type="text" placeholder="请填写你的职业..." class="m-wrap span8" value="<?php echo $job; ?>" name="job"/>
+																<input type="text" placeholder="请填写你的职业..." class="m-wrap span12" value="<?php echo $job; ?>" name="job"/>
 
 																<label class="control-label">所在地</label>
 
 																<div class="controls">
 
 																	<div class="selectList"> 
-																	<select class="province" name="location[]"> 
+																	<select class="province span4" name="location[]"> 
 																	<option>请选择</option> 
 																	</select> 
-																	<select class="city" name="location[]"> 
+																	<select class="city span4" name="location[]"> 
 																	<option>请选择</option> 
 																	</select> 
-																	<select class="district" name="location[]"> 
+																	<select class="district span4" name="location[]"> 
 																	<option>请选择</option> 
 																	</select> 
 																	</div>
@@ -1253,16 +1253,37 @@
 																	<p class="help-block"><span class="muted">省->市->县</span></p>
 
 																</div>
+																
+																<label class="control-label">生日</label>
+																<div class="ymdselect">
+																<?php if(!empty($birthday)):?>
+																<select name="year">
+																<option value="<?php echo date('Y',strtotime($birthday))?>"><?php echo date('Y',strtotime($birthday))?></option>
+																</select>
+																<select name="month">
+																<option value="<?php echo date('m',strtotime($birthday))?>"><?php echo date('m',strtotime($birthday))?></option>
+																</select>
+																<select name="day">
+																<option value="<?php echo date('d',strtotime($birthday))?>"><?php echo date('d',strtotime($birthday))?></option>
+																</select>
+																<?php else:?>
+																<select name="year"><option>年</option></select>
+																<select name="month"><option>月</option></select>
+																<select name="day"><option>日</option></select>
+																<?php endif;?>
+																</div>
 
 																<label class="control-label">个人简介</label>
 
-																<textarea class="span8 m-wrap" rows="3" placeholder="个人简介（个性签名）..." name="signature"><?php echo $signature?></textarea>
+																<textarea class="span12 m-wrap" rows="3" placeholder="个人简介（个性签名）..." name="signature"><?php echo $signature?></textarea>
 
 																<label class="control-label">个人博客</label>
 
-																<input type="text" placeholder="填写QQ空间、新浪博客或微博的链接..." class="m-wrap span8" value="<?php echo $blog?>" name="blog"/>
+																<input type="text" placeholder="填写QQ空间、新浪博客或微博的链接..." class="m-wrap span12" value="<?php echo $blog?>" name="blog"/>
 
 																<div class="submit-btn">
+																
+																	<input type="hidden" value="<?php echo $user_infos['user_name']?>" name="old_user_name"/>
 
 																	<button type="submit" class="btn green">保存</button>
 
@@ -2410,6 +2431,7 @@
 	<script type="text/javascript" src="<?php echo base_url('public/min/?f=public/js/chosen.jquery.min.js')?>"></script>
 	
 	<script src="<?php echo base_url('public/min/?f=public/js/loading/linkage.js')?>" type="text/javascript"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/loading/ymdselect.js')?>" type="text/javascript"></script>
 
 	<!-- END PAGE LEVEL PLUGINS -->
 
