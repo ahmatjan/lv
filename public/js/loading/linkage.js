@@ -15,7 +15,7 @@ $(function(){
 	//初始化省 
 	var province = function(){
 	$.each(areaJson,function(i,province){ 
-	temp_html+="<option value='"+province.p.code+"'>"+province.p.name+"</option>"; 
+	temp_html+="<option value='"+province.p.name+"'>"+province.p.name+"</option>"; 
 	}); 
 	oProvince.html(temp_html); 
 	city(); 
@@ -26,7 +26,7 @@ $(function(){
 	var n = oProvince.get(0).selectedIndex;
 	 
 	$.each(areaJson[n].c,function(i,city){
-	temp_html+="<option value='"+city.ct.code+"'>"+city.ct.name+"</option>"; 
+	temp_html+="<option value='"+city.ct.name+"'>"+city.ct.name+"</option>"; 
 	}); 
 	oCity.html(temp_html); 
 	district(); 
@@ -41,7 +41,7 @@ $(function(){
 	}else{ 
 	oDistrict.css("display","inline"); 
 	$.each(areaJson[m].c[n].d,function(i,district){ 
-	temp_html+="<option value='"+district.dt.code+"'>"+district.dt.name+"</option>"; 
+	temp_html+="<option value='"+district.dt.name+"'>"+district.dt.name+"</option>"; 
 	}); 
 	oDistrict.html(temp_html); 
 	}; 

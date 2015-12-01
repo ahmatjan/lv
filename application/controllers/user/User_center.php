@@ -168,7 +168,7 @@ class User_center extends CI_Controller {
 			//
 			
 			$data['signature']=$this->input->post('signature');
-			$data['location'] = serialize($this->input->post('location'));
+			$data['location'] = $this->input->post('location')[0].$this->input->post('location')[1].$this->input->post('location')[2];
 			$data['hobby']=$this->input->post('hobby');
 			$data['job']=$this->input->post('job');
 			$data['blog']=$this->input->post('blog');
