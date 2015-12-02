@@ -85,7 +85,7 @@
 				</label>
 
 				<!--<button type="submit" class="btn green pull-right">-->
-				<button type="submit" class="btn green btn-block">
+				<button type="submit" class="btn green btn-block sub-login">
 
 				<?php echo $text_login ?>  <i class="m-icon-swapright m-icon-white"></i>
 
@@ -388,6 +388,15 @@
 			if(!reg.test($(this).val())){
 				$(".register-email").val('').removeAttr("readonly");
 			}
+		});
+		
+		//回车提交
+		$(".login-form").keydown(function(e){
+		 var e = e || event,
+		 keycode = e.which || e.keyCode;
+		 if (keycode==13) {
+		  $(".sub-login").trigger("click");
+		 }
 		});
 	});
 	</script>

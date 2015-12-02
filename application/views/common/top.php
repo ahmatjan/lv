@@ -648,6 +648,18 @@
 	
 	$(document).ready(function(){
 	  $(".sub-login").click(function(){
+	  	login();
+	  });
+	  //回车提交
+		$(".login-form").keydown(function(e){
+			var e = e || event,
+			keycode = e.which || e.keyCode;
+			if (keycode==13) {
+				login();
+			}
+		});
+	  
+	  function login () {
 	  	var user_name=$(".luser_name").val();
 	  	var pass_word=$(".lpass_word").val();
 	  	//判断验证用户输入
@@ -715,7 +727,7 @@
 		    });
 		}
 		
-	  });
+	  }
 	});
 	</script>
 	<!--登陆js-->

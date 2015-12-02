@@ -37,7 +37,7 @@
 									
 										<ul class="unstyled profile-nav span3">
 
-											<li><img src="<?php echo $user_image?>" alt="<?php echo $nick_name?>"/></li>
+											<li><img src="<?php echo $this->image->rezice($user_infos['image'],250,250)?>" alt="<?php echo $user_infos['nick_name']?>"/></li>
 
 										</ul>
 										
@@ -45,23 +45,23 @@
 
 											<div class="span8 profile-info">
 
-												<h1><?php echo $nick_name?></h1>
+												<h1><?php echo $user_infos['nick_name']?></h1>
 
-												<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.</p>
+												<p><?php echo isset($user_infos['signature']) ? $user_infos['signature'] : '这个用户好懒，还没有简介...' ?></p>
 
-												<p><a href="#">www.mywebsite.com</a></p>
+												<p><?php echo isset($user_infos['blog']) ? '<span style="color: #00A4CC" title="复制到浏览器打开">'.$user_infos['blog'].'</span>' : '还没有博客...' ?></p>
 
 												<ul class="unstyled inline">
 
-													<li><i class="icon-map-marker"></i> Spain</li>
+													<li><i class="icon-map-marker"></i><?php echo isset($user_infos['hobby']) ? $user_infos['hobby'] : '...' ;?></li>
 
-													<li><i class="icon-calendar"></i> 18 Jan 1982</li>
+													<li><i class="icon-calendar"></i><?php echo isset($user_infos['birthday']) ? $user_infos['birthday'] : '...' ;?></li>
 
-													<li><i class="icon-briefcase"></i> Design</li>
+													<li><i class="icon-briefcase"></i><?php echo isset($user_infos['job']) ? $user_infos['job'] : '...' ;?></li>
 
-													<li><i class="icon-star"></i> Top Seller</li>
+													<li><i class="icon-star"></i><?php echo isset($user_infos['location']) ? $user_infos['location'] : '...' ;?></li>
 
-													<li><i class="icon-heart"></i> BASE Jumping</li>
+													<li><i class="icon-heart"></i>资料完善度：20%</li>
 
 												</ul>
 

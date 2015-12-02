@@ -181,7 +181,7 @@ class User_center extends CI_Controller {
 			$data['hobby']=$this->input->post('hobby');
 			$data['job']=$this->input->post('job');
 			$data['blog']=$this->input->post('blog');
-			$data['birthday']=$this->input->post('birthday');//出生日期
+			$data['birthday']=$this->input->post('year').'-'.$this->input->post('month').'-'.$this->input->post('day');//出生日期
 			
 			$this->load->model('user/user_description');
 			if($this->user_description->updata_user_description($data) == TRUE && $this->user_info->updata_userinfo($data) == TRUE){

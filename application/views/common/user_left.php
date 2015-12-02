@@ -53,7 +53,7 @@
 	<!--如果存在链接...-->
 	<?php if (!empty($item['nav_url'])): ?>
 
-	<a href="<?php echo site_url($item['nav_url'])?>" target="_black">
+	<a href="<?php echo site_url($item['nav_url'])?>">
 
 	<?php else: ?>
 	
@@ -85,7 +85,7 @@
 		<li>
 		<?php endif; ?>
 
-			<a href="<?php echo site_url($childs['nav_child_url'])?>" target="_black">
+			<a href="<?php echo site_url($childs['nav_child_url'])?>">
 
 			<?php echo $childs['nav_child_name']?></a>
 

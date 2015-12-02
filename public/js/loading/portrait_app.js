@@ -17,6 +17,11 @@ $(window).load(function() {
 		reader.readAsDataURL(this.files[0]);
 		this.files = [];
 	})
+	
+	if(!$('.cropped').html()){
+		$('.cropped').html('<img src="'+options.imgSrc+'" align="absmiddle" style="width:29px;margin-top:4px;border-radius:29px !important;box-shadow:0px 0px 12px #7E7E7E;" ><p>29px*29px</p><img src="'+options.imgSrc+'" align="absmiddle" style="width:64px;margin-top:4px;border-radius:64px !important;box-shadow:0px 0px 12px #7E7E7E;"><p>64px*64px</p><img src="'+options.imgSrc+'" align="absmiddle" style="width:120px;margin-top:4px;border-radius:120px !important;box-shadow:0px 0px 12px #7E7E7E;"><p>120px*120px</p>');
+	}
+	
 	$('#btnCrop').on('click', function(){
 		img = cropper.getDataURL();
 		$('.cropped').html('');

@@ -46,11 +46,17 @@ $(document).ready(function() {
 		function addOpt(box,range){
 			if(range[1]>=range[0]){
 				for(var i=range[0]; i<=range[1]; i++){
+					if(i < 10){
+						i = "0"+i;
+					}
 					var opt=$('<option></option>').attr({value:i}).text(i).appendTo(box);
 				}
 			}
 			else{
 				for(var i=range[0]; i>=range[1]; i--){
+					if(i < 10){
+						i = "0"+i;
+					}
 					var opt=$('<option></option>').attr({value:i}).text(i).appendTo(box);
 				}
 			}

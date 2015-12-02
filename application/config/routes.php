@@ -61,3 +61,4 @@ $route['helper/([a-zA-Z_-]+)'] = 'about/helper/index';//帮助中心列表
 
 //个人中心
 $route['user'] = 'user/user_center/index';//帮助中心列表
+$route['user/:num'] = 'user/user_page/index';//帮助中心列表

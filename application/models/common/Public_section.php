@@ -430,7 +430,7 @@ class public_section extends CI_Model {
 		}
 		
 		//判断机器人
-		if($this->agent->robot()){
+		if($this->agent->checkrobot()){
 			$robot = $this->agent->robot();
 		}else{
 			$robot = NULL;
@@ -453,7 +453,8 @@ class public_section extends CI_Model {
 				
 				
 		//判断，如果是蜘蛛，不开session
-		if($this->agent->is_robot() === FALSE && stripos($this->agent->platform(),'Unknown') === FALSE && !empty($this->agent->browser()) && !empty($this->agent->platform())){
+		//if(!$this->agent->checkrobot()){
+		if($this->agent->is_robot() === FALSE && stripos($this->agent->platform(),'Unknown') === FALSE && !empty($this->agent->browser()) && !empty($this->agent->platform()) && !$this->agent->checkrobot()){
 			//写入一个随机session做为token令牌，用来检查是同一次访问
 			if(!isset($_SESSION['token'])){//如果token不存在或者为空
 				$this->load->helper('string');
@@ -483,7 +484,9 @@ class public_section extends CI_Model {
 					'token'			=>$token,
 				);
 				//直接写入到数据库（因为这个类在model,所以没有再去load->model）
-				$this->db->insert( $this->db->dbprefix('report_access') , $report_access);
+				if(strlen(serialize(@$ip_address)) > 10){
+					$this->db->insert( $this->db->dbprefix('report_access') , $report_access);
+				}
 			}
 		}
 		

@@ -362,7 +362,13 @@ var_dump($nav_parents);
 		*/
 		
 		
-		$this->load->library('calendar');
+		$this->load->library('user_agent');
+		
+		if($this->agent->checkrobot()){
+			echo '是机器人';
+		}else{
+			echo '是用户';
+		}
 		
 		
 		

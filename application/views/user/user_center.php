@@ -89,12 +89,16 @@
 										<div class="row-fluid span9">
 
 											<div class="span8 profile-info">
+											
+												<?php 
+													$click_txt='javascript:window.open('."'".site_url('user/'.$this->user->get_userid())."')";
+												?>
 
-												<h1><?php echo $nick_name?></h1>
+												<h1><a href="#" onclick="<?php echo $click_txt?>"><?php echo $nick_name?></a></h1>
 
 												<p><?php echo isset($user_infos['signature']) ? $user_infos['signature'] : '你还没有设置简介...<a href="'.site_url('user?tab_position=tab_1_3').'">点此设置</a>' ;?></p>
 
-												<!--<p><a href="#">www.mywebsite.com</a></p>-->
+												<p><a href="<?php echo $user_infos['blog']?>"><?php echo $user_infos['blog']?></a></p>
 
 												<ul class="unstyled inline">
 

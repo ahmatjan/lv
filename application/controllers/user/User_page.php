@@ -5,15 +5,18 @@ class User_page extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 			$this->output->https_jump();
-			if($this->input->get('user_id')== NULL){
-				show_404();
-			}
 	}
 	
 	public function index()
 	{
 		$this->load->model(array('user/user_info','common/image'));
-		$user_infos=$this->user_info->get_userinfobyuser_id($this->input->get('user_id'));
+		//通过user_id 查用户信息
+		//基本资料
+		$this->load->model(array('user/user_info','user/user_description','common/image'));
+		$user_infos = $this->user_info->get_userid_info($this->uri->segment(2));
+		$user_description = $this->user_description->get_userdescriptionforid($this->uri->segment(2));
+		$users = array_merge($user_infos,$user_description);
+		$data['user_infos'] = $users;//直接传入数组，用于不是修改输入框的显示内容
 		
 		$this->lang->load('user/user_page');
 		$header['css_page_style']=array('public/css/bootstrap-fileupload.css','public/css/chosen.css','public/css/profile.css');
@@ -35,15 +38,11 @@ class User_page extends CI_Controller {
 								'url'=>site_url('home')
 								),
 			'setting'		=>array(
-								'name'=>$this->lang->line('heading_title'),
-								'this_url'=>site_url('user/User_page'),
+								'name'=>$user_infos['nick_name'].'的空间',
+								'this_url'=>site_url('user/'.$this->uri->segment(2)),
 								'url'=>''
 								),
 		);
-		
-		//通过user_id 查用户信息
-		$data['user_image']=$this->image->rezice($user_infos['image'],255,255);
-		$data['nick_name']=$user_infos['nick_name'];
 		
 		$this->load->view('user/user_page',$data);
 		$this->public_section->get_footer();
