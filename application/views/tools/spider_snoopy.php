@@ -1,1 +1,1 @@
-<?php echo $log.':当前爬取=>'.$url.'<br/>'?>
+<?php echo $snap_id.'.内存：'.$m.'M'.$log.':爬取'.$url.'<br/>'?>

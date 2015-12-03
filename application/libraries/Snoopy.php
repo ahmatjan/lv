@@ -857,7 +857,8 @@ class Snoopy
 						
 
 		// catenate the non-empty matches from the conditional subpattern
-
+		
+		$match = array();
 		while(list($key,$val) = each($links[2]))
 		{
 			if(!empty($val))
