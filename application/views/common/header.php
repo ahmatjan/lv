@@ -18,6 +18,8 @@
 
 <meta content="<?php echo $mate_key?>" name="keywords" />
 
+<base href="<?php echo base_url()?>" />
+
 <meta content="<?php echo $mate_author?>" name="author" />
 
 <!--缓存dns-->

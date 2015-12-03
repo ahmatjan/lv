@@ -13,16 +13,10 @@
 <script src="<?php echo base_url('public/js/loading/linkage.js')?>" type="text/javascript"></script>
 
 
-<form name=form1>  
-<select name=YYYY onchange="YYYYMM(this.value)">  
-<option value="">年</option>  
-</select>  
-<select name=MM onchange="MMDD(this.value)">  
-<option value="">月</option>  
-</select>  
-<select name=DD>  
-<option value="">日</option>  
-</select>  
-</form>  
+<div class="ymdselect">  
+<select name="year"><option>年</option></select>
+<select name="month"><option>月</option></select>
+<select name="day"><option>日</option></select>
+</div> 
 
 <script src="<?php echo base_url('public/js/loading/ymdselect.js')?>" type="text/javascript"></script>

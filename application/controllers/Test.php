@@ -361,18 +361,52 @@ var_dump($nav_parents);
 		}
 		*/
 		
+		$this->load->library('snoopy');
 		
-		$this->load->library('user_agent');
+		$url = "http://www.lv.com";
+		$ssl = is_https()===TRUE ? 'https://' : 'http://' ;
 		
-		if($this->agent->checkrobot()){
-			echo '是机器人';
-		}else{
-			echo '是用户';
+		//$snoopy = new Snoopy;
+		//$this->snoopy->fetch($url);        //获取所有内容
+		$this->snoopy->fetchlinks($url);
+		//echo $this->snoopy->results;       //显示结果
+		$urls = $this->snoopy->results;
+		$urls = array_unique($urls);
+		
+		foreach ($urls as $u_k=>$u_v){	//结果
+			if(preg_match('#^'.$ssl.'([a-z0-9])+\.'.explode('.',$_SERVER['HTTP_HOST'])['1'].'\.(.[a-z]+)#i',$urls[$u_k])){
+				if(preg_match('#html{1}#i',$urls[$u_k]))
+			    {
+			    	if($ssl == 'http://'){
+						$url_news[] = str_replace(':80/','',$urls[$u_k]);
+					}
+					if($ssl == 'https://'){
+						$url_news[] = str_replace(':443/','',$urls[$u_k]);
+					}
+			    }
+		    }
 		}
+		foreach ($url_news as $b){
+			echo $b.'<br/>';
+		}
+		/*
+		if(preg_match('#^'.$ssl.'([a-z0-9])+\.'.explode('.',$_SERVER['HTTP_HOST'])['1'].'\.(.[a-z]+)#i',$url)){
+			if(preg_match('#html{1}#i',$url))
+		    {
+		            echo 'yes' ;
+		    }
+		    else
+		    {
+		            echo 'no';
+		    }
+	    }
+	    */
+
+		 //$base_url = explode('.',$_SERVER['HTTP_HOST'])['1'];
+
 		
 		
-		
-		$this->load->view('test');
+		//$this->load->view('test');
 		
 		
 		/*

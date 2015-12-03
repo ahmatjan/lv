@@ -76,7 +76,7 @@
 										
 										<!-- BEGIN FORM-->
 
-										<form action="<?php echo site_url('setting/layout_form/add_layout')?>" class="form-horizontal" method="post" enctype="multipart/form-data">
+										<form action="setting/layout_form/add_layout" class="form-horizontal" method="post" enctype="multipart/form-data">
 
 											<div class="control-group">
 
@@ -134,7 +134,7 @@
 										
 										<!-- BEGIN FORM-->
 
-										<form action="<?php echo site_url('setting/layout_form/add_layout_module')?>" class="form-horizontal" method="post" enctype="multipart/form-data">
+										<form action="setting/layout_form/add_layout_module" class="form-horizontal" method="post" enctype="multipart/form-data">
 										
 										
 											<div class="control-group">
