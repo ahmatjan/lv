@@ -193,6 +193,7 @@ $mobiles = array(
 // There are hundreds of bots but these are the most common.
 $robots = array(
 	//百度
+	'xCalder'					=>'站内索引',
 	'Baiduspider'				=>'百度抓取',
 	'Baiduspider-image'			=>'百度图片抓取',
 	'Baiduspider-video'			=>'百度视频抓取',

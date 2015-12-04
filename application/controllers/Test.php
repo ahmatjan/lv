@@ -385,11 +385,26 @@ var_dump($nav_parents);
 		*/
 		//var_dump(get_loaded_extensions());
 		
+		/*
 		if($this->check_url('http://www.lv.com/helper/abot_u#s.html')){
 			echo '合法';
 		}else{
 			echo '不合法';
 		}
+		*/
+		
+		$interface = 'http://www.lv.com'; 
+		$header = $this->FormatHeader($interface,'10.1.11.1'); 
+/*
+		$ch = curl_init(); 
+		curl_setopt($ch, CURLOPT_URL, $interface); 
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $header); //设置头信息的地方 
+		curl_setopt($ch, CURLOPT_HEADER, 0); //不取得返回头信息 
+		curl_setopt($ch, CURLOPT_TIMEOUT, 5); 
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+		$result = curl_exec($ch); 
+*/
+		var_dump($header); 
 		
 		//$this->load->view('test');
 		
@@ -477,6 +492,28 @@ var_dump($nav_parents);
 	    }else{
 	    return FALSE;
 		}
+	}
+	
+	function FormatHeader($url, $myIp = null,$xml = null) 
+	{ 
+		// 解悉url 
+		$temp = parse_url($url); 
+		$query = isset($temp['query']) ? $temp['query'] : ''; 
+		$path = isset($temp['path']) ? $temp['path'] : '/'; 
+
+		$header = array ( 
+		"POST {$path}?{$query} HTTP/1.1", 
+		"Host: {$temp['host']}", 
+		"Content-Type: text/xml; charset=utf-8", 
+		'Accept: */*', 
+		"Referer: http://{$temp['host']}/", 
+		'User-Agent: xcalder', 
+		"X-Forwarded-For: {$myIp}", 
+		"Content-length: 380", 
+		"Connection: Close" 
+		); 
+
+		return $header; 
 	}
 
 }

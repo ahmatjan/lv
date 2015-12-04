@@ -6,17 +6,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 **************************************************************/
 class Spider_func
 {
-	public function __construct() {
-		$this->CI =& get_instance();//$this->CI调用框架方法
-		$this->CI->load->helper('url');
-	}
-	
 	private $sitemap_urls = array();
 	private $base;
 	private $protocol;
 	private $domain;
 	private $check = array();
 	private $proxy = "";
+	private $header = array('User-Agent: Mozilla/5.0 (Windows NT 6.1; xCalder/1..00; +http://www.lvxingto.com/search/spider.html)');
+	
+	public function __construct() {
+		$this->CI =& get_instance();//$this->CI调用框架方法
+	}
 	
 	//setting list of substring to ignore in urls
 	public function set_ignore($ignore_list){
@@ -26,6 +26,18 @@ class Spider_func
 	public function set_proxy($host_port){
 		$this->proxy = $host_port;
 	}
+	//设置headerz头
+	public function set_header($g_header=''){
+		if(empty($g_header)){
+			$this->header = $header;
+		}else{
+			foreach($g_header as $g_k=>$g_v){
+				$this->header[$k] = $g_header[$k];
+			}
+		}
+		
+	}
+	
 	//validating urls using list of substrings
 	private function validate($url){
 		$valid = true;
@@ -45,11 +57,13 @@ class Spider_func
 	private function multi_curl($urls){
 		// for curl handlers
 		$curl_handlers = array();
+		
 		//setting curl handlers
 		foreach ($urls as $url) 
 		{
 			$curl = curl_init();
 			curl_setopt($curl, CURLOPT_URL, $url);
+			curl_setopt($curl, CURLOPT_HTTPHEADER, $this->header);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			if (isset($this->proxy) && !$this->proxy == '') 
 			{

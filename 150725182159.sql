@@ -2,7 +2,7 @@
 MySQL Backup
 Source Server Version: 5.5.40
 Source Database: lv
-Date: 2015/12/4 18:22:54
+Date: 2015/12/5 02:14:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -223,7 +223,7 @@ CREATE TABLE `report_access` (
   `token` text NOT NULL,
   `login_type` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`report_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=90 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `report_flow`
@@ -241,7 +241,7 @@ CREATE TABLE `report_flow` (
   `robot` varchar(128) DEFAULT NULL,
   `user_agent` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`flow_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3655 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4633 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `report_robot`
@@ -254,7 +254,7 @@ CREATE TABLE `report_robot` (
   `url` varchar(255) NOT NULL,
   `access_time` datetime NOT NULL,
   PRIMARY KEY (`robot_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `spider_snap`
