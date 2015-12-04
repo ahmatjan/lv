@@ -343,7 +343,7 @@ var_dump($nav_parents);
 		//三级联动
 		
 		
-		$this->public_section->get_header();
+		//$this->public_section->get_header();
 		
 		//$str = 'about/helper/con?position=about_us';
 		//echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
@@ -361,9 +361,10 @@ var_dump($nav_parents);
 		}
 		*/
 		
-		$this->load->library('snoopy');
 		
-		$url = "http://www.lv.com";
+		$this->load->library('spider_func');
+		/*
+		$url = "http://www.lv.com/";
 		$ssl = is_https()===TRUE ? 'https://' : 'http://' ;
 		
 		//$snoopy = new Snoopy;
@@ -372,39 +373,23 @@ var_dump($nav_parents);
 		//echo $this->snoopy->results;       //显示结果
 		$urls = $this->snoopy->results;
 		$urls = array_unique($urls);
-		
-		foreach ($urls as $u_k=>$u_v){	//结果
-			if(preg_match('#^'.$ssl.'([a-z0-9])+\.'.explode('.',$_SERVER['HTTP_HOST'])['1'].'\.(.[a-z]+)#i',$urls[$u_k])){
-				if(preg_match('#html{1}#i',$urls[$u_k]))
-			    {
-			    	if($ssl == 'http://'){
-						$url_news[] = str_replace(':80/','',$urls[$u_k]);
-					}
-					if($ssl == 'https://'){
-						$url_news[] = str_replace(':443/','',$urls[$u_k]);
-					}
-			    }
-		    }
+		foreach($urls as $u_k=>$u_v){
+			if(strpos($urls[$u_k],base_url()) !== false && strpos($urls[$u_k],'.html') !== false){
+				$url_new[$u_k]=$urls[$u_k];
+			}
 		}
-		foreach ($url_news as $b){
+		
+		foreach ($url_new as $b){
 			echo $b.'<br/>';
 		}
-		/*
-		if(preg_match('#^'.$ssl.'([a-z0-9])+\.'.explode('.',$_SERVER['HTTP_HOST'])['1'].'\.(.[a-z]+)#i',$url)){
-			if(preg_match('#html{1}#i',$url))
-		    {
-		            echo 'yes' ;
-		    }
-		    else
-		    {
-		            echo 'no';
-		    }
-	    }
-	    */
-
-		 //$base_url = explode('.',$_SERVER['HTTP_HOST'])['1'];
-
+		*/
+		//var_dump(get_loaded_extensions());
 		
+		if($this->check_url('http://www.lv.com/helper/abot_u#s.html')){
+			echo '合法';
+		}else{
+			echo '不合法';
+		}
 		
 		//$this->load->view('test');
 		
@@ -484,5 +469,14 @@ var_dump($nav_parents);
 </div>
 <?php endif; ?>
 	*/
+	
+	private function check_url($url){
+	    if(strpos($url,base_url()) !== false && strpos($url,'.html') !== false && strpos($url,'#') === false){
+	    	//检查链接是否是站内链接，是否是一个.html链接
+	    	return TRUE;
+	    }else{
+	    return FALSE;
+		}
+	}
 
 }
