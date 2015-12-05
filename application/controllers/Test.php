@@ -393,8 +393,15 @@ var_dump($nav_parents);
 		}
 		*/
 		
-		$interface = 'http://www.lv.com'; 
-		$header = $this->FormatHeader($interface,'10.1.11.1'); 
+		$interface = 'http://lv.com';
+		$exp= '#^(http|https)://([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?#i';
+		if(preg_match($exp,$interface)){
+			echo '合法';
+		}else{
+			echo '不合法';
+		}
+		
+		//$header = $this->FormatHeader($interface,'10.1.11.1'); 
 /*
 		$ch = curl_init(); 
 		curl_setopt($ch, CURLOPT_URL, $interface); 
@@ -404,7 +411,7 @@ var_dump($nav_parents);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
 		$result = curl_exec($ch); 
 */
-		var_dump($header); 
+		//var_dump($header); 
 		
 		//$this->load->view('test');
 		

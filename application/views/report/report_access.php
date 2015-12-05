@@ -99,6 +99,39 @@
 												<div class="portlet-title">
 
 													<div class="caption"><i class="icon-user"></i>用户访问统计</div>
+													
+													<div class="actions">
+
+														<div class="btn-group">
+
+															<a class="btn green" href="#" data-toggle="dropdown">
+
+															<i class="icon-cogs"></i> 清空表
+
+															<i class="icon-angle-down"></i>
+
+															</a>
+
+															<ul class="dropdown-menu pull-right">
+
+																<!--<li><a href="#"><i class="icon-pencil"></i> Edit</a></li>-->
+
+																<li><a href="<?php echo site_url('report/report_access/truncate_report?table_name=report_access')?>"><i class="icon-trash"></i>清空uv统计表</a></li>
+
+																<li><a href="<?php echo site_url('report/report_access/truncate_report?table_name=report_flow')?>"><i class="icon-trash"></i>清空pv统计表</a></li>
+																<li><a href="<?php echo site_url('report/report_access/truncate_report?table_name=report_robot')?>"><i class="icon-trash"></i>清空robot统计表</a></li>
+
+																<li class="divider"></li>
+
+																<li><a href="<?php echo site_url('report/report_access/truncate_report?table_name=report_access-report_flow-report_robot')?>"><i class="i"></i>清空所有统计表</a></li>
+																
+																<li><a target="_black" href="<?php echo site_url('tools/spider/spider_index?url=http://www.lv.com')?>"><i class="i"></i>运行抓取爬虫</a></li>
+
+															</ul>
+
+														</div>
+
+													</div>
 
 												</div>
 

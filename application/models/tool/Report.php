@@ -115,4 +115,23 @@ class Report extends CI_Model {
 			return unserialize($row['ip_address']);
 		}
 	}
+	
+	//清空统计表数据，重置表
+	public function truncate_($data){
+		if(empty($data)){
+			//参数为空返回回false
+			return FALSE;
+		}
+		if(!empty($data)){
+			//参数不为空，执行清空表
+			foreach($data as $d_k=>$d_v){
+				if($this->db->truncate($this->db->dbprefix($data[$d_k]))){
+					$res['true'][$d_k]=$data[$d_k];
+				}else{
+					$res['false'][$d_k]=$data[$d_k];
+				}
+			}
+			return $res;
+		}
+	}
 }

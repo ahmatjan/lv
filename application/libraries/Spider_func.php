@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /************************************************************* 
 
 **************************************************************/
+require_once "phpQuery/phpQuery.php";
+
 class Spider_func
 {
 	private $sitemap_urls = array();
@@ -12,21 +14,26 @@ class Spider_func
 	private $domain;
 	private $check = array();
 	private $proxy = "";
-	private $header = array('User-Agent: Mozilla/5.0 (Windows NT 6.1; xCalder/1..00; +http://www.lvxingto.com/search/spider.html)');
+	private $header = array('User-Agent: Mozilla/5.0 (Windows NT 6.1; xCalder/1.0.0; +http://www.lvxingto.com/search/spider.html)');
+	private $url_feedback='';
 	
 	public function __construct() {
 		$this->CI =& get_instance();//$this->CI调用框架方法
+		$this->CI->load->library(array('user_agent','session'));
+		$this->CI->session->unset_userdata('spider_id');
+		$this->CI->load->helper('html');
+		echo doctype('html4-trans').meta('Content-type', 'text/html;charset=utf-8', 'equiv');
 	}
 	
-	//setting list of substring to ignore in urls
+	//设置URL中的忽略类型
 	public function set_ignore($ignore_list){
 		$this->check = $ignore_list;
 	}
-	//set a proxy host and port (such as someproxy:8080 or 10.1.1.1:8080
+	//设置代理主机和端口（如someproxy：8080或10.1.1.1:8080
 	public function set_proxy($host_port){
 		$this->proxy = $host_port;
 	}
-	//设置headerz头
+	//设置header头
 	public function set_header($g_header=''){
 		if(empty($g_header)){
 			$this->header = $header;
@@ -38,10 +45,10 @@ class Spider_func
 		
 	}
 	
-	//validating urls using list of substrings
+	//验证使用站点地图的网址列表
 	private function validate($url){
 		$valid = true;
-		//add substrings of url that you don't want to appear using set_ignore() method
+		//添加URL，排除set_ignore（）设置
 		foreach($this->check as $val)
 		{
 			if(stripos($url, $val) !== false)
@@ -53,16 +60,27 @@ class Spider_func
 		return $valid;
 	}
 	
-	//multi curl requests
+	//多线程请求
 	private function multi_curl($urls){
-		// for curl handlers
+		// 为多线程处理
 		$curl_handlers = array();
 		
-		//setting curl handlers
-		foreach ($urls as $url) 
+		//设置curl 多线程
+		foreach ($urls as $url_k=>$url_v)
+		//foreach ($urls as $url)
 		{
+			if(isset($_SESSION['spider_id'])){
+				$spider_id=$_SESSION['spider_id'];
+				$this->CI->session->set_userdata('spider_id', $_SESSION['spider_id'] + '1');
+			}else{
+				$spider_id='1';
+				$this->CI->session->set_userdata('spider_id', '2');
+			}
+			echo iconv("GB2312", "UTF-8",$spider_id.'、 抓取：'.$urls[$url_k].'<br/>&nbsp;&nbsp;内存：<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span><br/><br/>');
+			
 			$curl = curl_init();
-			curl_setopt($curl, CURLOPT_URL, $url);
+			curl_setopt($curl, CURLOPT_URL, $urls[$url_k]);
+			//curl_setopt($curl, CURLOPT_URL, $url);
 			curl_setopt($curl, CURLOPT_HTTPHEADER, $this->header);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			if (isset($this->proxy) && !$this->proxy == '') 
@@ -71,16 +89,16 @@ class Spider_func
 			}
 			$curl_handlers[] = $curl;
 		}
-		//initiating multi handler
+		//启动多线程处理
 		$multi_curl_handler = curl_multi_init();
 	
-		// adding all the single handler to a multi handler
+		// 将所有的单处理器到多处理器
 		foreach($curl_handlers as $key => $curl)
 		{
 			curl_multi_add_handle($multi_curl_handler,$curl);
 		}
 		
-		// executing the multi handler
+		// 执行多处理器
 		do 
 		{
 			$multi_curl = curl_multi_exec($multi_curl_handler, $active);
@@ -89,12 +107,12 @@ class Spider_func
 		
 		foreach($curl_handlers as $curl)
 		{
-			//checking for errors
+			//检查错误
 			if(curl_errno($curl) == CURLE_OK)
 			{
-				//if no error then getting content
+				//如果没有得到错误的内容
 				$content = curl_multi_getcontent($curl);
-				//parsing content
+				//解析内容
 				$this->parse_content($content);
 			}
 		}
@@ -102,14 +120,14 @@ class Spider_func
 		return true;
 	}
 
-	//function to call
+	//函数调用
 	public function get_links($domain){
-		//getting base of domain url address
+		//获取域名URL地址
 		$this->base = str_replace("http://", "", $domain);
 		$this->base = str_replace("https://", "", $this->base);
 		$host = explode("/", $this->base);
 		$this->base = $host[0];
-		//getting proper domain name and protocol
+		//得到适当的域名和协议
 		$this->domain = trim($domain);
 		if(strpos($this->domain, "http") !== 0)
 		{
@@ -126,7 +144,7 @@ class Spider_func
 		{
 			$this->sitemap_urls[] = $this->domain;
 		}
-		//requesting link content using curl
+		//要求使用curl链接内容
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $this->domain);
 		if (isset($this->proxy) && !$this->proxy == '') 
@@ -141,6 +159,7 @@ class Spider_func
 	
 	//分析的内容，并检查网址
 	private function parse_content($page){
+		
 		//从获得的href属性的所有链接
 		preg_match_all("/<a[^>]*href\s*=\s*'([^']*)'|".
 					'<a[^>]*href\s*=\s*"([^"]*)"'."/is", $page, $match);
@@ -148,15 +167,15 @@ class Spider_func
 		$new_links = array();
 		for($i = 1; $i < sizeof($match); $i++)
 		{
-			//walking through links
+			//通过链接爬取
 			foreach($match[$i] as $url)
 			{
-				//if doesn't start with http and is not empty
+				//如果不以http开头并且不为空
 				if(strpos($url, "http") === false  && trim($url) !== "")
 				{
-					//checking if absolute path
+					//如果绝对路径检查
 					if($url[0] == "/") $url = substr($url, 1);
-					//checking if relative path
+					//如果相对路径检查
 					else if($url[0] == ".")
 					{
 						while($url[0] != "/")
@@ -165,40 +184,42 @@ class Spider_func
 						}
 						$url = substr($url, 1);
 					}
-					//transforming to absolute url
+					//转化为绝对URL
 					$url = $this->protocol.$this->base."/".$url;
 				}
-				//if new and not empty
+				//如果是新的链接，且不为空
 				if(!in_array($url, $this->sitemap_urls) && trim($url) !== "")
 				{
-					//if valid url
+					//如果是有效网址
 					if($this->validate($url))
 					{
-						//checking if it is url from our domain
+						//检查是否是URL并且在给定域名下
 						if(strpos($url, "http://".$this->base) === 0 || strpos($url, "https://".$this->base) === 0)
 						{
-							//adding url to sitemap array
+							//添加URL到数组
 							$this->sitemap_urls[] = $url;
-							//adding url to new link array
+							//添加URL到新数组
 							$new_links[] = $url;
 						}
 					}
 				}
 			}
 		}
+		//调多线程处理
 		$this->multi_curl($new_links);
+		$this->analysis_html($page);
 		return true;
 	}
 
-	//returns array of sitemap URLs
+	//返回网站地图的URL数组
 	public function get_array(){
 		
 		return $this->sitemap_urls;
 	}
 
-	//notifies services like google, bing, yahoo, ask and moreover about your site map update
+	//通知服务，如谷歌，必应，雅虎，问而且你的网站地图更新
 	public function ping($sitemap_url, $title ="", $siteurl = ""){
-		// for curl handlers
+		// 开启多线程处理
 		$curl_handlers = array();
 		
 		$sitemap_url = trim($sitemap_url);
@@ -218,16 +239,15 @@ class Spider_func
 		{
 			$siteurl = $start."//".$middle;
 		}
-		//urls to ping
-		$urls[0] = "http://www.google.com/webmasters/tools/ping?sitemap=".urlencode($sitemap_url);
-		$urls[1] = "http://www.bing.com/webmaster/ping.aspx?siteMap=".urlencode($sitemap_url);
-		$urls[2] = "http://search.yahooapis.com/SiteExplorerService/V1/updateNotification".
-				"?appid=YahooDemo&url=".urlencode($sitemap_url);
-		$urls[3] = "http://submissions.ask.com/ping?sitemap=".urlencode($sitemap_url);
-		$urls[4] = "http://rpc.weblogs.com/pingSiteForm?name=".urlencode($title).
-				"&url=".urlencode($siteurl)."&changesURL=".urlencode($sitemap_url);
+		//提交url的地址
+		$urls[0] = "http://data.zz.baidu.com/urls?site=www.lvxingto.com&token=0FHSDjSQgZYfKdly&type=original";//百度链接提交
+		//$urls[0] = "http://www.google.com/webmasters/tools/ping?sitemap=".urlencode($sitemap_url);
+		//$urls[1] = "http://www.bing.com/webmaster/ping.aspx?siteMap=".urlencode($sitemap_url);
+		//$urls[2] = "http://search.yahooapis.com/SiteExplorerService/V1/updateNotification". "?appid=YahooDemo&url=".urlencode($sitemap_url);
+		//$urls[3] = "http://submissions.ask.com/ping?sitemap=".urlencode($sitemap_url);
+		//$urls[4] = "http://rpc.weblogs.com/pingSiteForm?name=".urlencode($title). "&url=".urlencode($siteurl)."&changesURL=".urlencode($sitemap_url);
 	
-		//setting curl handlers
+		//设置多线程
 		foreach ($urls as $url) 
 		{
 			$curl = curl_init();
@@ -236,28 +256,28 @@ class Spider_func
 			curl_setopt($curl, CURL_HTTP_VERSION_1_1, 1);
 			$curl_handlers[] = $curl;
 		}
-		//initiating multi handler
+		//启动多线程
 		$multi_curl_handler = curl_multi_init();
 	
-		// adding all the single handler to a multi handler
+		// 将所有的单处理器到多处理器
 		foreach($curl_handlers as $key => $curl)
 		{
 			curl_multi_add_handle($multi_curl_handler,$curl);
 		}
 		
-		// executing the multi handler
+		// 在执行多处理器
 		do 
 		{
 			$multi_curl = curl_multi_exec($multi_curl_handler, $active);
 		} 
 		while ($multi_curl == CURLM_CALL_MULTI_PERFORM  || $active);
 		
-		// check if there any error
+		// 检查是否有任何错误
 		$submitted = true;
 		foreach($curl_handlers as $key => $curl)
 		{
-			//you may use curl_multi_getcontent($curl); for getting content
-			//and curl_error($curl); for getting errors
+			//您可以使用curl_multi_getcontent（$curl）;获取内容
+			//and curl_error($curl); 获取错误
 			if(curl_errno($curl) != CURLE_OK)
 			{
 				$submitted = false;
@@ -267,7 +287,7 @@ class Spider_func
 		return $submitted;
 	}
 	
-	//generates sitemap
+	//生成网站地图
 	public function generate_sitemap(){
 		$sitemap = new SimpleXMLElement('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>');
         foreach($this->sitemap_urls as $url) 
@@ -276,6 +296,12 @@ class Spider_func
             $url_tag->addChild("loc", htmlspecialchars($url));
 		}
 		return $sitemap->asXML();
+	}
+	
+	//提取html关键词
+	private function analysis_html ($page){
+		phpQuery::newDocument($page);
+		phpQuery::$documents = array();//清空数组，释放内存
 	}
 }
 ?>
