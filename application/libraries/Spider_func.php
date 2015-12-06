@@ -16,10 +16,10 @@ class Spider_func
 	private $proxy = "";
 	private $header = array('User-Agent: Mozilla/5.0 (Windows NT 6.1; xCalder/1.0.0; +http://www.lvxingto.com/search/spider.html)');
 	private $url_feedback='';
-	private $spider_url=array();//spider_url±íµÄÊı×é
+	private $spider_url=array();//spider_urlè¡¨çš„æ•°ç»„
 	
 	public function __construct() {
-		$this->CI =& get_instance();//$this->CIµ÷ÓÃ¿ò¼Ü·½·¨
+		$this->CI =& get_instance();//$this->CIè°ƒç”¨æ¡†æ¶æ–¹æ³•
 		$this->CI->load->library(array('user_agent','session'));
 		$this->CI->session->unset_userdata('spider_id');
 		//$this->CI->session->unset_userdata('spider_base_url');
@@ -27,15 +27,15 @@ class Spider_func
 		echo doctype('html4-trans').meta('Content-type', 'text/html;charset=utf-8', 'equiv');
 	}
 	
-	//ÉèÖÃURLÖĞµÄºöÂÔÀàĞÍ
+	//è®¾ç½®URLä¸­çš„å¿½ç•¥ç±»å‹
 	public function set_ignore($ignore_list){
 		$this->check = $ignore_list;
 	}
-	//ÉèÖÃ´úÀíÖ÷»úºÍ¶Ë¿Ú£¨Èçsomeproxy£º8080»ò10.1.1.1:8080
+	//è®¾ç½®ä»£ç†ä¸»æœºå’Œç«¯å£ï¼ˆå¦‚someproxyï¼š8080æˆ–10.1.1.1:8080
 	public function set_proxy($host_port){
 		$this->proxy = $host_port;
 	}
-	//ÉèÖÃheaderÍ·
+	//è®¾ç½®headerå¤´
 	public function set_header($g_header=''){
 		if(empty($g_header)){
 			$this->header = $header;
@@ -47,10 +47,10 @@ class Spider_func
 		
 	}
 	
-	//ÑéÖ¤Ê¹ÓÃÕ¾µãµØÍ¼µÄÍøÖ·ÁĞ±í
+	//éªŒè¯ä½¿ç”¨ç«™ç‚¹åœ°å›¾çš„ç½‘å€åˆ—è¡¨
 	private function validate($url){
 		$valid = true;
-		//Ìí¼ÓURL£¬ÅÅ³ıset_ignore£¨£©ÉèÖÃ
+		//æ·»åŠ URLï¼Œæ’é™¤set_ignoreï¼ˆï¼‰è®¾ç½®
 		foreach($this->check as $val)
 		{
 			if(stripos($url, $val) !== false)
@@ -62,12 +62,12 @@ class Spider_func
 		return $valid;
 	}
 	
-	//¶àÏß³ÌÇëÇó
+	//å¤šçº¿ç¨‹è¯·æ±‚
 	private function multi_curl($urls){
-		// Îª¶àÏß³Ì´¦Àí
+		// ä¸ºå¤šçº¿ç¨‹å¤„ç†
 		$curl_handlers = array();
 		
-		//ÉèÖÃcurl ¶àÏß³Ì
+		//è®¾ç½®curl å¤šçº¿ç¨‹
 		foreach ($urls as $url_k=>$url_v)
 		//foreach ($urls as $url)
 		{
@@ -80,26 +80,26 @@ class Spider_func
 			{
 				curl_setopt($curl, CURLOPT_PROXY, $this->proxy);
 			}
-			//ºó¼Ó
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);//ÖØ¶¨Ïò
-			curl_setopt($curl, CURLOPT_MAXREDIRS, 30);//ÔÊĞíµÄÖØ¶¨Ïò×î´óÊıÁ¿
+			//ååŠ 
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);//é‡å®šå‘
+			curl_setopt($curl, CURLOPT_MAXREDIRS, 30);//å…è®¸çš„é‡å®šå‘æœ€å¤§æ•°é‡
 			curl_setopt($curl,CURLOPT_HTTPPROXYTUNNEL,TRUE);
 			curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,FALSE);
 			curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,FALSE);
-			curl_setopt($curl,CURLOPT_TIMEOUT,30);//³¬Ê±
-			//ºó¼Ó
+			curl_setopt($curl,CURLOPT_TIMEOUT,30);//è¶…æ—¶
+			//ååŠ 
 			$curl_handlers[] = $curl;
 		}
-		//Æô¶¯¶àÏß³Ì´¦Àí
+		//å¯åŠ¨å¤šçº¿ç¨‹å¤„ç†
 		$multi_curl_handler = curl_multi_init();
 	
-		// ½«ËùÓĞµÄµ¥´¦ÀíÆ÷µ½¶à´¦ÀíÆ÷
+		// å°†æ‰€æœ‰çš„å•å¤„ç†å™¨åˆ°å¤šå¤„ç†å™¨
 		foreach($curl_handlers as $key => $curl)
 		{
 			curl_multi_add_handle($multi_curl_handler,$curl);
 		}
 		
-		// Ö´ĞĞ¶à´¦ÀíÆ÷
+		// æ‰§è¡Œå¤šå¤„ç†å™¨
 		do 
 		{
 			$multi_curl = curl_multi_exec($multi_curl_handler, $active);
@@ -108,18 +108,18 @@ class Spider_func
 		
 		foreach($curl_handlers as $curl)
 		{
-			//¼ì²é´íÎó
-			(int)$http_code = curl_getinfo($curl,CURLINFO_HTTP_CODE);//·µ»Ø×´Ì¬Âë
-			$loction_url = curl_getinfo($curl,CURLINFO_EFFECTIVE_URL);//·µ»ØÖØ¶¨ÏòºóµÄurl
+			//æ£€æŸ¥é”™è¯¯
+			(int)$http_code = curl_getinfo($curl,CURLINFO_HTTP_CODE);//è¿”å›çŠ¶æ€ç 
+			$loction_url = curl_getinfo($curl,CURLINFO_EFFECTIVE_URL);//è¿”å›é‡å®šå‘åçš„url
 			if(curl_errno($curl) == CURLE_OK && $http_code < (int)'400')
 			{
-				//Èç¹ûÃ»ÓĞµÃµ½´íÎóµÄÄÚÈİ
+				//å¦‚æœæ²¡æœ‰å¾—åˆ°é”™è¯¯çš„å†…å®¹
 				$content = curl_multi_getcontent($curl);
-				//½âÎöÄÚÈİ
+				//è§£æå†…å®¹
 				$this->parse_content($content);
-				$this->analysis_html($content,$loction_url);//½âÎöhtmlÈë¿â
+				$this->analysis_html($content,$loction_url);//è§£æhtmlå…¥åº“
 				
-				//Êä³öÌáÊ¾ĞÅÏ¢
+				//è¾“å‡ºæç¤ºä¿¡æ¯
 				if(isset($_SESSION['spider_id'])){
 					$spider_id=$_SESSION['spider_id'];
 					$this->CI->session->set_userdata('spider_id', $_SESSION['spider_id'] + '1');
@@ -127,25 +127,25 @@ class Spider_func
 					$spider_id='1';
 					$this->CI->session->set_userdata('spider_id', '2');
 				}
-				echo iconv("GB2312", "UTF-8",$spider_id.'¡¢ ×¥È¡£º'.$loction_url.'<br/>ÄÚ´æ£º<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span>&nbsp;HTTP×´Ì¬Âë'.$http_code.'<br/><br/>');
+				echo iconv("GB2312", "UTF-8",$spider_id.'ã€ æŠ“å–ï¼š'.$loction_url.'<br/>å†…å­˜ï¼š<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span>&nbsp;HTTPçŠ¶æ€ç '.$http_code.'<br/><br/>');
 			
-				//$this->spider_url[$_SESSION['spider_id']]['url']=$loction_url;//spider_url±íÊı×é
-				//$this->spider_url[$_SESSION['spider_id']]['http_code'] = $http_code; //ÎÒÖªµÀHTTPSTATÂëÅ¶¡«
+				//$this->spider_url[$_SESSION['spider_id']]['url']=$loction_url;//spider_urlè¡¨æ•°ç»„
+				//$this->spider_url[$_SESSION['spider_id']]['http_code'] = $http_code; //æˆ‘çŸ¥é“HTTPSTATç å“¦ï½
 			}
 		}
 		curl_multi_close($multi_curl_handler);
 		return true;
 	}
 
-	//º¯Êıµ÷ÓÃ
+	//å‡½æ•°è°ƒç”¨
 	public function get_links($domain){
-		//»ñÈ¡ÓòÃûURLµØÖ·
+		//è·å–åŸŸåURLåœ°å€
 		$this->base = str_replace("http://", "", $domain);
 		$this->base = str_replace("https://", "", $domain);
 		$host = explode("/", $this->base);
 		$this->base = $host[0];
 		//$this->CI->session->set_userdata('spider_base_url', $this->base);
-		//µÃµ½ÊÊµ±µÄÓòÃûºÍĞ­Òé
+		//å¾—åˆ°é€‚å½“çš„åŸŸåå’Œåè®®
 		$this->domain = trim($domain);
 		if(strpos($this->domain, "http") !== 0)
 		{
@@ -167,7 +167,7 @@ class Spider_func
 		{
 			$this->sitemap_urls[] = $this->domain;
 		}
-		//ÒªÇóÊ¹ÓÃcurlÁ´½ÓÄÚÈİ
+		//è¦æ±‚ä½¿ç”¨curlé“¾æ¥å†…å®¹
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $this->domain);
 		if (isset($this->proxy) && !$this->proxy == '') 
@@ -175,39 +175,39 @@ class Spider_func
 			curl_setopt($curl, CURLOPT_PROXY, $this->proxy);
 		}
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		//ºó¼Ó
-		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);//ÖØ¶¨Ïò
-		curl_setopt($curl, CURLOPT_MAXREDIRS, 30);//ÔÊĞíµÄÖØ¶¨Ïò×î´óÊıÁ¿
+		//ååŠ 
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);//é‡å®šå‘
+		curl_setopt($curl, CURLOPT_MAXREDIRS, 30);//å…è®¸çš„é‡å®šå‘æœ€å¤§æ•°é‡
 		curl_setopt($curl,CURLOPT_HTTPPROXYTUNNEL,TRUE);
 		curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,FALSE);
 		curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,FALSE);
-		curl_setopt($curl,CURLOPT_TIMEOUT,30);//³¬Ê±
-		//ºó¼Ó
+		curl_setopt($curl,CURLOPT_TIMEOUT,30);//è¶…æ—¶
+		//ååŠ 
 		$page = curl_exec($curl);
 		curl_close($curl);
 		$this->parse_content($page);
 		$this->unset_sitemap_urls();
 	}
 	
-	//·ÖÎöµÄÄÚÈİ£¬²¢¼ì²éÍøÖ·
+	//åˆ†æçš„å†…å®¹ï¼Œå¹¶æ£€æŸ¥ç½‘å€
 	private function parse_content($page){
 		
-		//´Ó»ñµÃµÄhrefÊôĞÔµÄËùÓĞÁ´½Ó
+		//ä»è·å¾—çš„hrefå±æ€§çš„æ‰€æœ‰é“¾æ¥
 		preg_match_all("/<a[^>]*href\s*=\s*'([^']*)'|".
 					'<a[^>]*href\s*=\s*"([^"]*)"'."/is", $page, $match);
-		//´æ´¢ĞÂÁ´½Ó
+		//å­˜å‚¨æ–°é“¾æ¥
 		$new_links = array();
 		for($i = 1; $i < sizeof($match); $i++)
 		{
-			//Í¨¹ıÁ´½ÓÅÀÈ¡
+			//é€šè¿‡é“¾æ¥çˆ¬å–
 			foreach($match[$i] as $url)
 			{
-				//Èç¹û²»ÒÔhttp¿ªÍ·²¢ÇÒ²»Îª¿Õ
+				//å¦‚æœä¸ä»¥httpå¼€å¤´å¹¶ä¸”ä¸ä¸ºç©º
 				if(strpos($url, "http") === false  && trim($url) !== "" && strpos($url, "#") === false)
 				{
-					//Èç¹û¾ø¶ÔÂ·¾¶¼ì²é
+					//å¦‚æœç»å¯¹è·¯å¾„æ£€æŸ¥
 					if($url[0] == "/") $url = substr($url, 1);
-					//Èç¹ûÏà¶ÔÂ·¾¶¼ì²é
+					//å¦‚æœç›¸å¯¹è·¯å¾„æ£€æŸ¥
 					else if($url[0] == ".")
 					{
 						while($url[0] != "/")
@@ -216,57 +216,57 @@ class Spider_func
 						}
 						$url = substr($url, 1);
 					}
-					//×ª»¯Îª¾ø¶ÔURL
+					//è½¬åŒ–ä¸ºç»å¯¹URL
 					$url = $this->protocol.$this->base."/".$url;
 				}
-				//Èç¹ûÊÇĞÂµÄÁ´½Ó£¬ÇÒ²»Îª¿Õ
+				//å¦‚æœæ˜¯æ–°çš„é“¾æ¥ï¼Œä¸”ä¸ä¸ºç©º
 				if(!in_array($url, $this->sitemap_urls) && trim($url) !== "" && strpos($url, "#") === false)
 				{
-					//Èç¹ûÊÇÓĞĞ§ÍøÖ·
+					//å¦‚æœæ˜¯æœ‰æ•ˆç½‘å€
 					if($this->validate($url))
 					{
-						//¼ì²éÊÇ·ñÊÇURL²¢ÇÒÔÚ¸ø¶¨ÓòÃûÏÂ
+						//æ£€æŸ¥æ˜¯å¦æ˜¯URLå¹¶ä¸”åœ¨ç»™å®šåŸŸåä¸‹
 						if(strpos($url, "http://".$this->base) === 0 || strpos($url, "https://".$this->base) === 0)
 						{
-							//Ìí¼ÓURLµ½Êı×é
+							//æ·»åŠ URLåˆ°æ•°ç»„
 							$this->sitemap_urls[] = $url;
-							//Ìí¼ÓURLµ½ĞÂÊı×é
+							//æ·»åŠ URLåˆ°æ–°æ•°ç»„
 							$new_links[] = $url;
 						}
 					}
 				}
 			}
 		}
-		//µ÷¶àÏß³Ì´¦Àí
+		//è°ƒå¤šçº¿ç¨‹å¤„ç†
 		$this->multi_curl($new_links);
 		
 		return true;
 	}
 
-	//·µ»ØÍøÕ¾µØÍ¼µÄURLÊı×é
+	//è¿”å›ç½‘ç«™åœ°å›¾çš„URLæ•°ç»„
 	public function get_array(){
 		
 		return $this->sitemap_urls;
 	}
 	
-	//ÖØÖÃ$this->sitemap_urls
+	//é‡ç½®$this->sitemap_urls
 	private function unset_sitemap_urls(){
 		if(count($this->sitemap_urls) > '500'){
 			//$this->sitemap_urls = array();
-			echo 'ÖØÖÃ';
+			echo 'é‡ç½®';
 			unset($this->sitemap_urls);
 		}
 	}
 	
-	//·µ»Øspider_url
+	//è¿”å›spider_url
 	public function get_spider_url(){
 		
 		return $this->spider_url;
 	}
 
-	//Í¨Öª·şÎñ£¬Èç¹È¸è£¬±ØÓ¦£¬ÑÅ»¢£¬ÎÊ¶øÇÒÄãµÄÍøÕ¾µØÍ¼¸üĞÂ
+	//é€šçŸ¥æœåŠ¡ï¼Œå¦‚è°·æ­Œï¼Œå¿…åº”ï¼Œé›…è™ï¼Œé—®è€Œä¸”ä½ çš„ç½‘ç«™åœ°å›¾æ›´æ–°
 	public function ping($sitemap_url, $title ="", $siteurl = ""){
-		// ¿ªÆô¶àÏß³Ì´¦Àí
+		// å¼€å¯å¤šçº¿ç¨‹å¤„ç†
 		$curl_handlers = array();
 		
 		$sitemap_url = trim($sitemap_url);
@@ -286,15 +286,15 @@ class Spider_func
 		{
 			$siteurl = $start."//".$middle;
 		}
-		//Ìá½»urlµÄµØÖ·
-		$urls[0] = "http://data.zz.baidu.com/urls?site=www.lvxingto.com&token=0FHSDjSQgZYfKdly&type=original";//°Ù¶ÈÁ´½ÓÌá½»
+		//æäº¤urlçš„åœ°å€
+		$urls[0] = "http://data.zz.baidu.com/urls?site=www.lvxingto.com&token=0FHSDjSQgZYfKdly&type=original";//ç™¾åº¦é“¾æ¥æäº¤
 		//$urls[0] = "http://www.google.com/webmasters/tools/ping?sitemap=".urlencode($sitemap_url);
 		//$urls[1] = "http://www.bing.com/webmaster/ping.aspx?siteMap=".urlencode($sitemap_url);
 		//$urls[2] = "http://search.yahooapis.com/SiteExplorerService/V1/updateNotification". "?appid=YahooDemo&url=".urlencode($sitemap_url);
 		//$urls[3] = "http://submissions.ask.com/ping?sitemap=".urlencode($sitemap_url);
 		//$urls[4] = "http://rpc.weblogs.com/pingSiteForm?name=".urlencode($title). "&url=".urlencode($siteurl)."&changesURL=".urlencode($sitemap_url);
 	
-		//ÉèÖÃ¶àÏß³Ì
+		//è®¾ç½®å¤šçº¿ç¨‹
 		foreach ($urls as $url) 
 		{
 			$curl = curl_init();
@@ -303,28 +303,28 @@ class Spider_func
 			curl_setopt($curl, CURL_HTTP_VERSION_1_1, 1);
 			$curl_handlers[] = $curl;
 		}
-		//Æô¶¯¶àÏß³Ì
+		//å¯åŠ¨å¤šçº¿ç¨‹
 		$multi_curl_handler = curl_multi_init();
 	
-		// ½«ËùÓĞµÄµ¥´¦ÀíÆ÷µ½¶à´¦ÀíÆ÷
+		// å°†æ‰€æœ‰çš„å•å¤„ç†å™¨åˆ°å¤šå¤„ç†å™¨
 		foreach($curl_handlers as $key => $curl)
 		{
 			curl_multi_add_handle($multi_curl_handler,$curl);
 		}
 		
-		// ÔÚÖ´ĞĞ¶à´¦ÀíÆ÷
+		// åœ¨æ‰§è¡Œå¤šå¤„ç†å™¨
 		do 
 		{
 			$multi_curl = curl_multi_exec($multi_curl_handler, $active);
 		} 
 		while ($multi_curl == CURLM_CALL_MULTI_PERFORM  || $active);
 		
-		// ¼ì²éÊÇ·ñÓĞÈÎºÎ´íÎó
+		// æ£€æŸ¥æ˜¯å¦æœ‰ä»»ä½•é”™è¯¯
 		$submitted = true;
 		foreach($curl_handlers as $key => $curl)
 		{
-			//Äú¿ÉÒÔÊ¹ÓÃcurl_multi_getcontent£¨$curl£©;»ñÈ¡ÄÚÈİ
-			//and curl_error($curl); »ñÈ¡´íÎó
+			//æ‚¨å¯ä»¥ä½¿ç”¨curl_multi_getcontentï¼ˆ$curlï¼‰;è·å–å†…å®¹
+			//and curl_error($curl); è·å–é”™è¯¯
 			if(curl_errno($curl) != CURLE_OK)
 			{
 				$submitted = false;
@@ -334,7 +334,7 @@ class Spider_func
 		return $submitted;
 	}
 	
-	//Éú³ÉÍøÕ¾µØÍ¼
+	//ç”Ÿæˆç½‘ç«™åœ°å›¾
 	public function generate_sitemap(){
 		$sitemap = new SimpleXMLElement('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>');
         foreach($this->sitemap_urls as $url) 
@@ -345,12 +345,12 @@ class Spider_func
 		return $sitemap->asXML();
 	}
 	
-	//ÌáÈ¡html¹Ø¼ü´Ê
+	//æå–htmlå…³é”®è¯
 	private function analysis_html ($page,$loction_url){
-		//echo iconv("GB2312", "UTF-8",'ÕıÔÚ×¥È¡ÄÚÈİ');
+		//echo iconv("GB2312", "UTF-8",'æ­£åœ¨æŠ“å–å†…å®¹');
 		//echo md5($page);
 		phpQuery::newDocument($page);
-		phpQuery::$documents = array();//Çå¿ÕÊı×é£¬ÊÍ·ÅÄÚ´æ
+		phpQuery::$documents = array();//æ¸…ç©ºæ•°ç»„ï¼Œé‡Šæ”¾å†…å­˜
 	}
 }
 ?>
