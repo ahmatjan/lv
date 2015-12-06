@@ -125,7 +125,7 @@
 
 																<li><a href="<?php echo site_url('report/report_access/truncate_report?table_name=report_access-report_flow-report_robot')?>"><i class="i"></i>清空所有统计表</a></li>
 																
-																<li><a target="_black" href="<?php echo site_url('tools/spider/spider_index?url=http://www.lv.com')?>"><i class="i"></i>运行抓取爬虫</a></li>
+																<li><a target="_black" href="<?php echo site_url('tools/spider/spider_index?url='.$spider_url)?>"><i class="i"></i>运行抓取爬虫</a></li>
 
 															</ul>
 

@@ -11,10 +11,10 @@
 					<li>2013 &copy; 旅行兔版权所有!</li>
 					<li>|</li>
 					<li>滇ICP备15003514号-1</li>
-					<li>|</li>
+					<!--<li>|</li>
 					<li>执行时间：{elapsed_time}</li>
 					<li>|</li>
-					<li>内存：{memory_usage}</li>
+					<li>内存：{memory_usage}</li>-->
 				</ul>
 	
 			</div>

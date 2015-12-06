@@ -4,7 +4,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Home extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
-			$this->output->https_jump();
+		$this->output->https_jump();
+		if(empty($this->uri->segment(2)) && $this->uri->segment(1) == 'home'){
+			redirect(base_url(), 'location', 301);
+			exit();
+		}
 	}
 	
 	public function index()

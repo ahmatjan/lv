@@ -16,11 +16,13 @@ class Spider_func
 	private $proxy = "";
 	private $header = array('User-Agent: Mozilla/5.0 (Windows NT 6.1; xCalder/1.0.0; +http://www.lvxingto.com/search/spider.html)');
 	private $url_feedback='';
+	private $spider_url=array();//spider_url表的数组
 	
 	public function __construct() {
 		$this->CI =& get_instance();//$this->CI调用框架方法
 		$this->CI->load->library(array('user_agent','session'));
 		$this->CI->session->unset_userdata('spider_id');
+		//$this->CI->session->unset_userdata('spider_base_url');
 		$this->CI->load->helper('html');
 		echo doctype('html4-trans').meta('Content-type', 'text/html;charset=utf-8', 'equiv');
 	}
@@ -69,15 +71,6 @@ class Spider_func
 		foreach ($urls as $url_k=>$url_v)
 		//foreach ($urls as $url)
 		{
-			if(isset($_SESSION['spider_id'])){
-				$spider_id=$_SESSION['spider_id'];
-				$this->CI->session->set_userdata('spider_id', $_SESSION['spider_id'] + '1');
-			}else{
-				$spider_id='1';
-				$this->CI->session->set_userdata('spider_id', '2');
-			}
-			echo iconv("GB2312", "UTF-8",$spider_id.'、 抓取：'.$urls[$url_k].'<br/>&nbsp;&nbsp;内存：<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span><br/><br/>');
-			
 			$curl = curl_init();
 			curl_setopt($curl, CURLOPT_URL, $urls[$url_k]);
 			//curl_setopt($curl, CURLOPT_URL, $url);
@@ -87,6 +80,14 @@ class Spider_func
 			{
 				curl_setopt($curl, CURLOPT_PROXY, $this->proxy);
 			}
+			//后加
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);//重定向
+			curl_setopt($curl, CURLOPT_MAXREDIRS, 30);//允许的重定向最大数量
+			curl_setopt($curl,CURLOPT_HTTPPROXYTUNNEL,TRUE);
+			curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,FALSE);
+			curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,FALSE);
+			curl_setopt($curl,CURLOPT_TIMEOUT,30);//超时
+			//后加
 			$curl_handlers[] = $curl;
 		}
 		//启动多线程处理
@@ -108,12 +109,28 @@ class Spider_func
 		foreach($curl_handlers as $curl)
 		{
 			//检查错误
-			if(curl_errno($curl) == CURLE_OK)
+			(int)$http_code = curl_getinfo($curl,CURLINFO_HTTP_CODE);//返回状态码
+			$loction_url = curl_getinfo($curl,CURLINFO_EFFECTIVE_URL);//返回重定向后的url
+			if(curl_errno($curl) == CURLE_OK && $http_code < (int)'400')
 			{
 				//如果没有得到错误的内容
 				$content = curl_multi_getcontent($curl);
 				//解析内容
 				$this->parse_content($content);
+				$this->analysis_html($content,$loction_url);//解析html入库
+				
+				//输出提示信息
+				if(isset($_SESSION['spider_id'])){
+					$spider_id=$_SESSION['spider_id'];
+					$this->CI->session->set_userdata('spider_id', $_SESSION['spider_id'] + '1');
+				}else{
+					$spider_id='1';
+					$this->CI->session->set_userdata('spider_id', '2');
+				}
+				echo iconv("GB2312", "UTF-8",$spider_id.'、 抓取：'.$loction_url.'<br/>内存：<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span>&nbsp;HTTP状态码'.$http_code.'<br/><br/>');
+			
+				//$this->spider_url[$_SESSION['spider_id']]['url']=$loction_url;//spider_url表数组
+				//$this->spider_url[$_SESSION['spider_id']]['http_code'] = $http_code; //我知道HTTPSTAT码哦～
 			}
 		}
 		curl_multi_close($multi_curl_handler);
@@ -124,14 +141,20 @@ class Spider_func
 	public function get_links($domain){
 		//获取域名URL地址
 		$this->base = str_replace("http://", "", $domain);
-		$this->base = str_replace("https://", "", $this->base);
+		$this->base = str_replace("https://", "", $domain);
 		$host = explode("/", $this->base);
 		$this->base = $host[0];
+		//$this->CI->session->set_userdata('spider_base_url', $this->base);
 		//得到适当的域名和协议
 		$this->domain = trim($domain);
 		if(strpos($this->domain, "http") !== 0)
 		{
 			$this->protocol = "http://";
+			$this->domain = $this->protocol.$this->domain;
+		}
+		elseif(strpos($this->domain, "https") !== 0)
+		{
+			$this->protocol = "https://";
 			$this->domain = $this->protocol.$this->domain;
 		}
 		else
@@ -152,9 +175,18 @@ class Spider_func
 			curl_setopt($curl, CURLOPT_PROXY, $this->proxy);
 		}
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		//后加
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);//重定向
+		curl_setopt($curl, CURLOPT_MAXREDIRS, 30);//允许的重定向最大数量
+		curl_setopt($curl,CURLOPT_HTTPPROXYTUNNEL,TRUE);
+		curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,FALSE);
+		curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,FALSE);
+		curl_setopt($curl,CURLOPT_TIMEOUT,30);//超时
+		//后加
 		$page = curl_exec($curl);
 		curl_close($curl);
 		$this->parse_content($page);
+		$this->unset_sitemap_urls();
 	}
 	
 	//分析的内容，并检查网址
@@ -171,7 +203,7 @@ class Spider_func
 			foreach($match[$i] as $url)
 			{
 				//如果不以http开头并且不为空
-				if(strpos($url, "http") === false  && trim($url) !== "")
+				if(strpos($url, "http") === false  && trim($url) !== "" && strpos($url, "#") === false)
 				{
 					//如果绝对路径检查
 					if($url[0] == "/") $url = substr($url, 1);
@@ -188,7 +220,7 @@ class Spider_func
 					$url = $this->protocol.$this->base."/".$url;
 				}
 				//如果是新的链接，且不为空
-				if(!in_array($url, $this->sitemap_urls) && trim($url) !== "")
+				if(!in_array($url, $this->sitemap_urls) && trim($url) !== "" && strpos($url, "#") === false)
 				{
 					//如果是有效网址
 					if($this->validate($url))
@@ -207,7 +239,7 @@ class Spider_func
 		}
 		//调多线程处理
 		$this->multi_curl($new_links);
-		$this->analysis_html($page);
+		
 		return true;
 	}
 
@@ -215,6 +247,21 @@ class Spider_func
 	public function get_array(){
 		
 		return $this->sitemap_urls;
+	}
+	
+	//重置$this->sitemap_urls
+	private function unset_sitemap_urls(){
+		if(count($this->sitemap_urls) > '500'){
+			//$this->sitemap_urls = array();
+			echo '重置';
+			unset($this->sitemap_urls);
+		}
+	}
+	
+	//返回spider_url
+	public function get_spider_url(){
+		
+		return $this->spider_url;
 	}
 
 	//通知服务，如谷歌，必应，雅虎，问而且你的网站地图更新
@@ -299,7 +346,9 @@ class Spider_func
 	}
 	
 	//提取html关键词
-	private function analysis_html ($page){
+	private function analysis_html ($page,$loction_url){
+		//echo iconv("GB2312", "UTF-8",'正在抓取内容');
+		//echo md5($page);
 		phpQuery::newDocument($page);
 		phpQuery::$documents = array();//清空数组，释放内存
 	}

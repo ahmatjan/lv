@@ -229,6 +229,12 @@ class Report_access extends CI_Controller {
 		$data['report_unknows']=$this->report->unknowspider($unknow_start,$this->base_setting->get_setting('quantity_admin'));
 		//获取抓取记录结束
 		
+		if(is_https()){
+			$data['spider_url'] = str_replace("https://", "", site_url());
+		}else{
+			$data['spider_url'] = str_replace("http://", "", site_url());
+		}
+		
 		$this->load->view('report/report_access',$data);
 		
 		$this->public_section->get_footer();
