@@ -2,7 +2,7 @@
 MySQL Backup
 Source Server Version: 5.5.40
 Source Database: lv
-Date: 2015/12/7 02:06:08
+Date: 2015/12/7 18:07:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -223,7 +223,7 @@ CREATE TABLE `report_access` (
   `token` text NOT NULL,
   `login_type` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`report_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `report_flow`
@@ -241,7 +241,7 @@ CREATE TABLE `report_flow` (
   `robot` varchar(128) DEFAULT NULL,
   `user_agent` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`flow_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=119 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `report_robot`
@@ -254,7 +254,7 @@ CREATE TABLE `report_robot` (
   `url` varchar(255) NOT NULL,
   `access_time` datetime NOT NULL,
   PRIMARY KEY (`robot_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `spider_url`
@@ -262,14 +262,16 @@ CREATE TABLE `report_robot` (
 DROP TABLE IF EXISTS `spider_url`;
 CREATE TABLE `spider_url` (
   `url_id` int(11) NOT NULL AUTO_INCREMENT,
-  `url` varchar(588) NOT NULL,
+  `url` varchar(255) NOT NULL,
   `content_md5` varchar(128) NOT NULL,
   `addtime` datetime NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `keyword` varchar(255) DEFAULT NULL,
+  `keywords` varchar(255) DEFAULT NULL,
   `author` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`url_id`)
+  `content` text,
+  PRIMARY KEY (`url_id`),
+  UNIQUE KEY `url` (`url`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -323,7 +325,12 @@ CREATE TABLE `user_info` (
   `register_style` varchar(12) NOT NULL,
   `group_id` int(11) NOT NULL,
   `username_edit` int(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`)
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_name` (`user_name`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `mobile` (`mobile`),
+  UNIQUE KEY `QQ` (`QQ`),
+  UNIQUE KEY `wechat` (`wechat`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -378,6 +385,7 @@ INSERT INTO `linkage_province` VALUES ('1','110000','北京市'), ('2','120000',
 INSERT INTO `modules` VALUES ('1','结伴','travel_info','结伴在首页显示','xcalder'), ('2','文章','article','显示文章','xcalder'), ('3','banner','banner','banner','xcalder'), ('9','gcx','gcx','none','none'), ('11','二维码','qr_banner','none','none'), ('12','节日效果','holidays','none','none');
 INSERT INTO `nav_child` VALUES ('1','8','青年旅社','about/helper','about/helper','10','1','1'), ('2','4','好的呀','article/article_content','article/article_content','111','1','1'), ('4','18','网站设置','setting/setting','setting/setting','10','1','1'), ('5','18','添加导航','setting/setting_form','setting/setting_form','20','1','1'), ('6','20','用户中心','user','user/user_center','10','1','1'), ('7','20','文章内容','article/article_content','','20','1','1'), ('8','20','用户登陆','user/login','','40','1','1'), ('9','20','文章列表','article/Article_list','','50','1','1'), ('10','20','关于我们','helper/about_us','','60','1','1'), ('11','20','结伴内容','travel_info/alice_content','','70','1','1'), ('12','20','结伴列表','travel_info/alice_list','','80','1','1'), ('13','20','网站设置','setting/setting','','90','1','1'), ('14','20','图片管理','user/image_manager','','100','1','1'), ('15','21','找青旅','111','','110','1','1'), ('16','18','布局插件','setting/layout','setting/layout','10','1','1'), ('17','26','示例','','','10','1','1'), ('18','24','示例2','#','','20','1','1'), ('19','24','示例3','','','30','1','1'), ('20','24','示例4','#','','30','1','1'), ('21','25','示例','#','','10','1','1'), ('22','18','用户管理','setting/user_manage','setting/user_manage','200','1','1'), ('23','18','访问统计','report/report_access','report/report_access','400','1','1'), ('24','18','统计图表','report/report_charts','report/report_charts','410','1','1'), ('25','18','11111','222222222222222','','222','1','1'), ('26','18','文章管理','setting/informations','setting/informations','500','1','1');
 INSERT INTO `nav_parent` VALUES ('1','个人中心','user','admin','user','user/user_center','10','1','1'), ('2','结伴','group','admin','article/article_content','article/article_content','20','1','1'), ('3','艺术长河','magic','admin','article/article_content','article/article_content','30','1','1'), ('4','行摄频道','camera-retro','admin','article/article_content','article/article_content','40','1','1'), ('5','特色城市','flag','admin','article/article_content','article/article_content','50','1','1'), ('6','安全中心','lock','admin','article/article_content','article/article_content','60','1','1'), ('7','关于我们','thumbs-up','admin','helper/about_us','about/helper','70','1','1'), ('8','旅行','leaf','admin','about/helper','about/helper','15','1','1'), ('9','关于我们','thumbs-up','helper','helper/about_us','','10','1','1'), ('11','常见问题','cogs','helper','helper/common',NULL,'20','1','1'), ('12','自助服务','wrench','helper','helper/self','','30','1','1'), ('13','版权协议','bookmark-empty','helper','helper/copyright','about/helper/copyright','40','1','1'), ('14','免责申明','lemon','helper','helper/disclaimer',NULL,'50','1','1'), ('15','赞助投资','credit-card','helper','helper/sponsor','','60','1','1'), ('16','广告服务','dashboard','helper','helper/advertising',NULL,'70','1','1'), ('17','意见反馈','pencil','helper','helper/opinion',NULL,'80','1','1'), ('18','管理员面板','edit','admin','','','14','1','1'), ('19','首页','home','view_top','home',NULL,'10','1','1'), ('20','结伴','home','view_top',NULL,NULL,'20','1','1'), ('21','旅行','home','view_top',NULL,NULL,'30','1','1'), ('22','青旅','home','view_top',NULL,NULL,'40','1','1'), ('23','首页','home','admin_top','home','home','10','1','1'), ('24','结伴','adn','admin_top','',NULL,'20','1','1'), ('25','旅行','align-left','admin_top','',NULL,'30','1','1'), ('26','青旅','align-center','admin_top','',NULL,'40','1','1'), ('27','','','','','','0','1','1');
+INSERT INTO `report_flow` VALUES ('1','127.0.0.1','http://www.lv.com/report/report_access.html','http://www.lv.com/report/report_access.html','a2eb5ea38276ce360e5993f882625e1f655846c4','2015-12-07 18:07:06','Windows 7','Chrome46.0.2490.86',NULL,'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36'), ('2','127.0.0.1','http://www.lv.com/report/report_access.html','http://www.lv.com/report/report_access.html','a2eb5ea38276ce360e5993f882625e1f655846c4','2015-12-07 18:07:13','Windows 7','Chrome46.0.2490.86',NULL,'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36');
 INSERT INTO `user_description` VALUES ('1','3','返回字符串，此字符串包含了表示 value 的字节流，可以存储于任何地方。\r\n\r\n这有利于存储或传递 PHP 的值，同时不丢失其类型和结构。 \r\n\r\n想要将已序列化的字符串变回 PHP 的值，可使用 unserialize()。\r\nserialize() 可处理除了 resource 之外的任何类型。\r\n','云南省楚雄彝族自治州楚雄市','1989-11-18','爱玩','程序','http://www.lv.com/user.html');
 INSERT INTO `user_group` VALUES ('1','超级管理员','拥有所有权限','a:3:{s:6:\"access\";a:14:{i:0;s:18:\"common/filemanager\";i:1;s:15:\"common/linkages\";i:2;s:12:\"common/tools\";i:3;s:12:\"tools/spider\";i:4;s:20:\"setting/informations\";i:5;s:7:\"no_find\";i:6;s:20:\"report/report_access\";i:7;s:20:\"report/report_charts\";i:8;s:14:\"setting/layout\";i:9;s:19:\"setting/layout_form\";i:10;s:15:\"setting/setting\";i:11;s:20:\"setting/setting_form\";i:12;s:19:\"setting/user_manage\";i:13;s:17:\"_modules/holidays\";}s:6:\"modify\";a:14:{i:0;s:18:\"common/filemanager\";i:1;s:15:\"common/linkages\";i:2;s:12:\"common/tools\";i:3;s:12:\"tools/spider\";i:4;s:20:\"setting/informations\";i:5;s:7:\"no_find\";i:6;s:20:\"report/report_access\";i:7;s:20:\"report/report_charts\";i:8;s:14:\"setting/layout\";i:9;s:19:\"setting/layout_form\";i:10;s:15:\"setting/setting\";i:11;s:20:\"setting/setting_form\";i:12;s:19:\"setting/user_manage\";i:13;s:17:\"_modules/holidays\";}s:12:\"file_manager\";a:4:{i:0;s:4:\"user\";i:1;s:8:\"portrait\";i:2;s:7:\"catalog\";i:3;s:10:\"online_pic\";}}'), ('2','普通管理员','可以管理用户','a:2:{s:6:\"access\";a:1:{i:0;s:19:\"setting/user_manage\";}s:6:\"modify\";a:1:{i:0;s:19:\"setting/user_manage\";}}'), ('3','注册用户','拥有用户权限','a:2:{s:6:\"access\";N;s:6:\"modify\";N;}'), ('4','游客','游客','a:2:{s:6:\"access\";N;s:6:\"modify\";N;}');
 INSERT INTO `user_info` VALUES ('3','','admin','13125781125','576228830@qq.com','12555','1111','e10adc3949ba59abbe56e057f20f883e','xCalder','catalog/201512/d2bdc36493b5c355e00fe7c03a66feec.gif','127.0.0.1','2015-12-05 13:09:56','1','Windows 7','Chrome44.0.2403.157','','1','1'), ('4',NULL,'1234567',NULL,'1222@11.com',NULL,NULL,'e10adc3949ba59abbe56e057f20f883e','25b0f696e7f5a3877e47','portrait/2.jpg','127.0.0.1','2015-11-27 21:07:30','1','Windows 7','Chrome46.0.2490.80','user_name','3','0'), ('5','8BE6CA9A4D9FEEEC5C7327B6DE090CD6','5d01f88cd19d8536b368',NULL,'',NULL,NULL,'','xCalder','http://qzapp.qlogo.cn/qzapp/101189685/8BE6CA9A4D9FEEEC5C7327B6DE090CD6/30','14.205.60.36','2015-11-29 02:52:54','1','Windows 7','Chrome46.0.2490.80','qq','1','0');
