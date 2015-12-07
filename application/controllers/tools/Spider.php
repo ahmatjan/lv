@@ -30,14 +30,5 @@ class Spider extends CI_Controller {
 		$this->spider_func->set_ignore(array("javascript:", ".css", ".js", ".ico", ".jpg", ".png", ".jpeg", ".swf", ".gif"));
 		//要抓链接的网址
 		$this->spider_func->get_links($url);
-		
-		//$url=$this->spider_func->get_spider_url();
-		//var_dump($url);
-		
-		//header ("content-type: text/xml");
-		//generating sitemap();
-		//$map = $this->spider_func->generate_sitemap();
-		//$this->spider_func->ping($url);
-		//echo $map;
 	}
 }

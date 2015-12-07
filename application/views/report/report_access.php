@@ -120,6 +120,7 @@
 
 																<li><a href="<?php echo site_url('report/report_access/truncate_report?table_name=report_flow')?>"><i class="icon-trash"></i>清空pv统计表</a></li>
 																<li><a href="<?php echo site_url('report/report_access/truncate_report?table_name=report_robot')?>"><i class="icon-trash"></i>清空robot统计表</a></li>
+																<li><a href="<?php echo site_url('report/report_access/truncate_report?table_name=spider_url')?>"><i class="icon-trash"></i>清空搜索索引表</a></li>
 
 																<li class="divider"></li>
 

@@ -242,6 +242,7 @@ class Report_access extends CI_Controller {
 	
 	//清空统计表
 	public function truncate_report(){
+		$this->load->helper('array');
 		$data=array();
 		if($this->input->get('table_name')){
 			$data = explode('-',$this->input->get('table_name'));
@@ -253,44 +254,12 @@ class Report_access extends CI_Controller {
 		$result = $this->report->truncate_($data);
 		if($result){
 			if($result['true']){
-				$count = count($result['true']);
-				if($count == '1'){
-					foreach($result['true'] as $rt_v){
-						if($rt_v == 'report_access'){
-							$this->session->set_flashdata('setting_success', '清空uv统计表成功！');
-							redirect(site_url('report/report_access'));
-						}elseif($rt_v == 'report_flow'){
-							$this->session->set_flashdata('setting_success', '清空pv统计表成功！');
-							redirect(site_url('report/report_access'));
-						}elseif($rt_v == 'report_robot'){
-							$this->session->set_flashdata('setting_success', '清空robot统计表成功！');
-							redirect(site_url('report/report_access'));
-						}
-					}
-				}else{
-					$this->session->set_flashdata('setting_success', '清空所有统计表成功！');
-					redirect(site_url('report/report_access'));
-				}
+				$this->session->set_flashdata('setting_success', '清空'.arrayToString($result['true']).'成功！');
+				redirect(site_url('report/report_access'));
 			}
 			if($result['false']){
-				$count = count($result['false']);
-				if($count == '1'){
-					foreach($result['false'] as $rt_v){
-						if($rt_v == 'report_access'){
-							$this->session->set_flashdata('setting_success', '清空uv统计表成功！');
-							redirect(site_url('report/report_access'));
-						}elseif($rt_v == 'report_flow'){
-							$this->session->set_flashdata('setting_success', '清空pv统计表成功！');
-							redirect(site_url('report/report_access'));
-						}elseif($rt_v == 'report_robot'){
-							$this->session->set_flashdata('setting_success', '清空robot统计表成功！');
-							redirect(site_url('report/report_access'));
-						}
-					}
-				}else{
-					$this->session->set_flashdata('setting_success', '清空所有统计表成功！');
-					redirect(site_url('report/report_access'));
-				}
+				$this->session->set_flashdata('setting_success', '清空'.arrayToString($result['false']).'失败！');
+				redirect(site_url('report/report_access'));
 			}
 		}
 	}

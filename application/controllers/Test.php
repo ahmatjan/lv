@@ -362,7 +362,7 @@ var_dump($nav_parents);
 		*/
 		
 		
-		$this->load->library('spider_func');
+		//$this->load->library('spider_func');
 		/*
 		$url = "http://www.lv.com/";
 		$ssl = is_https()===TRUE ? 'https://' : 'http://' ;
@@ -393,13 +393,8 @@ var_dump($nav_parents);
 		}
 		*/
 		
-		$interface = 'http://lv.com';
-		$exp= '#^(http|https)://([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?#i';
-		if(preg_match($exp,$interface)){
-			echo '合法';
-		}else{
-			echo '不合法';
-		}
+		$this->load->library('spider/similarity');
+		echo $this->similarity->getSimilar("http://www.lv.com/","http://www.lv.com/travel_info/alice_list.html"); 
 		
 		//$header = $this->FormatHeader($interface,'10.1.11.1'); 
 /*

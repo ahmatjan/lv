@@ -7,21 +7,29 @@ class Spider_model extends CI_Model {
 		set_time_limit (0);
 	}
 	/**
-	################################@表########################################
+	################################@spider_url表########################################
 	*/
 	//添加访问记录
-	public function add_snapurl($data){
-		$this->db->insert_batch($this->db->dbprefix('spider_snap'), $data);
+	public function add_spider_url($data){
+		$result=$this->select_byurl($data['url']);
+		if($result){//如果记录已经存在
+			$this->db->where('url_id', $result['url_id']);
+			$res['updata'] = $this->db->update($this->db->dbprefix('spider_url'), $data);
+		}else{
+			$res['insert'] = $this->db->insert($this->db->dbprefix('spider_url'), $data);
+		}
+		return $res;
 	}
 	
-	public function select_urlbyid($url_id){
-		$sql = "SELECT * FROM " . $this->db->dbprefix('spider_snap') . " WHERE snap_id = ?"; 
+	//通过url来查询记录,并返回结果
+	public function select_byurl($url=''){
+		$sql = "SELECT * FROM " . $this->db->dbprefix('spider_url') . " WHERE url = ?"; 
 
-		$query=$this->db->query($sql, array($url_id));
+		$query=$this->db->query($sql, array($url));
 
 		if ($query->num_rows() > 0)
 		{
-		   $row = $query->row_array()['url'];
+		   $row = $query->row_array();
 		}else{
 			$row = FALSE;
 		}

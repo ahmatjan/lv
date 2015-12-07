@@ -429,28 +429,30 @@ class public_section extends CI_Model {
 			$referrer_url= NULL;
 		}
 		
-		//判断机器人
-		if($this->agent->checkrobot()){
-			$robot = $this->agent->robot();
-		}else{
-			$robot = NULL;
+		//如果不是已知爬虫才写入流量表
+		if(!$this->agent->robot()){
+			//判断机器人
+			if($this->agent->checkrobot()){
+				$robot = $this->agent->robot();
+			}else{
+				$robot = NULL;
+			}
+			
+			$report_flow=array(
+					'ip'					=>$ip,
+					'referrer_url'			=>$referrer_url,
+					'current_url'			=>$this->agent->get_page_url(),
+					'token'					=>@$_SESSION['token'],
+					'access_time'			=>date('Y-m-d H:i:s'),
+					'platform'				=>$platform,
+					'browser'				=>$browser,
+					'robot'					=>$robot,
+					'user_agent'			=>$this->agent->agent_string(),
+			);
+			
+			//直接写入到数据库（因为这个类在model,所以没有再去load->model）
+			$this->db->insert( $this->db->dbprefix('report_flow') , $report_flow);
 		}
-		
-		$report_flow=array(
-				'ip'					=>$ip,
-				'referrer_url'			=>$referrer_url,
-				'current_url'			=>$this->agent->get_page_url(),
-				'token'					=>@$_SESSION['token'],
-				'access_time'			=>date('Y-m-d H:i:s'),
-				'platform'				=>$platform,
-				'browser'				=>$browser,
-				'robot'					=>$robot,
-				'user_agent'			=>$this->agent->agent_string(),
-		);
-		
-		//直接写入到数据库（因为这个类在model,所以没有再去load->model）
-		$this->db->insert( $this->db->dbprefix('report_flow') , $report_flow);
-				
 				
 		//判断，如果是蜘蛛，不开session
 		//if(!$this->agent->checkrobot()){

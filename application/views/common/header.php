@@ -12,15 +12,15 @@
 
 <meta charset="utf-8" />
 <title><?php echo $title.$website_title ?></title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<meta content="<?php echo $mate_description?>" name="description" />
+<meta name="description" content="<?php echo $mate_description?>"/>
 
-<meta content="<?php echo $mate_key?>" name="keywords" />
+<meta name="keywords" content="<?php echo $mate_key?>"/>
 
 <base href="<?php echo base_url()?>" />
 
-<meta content="<?php echo $mate_author?>" name="author" />
+<meta name="author" content="<?php echo $mate_author?>"/>
 
 <!--缓存dns-->
 <link rel="dns-prefetch" href="<?php echo base_url()?>">

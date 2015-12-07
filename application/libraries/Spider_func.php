@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 **************************************************************/
 require_once "phpQuery/phpQuery.php";
+require_once "spider/class.textExtract.php";
 
 class Spider_func
 {
@@ -16,15 +17,14 @@ class Spider_func
 	private $proxy = "";
 	private $header = array('User-Agent: Mozilla/5.0 (Windows NT 6.1; xCalder/1.0.0; +http://www.lvxingto.com/search/spider.html)');
 	private $url_feedback='';
-	private $spider_url=array();//spider_url表的数组
+	private $spider_id = '1';//spider_id变量，抓取的序号
 	
 	public function __construct() {
 		$this->CI =& get_instance();//$this->CI调用框架方法
-		$this->CI->load->library(array('user_agent','session'));
-		$this->CI->session->unset_userdata('spider_id');
-		//$this->CI->session->unset_userdata('spider_base_url');
-		$this->CI->load->helper('html');
+		$this->CI->load->helper(array('html','string','url'));
+		$this->CI->load->model('tool/spider_model');
 		echo doctype('html4-trans').meta('Content-type', 'text/html;charset=utf-8', 'equiv');
+		echo link_tag(base_url('public/image/favicon.ico'), 'shortcut icon', 'image/ico');
 	}
 	
 	//设置URL中的忽略类型
@@ -111,26 +111,43 @@ class Spider_func
 			//检查错误
 			(int)$http_code = curl_getinfo($curl,CURLINFO_HTTP_CODE);//返回状态码
 			$loction_url = curl_getinfo($curl,CURLINFO_EFFECTIVE_URL);//返回重定向后的url
-			if(curl_errno($curl) == CURLE_OK && $http_code < (int)'400')
-			{
-				//如果没有得到错误的内容
-				$content = curl_multi_getcontent($curl);
-				//解析内容
-				$this->parse_content($content);
-				$this->analysis_html($content,$loction_url);//解析html入库
-				
-				//输出提示信息
-				if(isset($_SESSION['spider_id'])){
-					$spider_id=$_SESSION['spider_id'];
-					$this->CI->session->set_userdata('spider_id', $_SESSION['spider_id'] + '1');
-				}else{
-					$spider_id='1';
-					$this->CI->session->set_userdata('spider_id', '2');
-				}
-				echo iconv("GB2312", "UTF-8",$spider_id.'、 抓取：'.$loction_url.'<br/>内存：<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span>&nbsp;HTTP状态码'.$http_code.'<br/><br/>');
 			
-				//$this->spider_url[$_SESSION['spider_id']]['url']=$loction_url;//spider_url表数组
-				//$this->spider_url[$_SESSION['spider_id']]['http_code'] = $http_code; //我知道HTTPSTAT码哦～
+			//判断域名是不是属于爬取的网站
+			if(strpos($loction_url, "http://".$this->base) === 0 || strpos($loction_url, "https://".$this->base) === 0)
+			{
+				//如果curl没有错误
+				//如果返回http 状态小于400
+				if(curl_errno($curl) == CURLE_OK && $http_code < (int)'400')
+				{
+					//如果没有得到错误的内容
+					$content = curl_multi_getcontent($curl);
+					
+					//查询数据库中的抓取记录
+					$selct_spider_url = $this->CI->spider_model->select_byurl($loction_url);
+					if($selct_spider_url['content_md5'] !== md5($content))
+					{
+						//如果上次抓取的网页内容md5和当前md5不相同，说明页面有变动，才重新抓取
+						//解析内容
+						$this->parse_content($content);
+						
+						//$result['add_spider_url']['updata'] = TRUE;//定义变量，避免报错
+						@$result = $this->analysis_html($content,$loction_url);//解析html入库
+						
+						if(isset($result['add_spider_url']['updata']) && $result['add_spider_url']['updata']){
+							$add_spider_url = '更新[spider_url]表<span style="color: red">成功</span>';
+						}elseif($result['add_spider_url']['insert']){
+							$add_spider_url = '写入[spider_url]表<span style="color: red">成功</span>';
+						}else{
+							$add_spider_url = '写入[spider_url]表<span style="color: red">失败</span>';
+						}
+						echo $this->spider_id.'、 抓取：'.$loction_url.'<br/>内存：<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span>&nbsp;HTTP状态码<span style="color: red">'.$http_code.'</span>&nbsp;'.$add_spider_url.'<br/><br/>';
+						$this->spider = $this->spider_id++;//序号+1
+					}else{
+						$this->parse_content($content);
+						echo $this->spider_id.'、 抓取：'.$loction_url.'<br/>内存：<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span>&nbsp;HTTP状态码<span style="color: red">'.$http_code.'</span>&nbsp;内容没有变化<span style="color:red">已忽略</span><br/><br/>';
+						$this->spider = $this->spider_id++;//序号+1
+					}
+				}
 			}
 		}
 		curl_multi_close($multi_curl_handler);
@@ -253,17 +270,11 @@ class Spider_func
 	private function unset_sitemap_urls(){
 		if(count($this->sitemap_urls) > '500'){
 			//$this->sitemap_urls = array();
-			echo '重置';
+			echo '<br/><br/><br/><br/><br/><br/>重置<br/><br/><br/><br/><br/><br/>';
 			unset($this->sitemap_urls);
 		}
 	}
 	
-	//返回spider_url
-	public function get_spider_url(){
-		
-		return $this->spider_url;
-	}
-
 	//通知服务，如谷歌，必应，雅虎，问而且你的网站地图更新
 	public function ping($sitemap_url, $title ="", $siteurl = ""){
 		// 开启多线程处理
@@ -347,10 +358,58 @@ class Spider_func
 	
 	//提取html关键词
 	private function analysis_html ($page,$loction_url){
-		//echo iconv("GB2312", "UTF-8",'正在抓取内容');
+		$spider_url = array();//spider_url表的数组
+		$spider_url['content'] = NULL;
+		//抽取正文内容
+		$iTextExtractor = new textExtract( $page, 1);
+		//$text = $iTextExtractor->getPlainText();
+		$s_text = substr_cn($iTextExtractor->getPlainText(),998);
+		$spider_url['content'] = preg_replace("/<img\s*src=(\"|\')(.*?)\\1[^>]*>/is",'<img src="$2" />', $s_text);
+		
+		//先把header 用正则提取出来
+		preg_match("@<head[^>]*>(.*?)<\/head>@si",$page, $regs);
+		$headdata = $regs[1];//头部
+		$spider_url['description'] = NULL;
+		$spider_url['keywords'] = NULL;
+		$spider_url['author'] = NULL;
+		$res = Array ();
+		if(isset($headdata)){
+			#获取Description
+			preg_match("/<meta +name *=[\"']?description[\"']? *content=[\"']?([^<>'\"]+)[\"']?/i", $headdata, $res);
+			if (isset ($res)) {
+				$spider_url['description'] = $res[1];
+			}
+			//获取keywords
+			preg_match("/<meta +name *=[\"']?keywords[\"']? *content=[\"']?([^<>'\"]+)[\"']?/i", $headdata, $res);
+			if (isset ($res)) {
+				$spider_url['keywords'] = $res[1];
+			}
+			//获取author
+			preg_match("/<meta +name *=[\"']?author[\"']? *content=[\"']?([^<>'\"]+)[\"']?/i", $headdata, $res);
+			if (isset ($res)) {
+				@$spider_url['author'] = $res[1];
+			}
+		}
+		phpQuery::newDocument($page);//初始化phpqury
 		//echo md5($page);
-		phpQuery::newDocument($page);
+		$spider_url['url'] = $loction_url;
+		$spider_url['content_md5'] = md5($page);
+		$spider_url['addtime'] = date("Y-m-d H:m:s");
+		$spider_url['title'] = pq("head > title")->text();
+		//$spider_url['description'] = pq("meta[name=description]")->text();
+		//var_dump($spider_url);
+		
 		phpQuery::$documents = array();//清空数组，释放内存
+		
+		//把数组写入或更新到spider_url表
+		$result['add_spider_url'] = $this->CI->spider_model->add_spider_url($spider_url);
+		return $result;
+	}
+	
+	//抽取正文内容
+	private function get_content_text(){
+		$iTextExtractor = new textExtract( $content, $BL_BLOCK );
+		$text = $iTextExtractor->getPlainText();
 	}
 }
 ?>
