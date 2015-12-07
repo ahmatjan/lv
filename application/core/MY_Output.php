@@ -143,12 +143,15 @@ class MY_Output extends CI_Output
 		// If so send the output there.  Otherwise, echo it.
 		//装载调取基础设置类
 		$CI->load->model('setting/base_setting');
+		$CI->load->library('user_agent');
 		//如果启用压缩
-		if($CI->base_setting->get_setting('is_compactor')==TRUE){
-			$compactor = new Compactor(array(
-				'buffer_echo' => false
-			));
-			$output = $compactor->squeeze($output);
+		if($CI->agent->robot() !== '站内索引'){
+			if($CI->base_setting->get_setting('is_compactor')==TRUE){
+				$compactor = new Compactor(array(
+					'buffer_echo' => false
+				));
+				$output = $compactor->squeeze($output);
+			}
 		}
 		
 		if (method_exists($CI, '_output'))

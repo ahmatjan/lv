@@ -347,6 +347,7 @@
 	<script src="<?php echo base_url('public/min/?f=public/js/form-components.js')?>"></script>
 	<script src="<?php echo base_url('public/min/?f=public/js/table-managed.js')?>"></script>
 	<script src="<?php echo base_url('public/min/?f=public/js/summernote.min.js')?>"></script>
+	<script src="<?php echo base_url('public/min/?f=public/js/summernote-zh-CN.js')?>"></script>
 
 	<!-- END PAGE LEVEL SCRIPTS -->
 
@@ -366,17 +367,18 @@
 		
 		//公告
 		$('#editor-post').summernote({
+			lang: 'zh-CN',
 			height: 250,
+			
 			toolbar: [
-			//[groupname, [button list]]
-			  
-			['style', ['fontname','bold', 'italic', 'underline', 'clear']],
-			['font', ['strikethrough']],
+			//['groupname', ['button list']],
+			['style', ['fontname','bold', 'italic', 'underline', 'clear'],
+			['font', ['strikethrough']]],
 			['fontsize', ['fontsize']],
 			['para', ['ul', 'ol', 'paragraph']],
 			['height', ['height']],
 			['insert',['picture','video','link','table']],
-			['misc',['codeview']]
+			['misc',['codeview','color']]
 		  ]
 		});
 

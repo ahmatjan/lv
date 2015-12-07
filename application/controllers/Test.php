@@ -343,7 +343,7 @@ var_dump($nav_parents);
 		//三级联动
 		
 		
-		//$this->public_section->get_header();
+		$this->public_section->get_header();
 		
 		//$str = 'about/helper/con?position=about_us';
 		//echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
@@ -393,8 +393,16 @@ var_dump($nav_parents);
 		}
 		*/
 		
+		/*
 		$this->load->library('spider/similarity');
 		echo $this->similarity->getSimilar("http://www.lv.com/","http://www.lv.com/travel_info/alice_list.html"); 
+		
+		*/
+		
+		
+		$this->load->model('tool/spider_model');
+		$searchs = $this->spider_model->select_all();
+		$data['searchs']=$searchs;
 		
 		//$header = $this->FormatHeader($interface,'10.1.11.1'); 
 /*
@@ -408,7 +416,7 @@ var_dump($nav_parents);
 */
 		//var_dump($header); 
 		
-		//$this->load->view('test');
+		$this->load->view('test',$data);
 		
 		
 		/*

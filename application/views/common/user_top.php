@@ -69,7 +69,7 @@
 								<?php 
 									$click_txt='javascript:window.open('."'".site_url($item['nav_url'])."')";
 								?>
-								<a href="#" onclick="<?php echo $click_txt?>">
+								<a onclick="<?php echo $click_txt?>">
 								
 								<?php else: ?>
 							
@@ -104,7 +104,7 @@
 										<?php 
 										$click_txt='javascript:window.open('."'".site_url($childs['nav_child_url'])."')";
 										?>
-										<a href="#" onclick="<?php echo $click_txt?>">
+										<a onclick="<?php echo $click_txt?>">
 
 										<?php echo $childs['nav_child_name']?>
 

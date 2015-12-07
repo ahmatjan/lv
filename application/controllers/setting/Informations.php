@@ -84,7 +84,7 @@ class Informations extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('title', '文章标题', 'required|min_length[2]|max_length[128]');
 		$this->form_validation->set_rules('class', '文章类型', 'required|max_length[96]');
-		$this->form_validation->set_rules('information_content', '文章内容', 'required|min_length[5]|max_length[2000]');
+		$this->form_validation->set_rules('information_content', '文章内容', 'required|min_length[5]|max_length[8000]');
 		$this->form_validation->set_rules('position', '显示位置', 'required|max_length[25]');
 		$this->form_validation->set_rules('order', '排序', 'required|integer');
 		if ($this->form_validation->run() == TRUE){
@@ -101,7 +101,7 @@ class Informations extends CI_Controller {
 			redirect('setting/informations?tab_position=tab_1_2');
 		}else{
 			$this->session->set_flashdata('setting_false', '文章操作失败！');
-			redirect('setting/informations?tab_position=tab_1_3&information_id='.$this->input->get('information_id'));
+			redirect('setting/informations?tab_position=tab_1_3&information_id='.$this->input->post('information_id'));
 		}
 		
 	}

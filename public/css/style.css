@@ -74,7 +74,9 @@ a {
   text-shadow: none !important;
   color: #0d638f;
 }
-
+a:hover {
+  cursor:pointer;
+}
 /***
 General backgrounds
 ***/

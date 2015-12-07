@@ -86,12 +86,9 @@ class textExtract {
 		$content = preg_replace( $pattern, $replacement, $content );
 		
 		// 5. HTML TAGs
-		/*
 		$pattern = '/<.*?>/s';
 		$replacement = '';
 		$content = preg_replace( $pattern, $replacement, $content );
-		*/
-		$content = strip_tags($content,'<img>');
 		
 		// 6. some special charcaters
 		$pattern = '/&.{1,5};|&#.{1,5};/';

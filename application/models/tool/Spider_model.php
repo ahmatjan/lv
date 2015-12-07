@@ -37,9 +37,14 @@ class Spider_model extends CI_Model {
 	}
 	
 	//清空表
-	public function truncate_snap(){
-		$result = $this->db->truncate($this->db->dbprefix('spider_snap'));
-		return $result;
+	public function select_all(){
+		//查询一级目录
+		$sql = "SELECT * FROM " . $this->db->dbprefix('spider_url'); 
+
+		$query=$this->db->query($sql);
+
+		$row = $query->result_array(); 
+		return $row;
 	}
 
 }

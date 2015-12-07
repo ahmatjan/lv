@@ -17,10 +17,7 @@ class Helper extends CI_Controller {
 		//}
 		//----------------------------------------------------------------------------------------------
 		//header部分
-		$header['title']=$this->lang->line('heading_title');
 		$header['css_page_style']=array('public/css/blog.css','public/css/search.css','public/css/jquery.fancybox.css','public/css/about-us.css');
-		$this->public_section->get_header($header);
-		$this->public_section->get_top();
 		
 		//开始主体程序
 		//1、设置语言
@@ -68,7 +65,9 @@ class Helper extends CI_Controller {
 		}
 		
 		$data['informations'] = $informations;
-		
+		$header['title']=isset($position_name) ? $position_name : '没有内容';
+		$this->public_section->get_header($header);
+		$this->public_section->get_top();
 		$this->load->view('about/helper',$data);
 		$this->public_section->get_footer();
 	}
@@ -91,7 +90,7 @@ class Helper extends CI_Controller {
 		//}
 		//----------------------------------------------------------------------------------------------
 		//header部分
-		$header['title']=$this->lang->line('heading_title');
+		$header['title']=$informations['title'];
 		$header['css_page_style']='public/css/about-us.css';
 		$header['meta_key']=$informations['title'];
 		$header['meta_description']=substr_cn(strip_tags($informations['content']),80);

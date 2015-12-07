@@ -4,8 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /************************************************************* 
 
 **************************************************************/
-require_once "phpQuery/phpQuery.php";
-require_once "spider/class.textExtract.php";
+//require_once "phpQuery/phpQuery.php";php解析htm类库
+require_once "spider/class.textExtract.php";//无dom解析的正文抽取类
+//require_once "spider/Readability.inc.php";//解析html抽取正文
 
 class Spider_func
 {
@@ -361,11 +362,15 @@ class Spider_func
 		$spider_url = array();//spider_url表的数组
 		$spider_url['content'] = NULL;
 		//抽取正文内容
-		$iTextExtractor = new textExtract( $page, 1);
-		//$text = $iTextExtractor->getPlainText();
-		$s_text = substr_cn($iTextExtractor->getPlainText(),998);
+		$iTextExtractor = new textExtract( $page, 6);
+		//$spider_url['content'] = $iTextExtractor->getPlainText();
+		$s_text = substr_cn($iTextExtractor->getPlainText(),1000);
 		$spider_url['content'] = preg_replace("/<img\s*src=(\"|\')(.*?)\\1[^>]*>/is",'<img src="$2" />', $s_text);
-		
+		/*
+		$Readability     = new Readability($page); // default charset is utf-8
+		$ReadabilityData = $Readability->getContent();
+		$spider_url['content'] = strip_tags($ReadabilityData['content'],'<img>');
+		*/
 		//先把header 用正则提取出来
 		preg_match("@<head[^>]*>(.*?)<\/head>@si",$page, $regs);
 		$headdata = $regs[1];//头部
@@ -389,27 +394,21 @@ class Spider_func
 			if (isset ($res)) {
 				@$spider_url['author'] = $res[1];
 			}
+			//title
+			preg_match("/<title>(.*)<\/title>/Ui", $headdata, $res);
+			if(isset($res)){
+				$spider_url['title'] = trim($res[1]);
+			}
 		}
-		phpQuery::newDocument($page);//初始化phpqury
+		
 		//echo md5($page);
 		$spider_url['url'] = $loction_url;
 		$spider_url['content_md5'] = md5($page);
 		$spider_url['addtime'] = date("Y-m-d H:m:s");
-		$spider_url['title'] = pq("head > title")->text();
-		//$spider_url['description'] = pq("meta[name=description]")->text();
-		//var_dump($spider_url);
-		
-		phpQuery::$documents = array();//清空数组，释放内存
 		
 		//把数组写入或更新到spider_url表
 		$result['add_spider_url'] = $this->CI->spider_model->add_spider_url($spider_url);
 		return $result;
-	}
-	
-	//抽取正文内容
-	private function get_content_text(){
-		$iTextExtractor = new textExtract( $content, $BL_BLOCK );
-		$text = $iTextExtractor->getPlainText();
 	}
 }
 ?>

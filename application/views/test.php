@@ -1,4 +1,4 @@
-
+<!--
 <div class="selectList"> 
 <select class="province"> 
 <option>请选择</option> 
@@ -20,3 +20,12 @@
 </div> 
 
 <script src="<?php echo base_url('public/js/loading/ymdselect.js')?>" type="text/javascript"></script>
+-->
+<?php foreach($searchs as $b):?>
+<?php echo '标题：'.$b['title']?>
+<br/>
+<?php echo $b['url']?>
+<br/><br/>
+<?php echo '正文：'.$b['content']?>
+<br/><br/><br/>
+<?php endforeach;?>

@@ -63,13 +63,13 @@ class nav_setting extends CI_Model {
 	//查找所有的父目录
 	public function get_navs_prent()
 	{
-	//查询一级目录
+		//查询一级目录
 		$sql = "SELECT * FROM " . $this->db->dbprefix('nav_parent') . " ORDER BY  store ASC"; 
 
 		$query=$this->db->query($sql);
 
 		$row = $query->result_array(); 
-			return $row;
+		return $row;
 		
 	}
 	
@@ -77,7 +77,7 @@ class nav_setting extends CI_Model {
 	//通过传子目录id查找子目录
 	public function get_navschildforid($nav_child_id)
 	{
-	//通过传入id查询子级目录
+		//通过传入id查询子级目录
 		$sql = "SELECT * FROM " . $this->db->dbprefix('nav_child') . " WHERE nav_child_id = ?"; 
 
 		$query=$this->db->query($sql, array($nav_child_id));
