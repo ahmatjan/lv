@@ -118,7 +118,7 @@ class Spider_func
 			{
 				//如果curl没有错误
 				//如果返回http 状态小于400
-				if(curl_errno($curl) == CURLE_OK && $http_code < (int)'400')
+				if(curl_errno($curl) == CURLE_OK && $http_code < (int)'400' && $http_code > '199')
 				{
 					//如果没有得到错误的内容
 					$content = curl_multi_getcontent($curl);
@@ -148,6 +148,9 @@ class Spider_func
 						echo $this->spider_id.'、 抓取：'.$loction_url.'<br/>内存：<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span>&nbsp;HTTP状态码<span style="color: red">'.$http_code.'</span>&nbsp;内容没有变化<span style="color:red">已忽略</span><br/><br/>';
 						$this->spider = $this->spider_id++;//序号+1
 					}
+				}else{
+					echo $this->spider_id.'、 抓取：'.$loction_url.'<br/>内存：<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span>&nbsp;HTTP状态码<span style="color: red">'.$http_code.'</span>&nbsp;未知抓取错误<span style="color:red">已退出</span><br/><br/>';
+					$this->spider = $this->spider_id++;//序号+1
 				}
 			}
 		}

@@ -124,7 +124,7 @@
 
 								<div class="search-form hidden-phone hidden-tablet">
 
-									<form action="<?php echo base_url('search/lv.php')?>" method="get" class="form-search">
+									<form action="<?php echo base_url('tools/search')?>" method="get" class="form-search">
 
 										<div class="input-append">
 

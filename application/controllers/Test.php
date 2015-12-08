@@ -399,7 +399,7 @@ var_dump($nav_parents);
 		
 		*/
 		
-		
+		echo site_url();
 		$this->load->model('tool/spider_model');
 		$searchs = $this->spider_model->select_all();
 		$data['searchs']=$searchs;

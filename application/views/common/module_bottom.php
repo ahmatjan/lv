@@ -1,4 +1,3 @@
-<!--底-->
 <?php if (isset($module_bottom)): ?><!--如果不为空-->
 <?php if (is_array($module_bottom)): ?><!--如果是一个数组-->
 
