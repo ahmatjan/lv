@@ -280,6 +280,18 @@
 											
 											<div class="control-group">
 
+												<label class="control-label">过虑关键字：</label>
+
+												<div class="controls">
+												
+													<textarea rows="3" class="large m-wrap span12" name="word_censor"><?php  echo isset($word_censor) ? $word_censor : '用分号隔开...'?></textarea>
+
+												</div>
+
+											</div>
+											
+											<div class="control-group">
+
 												<label class="control-label">是否审核文章：</label>
 
 												<div class="controls">

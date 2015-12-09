@@ -388,5 +388,5 @@ class Lunar
         $jieqi = $this->getJieQi($y,$m,$d);   
         if($jieqi)array_push($festivals,$jieqi);    
         return implode('/',$festivals);   
-    }   
+    }  
 } 

@@ -544,4 +544,14 @@ class public_section extends CI_Model {
 		}
 	}
 	
+	//过虑敏感字词
+	public function word_censor ($text=''){
+		$disallowed = $this->base_setting->get_setting('word_censor');
+		if(!isset($disallowed)){
+			return $text;
+		}
+		
+		$disallowed = explode(';',$disallowed);
+		return str_ireplace($disallowed, '*', $text);
+	}
 }
