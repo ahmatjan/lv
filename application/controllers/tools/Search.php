@@ -7,11 +7,13 @@ class Search extends CI_Controller {
 		$this->output->https_jump();
 		$this->load->model(array('tool/search_model'));
 		$this->load->helper(array('string','text'));
+		$this->load->library('pagination');
 	}
 
 	public function index()
 	{
 		//搜索关键词
+		
 		if($this->input->get('query')){
 			$search['query'] = $this->input->get('query');
 			$query = mb_substr($this->input->get('query'),0,30);
@@ -38,7 +40,7 @@ class Search extends CI_Controller {
 		if($this->input->get('results')){
 			$search['results'] = $this->input->get('results');
 		}else{
-			$search['results'] = '';
+			$search['results'] = '0';
 		}
 		
 		$spider_all = $this->search_model->get_spider_like($search);
@@ -107,6 +109,46 @@ class Search extends CI_Controller {
 			
 		}
 		@$data['results'] = $spider;
+		
+		//分页
+		//链接
+		$url = '';
+		$url .= 'query='.$query;
+		$url .= '&type='.$search['type'];
+		$url .= '&url='.$search['url'];
+		
+		$config['full_tag_open'] = '<ul>';
+		$config['full_tag_close'] = '</ul>';
+		$config['first_link'] = '首页';
+		$config['last_link'] = '尾页';
+		$config['first_tag_open'] = '<li>';
+		$config['next_tag_open'] = '<li>';
+		$config['prev_tag_open'] = '<li>';
+		$config['last_tag_open'] = '<li>';
+		$config['cur_tag_open'] = '<li class="active"><a>';
+		$config['num_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+		$config['next_tag_close'] = '</li>';
+		$config['last_tag_close'] = '</li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['cur_tag_close'] = '</a></li>';
+		$config['num_tag_close'] = '</li>';
+		$config['next_link'] = '下一页';
+		$config['prev_link'] = '上一页';
+		$config['base_url'] = site_url('tools/search?'.$url);
+		$config['total_rows'] = '600';
+		$config['per_page'] = $this->base_setting->get_setting('quantity_admin');//每页显示条数
+		$config['page_query_string']=TRUE;
+		$config['query_string_segment'] ='results';
+		if($this->agent->is_mobile()){
+			$config1['display_pages'] = FALSE;
+		}else{
+			$config1['num_links'] = '2';
+		}
+
+		$this->pagination->initialize($config);
+
+		$data['search_page'] = $this->pagination->create_links();
 		
 		$this->load->view('tools/search',$data);
 		$this->public_section->get_footer();

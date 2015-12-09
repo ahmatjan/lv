@@ -75,9 +75,9 @@ class Report_access extends CI_Controller {
 		$config['page_query_string']=TRUE;
 		$config['query_string_segment'] ='access_page';
 		if($this->agent->is_mobile()){
-			$config1['display_pages'] = FALSE;
+			$config['display_pages'] = FALSE;
 		}else{
-			$config1['num_links'] = '2';
+			$config['num_links'] = '2';
 		}
 
 		$this->pagination->initialize($config);
@@ -168,9 +168,9 @@ class Report_access extends CI_Controller {
 		$config2['page_query_string']=TRUE;
 		$config2['query_string_segment'] ='robot_page';
 		if($this->agent->is_mobile()){
-			$config1['display_pages'] = FALSE;
+			$config2['display_pages'] = FALSE;
 		}else{
-			$config1['num_links'] = '2';
+			$config2['num_links'] = '2';
 		}
 
 		$this->pagination->initialize($config2);
@@ -211,9 +211,9 @@ class Report_access extends CI_Controller {
 		$config3['page_query_string']=TRUE;
 		$config3['query_string_segment'] ='unknow_page';
 		if($this->agent->is_mobile()){
-			$config1['display_pages'] = FALSE;
+			$config3['display_pages'] = FALSE;
 		}else{
-			$config1['num_links'] = '2';
+			$config3['num_links'] = '2';
 		}
 
 		$this->pagination->initialize($config3);
