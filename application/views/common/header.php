@@ -98,6 +98,8 @@
 	<script src="<?php echo base_url('public/min/?f=public/js/respond.min.js')?>"></script>  
 
 	<![endif]-->  
+	
+	<?php echo $style;?>
 
 </head>
 

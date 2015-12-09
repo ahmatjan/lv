@@ -368,7 +368,7 @@ class Spider_func
 		$iTextExtractor = new textExtract( $page, 6);
 		//$spider_url['content'] = $iTextExtractor->getPlainText();
 		$s_text = substr_cn($iTextExtractor->getPlainText(),1000);
-		$spider_url['content'] = preg_replace("/<img\s*src=(\"|\')(.*?)\\1[^>]*>/is",'<img src="$2" />', $s_text);
+		$spider_url['content'] = $s_text;
 		/*
 		$Readability     = new Readability($page); // default charset is utf-8
 		$ReadabilityData = $Readability->getContent();
@@ -413,5 +413,6 @@ class Spider_func
 		$result['add_spider_url'] = $this->CI->spider_model->add_spider_url($spider_url);
 		return $result;
 	}
+	
 }
 ?>

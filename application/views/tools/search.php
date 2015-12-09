@@ -19,17 +19,19 @@
 				
 					<!--设置classspan-->
 					<?php 
-						if(isset($module_left) && isset($module_right)){
+				
+						if(!empty($module_left) && !empty($module_right)){
 							$class_span='span6';
-						}elseif(isset($module_left) || isset($module_right)){
+						}elseif(!empty($module_left) || !empty($module_right)){
 							$class_span='span9';
 						}else{
 							$class_span='span12';
 						}
+						
 					?>
 					<!--设置classspan-->
 					
-					<?php if(isset($module_left)):?>
+					<?php if(!empty($module_left)):?>
 					<div class="span3"><?php echo $module_left;?></div>
 					<?php endif;?>
 					
@@ -204,118 +206,23 @@
 
 										</form>
 
-										<div class="space20"></div>
+										<!--<div class="space20"></div>-->
 										
 									</div>
 
 									<!--end booking-search-->
 
-								<div class="span6 booking-search" style="margin-left: 0">
-								
+								<div class="span12 booking-search" style="margin-left: 0">
+								<?php if(isset($results)):?>
+								<?php foreach($results as $result):?>
 									<div class="booking-blocks">
 
-											<div class="pull-left booking-img">
+										<div style="overflow:hidden;">
+										
+											<h4><a onclick="javascript:window.open('<?php echo $result['url']?>')"><?php echo $result['title']?></a></h4>
 
-												<!--<img src="<?php echo base_url('public/image/image4.jpg')?>" alt="">-->
-
-												<ul class="unstyled">
-
-													<li><i class="icon-money"></i> From $126</li>
-
-													<li><i class="icon-map-marker"></i> Tioman, Malaysia</li>
-
-												</ul>
-
-											</div>
-
-											<div style="overflow:hidden;">
-
-												<h2><a href="#">Here Any Title</a></h2>
-
-												<ul class="unstyled inline">
-
-													<li><i class="icon-star"></i></li>
-
-													<li><i class="icon-star"></i></li>
-
-													<li><i class="icon-star"></i></li>
-
-													<li><i class="icon-star"></i></li>
-
-													<li><i class="icon-star-empty"></i></li>
-
-												</ul>
-
-												<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores  Fusce condimentum eleifend enim a feugiat <a href="#">read more</a></p>
-
-											</div>
-
-										</div>
-
-										<div class="booking-blocks">
-
-											<div class="pull-left booking-img">
-
-												<!--<img src="<?php echo base_url('public/image/image4.jpg')?>" alt="">-->
-
-												<ul class="unstyled">
-
-													<li><i class="icon-money"></i> From $126</li>
-
-													<li><i class="icon-map-marker"></i> Tioman, Malaysia</li>
-
-												</ul>
-
-											</div>
-
-											<div style="overflow:hidden;">
-
-												<h2><a href="#">Here Any Title</a></h2>
-
-												<ul class="unstyled inline">
-
-													<li><i class="icon-star"></i></li>
-
-													<li><i class="icon-star"></i></li>
-
-													<li><i class="icon-star"></i></li>
-
-													<li><i class="icon-star"></i></li>
-
-													<li><i class="icon-star-empty"></i></li>
-
-												</ul>
-
-												<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores  Fusce condimentum eleifend enim a feugiat <a href="#">read more</a></p>
-
-											</div>
+											<p><?php echo $result['content']?><a href="#">read more</a></p>
 											
-										</div>
-									
-								</div>
-								
-								<div class="span6 booking-search">
-								
-									<div class="booking-blocks">
-
-										<div class="pull-left booking-img">
-
-											<!--<img src="<?php echo base_url('public/image/image5.jpg')?>" alt="">-->
-
-											<ul class="unstyled">
-
-												<li><i class="icon-money"></i> From $157</li>
-
-												<li><i class="icon-map-marker"></i> London, UK</li>
-
-											</ul>
-
-										</div>
-
-										<div style="overflow:hidden;">
-
-											<h2><a href="#">Here Any Title</a></h2>
-
 											<ul class="unstyled inline">
 
 												<li><i class="icon-star"></i></li>
@@ -330,52 +237,11 @@
 
 											</ul>
 
-											<p>Lorem ipsum dolupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum. Sed et quam lacus a sem ut volutpat. Integer sed arcu. <a href="#">read more</a></p>
-
 										</div>
 				
 									</div>
-								
-									<div class="booking-blocks">
-
-										<div class="pull-left booking-img">
-
-											<!--<img src="<?php echo base_url('public/image/image5.jpg')?>" alt="">-->
-
-											<ul class="unstyled">
-
-												<li><i class="icon-money"></i> From $157</li>
-
-												<li><i class="icon-map-marker"></i> London, UK</li>
-
-											</ul>
-
-										</div>
-
-										<div style="overflow:hidden;">
-
-											<h2><a href="#">Here Any Title</a></h2>
-
-											<ul class="unstyled inline">
-
-												<li><i class="icon-star"></i></li>
-
-												<li><i class="icon-star"></i></li>
-
-												<li><i class="icon-star"></i></li>
-
-												<li><i class="icon-star"></i></li>
-
-												<li><i class="icon-star"></i></li>
-
-											</ul>
-
-											<p>Lorem ipsum dolor s a sem ut volutpat. Integer sed arcu. <a href="#">read more</a></p>
-
-										</div>
-				
-									</div>
-									
+								<?php endforeach;?>
+								<?php endif;?>
 								</div>
 								
 								<!--end booking-search-->
@@ -412,7 +278,7 @@
 
 					</div>
 					
-					<?php if(isset($module_right)):?>
+					<?php if(!empty($module_right)):?>
 					<div class="span3"><?php echo $module_right;?></div>
 					<?php endif;?>
 				

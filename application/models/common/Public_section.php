@@ -27,6 +27,12 @@ class public_section extends CI_Model {
 			$data['title']='';
 		}
 		
+		if(isset($header['style'])){
+			$data['style']=$header['style'];	
+		}else{
+			$data['style']='';
+		}
+		
 		$this->load->model('setting/base_setting');
 		
 		$data['website_title']=$this->base_setting->get_setting('website_title');

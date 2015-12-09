@@ -36,15 +36,4 @@ class Spider_model extends CI_Model {
 		return $row;
 	}
 	
-	//清空表
-	public function select_all(){
-		//查询一级目录
-		$sql = "SELECT * FROM " . $this->db->dbprefix('spider_url'); 
-
-		$query=$this->db->query($sql);
-
-		$row = $query->result_array(); 
-		return $row;
-	}
-
 }

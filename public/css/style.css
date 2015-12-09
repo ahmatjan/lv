@@ -5524,4 +5524,7 @@ Datatables Plugin(in v1.3)
 		border:1px solid rgba(217, 217, 217, 0.380392);
 		padding:5px;
 	}
+	.search .booking-blocks h4{
+		text-decoration: underline;
+	}
 }

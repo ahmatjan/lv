@@ -398,11 +398,12 @@ var_dump($nav_parents);
 		echo $this->similarity->getSimilar("http://www.lv.com/","http://www.lv.com/travel_info/alice_list.html"); 
 		
 		*/
+		$this->load->helper('text');
+		$str = '《人生符号》　　你的人生是真正待放的花蕾，还可以是展翅翱翔于蓝天的雄鹰，是正在追逐目标的逗号，还是已获得成功辉煌的句号。　　不同的人生符号，象征着不同的人生。　　逗号—求索　　风华正茂的我们正求索知识。踏上求索知识条征程，象征着艰辛的苦涩，泪水汗水交融，点滴成血，这是我们求索知识的过程中所付出的代价，俗话说，一份耕耘一份收获，一步　　一个脚印，得到一方晴空上的乌云。或许求索不一帆风顺，请相信做工不同，人生的抛物伐也不同，人生路脚点也不同，求索知识的心镜不同，人生的未来更不同。　　问号——获识　　人非圣贤，就能无感，“敏而好学，不耻下问”放下你的尊驾卑躬求问你所疑问的问题，这样，才能获取新的知识。不断寻问，解决疑惑，是智者的选择。这并不是丢面子的行为，而是不懂就问，寻求真理的明智。不懂装懂，知识断绝你拥有新知识的可耻行为。（人生感悟www.lz13.cn）知识你堕落深渊的卡帕心理。求知不同，获识不同，你的人生亦不同。　　叹号——停滞不前　　望着谌蓝的天空，深深的叹一口气，唉，好羡慕他们啊，（指成功者）同你是否观察到成功者背后的艰辛，不是那常常的叹息声。而是那永远无休止的劳作。我们只懂得说却不去做，';
+		echo highlight_phrase($str, "懂", '<span style="color:#990000;">', '</span>');
+		//echo $str;
 		
-		echo site_url();
-		$this->load->model('tool/spider_model');
-		$searchs = $this->spider_model->select_all();
-		$data['searchs']=$searchs;
+		
 		
 		//$header = $this->FormatHeader($interface,'10.1.11.1'); 
 /*
@@ -416,7 +417,7 @@ var_dump($nav_parents);
 */
 		//var_dump($header); 
 		
-		$this->load->view('test',$data);
+		//$this->load->view('test',$data);
 		
 		
 		/*

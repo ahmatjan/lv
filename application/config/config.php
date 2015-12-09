@@ -434,7 +434,7 @@ $config['standardize_newlines'] = FALSE;
 |          for backwards compatibility purposes!
 |
 */
-$config['global_xss_filtering'] = FALSE;
+$config['global_xss_filtering'] = TRUE;
 //是否对输入数据（GET、POST）自动过滤跨脚本攻击
 
 /*
