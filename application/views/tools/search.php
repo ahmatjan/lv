@@ -186,7 +186,7 @@
 								
 								<div class="booking-search">
 
-										<form action="#">
+										<form action="<?php echo site_url('search')?>" method="get" enctype="multipart/form-data">
 
 											<div class="clearfix margin-bottom-10">
 
@@ -196,7 +196,7 @@
 
 													<i class="icon-map-marker"></i>
 
-													<input class="m-wrap span12 tooltips" type="text" placeholder="关键词查找..." data-original-title="这里可以快速的找到你想要的信息，比如：时间、地点、线路、出行方式等">
+													<input class="m-wrap span12 tooltips" type="text" placeholder="关键词查找..." data-original-title="这里可以快速的找到你想要的信息，比如：时间、地点、线路、出行方式等" value="<?php echo $query;?>" name="query">
 
 												</div>
 

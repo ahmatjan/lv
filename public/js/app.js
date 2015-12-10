@@ -374,7 +374,7 @@ var App = function () {
         //handle hor menu search button click
         $('.header').on('click', '.hor-menu .search-form .btn', function (e) {
                 var query=$("#search-query").val();
-                window.location.href = "http://"+window.location.host+"/tools/search.html?type=and&url=all&query="+query;
+                window.location.href = "http://"+window.location.host+"/search.html?type=and&url=all&query="+query;
                 e.preventDefault();
             });
 
@@ -382,7 +382,7 @@ var App = function () {
         $('.header').on('keypress', '.hor-menu .search-form input', function (e) {
                 if (e.which == 13) {
                 	var query=$("#search-query").val();
-                    window.location.href = "http://"+window.location.host+"/tools/search.html?type=and&url=all&query="+query;
+                    window.location.href = "http://"+window.location.host+"/search.html?type=and&url=all&query="+query;
                     return false;
                 }
             });

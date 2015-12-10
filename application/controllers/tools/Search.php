@@ -22,6 +22,7 @@ class Search extends CI_Controller {
 			$query = '';
 		}
 		
+		$data['query'] = $query;
 		//搜索的类型and/or
 		if($this->input->get('type')){
 			$search['type'] = $this->input->get('type');
@@ -137,7 +138,7 @@ class Search extends CI_Controller {
 		$config['num_tag_close'] = '</li>';
 		$config['next_link'] = '下一页';
 		$config['prev_link'] = '上一页';
-		$config['base_url'] = site_url('tools/search?'.$url);
+		$config['base_url'] = site_url('search?'.$url);
 		$config['total_rows'] = $spider_all['count'];
 		$config['per_page'] = $quantity_view;//每页显示条数
 		$config['page_query_string']=TRUE;

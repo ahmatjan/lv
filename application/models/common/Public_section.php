@@ -138,7 +138,7 @@ class public_section extends CI_Model {
 		$this->load->module('common/module_top');
 		$data['module_top'] = $this->module_top->index();
 		
-		$data['body_css']=$this->uri->segment(2, 'home');//返回url 第二段也就是当前视图文件名称，用于设置body class
+		$data['body_css']=$this->uri->segment(2, $this->uri->segment(1, 'home'));//返回url 第二段也就是当前视图文件名称，用于设置body class
 		
 		$data['logo'] = base_url('public/image/logo.png');
 		
