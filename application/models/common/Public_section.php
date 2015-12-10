@@ -432,7 +432,7 @@ class public_section extends CI_Model {
 		if($this->agent->referrer()){
 			$referrer_url=$this->agent->referrer();
 		}else{
-			$referrer_url= NULL;
+			$referrer_url= '';
 		}
 		
 		//如果不是已知爬虫才写入流量表

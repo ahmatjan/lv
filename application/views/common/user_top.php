@@ -136,7 +136,7 @@
 
 										<div class="input-append">
 
-											<input type="text" placeholder="搜索..." class="m-wrap">
+											<input type="text" placeholder="搜索..." value="" id="search-query" class="m-wrap">
 
 											<button type="button" class="btn"></button>
 

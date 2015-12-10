@@ -26,14 +26,14 @@ class Search extends CI_Controller {
 		if($this->input->get('type')){
 			$search['type'] = $this->input->get('type');
 		}else{
-			$search['type'] = 'or';
+			$search['type'] = 'and';
 		}
 		
 		//url是否把链接加入搜索权重
 		if($this->input->get('url')){
 			$search['url'] = $this->input->get('url');
 		}else{
-			$search['url'] = '';
+			$search['url'] = 'all';
 		}
 		
 		//每页显示多少条结果
@@ -43,9 +43,11 @@ class Search extends CI_Controller {
 			$search['results'] = '0';
 		}
 		
+		$quantity_view = $this->base_setting->get_setting('quantity_view');//每页显示数
+		$search['quantity_view'] = $quantity_view;
+		
 		$spider_all = $this->search_model->get_spider_like($search);
 		//搜索关键词
-		
 		
 		//处理高亮显示，把字符串转成单字数组
 		$q_arr = SBC_DBC($query,1);//全角转半角
@@ -90,15 +92,15 @@ class Search extends CI_Controller {
 		
 		//遍历处理结果数组
 		$data['results'] = array();
-		foreach($spider_all as $s_k=>$s_v){
+		foreach($spider_all['content'] as $s_k=>$s_v){
 			//链接
-			$spider[$s_k]['url'] = $spider_all[$s_k]['url'];
+			$spider[$s_k]['url'] = $spider_all['content'][$s_k]['url'];
 			
 			//循环关键字，高亮
 			//标题
-			$title = mb_substr($spider_all[$s_k]['title'],0,18,'utf-8');
+			$title = mb_substr($spider_all['content'][$s_k]['title'],0,18,'utf-8');
 			//正文
-			$content = mb_substr($spider_all[$s_k]['content'],0,100,'utf-8');
+			$content = mb_substr($spider_all['content'][$s_k]['content'],0,100,'utf-8');
 			for($i=0;$i<$q_arr_count;$i++){
 				$title = highlight_phrase($title,$q_arr[$i]);
 				
@@ -113,9 +115,9 @@ class Search extends CI_Controller {
 		//分页
 		//链接
 		$url = '';
-		$url .= 'query='.$query;
-		$url .= '&type='.$search['type'];
+		$url .= 'type='.$search['type'];
 		$url .= '&url='.$search['url'];
+		$url .= '&query='.$query;
 		
 		$config['full_tag_open'] = '<ul>';
 		$config['full_tag_close'] = '</ul>';
@@ -136,8 +138,8 @@ class Search extends CI_Controller {
 		$config['next_link'] = '下一页';
 		$config['prev_link'] = '上一页';
 		$config['base_url'] = site_url('tools/search?'.$url);
-		$config['total_rows'] = '600';
-		$config['per_page'] = $this->base_setting->get_setting('quantity_admin');//每页显示条数
+		$config['total_rows'] = $spider_all['count'];
+		$config['per_page'] = $quantity_view;//每页显示条数
 		$config['page_query_string']=TRUE;
 		$config['query_string_segment'] ='results';
 		if($this->agent->is_mobile()){

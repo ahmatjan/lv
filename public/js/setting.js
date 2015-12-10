@@ -23,11 +23,11 @@ $().ready(function() {
 	   },
 	   quantity_view: {
 	    required: true,
-	    range:[20,60]
+	    range:[10,60]
 	   },
 	   quantity_admin: {
 	    required: true,
-	    range:[20,60]
+	    range:[10,60]
 	   }
 	  },
 	        messages: {
@@ -53,11 +53,11 @@ $().ready(function() {
 	   },
 	   quantity_view: {
 	    required: "前台显示条数必填",
-	    range:"输入值在20——60之间"
+	    range:"输入值在10——60之间"
 	   },
 	   quantity_admin: {
 	    required: "后台显示条数必填",
-	    range:"输入值在20——60之间"
+	    range:"输入值在10——60之间"
 	   }
 	  }
     });

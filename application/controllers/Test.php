@@ -342,8 +342,9 @@ var_dump($nav_parents);
 		
 		//三级联动
 		
+		echo '打开了';
 		
-		$this->public_section->get_header();
+		//$this->public_section->get_header();
 		
 		//$str = 'about/helper/con?position=about_us';
 		//echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
@@ -398,12 +399,7 @@ var_dump($nav_parents);
 		echo $this->similarity->getSimilar("http://www.lv.com/","http://www.lv.com/travel_info/alice_list.html"); 
 		
 		*/
-		
-		$this->load->helper('text');
-		$string = 'da旅行兔网ggg svhucksggg golgggly phooey';
-		$disallowed = array('旅行', 'shucks', '网', 'phooey');
-		$string = word_censor($string, $disallowed, '***');
-		echo $string;
+	
 		
 		/*
 		$te = '12222sssseeeddfhis->similarity->getSimil';

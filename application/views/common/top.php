@@ -128,7 +128,7 @@
 
 										<div class="input-append">
 
-											<input type="text" id="search-query" placeholder="热门词..." class="m-wrap" name="query">
+											<input type="text" id="search-query" placeholder="热门词..." class="m-wrap" name="query" value="">
 											
 											<button type="button" class="btn"></button>
 
