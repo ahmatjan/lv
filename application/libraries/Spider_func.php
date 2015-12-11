@@ -192,6 +192,7 @@ class Spider_func
 
 	//函数调用
 	public function get_links($domain){
+		$this->unset_sitemap_urls();//清空url
 		//获取域名URL地址
 		$this->base = str_replace("http://", "", $domain);
 		$this->base = str_replace("https://", "", $domain);
@@ -240,7 +241,6 @@ class Spider_func
 		$page = curl_exec($curl);
 		curl_close($curl);
 		$this->parse_content($page);
-		$this->unset_sitemap_urls();
 	}
 	
 	//分析的内容，并检查网址
@@ -305,9 +305,13 @@ class Spider_func
 	
 	//重置$this->sitemap_urls
 	private function unset_sitemap_urls(){
-		if(count($this->sitemap_urls) > '500'){
+		if(count($this->sitemap_urls) > '20'){
 			//$this->sitemap_urls = array();
-			echo '<br/><br/><br/><br/><br/><br/>重置<br/><br/><br/><br/><br/><br/>';
+			if(is_cli()){
+				echo "\r\n重置$this->sitemap_urls\r\n";
+			}else{
+				echo '重置$this->sitemap_urls';
+			}
 			unset($this->sitemap_urls);
 		}
 	}
@@ -413,6 +417,7 @@ class Spider_func
 		$spider_url['description'] = NULL;
 		$spider_url['keywords'] = NULL;
 		$spider_url['author'] = NULL;
+		$spider_url['title'] = NULL;
 		$res = Array ();
 		if(isset($headdata)){
 			#获取Description

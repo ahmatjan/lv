@@ -134,10 +134,12 @@ class Search extends CI_Controller {
 		}
 		
 		//按权重分排序
-		foreach($spider as $weight_){
-			$weight_order[] = $weight_['weight'];
+		if(isset($spider)){
+			foreach($spider as $weight_){
+				$weight_order[] = $weight_['weight'];
+			}
+			array_multisort($weight_order, SORT_DESC, $spider);
 		}
-		array_multisort($weight_order, SORT_DESC, $spider);
 		
 		//arsort($spider);
 		@$data['results'] = $spider;

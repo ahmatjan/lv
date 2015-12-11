@@ -18,7 +18,7 @@ class Similarity {
     if ($len1 == 0) $len1 = strlen($str1);
     if ($len2 == 0) $len2 = strlen($str2);
     $this->initC($len1, $len2);
-    return $this->printLCS($this->c, $len1 - 1, $len2 - 1);
+    return $this->printLCS($this->c, $len1 - 1 > 50 ? '50' : $len1 - 1 , $len2 - 1 > 50 ? '50' : $len2 - 1);
   }
   /*返回两个串的相似度
 */

@@ -196,11 +196,14 @@
 
 													<i class="icon-map-marker"></i>
 
-													<input class="m-wrap span12 tooltips" type="text" placeholder="关键词查找..." data-original-title="这里可以快速的找到你想要的信息，比如：时间、地点、线路、出行方式等" value="<?php echo $query;?>" name="query">
+													<input class="m-wrap span12 tooltips" type="text" placeholder="关键词查找..." data-original-title="搜索时间、地点、线路、出行方式等<br/>多个关键词用空格隔开！" value="<?php echo $query;?>" name="query">
 
 												</div>
 
 											</div>
+											
+											<input type="hidden" value="and" name="type">
+											<input type="hidden" value="all" name="url">
 
 											<button class="btn blue btn-block">搜索 <i class="m-icon-swapright m-icon-white"></i></button>
 
@@ -227,7 +230,7 @@
 
 												<li class="domain"><?php echo parse_url($result['url'])['host']?></li>
 												
-												<li class="domain"><?php echo '&nbsp;|&nbsp;指数:'.$result['weight']?></li>
+												<li class="domain"><?php echo !empty($result['weight']) ? '&nbsp;|&nbsp;指数:'.$result['weight'] : '&nbsp;|&nbsp;指数:0' ?></li>
 
 											</ul>
 
@@ -235,6 +238,8 @@
 				
 									</div>
 								<?php endforeach;?>
+								<?php else:?>
+								<?php echo '没有符合条件的内容！';?>
 								<?php endif;?>
 								</div>
 								

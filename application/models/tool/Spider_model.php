@@ -12,7 +12,7 @@ class Spider_model extends CI_Model {
 	//添加访问记录
 	public function add_spider_url($data){
 		$result=$this->select_byurl($data['url']);
-		if($result){//如果记录已经存在
+		if($result !== FALSE){//如果记录已经存在
 			$this->db->where('url_id', $result['url_id']);
 			$res['updata'] = $this->db->update($this->db->dbprefix('spider_url'), $data);
 		}else{
