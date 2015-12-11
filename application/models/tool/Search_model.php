@@ -21,13 +21,32 @@ class Search_model extends CI_Model {
 			$count_sql .= "url like '%".$search['url']."%' AND ";
 		}
 		
+		$s_sql = '';
 		if($search['type'] == 'and'){
 			if(isset($search['query'])){
-				$select_sql .= "title like '%".$search['query']."%' ";
-				$count_sql .= "title like '%".$search['query']."%' ";
+				$s_query = explode(' ',$search['query']);//关键词转成数组
+				foreach($s_query as $s_k=>$s_v){
+					$s_sql .= "title like '%".$s_query[$s_k]."%' OR ";
+				}
+				
+				$select_sql .= substr($s_sql,0,-3);
+				$count_sql .= substr($s_sql,0,-4);
 			}
 		}else{
 			if(isset($search['query'])){
+				$s_query = explode(' ',$search['query']);//关键词转成数组
+				foreach($s_query as $s_k=>$s_v){
+					$s_sql .= "title like '%".$s_query[$s_k]."%' OR ";
+					$s_sql .= "content like '%".$s_query[$s_k]."%' OR ";
+					$s_sql .= "description like '%".$s_query[$s_k]."%' OR ";
+					$s_sql .= "keywords like '%".$s_query[$s_k]."%' OR ";
+					$s_sql .= "author like '%".$s_query[$s_k]."%' OR ";
+					
+				}
+				
+				$select_sql .= substr($s_sql,0,-3);
+				$count_sql .= substr($s_sql,0,-4);
+				/*
 				$select_sql .= "title like '%".$search['query']."%' OR ";
 				$count_sql .= "title like '%".$search['query']."%' OR ";
 				
@@ -42,6 +61,7 @@ class Search_model extends CI_Model {
 				
 				$select_sql .= "author like '%".$search['query']."%' ";
 				$count_sql .= "author like '%".$search['query']."%' ";
+				*/
 			}
 		}
 		$select_sql .= 'LIMIT '.$search['results'].' , '.$search['quantity_view'];

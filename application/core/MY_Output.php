@@ -275,7 +275,7 @@ class MY_Output extends CI_Output
 			log_message('debug', 'Cache file written: '.$cache_path);
 
 			// Send HTTP cache-control headers to browser to match file cache settings.
-			$this->set_cache_header($_SERVER['REQUEST_TIME'], $expire);
+			$this->set_cache_header($this->CI->input->server('REQUEST_TIME'), $expire);
 		}
 		else
 		{
@@ -305,7 +305,7 @@ class MY_Output extends CI_Output
 		//用户代理类用来判断设备
 		$this->CI->load->library('user_agent');
 		
-		$url_ = $_SERVER['SERVER_NAME'];
+		$url_ = $this->CI->input->server('SERVER_NAME');
 		/*
 		if(strpos($url_ ,'www.') !== FALSE){
 			$url_=substr($url_,4);
@@ -315,16 +315,16 @@ class MY_Output extends CI_Output
 		{
 			//如果使用的是移动端
 			if($https_mobile == TRUE){
-				if (@$_SERVER["HTTPS"] <> "on")
+				if (@$this->CI->input->server("HTTPS") <> "on")
 					{
-					    $xredir="https://".$url_.$_SERVER["REQUEST_URI"];
+					    $xredir="https://".$url_.$this->CI->input->server("REQUEST_URI");
 					    header("Location: ".$xredir);
 					    exit();
 					}
 			}else{
-				if(@$_SERVER['HTTPS'] == "on") 
+				if(@$this->CI->input->server('HTTPS') == "on") 
 				{ 
-				    $xredir='http://'.$url_. $_SERVER['REQUEST_URI']; 
+				    $xredir='http://'.$url_. $this->CI->input->server('REQUEST_URI'); 
 
 				    header("Location: ".$xredir);
 				    exit();
@@ -336,17 +336,17 @@ class MY_Output extends CI_Output
 			//如果使用的不是移动端
 			if($https_pc == TRUE){
 				//使用https
-				if (@$_SERVER["HTTPS"] <> "on")
+				if (@$this->CI->input->server("HTTPS") <> "on")
 				{
-				    $xredir="https://".$url_.$_SERVER["REQUEST_URI"];
+				    $xredir="https://".$url_.$this->CI->input->server("REQUEST_URI");
 				    header("Location: ".$xredir);
 				    exit();
 				}
 			}else{
 				//不使用https
-				if(@$_SERVER['HTTPS'] == "on") 
+				if(@$this->CI->input->server('HTTPS') == "on") 
 				{ 
-				    $xredir='http://'.$url_. $_SERVER['REQUEST_URI']; 
+				    $xredir='http://'.$url_. $this->CI->input->server('REQUEST_URI'); 
 
 				    header("Location: ".$xredir);
 				    exit();

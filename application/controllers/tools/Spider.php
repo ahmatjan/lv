@@ -7,22 +7,25 @@ class Spider extends CI_Controller {
 		$this->load->library('spider_func');
 		//$this->load->library(array('user_agent'));
 		$this->load->model('tool/spider_model');
-		$this->output->https_jump();
-		//判断权限
-		$this->public_section->is_access('tools/spider');
-		//跳转
+		
+		if(!is_cli()){
+			$this->output->https_jump();
+			//判断权限
+			$this->public_section->is_access('tools/spider');
+			//跳转
+		}
 		
 		set_time_limit (0);
 	}
 
-	public function spider_index($url='')
+	public function spider_index($url='http://www.lv.com/')
 	{
-		if(empty($url)){
-			$url='http://www.lv.com/';
+		if(!is_cli()){
+			if($this->input->get('url')){
+				$url = $this->input->get('url');
+			}
 		}
-		if($this->input->get('url')){
-			$url = $this->input->get('url');
-		}
+		
 		$url = str_replace("http://", "", $url);
 		$url = str_replace("https://", "", $url);
 		

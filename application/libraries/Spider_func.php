@@ -17,6 +17,7 @@ class Spider_func
 	private $check = array();
 	private $proxy = "";
 	private $header = array('User-Agent: Mozilla/5.0 (Windows NT 6.1; xCalder/1.0.0; +http://www.lvxingto.com/search/spider.html)');
+	
 	private $url_feedback='';
 	private $spider_id = '1';//spider_id变量，抓取的序号
 	
@@ -24,8 +25,10 @@ class Spider_func
 		$this->CI =& get_instance();//$this->CI调用框架方法
 		$this->CI->load->helper(array('html','string','url'));
 		$this->CI->load->model('tool/spider_model');
-		echo doctype('html4-trans').meta('Content-type', 'text/html;charset=utf-8', 'equiv');
-		echo link_tag(base_url('public/image/favicon.ico'), 'shortcut icon', 'image/ico');
+		if(!is_cli()){
+			echo doctype('html4-trans').meta('Content-type', 'text/html;charset=utf-8', 'equiv');
+			echo link_tag(base_url('public/image/favicon.ico'), 'shortcut icon', 'image/ico');
+		}
 	}
 	
 	//设置URL中的忽略类型
@@ -65,6 +68,7 @@ class Spider_func
 	
 	//多线程请求
 	private function multi_curl($urls){
+		
 		// 为多线程处理
 		$curl_handlers = array();
 		
@@ -134,22 +138,50 @@ class Spider_func
 						//$result['add_spider_url']['updata'] = TRUE;//定义变量，避免报错
 						@$result = $this->analysis_html($content,$loction_url);//解析html入库
 						
-						if(isset($result['add_spider_url']['updata']) && $result['add_spider_url']['updata']){
-							$add_spider_url = '更新[spider_url]表<span style="color: red">成功</span>';
-						}elseif($result['add_spider_url']['insert']){
-							$add_spider_url = '写入[spider_url]表<span style="color: red">成功</span>';
+						if(is_cli()){
+							//cli下
+							if(isset($result['add_spider_url']['updata']) && $result['add_spider_url']['updata']){
+								$add_spider_url = "更新[spider_url]表成功";
+							}elseif($result['add_spider_url']['insert']){
+								$add_spider_url = "写入[spider_url]表成功";
+							}else{
+								$add_spider_url = "写入[spider_url]表失败";
+							}
+							echo $this->spider_id."抓取".$loction_url."\r\n内存" . round(memory_get_usage()/1024/1024,2)."MHTTP状态码".$http_code.$add_spider_url."\r\n\r\n";
+							//cli下
 						}else{
-							$add_spider_url = '写入[spider_url]表<span style="color: red">失败</span>';
+							//不是cli
+							if(isset($result['add_spider_url']['updata']) && $result['add_spider_url']['updata']){
+								$add_spider_url = '更新[spider_url]表<span style="color: red">成功</span>';
+							}elseif($result['add_spider_url']['insert']){
+								$add_spider_url = '写入[spider_url]表<span style="color: red">成功</span>';
+							}else{
+								$add_spider_url = '写入[spider_url]表<span style="color: red">失败</span>';
+							}
+							echo $this->spider_id.'、 抓取：'.$loction_url.'<br/>内存：<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span>&nbsp;HTTP状态码<span style="color: red">'.$http_code.'</span>&nbsp;'.$add_spider_url.'<br/><br/>';
 						}
-						echo $this->spider_id.'、 抓取：'.$loction_url.'<br/>内存：<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span>&nbsp;HTTP状态码<span style="color: red">'.$http_code.'</span>&nbsp;'.$add_spider_url.'<br/><br/>';
-						$this->spider = $this->spider_id++;//序号+1
+						//不是cli
 					}else{
 						$this->parse_content($content);
-						echo $this->spider_id.'、 抓取：'.$loction_url.'<br/>内存：<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span>&nbsp;HTTP状态码<span style="color: red">'.$http_code.'</span>&nbsp;内容没有变化<span style="color:red">已忽略</span><br/><br/>';
-						$this->spider = $this->spider_id++;//序号+1
+						if(is_cli()){
+							echo $this->spider_id."抓取：".$loction_url."\r\n内存" . round(memory_get_usage()/1024/1024,2)."MHTTP状态码".$http_code."内容没有变化已忽略\r\n\r\n";
+						}else{
+							//不是cli
+							echo $this->spider_id.'、 抓取：'.$loction_url.'<br/>内存：<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span>&nbsp;HTTP状态码<span style="color: red">'.$http_code.'</span>&nbsp;内容没有变化<span style="color:red">已忽略</span><br/><br/>';
+							//不是cli
+						}
+						
 					}
+					$this->spider = $this->spider_id++;//序号+1
 				}else{
-					echo $this->spider_id.'、 抓取：'.$loction_url.'<br/>内存：<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span>&nbsp;HTTP状态码<span style="color: red">'.$http_code.'</span>&nbsp;未知抓取错误<span style="color:red">已退出</span><br/><br/>';
+					if(is_cli()){
+						echo $this->spider_id."抓取".$loction_url."\r\n内存" . round(memory_get_usage()/1024/1024,2)."MHTTP状态码".$http_code."未知抓取错误已退出\r\n\r\n";
+					}else{
+						//不是cli
+						echo $this->spider_id.'、 抓取：'.$loction_url.'<br/>内存：<span style="color: red">' . round(memory_get_usage()/1024/1024,2).'M</span>&nbsp;HTTP状态码<span style="color: red">'.$http_code.'</span>&nbsp;未知抓取错误<span style="color:red">已退出</span><br/><br/>';
+						//不是cli
+					}
+					
 					$this->spider = $this->spider_id++;//序号+1
 				}
 			}
@@ -197,6 +229,7 @@ class Spider_func
 		}
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		//后加
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $this->header);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);//重定向
 		curl_setopt($curl, CURLOPT_MAXREDIRS, 30);//允许的重定向最大数量
 		curl_setopt($curl,CURLOPT_HTTPPROXYTUNNEL,TRUE);

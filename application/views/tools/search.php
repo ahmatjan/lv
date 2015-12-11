@@ -190,7 +190,7 @@
 
 											<div class="clearfix margin-bottom-10">
 
-												<label>搜索</label>
+												<label>搜索<?php echo !empty($query) ? '->'.$query.'&nbsp;|&nbsp;找到'.$count.'条符合条件的结果&nbsp;' : '' ?></label>
 
 												<div class="input-icon left">
 
@@ -225,15 +225,9 @@
 											
 											<ul class="unstyled inline">
 
-												<li><i class="icon-star"></i></li>
-
-												<li><i class="icon-star"></i></li>
-
-												<li><i class="icon-star"></i></li>
-
-												<li><i class="icon-star"></i></li>
-
-												<li><i class="icon-star"></i></li>
+												<li class="domain"><?php echo parse_url($result['url'])['host']?></li>
+												
+												<li class="domain"><?php echo '&nbsp;|&nbsp;指数:'.$result['weight']?></li>
 
 											</ul>
 

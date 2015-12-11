@@ -342,8 +342,15 @@ var_dump($nav_parents);
 		
 		//三级联动
 		
-		echo '打开了';
-		
+		/*
+		$source = "hello1 hello2,hello3 hello4 hello5";//按逗号分离字符串 
+		$hello = explode(' ',$source);
+		$sql = '1233';
+		foreach($hello as $q_k=>$q_v){
+			$sql .= "title like '%".$hello[$q_k]."%' AND ";
+		}
+		echo $sql;
+		*/
 		//$this->public_section->get_header();
 		
 		//$str = 'about/helper/con?position=about_us';
@@ -394,11 +401,7 @@ var_dump($nav_parents);
 		}
 		*/
 		
-		/*
-		$this->load->library('spider/similarity');
-		echo $this->similarity->getSimilar("http://www.lv.com/","http://www.lv.com/travel_info/alice_list.html"); 
-		
-		*/
+		var_dump($this->input->server(array('SERVER_PORT','HTTP_HOST', 'REQUEST_URI','REQUEST_URI')));
 	
 		
 		/*

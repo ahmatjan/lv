@@ -4,6 +4,12 @@
 */
 class public_section extends CI_Model {
 	
+	function __construct()
+    {
+        parent::__construct();
+        $this->load->library('session');
+    }
+	
 	//这是一个只包含css/js等引入的公共头部
 	public function get_header($header=array())
 	{
@@ -131,7 +137,7 @@ class public_section extends CI_Model {
 		
 		//查询ip_address
 		@$sql = "SELECT ip_address FROM " . $this->db->dbprefix('report_access') . " WHERE token = ?"; 
-		@$query=$this->db->query($sql, array(@$_SESSION['token']));
+		@$query=$this->db->query($sql, array(@$this->session->userdata('token')));
 		@$data['ip_address'] = unserialize($query->row_array()['ip_address']);
 
 		//顶布局
@@ -438,21 +444,15 @@ class public_section extends CI_Model {
 		//如果不是已知爬虫才写入流量表
 		if(!$this->agent->robot()){
 			//判断机器人
-			if($this->agent->checkrobot()){
-				$robot = $this->agent->robot();
-			}else{
-				$robot = NULL;
-			}
-			
 			$report_flow=array(
 					'ip'					=>$ip,
 					'referrer_url'			=>$referrer_url,
 					'current_url'			=>$this->agent->get_page_url(),
-					'token'					=>@$_SESSION['token'],
+					'token'					=>@$this->session->userdata('token'),
 					'access_time'			=>date('Y-m-d H:i:s'),
 					'platform'				=>$platform,
 					'browser'				=>$browser,
-					'robot'					=>$robot,
+					'robot'					=>$this->agent->robot(),
 					'user_agent'			=>$this->agent->agent_string(),
 			);
 			
@@ -461,10 +461,9 @@ class public_section extends CI_Model {
 		}
 				
 		//判断，如果是蜘蛛，不开session
-		//if(!$this->agent->checkrobot()){
-		if($this->agent->is_robot() === FALSE && stripos($this->agent->platform(),'Unknown') === FALSE && !empty($this->agent->browser()) && !empty($this->agent->platform()) && !$this->agent->checkrobot()){
+		if($this->agent->is_robot() === FALSE && stripos($this->agent->platform(),'Unknown') === FALSE && !empty($this->agent->browser()) && !empty($this->agent->platform())){
 			//写入一个随机session做为token令牌，用来检查是同一次访问
-			if(!isset($_SESSION['token'])){//如果token不存在或者为空
+			if($this->session->userdata('token') == NULL){//如果token不存在或者为空
 				$this->load->helper('string');
 				$token=random_string('sha1');
 				$this->session->set_userdata('token', $token);
@@ -518,7 +517,7 @@ class public_section extends CI_Model {
 		if($this->user->hasPermission('access',$path_name) !== TRUE){
 			//无权限查看
 			$this->session->set_flashdata('setting_false', '你没有权限查看！');
-			if($_SESSION['user_id']){
+			if($this->session->userdata('user_id')){
 				redirect($this->agent->referrer() ? $this->agent->referrer() : 'home');
 				exit();
 			}else{
@@ -534,7 +533,7 @@ class public_section extends CI_Model {
 		if($this->user->hasPermission('modify',$path_name) !== TRUE){
 			//无权限修改
 			$this->session->set_flashdata('setting_false', '你没有权限修改！');
-			if($_SESSION['user_id']){
+			if($this->session->userdata('user_id')){
 				redirect($this->agent->referrer() ? $this->agent->referrer() : 'home');
 				exit();
 			}else{

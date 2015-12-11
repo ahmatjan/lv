@@ -5528,3 +5528,13 @@ Datatables Plugin(in v1.3)
 		text-decoration: underline;
 	}
 }
+/*搜索页*/
+.search .container .booking-blocks p{
+	margin: 0;
+}
+.search .container .booking-blocks ul li{
+	padding-left: 0;
+}
+.search .container .booking-blocks ul .domain{
+	color: #2A8E85;
+}

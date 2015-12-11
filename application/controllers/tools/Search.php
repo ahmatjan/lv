@@ -8,6 +8,7 @@ class Search extends CI_Controller {
 		$this->load->model(array('tool/search_model'));
 		$this->load->helper(array('string','text'));
 		$this->load->library('pagination');
+		$this->load->library('spider/similarity');//字符串相似度
 	}
 
 	public function index()
@@ -15,8 +16,8 @@ class Search extends CI_Controller {
 		//搜索关键词
 		
 		if($this->input->get('query')){
-			$search['query'] = $this->input->get('query');
-			$query = mb_substr($this->input->get('query'),0,30);
+			$query = mb_substr(merge_spaces(trim($this->input->get('query'))),0,30);
+			$search['query'] = $query;
 		}else{
 			$search['query'] = '';
 			$query = '';
@@ -27,7 +28,7 @@ class Search extends CI_Controller {
 		if($this->input->get('type')){
 			$search['type'] = $this->input->get('type');
 		}else{
-			$search['type'] = 'and';
+			$search['type'] = 'or';
 		}
 		
 		//url是否把链接加入搜索权重
@@ -51,9 +52,12 @@ class Search extends CI_Controller {
 		//搜索关键词
 		
 		//处理高亮显示，把字符串转成单字数组
+		/*
 		$q_arr = SBC_DBC($query,1);//全角转半角
 		$q_arr = preg_replace("/\s/","",$q_arr);//去空格
 		$q_arr = split_string_to_array($q_arr);
+		*/
+		$q_arr = explode(' ',$query);
 		$q_arr_count = count($q_arr);
 		//处理高亮显示，把字符串转成单字数组
 		
@@ -94,8 +98,26 @@ class Search extends CI_Controller {
 		//遍历处理结果数组
 		$data['results'] = array();
 		foreach($spider_all['content'] as $s_k=>$s_v){
+			//权重
+			$spider[$s_k]['weight'] = '';
 			//链接
 			$spider[$s_k]['url'] = $spider_all['content'][$s_k]['url'];
+			
+			//计算权重，统计字符长度
+			$title_strlen = strlen($spider_all['content'][$s_k]['title']);
+			$content_strlen = strlen($spider_all['content'][$s_k]['content']);
+			//计算权重排序，计算相似度
+			if(!empty($query) && is_array($q_arr)){
+				foreach($q_arr as $q_k=>$q_v){
+				//关键字长度/标题长度*相似度
+				//标题
+				@$spider[$s_k]['weight']['title'][$q_k] = (strlen($q_arr[$q_k])/$title_strlen * 0.2) + ($this->similarity->getSimilar($q_arr[$q_k],$spider_all['content'][$s_k]['title']) * 0.4);
+				//内容
+				$spider[$s_k]['weight']['content'][$q_k] = (strlen($q_arr[$q_k])/$content_strlen * 0.12) + ($this->similarity->getSimilar($q_arr[$q_k],$spider_all['content'][$s_k]['content']) * 0.28);
+			}
+			//计算元素的和
+			$spider[$s_k]['weight'] = array_sum($spider[$s_k]['weight']['title']) + array_sum($spider[$s_k]['weight']['content']);
+			}
 			
 			//循环关键字，高亮
 			//标题
@@ -103,14 +125,21 @@ class Search extends CI_Controller {
 			//正文
 			$content = mb_substr($spider_all['content'][$s_k]['content'],0,100,'utf-8');
 			for($i=0;$i<$q_arr_count;$i++){
+				//高亮显示文本字符串
 				$title = highlight_phrase($title,$q_arr[$i]);
-				
 				$content = highlight_phrase($content,$q_arr[$i]);
 			}
 			$spider[$s_k]['title'] = $this->public_section->word_censor($title);//标题
 			$spider[$s_k]['content'] = $this->public_section->word_censor($content);//正文
-			
 		}
+		
+		//按权重分排序
+		foreach($spider as $weight_){
+			$weight_order[] = $weight_['weight'];
+		}
+		array_multisort($weight_order, SORT_DESC, $spider);
+		
+		//arsort($spider);
 		@$data['results'] = $spider;
 		
 		//分页
@@ -150,6 +179,8 @@ class Search extends CI_Controller {
 		}
 
 		$this->pagination->initialize($config);
+		
+		$data['count'] = $spider_all['count'];
 
 		$data['search_page'] = $this->pagination->create_links();
 		

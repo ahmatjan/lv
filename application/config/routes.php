@@ -65,3 +65,4 @@ $route['user/:num'] = 'user/user_page/index';//帮助中心列表
 
 //搜索
 $route['search'] = 'tools/search/index';//搜索
+//$route['spider'] = 'tools/spider/spider_index';//抓取
