@@ -401,7 +401,35 @@ var_dump($nav_parents);
 		}
 		*/
 		
-		var_dump($this->input->server(array('SERVER_PORT','HTTP_HOST', 'REQUEST_URI','REQUEST_URI')));
+		$this->load->helper(array('captcha','string'));
+		
+		//$rand = rand(0,255);//颜色随机数
+		
+		$vals = array(
+	        //'word'          => 'Random word',
+	        'img_path'      => WWW_PATH.'/image/cache/captcha/',
+	        'img_url'       => base_url('image/cache/captcha/'),
+	        'font_path'     => WWW_PATH.'/public/font/niao.ttf',
+	        'img_width'     => '250',
+	        'img_height'    => '100',
+	        'expiration'    => 300,
+	        'word_length'   => 4,
+	        'font_size'     => 48,
+	        'img_id'        => 'Imageid',
+	        'pool'          => '23456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ',
+
+	        // White background and border, black text and red grid
+	        'colors'        => array(
+                //'background' => array(255, 255, 255),
+                'background' => array(rand(0,255), rand(0,255), rand(0,255)),
+                'border' => array(rand(0,255), rand(0,255), rand(0,255)),
+                'text' => array(0, 0, 0),
+                'grid' => array(rand(0,255), rand(0,255), rand(0,255))
+	        )
+		);
+
+		$cap = create_captcha($vals);
+		echo $cap['image'].$cap['word'];
 	
 		
 		/*
