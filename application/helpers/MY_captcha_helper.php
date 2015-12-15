@@ -66,19 +66,19 @@ if ( ! function_exists('create_captcha'))
 			'word'		=> '',
 			'img_path'	=> '',
 			'img_url'	=> '',
-			'img_width'	=> '150',
-			'img_height'	=> '30',
-			'font_path'	=> '',
-			'expiration'	=> 7200,
-			'word_length'	=> 8,
-			'font_size'	=> 16,
+			'img_width'	=> '120',
+			'img_height'	=> '40',
+			'font_path'	=> WWW_PATH.'/public/font/kaiyuan.otf',
+			'expiration'	=> 20,
+			'word_length'	=> 4,
+			'font_size'	=> 18,
 			'img_id'	=> '',
-			'pool'		=> '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+			'pool'		=> '23456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ',
 			'colors'	=> array(
-				'background'	=> array(255,255,255),
-				'border'	=> array(153,102,102),
-				'text'		=> array(204,153,153),
-				'grid'		=> array(255,182,182)
+				'background' => array(255, 255, 255),
+				'border'	=> array(250,250,250),
+				//'text'		=> array(rand(0, 200),rand(0, 200),rand(0, 200)),
+				'grid'		=> array(rand(210,255),rand(210,255),rand(210,255))
 			)
 		);
 
@@ -92,6 +92,10 @@ if ( ! function_exists('create_captcha'))
 			{
 				$$key = isset($data[$key]) ? $data[$key] : $val;
 			}
+		}
+		
+		if (!is_dir($img_path)) {//如果文件夹不存在创建
+			@mkdir($img_path, 0777);
 		}
 
 		if ($img_path === '' OR $img_url === ''
@@ -168,6 +172,7 @@ if ( ! function_exists('create_captcha'))
 		// -----------------------------------
 		//  Create the spiral pattern
 		// -----------------------------------
+		/*
 		$theta		= 1;
 		$thetac		= 7;
 		$radius		= 16;
@@ -187,7 +192,19 @@ if ( ! function_exists('create_captcha'))
 			imageline($im, $x, $y, $x1, $y1, $colors['grid']);
 			$theta -= $thetac;
 		}
-
+*/
+			//线条
+		  for ($i=0;$i<6;$i++) {
+		   $color = imagecolorallocate($im,rand(100,156),rand(100,156),rand(100,156));
+		   imageline($im,rand(0,$img_width),rand(0,$img_height),rand(0,$img_width),rand(0,$img_height),$color);
+		  }
+		  //雪花
+		  /*
+		  for ($i=0;$i<100;$i++) {
+		   $color = imagecolorallocate($im,rand(210,240),rand(210,240),rand(210,240));
+		   imagestring($im,rand(1,5),rand(0,$img_width),rand(0,$img_height),'*',$color);
+		  }
+*/
 		// -----------------------------------
 		//  Write the text
 		// -----------------------------------
@@ -208,6 +225,7 @@ if ( ! function_exists('create_captcha'))
 
 		for ($i = 0; $i < $length; $i++)
 		{
+			$colors['text'] = imagecolorallocate($im,rand(100,2199),rand(100,199),rand(100,199));//文字颜色
 			if ($use_font === FALSE)
 			{
 				$y = mt_rand(0 , $img_height / 2);

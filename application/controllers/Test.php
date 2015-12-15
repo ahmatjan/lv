@@ -351,7 +351,7 @@ var_dump($nav_parents);
 		}
 		echo $sql;
 		*/
-		//$this->public_section->get_header();
+		$this->public_section->get_header();
 		
 		//$str = 'about/helper/con?position=about_us';
 		//echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
@@ -401,6 +401,8 @@ var_dump($nav_parents);
 		}
 		*/
 		
+		/*
+		
 		$this->load->helper(array('captcha','string'));
 		
 		//$rand = rand(0,255);//颜色随机数
@@ -409,28 +411,14 @@ var_dump($nav_parents);
 	        //'word'          => 'Random word',
 	        'img_path'      => WWW_PATH.'/image/cache/captcha/',
 	        'img_url'       => base_url('image/cache/captcha/'),
-	        'font_path'     => WWW_PATH.'/public/font/niao.ttf',
-	        'img_width'     => '250',
-	        'img_height'    => '100',
-	        'expiration'    => 300,
-	        'word_length'   => 4,
-	        'font_size'     => 48,
-	        'img_id'        => 'Imageid',
-	        'pool'          => '23456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ',
-
-	        // White background and border, black text and red grid
-	        'colors'        => array(
-                //'background' => array(255, 255, 255),
-                'background' => array(rand(0,255), rand(0,255), rand(0,255)),
-                'border' => array(rand(0,255), rand(0,255), rand(0,255)),
-                'text' => array(0, 0, 0),
-                'grid' => array(rand(0,255), rand(0,255), rand(0,255))
-	        )
+	        //'font_path'     => WWW_PATH.'/public/font/niao.ttf',
+	        
 		);
 
 		$cap = create_captcha($vals);
 		echo $cap['image'].$cap['word'];
-	
+		*/
+		
 		
 		/*
 		$te = '12222sssseeeddfhis->similarity->getSimil';
@@ -459,9 +447,10 @@ var_dump($nav_parents);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
 		$result = curl_exec($ch); 
 */
-		//var_dump($header); 
-		
-		//$this->load->view('test',$data);
+		//var_dump($header);
+		$this->load->model('common/captcha');
+		$data['captcha'] = $this->captcha->get_img();
+		$this->load->view('test',$data);
 		
 		
 		/*
@@ -540,35 +529,8 @@ var_dump($nav_parents);
 <?php endif; ?>
 	*/
 	
-	private function check_url($url){
-	    if(strpos($url,base_url()) !== false && strpos($url,'.html') !== false && strpos($url,'#') === false){
-	    	//检查链接是否是站内链接，是否是一个.html链接
-	    	return TRUE;
-	    }else{
-	    return FALSE;
-		}
+	public function get_img(){
+		$this->load->model('common/captcha');
+		return $this->captcha->get_img();
 	}
-	
-	function FormatHeader($url, $myIp = null,$xml = null) 
-	{ 
-		// 解悉url 
-		$temp = parse_url($url); 
-		$query = isset($temp['query']) ? $temp['query'] : ''; 
-		$path = isset($temp['path']) ? $temp['path'] : '/'; 
-
-		$header = array ( 
-		"POST {$path}?{$query} HTTP/1.1", 
-		"Host: {$temp['host']}", 
-		"Content-Type: text/xml; charset=utf-8", 
-		'Accept: */*', 
-		"Referer: http://{$temp['host']}/", 
-		'User-Agent: xcalder', 
-		"X-Forwarded-For: {$myIp}", 
-		"Content-length: 380", 
-		"Connection: Close" 
-		); 
-
-		return $header; 
-	}
-
 }
