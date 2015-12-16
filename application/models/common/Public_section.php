@@ -8,6 +8,7 @@ class public_section extends CI_Model {
     {
         parent::__construct();
         $this->load->library('session');
+        $this->load->model('tool/report');
     }
 	
 	//这是一个只包含css/js等引入的公共头部
@@ -459,7 +460,7 @@ class public_section extends CI_Model {
 			//直接写入到数据库（因为这个类在model,所以没有再去load->model）
 			$this->db->insert( $this->db->dbprefix('report_flow') , $report_flow);
 		}
-				
+
 		//判断，如果是蜘蛛，不开session
 		if($this->agent->is_robot() === FALSE && stripos($this->agent->platform(),'Unknown') === FALSE && !empty($this->agent->browser()) && !empty($this->agent->platform())){
 			//写入一个随机session做为token令牌，用来检查是同一次访问

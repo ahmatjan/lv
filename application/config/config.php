@@ -92,6 +92,12 @@ $config['language']	= 'chinese';
 $config['charset'] = 'UTF-8';
 //CodeIgniter 程序默认使用的字符集
 
+
+ //设置时区
+$config['time_zone']=date_default_timezone_set('Asia/shanghai');//或者ini_set('date.timezone','Asia/shanghai');
+
+date_default_timezone_set("Asia/Shanghai");
+
 /*
 |--------------------------------------------------------------------------
 | Enable/Disable System Hooks

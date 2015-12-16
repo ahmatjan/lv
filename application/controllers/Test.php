@@ -448,9 +448,15 @@ var_dump($nav_parents);
 		$result = curl_exec($ch); 
 */
 		//var_dump($header);
-		$this->load->model('common/captcha');
-		$data['captcha'] = $this->captcha->get_img();
-		$this->load->view('test',$data);
+		$this->load->library('validate_code');
+		
+		//$this->load->helper('date');
+		//echo unix_to_human(now());
+		
+		echo date('Y-m-d H:m:s');
+		
+		//$data['captcha_code'] = $_SESSION['captcha_code'];
+		$this->load->view('test');
 		
 		
 		/*
@@ -529,8 +535,12 @@ var_dump($nav_parents);
 <?php endif; ?>
 	*/
 	
-	public function get_img(){
-		$this->load->model('common/captcha');
-		return $this->captcha->get_img();
+	public function cap(){
+		$captcha = $this->input->post('captcha');
+		if($captcha === $_SESSION['captcha_code']){
+			echo '通过验证';
+		}else{
+			echo '验证不通过';
+		}
 	}
 }

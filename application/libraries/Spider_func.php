@@ -19,6 +19,7 @@ class Spider_func
 	private $header = array('User-Agent: Mozilla/5.0 (Windows NT 6.1; xCalder/1.0.0; +http://www.lvxingto.com/search/spider.html)');
 	
 	private $url_feedback='';
+	private $site_id;
 	private $spider_id = '1';//spider_id变量，抓取的序号
 	
 	public function __construct() {
@@ -191,7 +192,12 @@ class Spider_func
 	}
 
 	//函数调用
-	public function get_links($domain){
+	public function get_links($domain,$site_id=''){
+		//站点id
+		if($site_id !== NULL){
+			$this->site_id=$site_id;
+		}
+		
 		$this->unset_sitemap_urls();//清空url
 		//获取域名URL地址
 		$this->base = str_replace("http://", "", $domain);
@@ -404,7 +410,7 @@ class Spider_func
 		//抽取正文内容
 		$iTextExtractor = new textExtract( $page, 6);
 		//$spider_url['content'] = $iTextExtractor->getPlainText();
-		$s_text = substr_cn($iTextExtractor->getPlainText(),1000);
+		$s_text = mb_substr($iTextExtractor->getPlainText(),0,1000);
 		$spider_url['content'] = $s_text;
 		/*
 		$Readability     = new Readability($page); // default charset is utf-8
@@ -446,6 +452,7 @@ class Spider_func
 		$spider_url['url'] = $loction_url;
 		$spider_url['content_md5'] = md5($page);
 		$spider_url['addtime'] = date("Y-m-d H:m:s");
+		$spider_url['site_id'] = $this->site_id;
 		
 		//把数组写入或更新到spider_url表
 		$result['add_spider_url'] = $this->CI->spider_model->add_spider_url($spider_url);

@@ -31,7 +31,18 @@ class Spider extends CI_Controller {
 		
 		//要排除的链接后缀
 		$this->spider_func->set_ignore(array("javascript:", ".css", ".js", ".ico", ".jpg", ".png", ".jpeg", ".swf", ".gif"));
+		
+		//添加站点
+		$data['domain'] = $url;
+		$this->spider_model->add_spider_site($data);
+		
+		//site_id
+		$site = $this->spider_model->get_site($url);
+		if($site !== FALSE){
+			$site_id = $site['site_id'];
+		}
+		
 		//要抓链接的网址
-		$this->spider_func->get_links($url);
+		$this->spider_func->get_links($url,$site_id);
 	}
 }

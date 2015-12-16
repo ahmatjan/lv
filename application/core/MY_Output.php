@@ -9,6 +9,7 @@ class MY_Output extends CI_Output
         parent::__construct();
         // Set the super object to a local variable for use later
 		//$this->CI =& get_instance();
+		//$this->CI->load->model('tool/report');
      }
 	//替换缓存写入类,在视图输出前压缩html代码
 	/**
@@ -291,6 +292,18 @@ class MY_Output extends CI_Output
 		$this->CI->load->library('session');
 		$this->CI->session->set_userdata('sns_redirect', current_url());
 		
+		
+		//判断是否是黑名单ip,如果是，直接跳转
+		if($this->CI->report->get_ip($this->CI->input->ip_address()) !== FALSE){
+			redirect(site_url('tools/captcha/input_captcha'));
+			exit();
+		}
+		
+		//判断访问频率，每秒不超过6次
+		if($this->CI->report->count_ip($this->CI->input->ip_address()) > 1){
+			 redirect(site_url('tools/captcha/input_captcha'));
+			 exit();
+		}
 		
 		//装载模型
 		$this->CI->load->model('setting/base_setting');

@@ -36,4 +36,31 @@ class Spider_model extends CI_Model {
 		return $row;
 	}
 	
+	//spider_site表
+	//添加
+	public function add_spider_site($data){
+		$result=$this->get_site($data['domain']);
+		if($result !== FALSE){//如果记录已经存在
+			$this->db->where('domain', $data['domain']);
+			$this->db->update($this->db->dbprefix('spider_site'), $data);
+		}else{
+			$this->db->insert($this->db->dbprefix('spider_site'), $data);
+		}
+	}
+	
+	//查询是否存在
+	public function get_site($domain){
+		$sql = "SELECT * FROM " . $this->db->dbprefix('spider_site') . " WHERE domain = ?"; 
+
+		$query=$this->db->query($sql, array($domain));
+
+		if ($query->num_rows() > 0)
+		{
+		   $row = $query->row_array();
+		}else{
+			$row = FALSE;
+		}
+		return $row;
+	}
+	
 }

@@ -21,10 +21,11 @@
 
 <script src="<?php echo base_url('public/js/loading/ymdselect.js')?>" type="text/javascript"></script>
 -->
-<div id="captcha" class="captcha"><span class="img"><?php echo $captcha;?></span>点击刷新验证码</div>
+<img  title="点击刷新" src="<?php echo site_url('tools/captcha')?>" align="absbottom" onclick="this.src='tools/captcha?'+Math.random();"></img>
 
-<script type="text/javascript">
-$('.captcha').click(function(){
-	$(this).find('.img').html("<?php site_url('test/get_img')?>");
-});
-</script>
+<form id="base-setting" action="<?php echo site_url('test/cap')?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+
+<input type="text" name="captcha">
+<button type="submit" class="btn blue">提交</button>
+
+</form>

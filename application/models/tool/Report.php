@@ -134,4 +134,52 @@ class Report extends CI_Model {
 			return $res;
 		}
 	}
+	
+	//通过ip、时间来统计访问数量
+	public function count_ip($ip){
+		$this->db->where('ip',$ip);
+		$this->db->where('access_time',date("Y-m-d H:m:s"));
+		$this->db->from($this->db->dbprefix('report_flow'));
+		return $this->db->count_all_results();
+	}
+	
+	//把超过6的ip加入黑名单
+	public function add_blackip($data){
+		$result = $this->chack_blackip($data['ip']);
+		if($result === FALSE){
+			//记录不存在，添加
+			$this->db->insert($this->db->dbprefix('blacklist_ip'), $data);
+		}else{
+			$this->db->where('ip', $data['ip']);
+			$this->db->update($this->db->dbprefix('blacklist_ip'), $data);
+		}
+	}
+	
+	//检查blackip是否存在
+	public function chack_blackip($ip){
+		$sql = "SELECT * FROM " . $this->db->dbprefix('blacklist_ip') . " WHERE ip = ?"; 
+
+		$query=$this->db->query($sql, array($ip));
+
+		if ($query->num_rows() > 0)
+		{
+		   $row = $query->row_array();
+		}else{
+			$row = FALSE;
+		}
+		return $row;
+	}
+	
+	//查询ip黑名单
+	public function get_ip($ip){
+		$sql = "SELECT * FROM " . $this->db->dbprefix('blacklist_ip') . " WHERE ip = ? AND start = 1"; 
+
+		$query=$this->db->query($sql, array($ip));
+		if ($query->num_rows() > 0)
+		{
+		   $row = $query->row_array();
+		   return $row;
+		}
+		return FALSE;
+	}
 }
