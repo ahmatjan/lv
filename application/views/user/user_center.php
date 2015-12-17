@@ -98,7 +98,7 @@
 
 												<p><?php echo isset($user_infos['signature']) ? $user_infos['signature'] : '你还没有设置简介...<a href="'.site_url('user?tab_position=tab_1_3').'">点此设置</a>' ;?></p>
 
-												<p><a href="<?php echo $user_infos['blog']?>"><?php echo $user_infos['blog']?></a></p>
+												<p><a href="<?php echo isset($user_infos['blog']) ? $user_infos['blog'] : '#' ?>"><?php echo isset($user_infos['blog']) ? $user_infos['blog'] : '请完善...' ?></a></p>
 
 												<ul class="unstyled inline">
 

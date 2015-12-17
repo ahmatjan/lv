@@ -37,7 +37,7 @@ class spider_total extends CI_Controller {
 								),
 			'setting'		=>array(
 								'name'=>$this->lang->line('heading_title'),
-								'this_url'=>site_url('report/report_access'),
+								'this_url'=>site_url('tools/spider_total'),
 								'url'=>''
 								)
 		);
@@ -100,7 +100,7 @@ class spider_total extends CI_Controller {
 		$data['report_accesss']=$report_accesss;
 		//用户访问数据结束
 		
-		//开始获取流量统计数据
+		//开始网站列表
 		$config1['full_tag_open'] = '<ul>';
 		$config1['full_tag_close'] = '</ul>';
 		$config1['first_link'] = '首页';
@@ -119,11 +119,11 @@ class spider_total extends CI_Controller {
 		$config1['num_tag_close'] = '</li>';
 		$config1['next_link'] = '下一页';
 		$config1['prev_link'] = '上一页';
-		$config1['base_url'] = site_url('report/report_access?tab_position=tab_1_3');
-		$config1['total_rows'] = $this->report->count_report_flow();
+		$config1['base_url'] = site_url('tools/spider_total?tab_position=tab_1_3');
+		$config1['total_rows'] = $this->report->count_spider_site();
 		$config1['per_page'] = $this->base_setting->get_setting('quantity_admin');
 		$config1['page_query_string']=TRUE;
-		$config1['query_string_segment'] ='flow_page';
+		$config1['query_string_segment'] ='site_page';
 		if($this->agent->is_mobile()){
 			$config1['display_pages'] = FALSE;
 		}else{
@@ -132,18 +132,18 @@ class spider_total extends CI_Controller {
 
 		$this->pagination->initialize($config1);
 
-		$data['flow_page'] = $this->pagination->create_links();
+		$data['site_page'] = $this->pagination->create_links();
 		
 		//获取用户访问数组
-		if($this->input->get('flow_page')){
-			$flow_start=$this->input->get('flow_page');
+		if($this->input->get('site_page')){
+			$site_start=$this->input->get('site_page');
 		}else{
-			$flow_start=0;
+			$site_start=0;
 		}
-		$data['report_flows']=$this->report->get_report_flowall($flow_start,$this->base_setting->get_setting('quantity_admin'));
-		//获取流量统计数据结束
+		$data['sites']=$this->report->get_spider_site($site_start,$this->base_setting->get_setting('quantity_admin'));
+		//网站列表结束
 		
-		//开始获取抓取记录
+		//开始获取索引记录
 		$config2['full_tag_open'] = '<ul>';
 		$config2['full_tag_close'] = '</ul>';
 		$config2['first_link'] = '首页';
@@ -162,11 +162,11 @@ class spider_total extends CI_Controller {
 		$config2['num_tag_close'] = '</li>';
 		$config2['next_link'] = '下一页';
 		$config2['prev_link'] = '上一页';
-		$config2['base_url'] = site_url('report/report_access?tab_position=tab_1_5');
-		$config2['total_rows'] = $this->report->count_report_robot();
+		$config2['base_url'] = site_url('tools/spider_total?tab_position=tab_1_5');
+		$config2['total_rows'] = $this->report->count_spider_url();
 		$config2['per_page'] = $this->base_setting->get_setting('quantity_admin');
 		$config2['page_query_string']=TRUE;
-		$config2['query_string_segment'] ='robot_page';
+		$config2['query_string_segment'] ='spider_page';
 		if($this->agent->is_mobile()){
 			$config2['display_pages'] = FALSE;
 		}else{
@@ -175,18 +175,18 @@ class spider_total extends CI_Controller {
 
 		$this->pagination->initialize($config2);
 
-		$data['robot_page'] = $this->pagination->create_links();
+		$data['spider_page'] = $this->pagination->create_links();
 		
 		//从数据库获取数据
-		if($this->input->get('robot_page')){
-			$robot_start=$this->input->get('robot_page');
+		if($this->input->get('spider_page')){
+			$spider_start=$this->input->get('spider_page');
 		}else{
-			$robot_start=0;
+			$spider_start=0;
 		}
-		$data['report_robots']=$this->report->get_report_robotall($robot_start,$this->base_setting->get_setting('quantity_admin'));
-		//获取抓取记录结束
+		$data['spider_urls']=$this->report->get_spider_urls($spider_start,$this->base_setting->get_setting('quantity_admin'));
+		//获取索引记录结束
 		
-		//开始获取抓取记录
+		//开始获取IP黑名单记录
 		$config3['full_tag_open'] = '<ul>';
 		$config3['full_tag_close'] = '</ul>';
 		$config3['first_link'] = '首页';
@@ -205,11 +205,11 @@ class spider_total extends CI_Controller {
 		$config3['num_tag_close'] = '</li>';
 		$config3['next_link'] = '下一页';
 		$config3['prev_link'] = '上一页';
-		$config3['base_url'] = site_url('report/report_access?tab_position=tab_1_6');
-		$config3['total_rows'] = $this->report->count_unkow();
+		$config3['base_url'] = site_url('tools/spider_total?tab_position=tab_1_6');
+		$config3['total_rows'] = $this->report->count_blacklist_ip();
 		$config3['per_page'] = $this->base_setting->get_setting('quantity_admin');
 		$config3['page_query_string']=TRUE;
-		$config3['query_string_segment'] ='unknow_page';
+		$config3['query_string_segment'] ='black_page';
 		if($this->agent->is_mobile()){
 			$config3['display_pages'] = FALSE;
 		}else{
@@ -218,16 +218,16 @@ class spider_total extends CI_Controller {
 
 		$this->pagination->initialize($config3);
 
-		$data['unknow_page'] = $this->pagination->create_links();
+		$data['black_page'] = $this->pagination->create_links();
 		
 		//从数据库获取数据
-		if($this->input->get('unknow_page')){
-			$unknow_start=$this->input->get('unknow_page');
+		if($this->input->get('black_page')){
+			$black_start=$this->input->get('black_page');
 		}else{
-			$unknow_start=0;
+			$black_start=0;
 		}
-		$data['report_unknows']=$this->report->unknowspider($unknow_start,$this->base_setting->get_setting('quantity_admin'));
-		//获取抓取记录结束
+		$data['black_ips']=$this->report->get_blacklist_ips($black_start,$this->base_setting->get_setting('quantity_admin'));
+		//获取黑名单记录结束
 		
 		if(is_https()){
 			$data['spider_url'] = str_replace("https://", "", site_url());
@@ -261,6 +261,29 @@ class spider_total extends CI_Controller {
 				$this->session->set_flashdata('setting_success', '清空'.arrayToString($result['false']).'失败！');
 				redirect(site_url('report/report_access'));
 			}
+		}
+	}
+	
+	//删除网站
+	public function del_site(){
+		if(!$this->input->get('site_id')){
+			redirect(site_url('tools/spider_total').'?tab_position=tab_1_3');
+			exit();
+		}
+		
+		if($this->report->get_site_forid($this->input->get('site_id')) === FALSE){
+			redirect(site_url('tools/spider_total').'?tab_position=tab_1_3');
+			exit();
+		}
+		
+		if($this->report->del_site_url($this->input->get('site_id')) === TRUE){
+			$this->session->set_flashdata('setting_success', '站点、对应的索引删除成功！');
+			redirect(site_url('tools/spider_total').'?tab_position=tab_1_3');
+			exit();
+		}else{
+			$this->session->set_flashdata('setting_false', '站点或索引删除不成功！');
+			redirect(site_url('tools/spider_total').'?tab_position=tab_1_3');
+			exit();
 		}
 	}
 }

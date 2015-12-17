@@ -182,4 +182,84 @@ class Report extends CI_Model {
 		}
 		return FALSE;
 	}
+	
+	//查spider_site表
+	public function get_spider_site($site_start,$site_end)
+	{
+	//
+		$sql = "SELECT * FROM " . $this->db->dbprefix('spider_site') . " ORDER BY site_id ASC LIMIT " . $site_start . " , " . $site_end; 
+
+		$query=$this->db->query($sql);
+
+		$row = $query->result_array(); 
+		return $row;
+
+	}
+	
+	//统计spider_site表的记录行数
+	public function count_spider_site(){
+		$count=$this->db->count_all('spider_site');
+		return $count;
+	}
+	
+	//查spider_url表
+	public function get_spider_urls($spider_start,$spider_end)
+	{
+	//
+		$sql = "SELECT * FROM " . $this->db->dbprefix('spider_url') . " ORDER BY url_id ASC LIMIT " . $spider_start . " , " . $spider_end; 
+
+		$query=$this->db->query($sql);
+
+		$row = $query->result_array(); 
+		return $row;
+
+	}
+	
+	//统计spider_url表的记录行数
+	public function count_spider_url(){
+		$count=$this->db->count_all('spider_url');
+		return $count;
+	}
+	
+	//查blacklist_ip表
+	public function get_blacklist_ips($black_start,$black_end)
+	{
+	//
+		$sql = "SELECT * FROM " . $this->db->dbprefix('blacklist_ip') . " ORDER BY id ASC LIMIT " . $black_start . " , " . $black_end; 
+
+		$query=$this->db->query($sql);
+
+		$row = $query->result_array(); 
+		return $row;
+
+	}
+	
+	//统计blacklist_ip表的记录行数
+	public function count_blacklist_ip(){
+		$count=$this->db->count_all('blacklist_ip');
+		return $count;
+	}
+	
+	//id查网站
+	public function get_site_forid($site_id){
+		$sql = "SELECT * FROM " . $this->db->dbprefix('spider_site') . " WHERE site_id = ?"; 
+
+		$query=$this->db->query($sql, array($site_id));
+
+		if ($query->num_rows() > 0)
+		{
+		   $row = $query->row_array(); 
+			return $row;
+		}
+		
+		return FALSE;
+	}
+	
+	//删除spider_site和spider_url表的对应id内容
+	public function del_site_url($site_id){
+		if($this->db->delete($this->db->dbprefix('spider_site'), array('site_id' => $site_id)) !== FALSE && $this->db->delete($this->db->dbprefix('spider_url'), array('site_id' => $site_id)) !== FALSE ){
+			//删除成功返回true
+			return TRUE;
+		}
+	}
 }

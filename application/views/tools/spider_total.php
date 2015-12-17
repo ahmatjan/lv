@@ -45,7 +45,7 @@
 									<?php else: ?>
 									<li>
 									<?php endif; ?>
-									<a href="#tab_1_2" data-toggle="tab">用户访问统计</a>
+									<a href="#tab_1_2" data-toggle="tab">爬虫设置</a>
 									</li>
 									
 									<?php if ($tab_position === 'tab_1_3'): ?>
@@ -53,7 +53,7 @@
 									<?php else: ?>
 									<li>
 									<?php endif; ?>
-									<a href="#tab_1_3" data-toggle="tab">流量统计</a>
+									<a href="#tab_1_3" data-toggle="tab">网站列表</a>
 									</li>
 									
 									<?php if ($tab_position === 'tab_1_5'): ?>
@@ -61,7 +61,7 @@
 									<?php else: ?>
 									<li>
 									<?php endif; ?>
-									<a href="#tab_1_5" data-toggle="tab">抓取统计</a>
+									<a href="#tab_1_5" data-toggle="tab">抓取索引</a>
 									</li>
 									
 									<?php if ($tab_position === 'tab_1_6'): ?>
@@ -69,7 +69,7 @@
 									<?php else: ?>
 									<li>
 									<?php endif; ?>
-									<a href="#tab_1_6" data-toggle="tab">未知抓取</a>
+									<a href="#tab_1_6" data-toggle="tab">IP黑名单</a>
 									</li>
 
 								</ul>
@@ -247,61 +247,46 @@
 
 																<th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_3 .checkboxes" /></th>
 
-																<th class="hidden-480">IP</th>
+																<th>ID</th>
 																
-																<th>来源</th>
+																<th class="hidden-480">域名</th>
 																
-																<th>被访页</th>
+																<th>名称</th>
 																
-																<th>访问时间</th>
+																<th>操作</th>
 																
-																<th>系统平台</th>
-																
-																<th>robot</th>
-																
-																<th>用户代理</th>
-
 															</tr>
 
 														</thead>
 
 														<tbody>
 
-															<?php if ($report_flows && is_array($report_flows)): ?>
-															<?php foreach ($report_flows as $report_flow): ?>
+															<?php if ($sites && is_array($sites)): ?>
+															<?php foreach ($sites as $site): ?>
 															<!--判断它是一个数组并且不为空 -->
 														
 															<tr class="odd gradeX">
 
-																<td><div title="<?php echo $report_flow['flow_id']?>"><input type="checkbox" class="checkboxes" value="<?php echo $report_flow['flow_id']?>" /></div></td>
+																<td><div title="<?php echo $site['site_id']?>"><input type="checkbox" class="checkboxes" value="<?php echo $site['site_id']?>" /></div></td>
 
-																<td><div title="<?php echo $report_flow['ip']?>"><?php echo $report_flow['ip']?></div></td>
+																<td><?php echo $site['site_id']?></div></td>
 																
-																<td class="hidden-480">
-																<!--判断referrer_url是否为空-->
-																<?php if(!empty($report_flow['referrer_url'])):?>
-																<a href="<?php echo $report_flow['referrer_url']?>" title="<?php echo $report_flow['referrer_url']?>" target="_blank"><?php echo strlen(mb_substr($report_flow['referrer_url'],stripos($report_flow['referrer_url'],'.com') + 5,15))>7 ? mb_substr($report_flow['referrer_url'],stripos($report_flow['referrer_url'],'.com') + 5,15) : $report_flow['referrer_url']?></a>
-																<?php else:?>
-																--空--
-																<?php endif;?>
-																</td>
+																<td class="hidden-480"><?php echo $site['domain']?></td>
 																
 																<td>
-																	<!--判断current_url是否为空-->
-																<?php if(!empty($report_flow['current_url'])):?>
-																<a href="<?php echo $report_flow['current_url']?>" title="<?php echo $report_flow['current_url']?>" target="_blank"><?php echo strlen(mb_substr($report_flow['current_url'],stripos($report_flow['current_url'],'.com') + 5,15))>7 ? mb_substr($report_flow['current_url'],stripos($report_flow['current_url'],'.com') + 5,15) : $report_flow['current_url']?></a>
+																<!--判断$site['name']是否为空-->
+																<?php if(!empty($site['name'])):?>
+																<a href="<?php echo $site['domain']?>" title="<?php echo $site['name']?>" target="_blank"><?php echo mb_substr($site['name'],0,20)?></a>
 																<?php else:?>
 																<a>--空--</a>
 																<?php endif;?>
 																</td>
 																
-																<td><?php echo mb_substr($report_flow['access_time'],5)?></td>
+																<td>
+																	<span class="label label-success"><a target="_black" href="<?php echo site_url('tools/spider/spider_index?url='.$site['domain'])?>" style="color: #FFF">重建索引</a></span>
+																<span class="label label-success" style="margin-left: 5px"><a href="<?php echo site_url('tools/spider_total/del_site').'?site_id='.$site['site_id']?>" style="color: #FFF">删除</a></span>
+																</td>
 																
-																<td><div title="<?php echo $report_flow['platform'].$report_flow['browser']?>"><?php echo substr_cn($report_flow['platform'].$report_flow['browser'],10)?></td>
-																
-																<td><div title="<?php echo $report_flow['robot']?>"><?php echo substr_cn($report_flow['robot'],8)?></div></td>
-																
-																<td><div title="<?php echo $report_flow['user_agent']?>"><?php echo substr_cn($report_flow['user_agent'],12)?></div></td>
 																
 															</tr>
 
@@ -317,7 +302,7 @@
 
 													<ul>
 													
-													<?php echo $flow_page?>
+													<?php echo $site_page?>
 
 													</ul>
 
@@ -371,15 +356,13 @@
 
 																<th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_5 .checkboxes" /></th>
 																
-																<th>ID</th>
+																<th class="hidden-480">ID</th>
 
-																<th class="hidden-480">IP</th>
-																
-																<th>抓取平台</th>
-																
-																<th>URL</th>
+																<th class="hidden-480">URL</th>
 																
 																<th>抓取时间</th>
+																
+																<th>标题</th>
 
 															</tr>
 
@@ -387,30 +370,21 @@
 
 														<tbody>
 
-															<?php if ($report_robots && is_array($report_robots)): ?>
-															<?php foreach ($report_robots as $report_robot): ?>
+															<?php if ($spider_urls && is_array($spider_urls)): ?>
+															<?php foreach ($spider_urls as $spider_url): ?>
 															<!--判断它是一个数组并且不为空 -->
 														
 															<tr class="odd gradeX">
 
-																<td><span title="<?php echo $report_robot['robot_id']?>"><input type="checkbox" class="checkboxes" value="<?php echo $report_robot['robot_id']?>" /></span></td>
+																<td><span title="<?php echo $spider_url['url_id']?>"><input type="checkbox" class="checkboxes" value="<?php echo $spider_url['url_id']?>" /></span></td>
 																
-																<td><?php echo $report_robot['robot_id']?></td>
+																<td class="hidden-480"><?php echo $spider_url['url_id']?></td>
 
-																<td><?php echo $report_robot['ip']?></td>
+																<td><a href="<?php echo $spider_url['url']?>" title="<?php echo $spider_url['url']?>"><?php echo mb_substr($spider_url['url'],7,15)?></a></td>
 																
-																<td class="hidden-480"><?php echo $report_robot['robot_name']?></td>
+																<td class="hidden-480"><div title="<?php echo $spider_url['addtime']?>"><?php echo mb_substr($spider_url['addtime'],5,20)?></div></td>
 
-																<td>
-																	<!--判断current_url是否为空-->
-																<?php if(!empty($report_robot['url'])):?>
-																<a href="<?php echo $report_robot['url']?>" title="<?php echo $report_robot['url']?>" target="_blank"><?php echo strlen(mb_substr($report_robot['url'],stripos($report_robot['url'],'.com') + 5,15))>7 ? mb_substr($report_robot['url'],stripos($report_robot['url'],'.com') + 5,15) : $report_robot['url']?></a>
-																<?php else:?>
-																<a>--空--</a>
-																<?php endif;?>
-																</td>
-																
-																<td><?php echo $report_robot['access_time']?></td>
+																<td><?php echo mb_substr($spider_url['title'],0,45)?></td>
 
 															</tr>
 
@@ -425,7 +399,7 @@
 													<div class="pagination" style="text-align: center;margin: 5px 0">
 
 													<ul>
-														<?php echo $robot_page?>
+														<?php echo $spider_page?>
 													</ul>
 
 												</div>
@@ -454,7 +428,7 @@
 
 											<span class="label label-important">提示:</span>&nbsp;
 
-											这里显示所有的流量统计，一个页面算一个流量，但是不包括机器人访问
+											这里显示IP黑名单
 
 										</p>
 									
@@ -480,51 +454,32 @@
 
 																<th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_6 .checkboxes" /></th>
 																
-																<th>ID</th>
-
-																<th class="hidden-480">IP</th>
+																<th>IP</th>
 																
-																<th>浏览器</th>
+																<th>状态</th>
 																
-																<th>代理</th>
+																<th class="hidden-480">备注</th>
 																
-																<th>URL</th>
-																
-																<th>抓取时间</th>
-
 															</tr>
 
 														</thead>
 
 														<tbody>
 
-															<?php if ($report_unknows && is_array($report_unknows)): ?>
-															<?php foreach ($report_unknows as $report_unknow): ?>
+															<?php if ($black_ips && is_array($black_ips)): ?>
+															<?php foreach ($black_ips as $black_ip): ?>
 															<!--判断它是一个数组并且不为空 -->
 														
 															<tr class="odd gradeX">
 
-																<td><span title="<?php echo $report_unknow['flow_id']?>"><input type="checkbox" class="checkboxes" value="<?php echo $report_unknow['flow_id']?>" /></span></td>
+																<td><span title="<?php echo $black_ip['id']?>"><input type="checkbox" class="checkboxes" value="<?php echo $black_ip['id']?>" /></span></td>
 																
-																<td><?php echo $report_unknow['flow_id']?></td>
+																<td><?php echo $black_ip['ip']?></td>
 
-																<td><?php echo $report_unknow['ip']?></td>
+																<td><?php echo $black_ip['start']?></td>
 																
-																<td class="hidden-480"><?php echo $report_unknow['browser']?></td>
-
-																<td><div title="<?php echo $report_unknow['user_agent']?>"><?php echo substr_cn($report_unknow['user_agent'],12)?></div></td>
+																<td class="hidden-480"><?php echo mb_substr($black_ip['remark'],0,25)?></td>
 																
-																<td>
-																	<!--判断current_url是否为空-->
-																<?php if(!empty($report_unknow['current_url'])):?>
-																<a href="<?php echo $report_unknow['current_url']?>" title="<?php echo $report_unknow['current_url']?>" target="_blank"><?php echo strlen(mb_substr($report_unknow['current_url'],stripos($report_unknow['current_url'],'.com') + 5,15))>7 ? mb_substr($report_unknow['current_url'],stripos($report_unknow['current_url'],'.com') + 5,15) : $report_unknow['current_url']?></a>
-																<?php else:?>
-																--空--
-																<?php endif;?>
-																</td>
-																
-																<td><?php echo $report_unknow['access_time']?></td>
-
 															</tr>
 
 															<?php endforeach; ?>
@@ -538,7 +493,7 @@
 													<div class="pagination" style="text-align: center;margin: 5px 0">
 
 													<ul>
-														<?php echo $unknow_page?>
+														<?php echo $black_page?>
 													</ul>
 
 												</div>
